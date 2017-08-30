@@ -21,8 +21,8 @@ The following features should be implemented into the system
  
 Contact information:
 
-Ken Odigwe Gomez -  0643965855 - k.odigwegomez@student.fontys.nl
-Daniel Lin - 0627534008 - daniel.lin@student.fontys.nl
-Max Meijer - 0642363003 - m.meijer@student.fontys.nl
-Vai van Ommeren - 0646913147 - v.vanommeren@student.fontys.nl
-Mike Kuiper - 0648050582 - mike.kuiper@student.fontys.nl 
+- Ken Odigwe Gomez; 0643965855; k.odigwegomez@student.fontys.nl
+- Daniel Lin;  0627534008;  daniel.lin@student.fontys.nl
+- Max Meijer;  0642363003;  m.meijer@student.fontys.nl
+- Vai van Ommeren; 0646913147; v.vanommeren@student.fontys.nl
+- Mike Kuiper; 0648050582; mike.kuiper@student.fontys.nl 
