@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Training {
     @MongoObjectId
-    private int _id;
+    private String _id;
 
     private String TrainingCode, Name, Description, RequiredMaterial;
     private Float Duration, Tuition;
@@ -19,7 +19,7 @@ public class Training {
     private List<User> Trainee;
     private List<Training> prerequisites;
 
-    public Training(int _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Formats.DateTime date, Location location, User teacher, List<User> trainee, List<Training> prerequisites) {
+    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Formats.DateTime date, Location location, User teacher, List<User> trainee, List<Training> prerequisites) {
         this._id = _id;
         TrainingCode = trainingCode;
         Name = name;
@@ -35,11 +35,11 @@ public class Training {
         this.prerequisites = prerequisites;
     }
 
-    public int get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 

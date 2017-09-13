@@ -3,15 +3,14 @@ package models;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 public class User {
-
     @MongoObjectId
-    private int _id;
+    private String _id;
     private String FirstName,LastName;
     private String Email;
     private Role role;
     private String company;
 
-    public User(int _id, String firstName, String lastName, String email, Role role, String company) {
+    public User(String _id, String firstName, String lastName, String email, Role role, String company) {
         this._id = _id;
         FirstName = firstName;
         LastName = lastName;
@@ -20,11 +19,11 @@ public class User {
         this.company = company;
     }
 
-    public int get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 

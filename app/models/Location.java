@@ -4,11 +4,11 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 public class Location {
     @MongoObjectId
-    private int _id;
+    private String _id;
     private String City, StreetNumber, Room;
     private int Capacity;
 
-    public Location(int _id, String city, String streetNumber, String room, int capacity) {
+    public Location(String _id, String city, String streetNumber, String room, int capacity) {
         this._id = _id;
         City = city;
         StreetNumber = streetNumber;
@@ -16,11 +16,11 @@ public class Location {
         Capacity = capacity;
     }
 
-    public int get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 

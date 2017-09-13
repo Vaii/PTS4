@@ -7,13 +7,13 @@ import java.util.List;
 public class Supplier {
 
     @MongoObjectId
-    private int _id;
+    private String _id;
     private String name;
     private User Contact;
     private List<User> Teachers;
     private List<Training> trainings;
 
-    public Supplier(int _id, String name, User contact, List<User> teachers, List<Training> trainings) {
+    public Supplier(String _id, String name, User contact, List<User> teachers, List<Training> trainings) {
         this._id = _id;
         this.name = name;
         Contact = contact;
@@ -21,11 +21,11 @@ public class Supplier {
         this.trainings = trainings;
     }
 
-    public int get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 
