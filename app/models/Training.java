@@ -1,38 +1,85 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.format.Formats;
+import sun.misc.resources.Messages_es;
 
 import java.util.List;
 
 
 public class Training {
+    // Mongo DB identifiers.
+    private static final String M_TRAININGSCODE = "TrainingsCode";
+    private static final String M_NAME = "Name";
+    private static final String M_DESCRIPTION = "Description";
+    private static final String M_REQUIREDMATERIAL = "RequiredMaterial";
+    private static final String M_DURATION = "Duration";
+    private static final String M_TUITION = "Tuition";
+    private static final String M_CAPACITY = "Capacity";
+    private static final String M_DATE = "Date";
+    private static final String M_LOCATION = "Location";
+    private static final String M_TEACHER = "Teacher";
+    private static final String M_TRAINEE = "Trainee";
+    private static final String M_PREREQUISITES = "Prerequisites";
+
+    // Mongo DB ID.
     @MongoObjectId
     private String _id;
 
+    // Class identifiers.
     private String TrainingCode, Name, Description, RequiredMaterial;
     private Float Duration, Tuition;
     private int Capacity;
     private Formats.DateTime Date;
-    private Location location;
+    private Location Location;
     private User Teacher;
     private List<User> Trainee;
-    private List<Training> prerequisites;
+    private List<Training> Prerequisites;
 
     public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Formats.DateTime date, Location location, User teacher, List<User> trainee, List<Training> prerequisites) {
         this._id = _id;
-        TrainingCode = trainingCode;
-        Name = name;
-        Description = description;
-        RequiredMaterial = requiredMaterial;
-        Duration = duration;
-        Tuition = tuition;
-        Capacity = capacity;
-        Date = date;
-        this.location = location;
-        Teacher = teacher;
-        Trainee = trainee;
-        this.prerequisites = prerequisites;
+        this.TrainingCode = trainingCode;
+        this.Name = name;
+        this.Description = description;
+        this.RequiredMaterial = requiredMaterial;
+        this.Duration = duration;
+        this.Tuition = tuition;
+        this.Capacity = capacity;
+        this.Date = date;
+        this.Location = location;
+        this.Teacher = teacher;
+        this.Trainee = trainee;
+        this.Prerequisites = prerequisites;
+    }
+
+    @JsonCreator
+    public Training(@JsonProperty(M_TRAININGSCODE) String trainingCode,
+                    @JsonProperty(M_NAME) String name,
+                    @JsonProperty(M_DESCRIPTION) String description,
+                    @JsonProperty(M_REQUIREDMATERIAL) String requiredMaterial,
+                    @JsonProperty(M_DURATION) float duration,
+                    @JsonProperty(M_TUITION) float tuition,
+                    @JsonProperty(M_CAPACITY) int capacity,
+                    @JsonProperty(M_DATE)Formats.DateTime date,
+                    @JsonProperty(M_LOCATION) Location location,
+                    @JsonProperty(M_TEACHER) User teacher,
+                    @JsonProperty(M_TRAINEE) List<User> trainee,
+                    @JsonProperty(M_PREREQUISITES) List<Training> prerequisites) {
+        this.TrainingCode = trainingCode;
+        this.Name = name;
+        this.Description = description;
+        this.RequiredMaterial = requiredMaterial;
+        this.Duration = duration;
+        this.Tuition = tuition;
+        this.Capacity = capacity;
+        this.Date = date;
+        this.Location = location;
+        this.Teacher = teacher;
+        this.Trainee = trainee;
+        this.Prerequisites = prerequisites;
     }
 
     public String get_id() {
@@ -43,6 +90,7 @@ public class Training {
         this._id = _id;
     }
 
+    @JsonProperty(M_TRAININGSCODE)
     public String getTrainingCode() {
         return TrainingCode;
     }
@@ -51,6 +99,7 @@ public class Training {
         TrainingCode = trainingCode;
     }
 
+    @JsonProperty(M_NAME)
     public String getName() {
         return Name;
     }
@@ -59,6 +108,7 @@ public class Training {
         Name = name;
     }
 
+    @JsonProperty(M_DESCRIPTION)
     public String getDescription() {
         return Description;
     }
@@ -67,6 +117,7 @@ public class Training {
         Description = description;
     }
 
+    @JsonProperty(M_REQUIREDMATERIAL)
     public String getRequiredMaterial() {
         return RequiredMaterial;
     }
@@ -75,6 +126,7 @@ public class Training {
         RequiredMaterial = requiredMaterial;
     }
 
+    @JsonProperty(M_DURATION)
     public Float getDuration() {
         return Duration;
     }
@@ -83,6 +135,7 @@ public class Training {
         Duration = duration;
     }
 
+    @JsonProperty(M_TUITION)
     public Float getTuition() {
         return Tuition;
     }
@@ -91,6 +144,7 @@ public class Training {
         Tuition = tuition;
     }
 
+    @JsonProperty(M_CAPACITY)
     public int getCapacity() {
         return Capacity;
     }
@@ -99,6 +153,7 @@ public class Training {
         Capacity = capacity;
     }
 
+    @JsonProperty(M_DATE)
     public Formats.DateTime getDate() {
         return Date;
     }
@@ -107,14 +162,16 @@ public class Training {
         Date = date;
     }
 
+    @JsonProperty(M_LOCATION)
     public Location getLocation() {
-        return location;
+        return Location;
     }
 
     public void setLocation(Location location) {
-        this.location = location;
+        this.Location = location;
     }
 
+    @JsonProperty(M_TEACHER)
     public User getTeacher() {
         return Teacher;
     }
@@ -123,6 +180,7 @@ public class Training {
         Teacher = teacher;
     }
 
+    @JsonProperty(M_TRAINEE)
     public List<User> getTrainee() {
         return Trainee;
     }
@@ -131,11 +189,12 @@ public class Training {
         Trainee = trainee;
     }
 
+    @JsonProperty(M_PREREQUISITES)
     public List<Training> getPrerequisites() {
-        return prerequisites;
+        return Prerequisites;
     }
 
     public void setPrerequisites(List<Training> prerequisites) {
-        this.prerequisites = prerequisites;
+        this.Prerequisites = prerequisites;
     }
 }

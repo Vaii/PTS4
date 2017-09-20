@@ -1,10 +1,21 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 public class Location {
+    // Mongo DB identifiers.
+    private static final String M_CITY = "City";
+    private static final String M_STREETNUMBER = "StreetNumber";
+    private static final String M_ROOM = "Room";
+    private static final String M_CAPACITY = "Capacity";
+
+    // Mongo DB ID.
     @MongoObjectId
     private String _id;
+
+    // Class fields.
     private String City, StreetNumber, Room;
     private int Capacity;
 
@@ -16,6 +27,18 @@ public class Location {
         Capacity = capacity;
     }
 
+    @JsonCreator
+    public Location(@JsonProperty(M_CITY) String city,
+                    @JsonProperty(M_STREETNUMBER) String streetNumber,
+                    @JsonProperty(M_ROOM) String room,
+                    @JsonProperty(M_CAPACITY) int capacity) {
+        this.City = city;
+        this.StreetNumber = streetNumber;
+        this.Room = room;
+        this.Capacity = capacity;
+    }
+
+
     public String get_id() {
         return _id;
     }
@@ -24,6 +47,7 @@ public class Location {
         this._id = _id;
     }
 
+    @JsonProperty(M_CITY)
     public String getCity() {
         return City;
     }
@@ -32,6 +56,7 @@ public class Location {
         City = city;
     }
 
+    @JsonProperty(M_STREETNUMBER)
     public String getStreetNumber() {
         return StreetNumber;
     }
@@ -40,6 +65,7 @@ public class Location {
         StreetNumber = streetNumber;
     }
 
+    @JsonProperty(M_ROOM)
     public String getRoom() {
         return Room;
     }
@@ -48,6 +74,7 @@ public class Location {
         Room = room;
     }
 
+    @JsonProperty(M_CAPACITY)
     public int getCapacity() {
         return Capacity;
     }
