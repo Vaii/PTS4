@@ -1,4 +1,4 @@
-package DAL.repository;
+package dal.repositories;
 
 public class TrainingDataLocationManagement {
 
