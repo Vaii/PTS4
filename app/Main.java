@@ -1,4 +1,4 @@
-import DAL.DBConnector;
+import dal.DBConnector;
 import models.Role;
 import models.User;
 import org.jongo.MongoCollection;

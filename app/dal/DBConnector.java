@@ -1,4 +1,4 @@
-package DAL;
+package dal;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
