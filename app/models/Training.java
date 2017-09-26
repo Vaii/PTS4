@@ -2,10 +2,8 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.format.Formats;
-import sun.misc.resources.Messages_es;
 
 import java.util.List;
 

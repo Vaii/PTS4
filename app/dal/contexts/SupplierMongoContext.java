@@ -4,7 +4,6 @@ import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.SupplierContext;
 import models.Supplier;
-import models.User;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
