@@ -61,6 +61,9 @@ public class UserMongoContext implements UserContext {
         return result.wasAcknowledged();
     }
 
+    /**
+     * Be careful with this.
+     */
     public void removeAll() {
         collection.drop();
     }
