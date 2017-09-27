@@ -1,9 +1,12 @@
 package controllers;
 
+import dal.contexts.TrainingMongoContext;
+import dal.interfaces.TrainingContext;
+import dal.repositories.TrainingRepository;
 import models.Training;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.trainingoverview;
+import views.html.*;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -14,28 +17,14 @@ import java.util.List;
  */
 public class TrainingController extends Controller{
 
-    //TrainingRepository trainingRepository = new TrainingRepository(context);
 
-  //  public final List<Training> trainingList;
+    TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
 
-    @Inject
-    public TrainingController(){
-    /*    trainingList = new ArrayList<Training>();
-        trainingList.add(new Training("TestTraining"));
-        trainingList.add(new Training("TestTraining"));
-        trainingList.add(new Training("TestTraining"));
-        trainingList.add(new Training("TestTraining"));
-        trainingList.add(new Training("TestTraining"));
-*/
-    }
     public Result overview() {
-        return ok(trainingoverview.render());
+        return ok(trainingoverview.render(trainingRepository.getAll()));
     }
 
-
-    //List<Training> training = new ArrayList<Training>();
-
-
-
-
+/*    public Result trainingClicked() {
+        return ok(training.render("Training"));
+    }*/
 }
