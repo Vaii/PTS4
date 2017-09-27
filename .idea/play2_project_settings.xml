@@ -3,18 +3,11 @@
   <component name="Play2ExcludedModulesSettings">
     <option name="INFO">
       <map>
-        <entry key="PTS4 InfoSupport">
-          <value>
-            <ProjectSettingsEntry>
-              <option name="playDistrPath" value="$USER_HOME$/.ivy2/cache/com.typesafe.play/play_2.11/jars/play_2.11-2.4.2.jar" />
-            </ProjectSettingsEntry>
-          </value>
-        </entry>
         <entry key="pts4">
           <value>
             <ProjectSettingsEntry>
-              <option name="sourceDir" value="F:\SEMESTER4\PTS4\app" />
-              <option name="confDir" value="D:\Repos\PTS4\app" />
+              <option name="sourceDir" value="C:\Users\Daniel\Documents\GitHub\PTS4\app" />
+              <option name="confDir" value="E:\Github\PTS4\app" />
               <option name="playDistrPath" value="$USER_HOME$/.ivy2/cache/com.typesafe.play/play_2.11/jars/play_2.11-2.4.2.jar" />
               <option name="templateImports">
                 <list>
@@ -40,7 +33,7 @@
                   <option value="play.libs.F" />
                 </list>
               </option>
-              <option name="uri" value="/D:/Repos/PTS4" />
+              <option name="uri" value="/E:/Github/PTS4" />
             </ProjectSettingsEntry>
           </value>
         </entry>
