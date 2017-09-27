@@ -19,6 +19,11 @@ public class Application extends Controller {
     public static Result index() {
         return ok(index.render("s"));
     }
+  
+  
+    public static Result location(){
+        return ok (location.render());
+    }
 
     public static Result addtraining() {
         return ok(addtraining.render());
@@ -27,6 +32,5 @@ public class Application extends Controller {
     public static Result submit() {
         return ok(addtraining.render());
     } /* When routers are not used,
-         just navigate to the action in the URL, then it will become highlighted */
-
+         just navigate to the action in the URL, then it will become highlighted *
 }
