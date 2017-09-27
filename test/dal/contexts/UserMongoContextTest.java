@@ -16,8 +16,8 @@ class UserMongoContextTest {
     @BeforeEach
     void setUp() {
         context = new UserMongoContext("UserTest");
-        testUser = new User("Henk", "TestPersoon", "Henk@test.nl", Role.External_Student, "Fictief bedrijf");
-        testUser2 = new User("Jaap", "NormaalPersoon", "jaap@nieteentest.nl", Role.Business_Unit_Manager, "Info Support");
+        testUser = new User("Henk", "TestPersoon", "Henk@test.nl", Role.AdviseurReward, "Fictief bedrijf");
+        testUser2 = new User("Jaap", "NormaalPersoon", "jaap@nieteentest.nl", Role.ManagerHRD, "Info Support");
     }
 
     @Test
