@@ -7,7 +7,7 @@ public enum TrainingCategory {
 
     private final String value;
 
-    private TrainingCategory(final String value) {
+    TrainingCategory(final String value) {
         this.value = value;
     }
 
