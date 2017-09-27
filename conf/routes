@@ -4,6 +4,10 @@
 
 # Home page
 GET     /                           controllers.Application.index
+
+GET     /addtraining                controllers.Application.addtraining
+GET     /submit                     controllers.Application.submit
+
 GET     /trainingOverview           controllers.TrainingController.overview
 
 # Signing up to training

@@ -61,10 +61,6 @@ public class User {
         return _id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
     @JsonProperty(M_FIRSTNAME)
     public String getFirstName() {
         return FirstName;
@@ -130,6 +126,12 @@ public class User {
 
     /** All password related stuff is down below.
      */
+    /**
+     * Hashes a password and salt combination using SHA-512.
+     * @param passwordToHash The password in plain text.
+     * @param salt THe salt to add to the password.
+     * @return The hashed combination of password and salt.
+     */
     public String generatePassword(String passwordToHash, String salt){
         String generatedPassword = null;
         try {
@@ -149,6 +151,10 @@ public class User {
         return generatedPassword;
     }
 
+    /**
+     * Generate a salt to be used when hashing passwords.
+     * @return The salt.
+     */
     public String generateSalt() {
         final Random r = new SecureRandom();
         byte[] salt = new byte[32];
@@ -157,6 +163,11 @@ public class User {
         return encodedSalt;
     }
 
+    /**
+     * Checks the login of a user by comparing the given plain text password with the salt and hashed password in the database.
+     * @param password The password to verify in plain text.
+     * @return True if the login is successful.
+     */
     public boolean checkLogin(String password) {
         String passwordToCheck = generatePassword(password, this.Salt);
         return passwordToCheck.equals(HashedPassword);
