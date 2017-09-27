@@ -19,23 +19,22 @@ public class Application extends Controller {
     public static Result index() {
         return ok(index.render("s"));
     }
+  
+  
+    public static Result location(){
+        return ok (location.render());
+    }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     public static Result signUpCourse() {
         return ok(signUpCourse.render());
     }
-=======
->>>>>>> master
-=======
+
     public static Result addtraining() {
         return ok(addtraining.render());
     }
-
+  
     public static Result submit() {
         return ok(addtraining.render());
     } /* When routers are not used,
-         just navigate to the action in the URL, then it will become highlighted */
->>>>>>> master
-
+         just navigate to the action in the URL, then it will become highlighted *
 }
