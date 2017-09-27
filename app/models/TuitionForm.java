@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+import java.util.Date;
+
 public class TuitionForm {
     // Mongo DB identifiers.
     private static final String M_MANAGER = "Manager";
@@ -17,6 +19,15 @@ public class TuitionForm {
     // Class fields.
     private User Manager, Employee;
     private Training Training;
+    private Date CompanyJoinDate;
+    private String ReasonForCourse;
+
+    private double StudyCosts;
+    private double ExaminiationFees;
+    private double TransportCosts;
+    private double AccommodationCosts;
+    private double ExtraCosts;
+    private double TotalCosts;
 
     public TuitionForm(String _id, User manager, User employee, Training training) {
         this._id = _id;

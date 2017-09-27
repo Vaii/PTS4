@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserMongoContextTest {
     UserMongoContext context;
@@ -16,8 +16,8 @@ class UserMongoContextTest {
     @BeforeEach
     void setUp() {
         context = new UserMongoContext("UserTest");
-        testUser = new User("Henk", "TestPersoon", "Henk@test.nl", Role.External_Student, "Fictief bedrijf");
-        testUser2 = new User("Jaap", "NormaalPersoon", "jaap@nieteentest.nl", Role.Business_Unit_Manager, "Info Support");
+        testUser = new User("Henk", "TestPersoon", "Henk@test.nl", Role.AdviseurReward, "Fictief bedrijf");
+        testUser2 = new User("Jaap", "NormaalPersoon", "jaap@nieteentest.nl", Role.ManagerHRD, "Info Support");
     }
 
     @Test
@@ -31,7 +31,7 @@ class UserMongoContextTest {
     void getUser() {
         reset();
         context.addUser(testUser, "123");
-        User user = context.getUser("Henk@test.nl");
+        User user = context.getUser("Henk@testone.nl");
 
         assertEquals("Henk", user.getFirstName());
     }
@@ -52,12 +52,12 @@ class UserMongoContextTest {
         reset();
 
         context.addUser(testUser, "123");
-        User user1 = context.getUser("Henk@test.nl");
+        User user1 = context.getUser("Henk@testone.nl");
         assertEquals("Henk", user1.getFirstName());
 
         testUser.setFirstName("Niet Henk");
         context.updateUser(testUser);
-        User user2 = context.getUser("Henk@test.nl");
+        User user2 = context.getUser("Henk@testone.nl");
 
         assertEquals("Niet Henk", user2.getFirstName());
     }
@@ -66,19 +66,19 @@ class UserMongoContextTest {
     void removeUser() {
         reset();
         context.addUser(testUser, "123");
-        assertEquals("Henk", context.getUser("Henk@test.nl").getFirstName());
+        assertEquals("Henk", context.getUser("Henk@testone.nl").getFirstName());
         context.removeUser(testUser);
-        assertEquals(null, context.getUser("Henk@test.nl"));
+        assertEquals(null, context.getUser("Henk@testone.nl"));
     }
 
     @Test
     void login() {
         reset();
         context.addUser(testUser, "123");
-        boolean resultFalse = context.login("Henk@test.nl", "1234");
+        boolean resultFalse = context.login("Henk@testone.nl", "1234");
         assertEquals(false, resultFalse);
 
-        boolean resultTrue = context.login("Henk@test.nl", "123");
+        boolean resultTrue = context.login("Henk@testone.nl", "123");
         assertEquals(true, resultTrue);
     }
 
