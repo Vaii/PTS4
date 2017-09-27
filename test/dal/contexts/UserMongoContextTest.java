@@ -1,9 +1,7 @@
 package dal.contexts;
 
-import dal.DBConnector;
 import models.Role;
 import models.User;
-import org.jongo.MongoCollection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
