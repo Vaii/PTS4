@@ -11,7 +11,7 @@
                 <lh>Training</lh>
                 @if(!trainings.isEmpty){
                     @for(training <- trainings){
-                            <li>display(training))</li>
+                            <li>@training.getName()</li>
                         }
                 } else {
                     <li>"No training yet"</li>
