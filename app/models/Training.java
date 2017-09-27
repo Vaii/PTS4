@@ -3,8 +3,8 @@ package models;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
-import play.data.format.Formats;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,13 +31,13 @@ public class Training {
     private String TrainingCode, Name, Description, RequiredMaterial;
     private Float Duration, Tuition;
     private int Capacity;
-    private Formats.DateTime Date;
+    private java.util.Date Date;
     private Location Location;
     private User Teacher;
     private List<User> Trainee;
     private List<Training> Prerequisites;
 
-    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Formats.DateTime date, Location location, User teacher, List<User> trainee, List<Training> prerequisites) {
+    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<User> trainee, List<Training> prerequisites) {
         this._id = _id;
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -61,7 +61,7 @@ public class Training {
                     @JsonProperty(M_DURATION) float duration,
                     @JsonProperty(M_TUITION) float tuition,
                     @JsonProperty(M_CAPACITY) int capacity,
-                    @JsonProperty(M_DATE)Formats.DateTime date,
+                    @JsonProperty(M_DATE)Date date,
                     @JsonProperty(M_LOCATION) Location location,
                     @JsonProperty(M_TEACHER) User teacher,
                     @JsonProperty(M_TRAINEE) List<User> trainee,
@@ -82,10 +82,6 @@ public class Training {
 
     public String get_id() {
         return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
     }
 
     @JsonProperty(M_TRAININGSCODE)
@@ -152,11 +148,11 @@ public class Training {
     }
 
     @JsonProperty(M_DATE)
-    public Formats.DateTime getDate() {
+    public Date getDate() {
         return Date;
     }
 
-    public void setDate(Formats.DateTime date) {
+    public void setDate(Date date) {
         Date = date;
     }
 
