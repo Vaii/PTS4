@@ -1,5 +1,4 @@
 package controllers;
-
 import models.Training;
 import play.api.data.Form;
 import play.mvc.*;
