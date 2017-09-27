@@ -6,8 +6,8 @@
         <entry key="pts4">
           <value>
             <ProjectSettingsEntry>
-              <option name="sourceDir" value="C:\Users\Daniel\Documents\GitHub\PTS4\app" />
-              <option name="confDir" value="C:\Users\Daniel\Documents\GitHub\PTS4\app" />
+              <option name="sourceDir" value="C:\Users\Ken\Documents\GitHub\PTS4\app" />
+              <option name="confDir" value="C:\Users\Ken\Documents\GitHub\PTS4\app" />
               <option name="playDistrPath" value="$USER_HOME$/.ivy2/cache/com.typesafe.play/play_2.11/jars/play_2.11-2.4.2.jar" />
               <option name="templateImports">
                 <list>
@@ -33,7 +33,7 @@
                   <option value="play.libs.F" />
                 </list>
               </option>
-              <option name="uri" value="/C:/Users/Daniel/Documents/GitHub/PTS4" />
+              <option name="uri" value="/C:/Users/Ken/Documents/GitHub/PTS4" />
             </ProjectSettingsEntry>
           </value>
         </entry>
