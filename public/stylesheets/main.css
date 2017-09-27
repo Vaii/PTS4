@@ -66,6 +66,19 @@
 #mainmenu:hover .dropdown-content {
     display: block;
 }
+
+/* Trainingform styles */
+#trainingform label {
+    float: left;
+    width: 200px;
+}
+
+#trainingform .customLabel {
+    float: none;
+    display: block;
+    width: 193px;
+}
+
 ul.trainingmenu lh{
     color: black;
     text-underline: none;
@@ -107,6 +120,7 @@ ul.trainingmenu li a:hover{
     background-color: #817ea1;
     text-underline: none;
 }
+<<<<<<< HEAD
 
 div.trainingtext h1{
     text-align: center;
@@ -117,3 +131,5 @@ div.trainingtext p {
     padding-right: 40px;
     padding-top:10px;
 }
+=======
+>>>>>>> 531e21e11b784ea61693649cabe08b47f2d549e5
