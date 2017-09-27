@@ -11,7 +11,7 @@ import org.jongo.MongoCollection;
  */
 
 public class DBConnector {
-    private DB database;
+    static private DB database;
     private Jongo jongo;
 
     public DBConnector() {

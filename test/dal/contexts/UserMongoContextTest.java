@@ -1,9 +1,7 @@
 package dal.contexts;
 
-import dal.DBConnector;
 import models.Role;
 import models.User;
-import org.jongo.MongoCollection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,21 +16,21 @@ class UserMongoContextTest {
     @BeforeEach
     void setUp() {
         context = new UserMongoContext("UserTest");
-        testUser = new User("Henk", "TestPersoon", "Henk@test.nl", Role.External_Student, "Fictief bedrijf");
-        testUser2 = new User("Jaap", "NormaalPersoon", "jaap@nieteentest.nl", Role.Business_Unit_Manager, "Info Support");
+        testUser = new User("Henk", "TestPersoon", "Henk@test.nl", Role.AdviseurReward, "Fictief bedrijf");
+        testUser2 = new User("Jaap", "NormaalPersoon", "jaap@nieteentest.nl", Role.ManagerHRD, "Info Support");
     }
 
     @Test
     void addUser() {
         reset();
-        boolean result = context.addUser(testUser);
+        boolean result = context.addUser(testUser, "123");
         assertEquals(true, result);
     }
 
     @Test
     void getUser() {
         reset();
-        context.addUser(testUser);
+        context.addUser(testUser, "123");
         User user = context.getUser("Henk@test.nl");
 
         assertEquals("Henk", user.getFirstName());
@@ -41,8 +39,8 @@ class UserMongoContextTest {
     @Test
     void getAll() {
         reset();
-        context.addUser(testUser2);
-        context.addUser(testUser);
+        context.addUser(testUser2, "123");
+        context.addUser(testUser, "123");
 
         List<User> users = context.getAll();
 
@@ -53,7 +51,7 @@ class UserMongoContextTest {
     void updateUser() {
         reset();
 
-        context.addUser(testUser);
+        context.addUser(testUser, "123");
         User user1 = context.getUser("Henk@test.nl");
         assertEquals("Henk", user1.getFirstName());
 
@@ -67,10 +65,21 @@ class UserMongoContextTest {
     @Test
     void removeUser() {
         reset();
-        context.addUser(testUser);
+        context.addUser(testUser, "123");
         assertEquals("Henk", context.getUser("Henk@test.nl").getFirstName());
         context.removeUser(testUser);
         assertEquals(null, context.getUser("Henk@test.nl"));
+    }
+
+    @Test
+    void login() {
+        reset();
+        context.addUser(testUser, "123");
+        boolean resultFalse = context.login("Henk@test.nl", "1234");
+        assertEquals(false, resultFalse);
+
+        boolean resultTrue = context.login("Henk@test.nl", "123");
+        assertEquals(true, resultTrue);
     }
 
     private void reset() {

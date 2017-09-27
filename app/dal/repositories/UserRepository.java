@@ -14,8 +14,8 @@ public class UserRepository implements UserContext {
     }
 
     @Override
-    public boolean addUser(User user) {
-        return context.addUser(user);
+    public boolean addUser(User user, String password) {
+        return context.addUser(user, password);
     }
 
     @Override
@@ -41,5 +41,10 @@ public class UserRepository implements UserContext {
     @Override
     public boolean updateUser(User user) {
         return context.updateUser(user);
+    }
+
+    @Override
+    public boolean login(String email, String password) {
+        return context.login(email, password);
     }
 }
