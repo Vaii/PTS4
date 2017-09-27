@@ -38,4 +38,15 @@ public class TrainingController extends Controller {
         Training trinna = repository.getTraining(newTraining.getTrainingCode());
         return ok(submit.render(trinna));
     }
+
+    public Result overview() {
+        return ok(trainingoverview.render(repository.getAll()));
+    }
+
+    /*    public Result trainingClicked() {
+        return ok(training.render("Training"));
+    }*/
+
 }
+
+
