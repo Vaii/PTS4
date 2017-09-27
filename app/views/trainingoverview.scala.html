@@ -1,7 +1,7 @@
 @(trainings: List[models.Training])
 
 @display(training:  models.Training) = {
-    training.getName()
+    @training.getName()
 }
 @main("Trainingen"){
     <div>
@@ -11,7 +11,7 @@
                 <lh>Training</lh>
                 @if(!trainings.isEmpty){
                     @for(training <- trainings){
-                            <li>@training.getName()</li>
+                        <li> @display(training)</li>
                         }
                 } else {
                     <li>"No training yet"</li>
