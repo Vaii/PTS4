@@ -1,6 +1,5 @@
 package dal.contexts;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.UserContext;
@@ -22,7 +21,13 @@ public class UserMongoContext implements UserContext {
     }
 
     @Override
-    public boolean addUser(User user) {
+    public boolean addUser(User user, String password) {
+        String salt = user.generateSalt();
+        String hashedPassword = user.generatePassword(password, salt);
+
+        user.setSalt(salt);
+        user.setHashedPassword(hashedPassword);
+
         WriteResult result = collection.save(user);
         return result.wasAcknowledged();
     }
@@ -59,6 +64,11 @@ public class UserMongoContext implements UserContext {
     public boolean updateUser(User user) {
         WriteResult result = collection.save(user);
         return result.wasAcknowledged();
+    }
+
+    @Override
+    public boolean login(String email, String password) {
+        return getUser(email).checkLogin(password);
     }
 
     /**
