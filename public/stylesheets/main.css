@@ -1,3 +1,26 @@
+#signupForm{
+    width: 80%;
+    background-color: blue;
+    height: 70%;
+    margin: auto;
+    color: white;
+}
+
+#signup-Nav-Bar{
+    width: 90%;
+    background-color: yellow;
+    border-style: solid;
+    border-color: black;
+    margin: auto;
+    color: green;
+    list-style-type: none;
+}
+
+#signup-Nav-Bar >li {
+    display: inline;
+    float: left;
+}
+
 
 #mainmenu {
     overflow: hidden;
@@ -43,4 +66,3 @@
 #mainmenu:hover .dropdown-content {
     display: block;
 }
-

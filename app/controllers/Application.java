@@ -25,10 +25,14 @@ public class Application extends Controller {
         return ok (location.render());
     }
 
+    public static Result signUpCourse() {
+        return ok(signUpCourse.render());
+    }
+
     public static Result addtraining() {
         return ok(addtraining.render());
     }
-
+  
     public static Result submit() {
         return ok(addtraining.render());
     } /* When routers are not used,
