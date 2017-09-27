@@ -6,9 +6,16 @@
         <entry key="pts4">
           <value>
             <ProjectSettingsEntry>
-              <option name="playDistrPath" value="$USER_HOME$/.ivy2/cache/com.typesafe.play/play_2.11/jars/play_2.11-2.4.2.jar" />
+              <option name="confDir" value="D:\Repos\PTS4\app" />
+              <option name="playDistrPath" value="$USER_HOME$/.ivy2/cache/com.typesafe.play/play_2.11/jars/play_2.11-2.6.3.jar" />
               <option name="templateImports">
                 <list>
+                  <option value="_root_.play.twirl.api.TwirlFeatureImports._" />
+                  <option value="_root_.play.twirl.api.TwirlHelperImports._" />
+                  <option value="_root_.play.twirl.api.Html" />
+                  <option value="_root_.play.twirl.api.JavaScript" />
+                  <option value="_root_.play.twirl.api.Txt" />
+                  <option value="_root_.play.twirl.api.Xml" />
                   <option value="models._" />
                   <option value="controllers._" />
                   <option value="play.api.i18n._" />
@@ -16,13 +23,13 @@
                   <option value="play.api.templates.PlayMagic._" />
                   <option value="java.lang._" />
                   <option value="java.util._" />
-                  <option value="scala.collection.JavaConversions._" />
                   <option value="scala.collection.JavaConverters._" />
                   <option value="play.core.j.PlayMagicForJava._" />
                   <option value="play.mvc._" />
-                  <option value="play.data._" />
                   <option value="play.api.data.Field" />
                   <option value="play.mvc.Http.Context.Implicit._" />
+                  <option value="play.data._" />
+                  <option value="play.core.j.PlayFormsMagicForJava._" />
                 </list>
               </option>
               <option name="routesImports">
@@ -31,6 +38,7 @@
                   <option value="play.libs.F" />
                 </list>
               </option>
+              <option name="uri" value="/D:/Repos/PTS4" />
             </ProjectSettingsEntry>
           </value>
         </entry>
