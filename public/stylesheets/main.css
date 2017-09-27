@@ -7,18 +7,24 @@
 }
 
 #signup-Nav-Bar{
-    width: 90%;
+    width: 95%;
     background-color: yellow;
-    border-style: solid;
-    border-color: black;
+    border: 1px solid black;
     margin: auto;
+    margin-top: 10px;
     color: green;
+    text-decoration: none;
+
+}
+
+#signup-Nav-Bar > ul{
     list-style-type: none;
 }
 
-#signup-Nav-Bar >li {
-    display: inline;
+#signup-Nav-Bar > li{
+    display: block;
     float: left;
+    border: 1px solid black;
 }
 
 

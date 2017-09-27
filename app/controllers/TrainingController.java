@@ -8,4 +8,8 @@ import views.html.*;
  * Created by Ken on 27-9-2017.
  */
 public class TrainingController extends Controller{
+
+    public Result signUpCourse(){
+        return ok(signUpCourse.render());
+    }
 }
