@@ -10,4 +10,8 @@ public class Application extends Controller {
         return ok(index.render("s"));
     }
 
+    public static Result signUpCourse() {
+        return ok(signUpCourse.render());
+    }
+
 }
