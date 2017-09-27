@@ -104,6 +104,16 @@ ul.trainingmenu li a{
     background-color: transparent;
 }
 ul.trainingmenu li a:hover{
-    background-color: antiquewhite;
+    background-color: #817ea1;
     text-underline: none;
+}
+
+div.trainingtext h1{
+    text-align: center;
+    color: #0078c9;
+}
+div.trainingtext p {
+    margin-left:20px;
+    padding-right: 40px;
+    padding-top:10px;
 }
