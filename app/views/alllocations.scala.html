@@ -1,1 +1,25 @@
-@(locations : List[Location])
+@(locations: List[models.Location])
+
+@display(location:  models.Location) = {
+    location.getRoom()
+}
+@main("Locaties"){
+    <div>
+        <h1>Locaties</h1>
+        <div >
+            <ul class="LocationMenu">
+                <lh>Training</lh>
+                @if(!locations.isEmpty){
+                    @for(location <- locations){
+                        <li>@location.getRoom()</li>
+                    }
+                } else {
+                    <li>"Geen locaties beschikbaar"</li>
+                }
+            </ul>
+        </div>
+        <div class="locationinfo">
+            <h1>lorum ipsum</h1>
+        </div>
+    </div>
+}

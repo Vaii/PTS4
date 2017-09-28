@@ -1,10 +1,21 @@
 package controllers;
 
-/**
- * Created by Ken on 27-9-2017.
- */
+import dal.contexts.LocationMongoContext;
+import dal.repositories.LocationRepository;
+import models.Location;
+import play.data.Form;
+import play.data.FormFactory;
+import play.mvc.Result;
+
+import javax.inject.Inject;
+
+import java.util.ArrayList;
+
+import static play.mvc.Results.badRequest;
+import static play.mvc.Results.ok;
+import static play.mvc.Results.redirect;
+
 public class LocationController {
-<<<<<<< HEAD
     private final Form<Location> form;
     private ArrayList<Location>availablelocations;
     private LocationRepository locationrepo;
@@ -40,6 +51,4 @@ public class LocationController {
 
         }
     }
-=======
->>>>>>> parent of fa1523e... added function to add new locations
 }
