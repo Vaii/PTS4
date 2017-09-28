@@ -33,6 +33,7 @@ public class LocationController {
 
     //loads the page with available locations
     public Result loadAvalaibleLocations(){
+        locationrepo.getAll();
         return ok(views.html.alllocations.render());
     }
 
