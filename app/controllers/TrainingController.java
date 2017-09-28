@@ -17,7 +17,6 @@ import java.util.List;
  */
 public class TrainingController extends Controller{
 
-
     TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
 
     public Result overview() {
@@ -27,4 +26,7 @@ public class TrainingController extends Controller{
 /*    public Result trainingClicked() {
         return ok(training.render("Training"));
     }*/
+    public Result signUpCourse(){
+        return ok(signUpCourse.render());
+    }
 }
