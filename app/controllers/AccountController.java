@@ -2,6 +2,7 @@ package controllers;
 
 import dal.contexts.UserMongoContext;
 import dal.repositories.UserRepository;
+import models.Secured;
 import models.User;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -26,12 +27,9 @@ public class AccountController extends Controller {
         this.userRepo = new UserRepository(new UserMongoContext("Users"));
     }
 
-
-
-
-
     public Result login(){
-        return ok(login.render());
+        return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+
     }
 
     public Result authentication(){
@@ -40,8 +38,6 @@ public class AccountController extends Controller {
         String username = requestData.get("username");
         String password = requestData.get("password");
 
-        System.out.println(username);
-        System.out.println(password);
         if(requestData.hasErrors()){
             play.Logger.ALogger logger = play.Logger.of(getClass());
             logger.error("Errors = {}", requestData.errors());
@@ -50,9 +46,23 @@ public class AccountController extends Controller {
         else{
 
             if(userRepo.login(username, password)){
+                session().clear();
+                session("email", username);
                 return redirect(routes.Application.index());
             }
             return redirect(routes.AccountController.login());
         }
     }
+
+    @Security.Authenticated(Secured.class)
+    public Result profile(){
+        return ok(profile.render("Profile", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result logout(){
+        session().clear();
+        return redirect(routes.Application.index());
+    }
+
 }

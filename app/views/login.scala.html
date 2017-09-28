@@ -1,4 +1,6 @@
-@main("Welcome to Play") {
+@(page: String, isLoggedIn: Boolean, User: User)
+
+@main(page, isLoggedIn, User) {
 
     @helper.form(routes.AccountController.authentication){
 

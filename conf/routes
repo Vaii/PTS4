@@ -14,6 +14,9 @@ GET     /training/signup                  controllers.TrainingController.signUpC
 
 GET     /account/login                    controllers.AccountController.login
 POST    /account/login                    controllers.AccountController.authentication
+GET     /account/profile                  controllers.AccountController.profile
+GET     /account/logout                   controllers.AccountController.logout
+
 
 #gets the form for adding a location
 GET     /addlocation                        controllers.LocationController.loadLocationForm
