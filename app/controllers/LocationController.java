@@ -6,6 +6,7 @@ import models.Location;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
+import views.html.alllocations;
 
 import javax.inject.Inject;
 
@@ -32,7 +33,9 @@ public class LocationController {
     }
 
     //loads the page with available locations
-
+    public Result locationOverview(){
+        return ok(alllocations.render(locationrepo.getAll()));
+    }
     // method to get the results from the html form and redirect the user to the next page
     public Result createLocation(){
         final Form<Location> boundForm = form.bindFromRequest();
