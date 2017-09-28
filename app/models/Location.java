@@ -19,10 +19,6 @@ public class Location {
     private String City, StreetNumber, Room;
     private int Capacity;
 
-    public Location(){
-
-    }
-
     public Location(String _id, String city, String streetNumber, String room, int capacity) {
         this._id = _id;
         City = city;
