@@ -32,10 +32,6 @@ public class LocationController {
     }
 
     //loads the page with available locations
-    public Result loadAvalaibleLocations(){
-        locationrepo.getAll();
-        return ok(views.html.alllocations.render());
-    }
 
     // method to get the results from the html form and redirect the user to the next page
     public Result createLocation(){
