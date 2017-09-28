@@ -40,3 +40,13 @@ ul.trainingmenu li a:hover{
     border-radius: 10px;
     text-underline: none;
 }
+
+div.trainingtext h1{
+    text-align: center;
+    color: #0078c9;
+}
+div.trainingtext p {
+    margin-left:20px;
+    padding-right: 40px;
+    padding-top:10px;
+}
