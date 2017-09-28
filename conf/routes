@@ -6,8 +6,10 @@
 
 GET     /                                   controllers.Application.index
 
-#gets the form for adding a location
+#Locations
 GET     /addlocation                        controllers.LocationController.loadLocationForm
+GET     /alllocations                       controllers.LocationController.locationOverview
+POST    /addinglocation                     controllers.LocationController.createLocation
 
 
 GET     /Overview                           controllers.TrainingController.overview

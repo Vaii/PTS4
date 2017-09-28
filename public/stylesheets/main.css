@@ -89,9 +89,9 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     left:100%;
 }
 
-.navbar ul li:hover > ul{
-    display:block
-
+.navbar ul li:hover > ul {
+    display: block;
+}
 ul.trainingmenu lh{
     color: black;
     text-underline: none;
