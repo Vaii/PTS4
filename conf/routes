@@ -14,6 +14,11 @@ GET     /training/signup                  controllers.TrainingController.signUpC
 
 GET     /account/login                    controllers.AccountController.login
 
+#gets the form for adding a location
+GET     /addlocation                        controllers.LocationController.loadLocationForm
+
+#gets the list of available locations
+GET     /availablelocation                  controllers.LocationController.loadAvalaibleLocations
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 

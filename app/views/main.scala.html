@@ -10,29 +10,33 @@
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
     </head>
     <body>
-        <div id = 'mainmenu'>
-            <a href ="#">Training</a>
-            <div class="dropdown-content">
-                <a href = "#">Training Beheren</a>
-                <a href = "#"> Mijn Trainingen</a>
-                <a href = "#">Inschrijven</a>
-                <a href = "#">Aangeboden Trainingen</a>
-            </div>
+        <nav class="navbar">
+            <ul>
+                <li ><a href="" class="navitem">Training</a>
+                    <ul>
+                        <li><a href="#">Training Beheren</a></li>
+                        <li><a href="#">Mijn Trainingen</a></li>
+                        <li><a href="#">Inschrijven</a></li>
+                        <li><a href="#">Aangeboden Trainingen</a></li>
+                    </ul>
+                </li>
 
-            <a href ="#">Manager</a>
-            <div class="dropdown-content">
-                <a href = "#">Mijn Medewerker</a>
-                <a href = "#">StudieKosten Formulier</a>
-            </div>
+                <li ><a href="" class="navitem">Manager</a>
+                    <ul>
+                        <li><a href="#">Mijn Medewerker</a></li>
+                        <li><a href="#">StudieKosten Formulier</a></li>
+                    </ul>
+                </li>
+                <li ><a href="" class="navitem">Log In</a>
+                    <ul>
+                        <li><a href="#">Registreren</a></li>
+                        <li><a href="#">Aanmelden</a></li>
+                    </ul>
+                </li>
 
-            <a href ="#">Log In</a>
-            <div class="dropdown-content">
-                <a href = "#">Registreren</a>
-                <a href = "#">Aanmelden </a>
-            </div>
-
-            <a href ="#">Contact</a>
-        </div>
+                <li ><a href="" class="navitem">Contact</a></li>
+            </ul>
+        </nav>
         @content
     </body>
 </html>

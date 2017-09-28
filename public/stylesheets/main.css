@@ -26,49 +26,69 @@
     float: left;
     border: 1px solid black;
 }
-
-
-#mainmenu {
-    overflow: hidden;
-    background-color: #333;
-    font-family: Arial;
+/*
+Code reference : https://codepen.io/philhoyt/pen/ujHzd
+*/
+.navbar{
+    background-color:#222222 ;
+    height: 70px;
+    color:#ffffff;
 }
 
-#mainmenu a {
-    float: left;
-    font-size: 16px;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+.navbar ul {
+    list-style:none;
+    position:relative;
+    float:left;
+    margin:0;
+    padding:0
 }
 
-.dropdown {
-    float: left;
-    overflow: hidden;
+.navbar ul a {
+    display:block;
+    color:#333;
+    text-decoration:none;
+    font-weight:700;
+    font-size:12px;
+    line-height:32px;
+    padding:0 15px;
+    font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
 }
 
-.dropdown-content:hover {
+.navbar ul li {
+    position:relative;
+    float:left;
+    margin:0;
+    padding:0
+}
+
+.navbar ul li:hover{
     background-color: #222222;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-.dropdown-content a {
-    float: none;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
+.navbar ul ul{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    background:#fff;
+    padding:0
 }
 
-#mainmenu:hover .dropdown-content {
-    display: block;
+.navbar ul ul li{
+    float:none;
+    width:200px
+}
+
+.navbar ul ul a{
+    line-height:120%;
+    padding:10px 15px
+}
+
+.navbar ul ul ul{
+    top:0;
+    left:100%;
+}
+
+.navbar ul li:hover > ul{
+    display:block
 }
