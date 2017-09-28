@@ -1,0 +1,42 @@
+ul.trainingmenu lh{
+    color: black;
+    text-underline: none;
+    text-decoration: none;
+    display: block;
+    background-color: transparent;
+    text-align: center;
+    font-size:20px;
+    padding-bottom: 5px;
+}
+
+ul.trainingmenu {
+    float: left;
+    list-style-type: none;
+    border: 1px solid black;
+    padding: 1px;
+    border-radius: 10px
+}
+ul.trainingmenu li{
+    padding-top: 5px;
+    padding-bottom:5px;
+    border-bottom: 1px solid black;
+    margin: 5px;
+    text-align: center;
+    text-underline: none;
+}
+
+ul.trainingmenu li:last-child{
+    border-bottom: none;
+}
+ul.trainingmenu li a{
+    color: #666;
+    text-underline: none;
+    text-decoration: none;
+    display: block;
+    background-color: transparent;
+}
+ul.trainingmenu li a:hover{
+    background-color: dimgray;
+    border-radius: 10px;
+    text-underline: none;
+}
