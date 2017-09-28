@@ -1,9 +1,10 @@
 @main("Welcome to Play") {
 
-    <div id="login-form">
-        <p>Login Form</p>
-        <input type="text" placeholder="Enter Email" name="email" required>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-        <button type="submit">Login</button>
-    </div>
+    @helper.form(routes.AccountController.authentication){
+
+        @helper.CSRF.formField
+        <input type="text" placeholder="Email Address" name="username"><br/>
+        <input type="password" placeholder="Password" name="password"><br/>
+        <button type="Submit">Log in</button>
+    }
 }
