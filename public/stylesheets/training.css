@@ -12,14 +12,14 @@ ul.trainingmenu lh{
 ul.trainingmenu {
     float: left;
     list-style-type: none;
-    border: 1px solid black;
+    border: 1px solid deepskyblue;
     padding: 1px;
     border-radius: 10px
 }
 ul.trainingmenu li{
     padding-top: 5px;
     padding-bottom:5px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid deepskyblue;
     margin: 5px;
     text-align: center;
     text-underline: none;
@@ -36,8 +36,9 @@ ul.trainingmenu li a{
     background-color: transparent;
 }
 ul.trainingmenu li a:hover{
-    background-color: dimgray;
-    border-radius: 10px;
+    background-color: #0078c9;
+    color: white;
+    border-radius: 5px;
     text-underline: none;
 }
 

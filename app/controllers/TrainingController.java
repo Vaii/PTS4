@@ -1,18 +1,17 @@
 package controllers;
 
 import dal.contexts.TrainingMongoContext;
-import dal.interfaces.TrainingContext;
 import dal.repositories.TrainingRepository;
 import models.Training;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.*;
+import views.html.addtraining;
+import views.html.submit;
+import views.html.trainingoverview;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Ken on 27-9-2017.
@@ -40,11 +39,18 @@ public class TrainingController extends Controller{
         return ok(submit.render(t));
     }
 
-    public Result overview() {
-        return ok(trainingoverview.render(trainingRepository.getAll()));
+
+    public Result overview(){
+        return ok(trainingoverview.render(trainingRepository.getAll(),null));
     }
 
-/*    public Result trainingClicked() {
-        return ok(training.render("Training"));
-    }*/
+    public Result trainingOverview(Training t){
+        if (t == null){
+            return ok(trainingoverview.render(trainingRepository.getAll(),null));
+       }
+        else {
+            return ok(trainingoverview.render(trainingRepository.getAll(),trainingRepository.getTraining(t.getTrainingCode())));
+        }
+
+    }
 }
