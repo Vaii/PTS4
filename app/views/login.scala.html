@@ -1,0 +1,12 @@
+@(page: String, isLoggedIn: Boolean, User: User)
+
+@main(page, isLoggedIn, User) {
+
+    @helper.form(routes.AccountController.authentication){
+
+        @helper.CSRF.formField
+        <input type="text" placeholder="Email Address" name="username"><br/>
+        <input type="password" placeholder="Password" name="password"><br/>
+        <button type="Submit">Log in</button>
+    }
+}

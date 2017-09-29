@@ -4,6 +4,7 @@ import dal.contexts.TrainingMongoContext;
 import dal.interfaces.TrainingContext;
 import dal.repositories.TrainingRepository;
 import models.Training;
+import models.Secured;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
@@ -27,6 +28,6 @@ public class TrainingController extends Controller{
         return ok(training.render("Training"));
     }*/
     public Result signUpCourse(){
-        return ok(signUpCourse.render());
+        return ok(signUpCourse.render("Training Inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 }

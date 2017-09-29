@@ -2,6 +2,7 @@ import dal.DBConnector;
 import dal.contexts.TrainingMongoContext;
 import dal.contexts.UserMongoContext;
 import dal.repositories.TrainingRepository;
+import dal.repositories.UserRepository;
 import models.Role;
 import models.Training;
 import models.User;
