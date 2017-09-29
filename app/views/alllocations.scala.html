@@ -6,20 +6,30 @@
 @main("Locaties"){
     <div>
         <h1>Locaties</h1>
-        <div >
-            <ul class="LocationMenu">
-                <lh>Training</lh>
-                @if(!locations.isEmpty){
-                    @for(location <- locations){
-                        <li>@location.getRoom()</li>
+        <div  class="formcontent">
+            <lh>Locaties</lh>
+            <table>
+                <tr>
+                    <th>City</th>
+                    <th>Street</th>
+                    <th>Streetnumber</th>
+                    <th>Room</th>
+                    <th>Capacity</th>
+                </tr>
+                    @if(!locations.isEmpty){
+                        @for(location <- locations){
+                            <tr>
+                                <td>@location.getCity</td>
+                                <td>@location.getStreet</td>
+                                <td>@location.getStreetNumber</td>
+                                <td>@location.getRoom</td>
+                                <td>@location.getCapacity</td>
+                            </tr>
+                        }
+                    } else {
+                        <p>"Geen locaties beschikbaar"</p>
                     }
-                } else {
-                    <li>"Geen locaties beschikbaar"</li>
-                }
-            </ul>
+            </table>>
         </div>
-        <div class="locationinfo">
-            <h1>lorum ipsum</h1>
-        </div>
-    </div>
+
 }
