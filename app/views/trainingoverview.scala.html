@@ -25,7 +25,11 @@
                 <td class ="trainingtext">
                     <div class="trainingtext">
                 @if(training != null){
-                    <h1>@training.getName()</h1>
+                    <table>
+                        <h1>@training.getName()</h1>
+
+                    </table>
+
                         <h2>Beschrijving</h2>
                     @if(training.getDescription == null) {
                         <p> Geen beschrijving. </p>
@@ -39,6 +43,8 @@
                         <tr><td><p>Koste:</p></td><td><p>€@training.getTuition euro per persoon.</p></td></tr>
                         <tr><td><p>Duur:</p></td><td><p>@training.getDuration dagen</p></td></tr>
                     </table>
+                    <h2></h2>
+                    <button>Inschrijven</button>
                 } else {
                     <h1>Selecteer een training</h1>
                     <p>Links in het menu kunt u trainingen selecteren.</p>
