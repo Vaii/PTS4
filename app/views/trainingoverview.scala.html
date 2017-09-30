@@ -4,32 +4,48 @@
 
 @main("Trainingen"){
     <div>
-        <h1>Trainingen</h1>
         <table>
-            <td>
-        <div >
-            <ul class="trainingmenu">
-                <lh>Training</lh>
-                @if(!trainings.isEmpty){
-                    @for(training <- trainings){
-                        <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
+
+            <div >
+                <td class="trainingmenu">
+                    <ul>
+                        <lh>Training</lh>
+                        @if(!trainings.isEmpty){
+                            @for(training <- trainings){
+                                <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
+                            }
+                        } else {
+                            <li>"No training yet"</li>
                         }
+                    </ul>
+                </td>
+            </div>
+
+
+                <td class ="trainingtext">
+                    <div class="trainingtext">
+                @if(training != null){
+                    <h1>@training.getName()</h1>
+                        <h2>Beschrijving</h2>
+                    @if(training.getDescription == null) {
+                        <p> Geen beschrijving. </p>
+                    } else{
+                        <p> @training.getDescription()</p>
+                    }
+                    <h2>Informatie</h2>
+                    <table>
+                        <tr><td><p>Ruimte:</p></td><td><p>@training.getCapacity() plekken</p></td></tr>
+                        <tr><td><p>Benodigde materialen:</p></td><td><p>@training.getRequiredMaterial</p></td></tr>
+                        <tr><td><p>Koste:</p></td><td><p>€@training.getTuition euro per persoon.</p></td></tr>
+                        <tr><td><p>Duur:</p></td><td><p>@training.getDuration dagen</p></td></tr>
+                    </table>
                 } else {
-                    <li>"No training yet"</li>
+                    <h1>Selecteer een training</h1>
+                    <p>Links in het menu kunt u trainingen selecteren.</p>
                 }
-           </ul>
-        </div>
-            </td>
-            <td>
-        <div class="trainingtext">
-        @if(training != null){
-            <h1>@training.getName()</h1>
-            <p>@training.getDescription()</p>
-        } else {
-            <h1>Selecteer een training</h1>
-            <p>Links in het menu kunt u trainingen selecteren.</p>
-        }
-        </div></td>
+                    </div>
+                </td>
+
         </table>
     </div>
 }
