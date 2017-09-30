@@ -12,7 +12,7 @@
                 <lh>Training</lh>
                 @if(!trainings.isEmpty){
                     @for(training <- trainings){
-                        <li ><a href="/Overview/@training.get_id()"> @training.getName</a></li>
+                        <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
                         }
                 } else {
                     <li>"No training yet"</li>

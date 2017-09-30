@@ -44,12 +44,12 @@ public class TrainingController extends Controller{
         return ok(trainingoverview.render(trainingRepository.getAll(),null));
     }
 
-    public Result trainingOverview(Training t){
-        if (t == null){
+    public Result trainingOverview(String id){
+        if (id == null){
             return ok(trainingoverview.render(trainingRepository.getAll(),null));
        }
         else {
-            return ok(trainingoverview.render(trainingRepository.getAll(),trainingRepository.getTraining(t.getTrainingCode())));
+            return ok(trainingoverview.render(trainingRepository.getAll(),trainingRepository.getTraining(id)));
         }
 
     }
