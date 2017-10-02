@@ -40,7 +40,8 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     position:relative;
     float:left;
     margin:0;
-    padding:0
+    padding:0;
+    color: white;
 }
 
 .navbar ul a {
