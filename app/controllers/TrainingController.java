@@ -1,35 +1,30 @@
 package controllers;
 
-<<<<<<< HEAD
+
 import models.Secured;
-=======
 import dal.contexts.TrainingMongoContext;
 import dal.repositories.TrainingRepository;
 import models.Training;
 import play.data.Form;
 import play.data.FormFactory;
->>>>>>> origin/Training-management-V3
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.addtraining;
+import views.html.signUpCourse;
 import views.html.submit;
 import views.html.trainingoverview;
 
-<<<<<<< HEAD
-=======
 import javax.inject.Inject;
 
->>>>>>> origin/Training-management-V3
 /**
  * Created by Ken on 27-9-2017.
  */
 public class TrainingController extends Controller{
 
-<<<<<<< HEAD
     public Result signUpCourse(){
         return ok(signUpCourse.render("Training Inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
-=======
+
     TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
     private Form<Training> form;
 
@@ -39,7 +34,7 @@ public class TrainingController extends Controller{
     }
 
     public Result addtraining() {
-        return ok(addtraining.render(form));
+        return ok(addtraining.render(form,Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training"));
     }
 
     public Result submit() { // submit new training
@@ -48,22 +43,24 @@ public class TrainingController extends Controller{
 
         trainingRepository.addTraining(newTraining);
         Training t = trainingRepository.getTraining(newTraining.getTrainingCode());
-        return ok(submit.render(t));
+        return ok(submit.render(t, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
 
     public Result overview(){
-        return ok(trainingoverview.render(trainingRepository.getAll(),null));
+        return ok(trainingoverview.render(trainingRepository.getAll(),null,
+                "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
     public Result trainingOverview(String id){
         if (id == null){
-            return ok(trainingoverview.render(trainingRepository.getAll(),null));
+            return ok(trainingoverview.render(trainingRepository.getAll(),null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
        }
         else {
-            return ok(trainingoverview.render(trainingRepository.getAll(),trainingRepository.getTraining(id)));
+            return ok(trainingoverview.render(trainingRepository.getAll(),trainingRepository.getTraining(id),
+                    "Trainingen" , Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
 
     }
->>>>>>> origin/Training-management-V3
 }
