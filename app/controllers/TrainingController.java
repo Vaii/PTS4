@@ -9,10 +9,9 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.addtraining;
 import views.html.signUpCourse;
-import views.html.submit;
-import views.html.trainingoverview;
+import views.html.Training.*;
+
 
 import javax.inject.Inject;
 

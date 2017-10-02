@@ -3,7 +3,7 @@
 @(form : Form[Training], isLoggedIn : Boolean, User : User, Page : String)
 
 @main(Page, isLoggedIn, User) {
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/addtraining.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
   <h1>Training toevoegen</h1>
 
   @helper.form(action = helper.CSRF(routes.TrainingController.submit()), 'id -> "trainingform") { @* CSRF to prevent unauthorized *@
