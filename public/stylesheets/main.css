@@ -74,6 +74,7 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     padding:0
 }
 
+<<<<<<< HEAD
 .navbar ul ul li{
     float:none;
     width:200px
@@ -92,3 +93,10 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
 .navbar ul li:hover > ul{
     display:block
 }
+=======
+#mainmenu:hover .dropdown-content {
+    display: block;
+}
+
+
+>>>>>>> origin/Training-management-V3

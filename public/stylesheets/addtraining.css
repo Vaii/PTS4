@@ -1,0 +1,10 @@
+#trainingform label {
+    float: left;
+    width: 200px;
+}
+
+#trainingform .customLabel {
+    float: none;
+    display: block;
+    width: 193px;
+}
