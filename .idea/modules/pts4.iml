@@ -23,7 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../conf" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/main" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/test" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../target/web/public/testOne" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../target/web/public/testone" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../target" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/resolution-cache" />
@@ -38,10 +38,6 @@
     <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.11.8:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:play-iteratees_2.11:2.6.1:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:play-iteratees-reactive-streams_2.11:2.6.1:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: com.typesafe.play:play-guice_2.11:2.6.3:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: com.google.inject.extensions:guice-assistedinject:4.1.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: com.google.inject:guice:4.1.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="SBT: aopalliance:aopalliance:1.0:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: xalan:xalan:2.7.2:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: xalan:serializer:2.7.2:jar" level="project" />
     <orderEntry type="library" name="SBT: org.reactivestreams:reactive-streams:1.0.0:jar" level="project" />
@@ -162,5 +158,19 @@
     <orderEntry type="library" name="SBT: org.springframework:spring-core:4.3.9.RELEASE:jar" level="project" />
     <orderEntry type="library" name="SBT: org.typelevel:macro-compat_2.11:1.1.1:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: xerces:xercesImpl:2.11.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: aopalliance:aopalliance:1.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.google.inject:guice:4.1.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.google.inject.extensions:guice-assistedinject:4.1.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.typesafe.play:play-guice_2.11:2.6.3:jar" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library name="JUnit5">
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/junit-jupiter-api-5.0.0.jar!/" />
+          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/opentest4j-1.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

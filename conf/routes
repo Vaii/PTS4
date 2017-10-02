@@ -4,7 +4,29 @@
 
 # Home page
 
+GET     /                                 controllers.Application.index
+
+# Trainingen
+
+GET     /training/signup                  controllers.TrainingController.signUpCourse
+
+# Account management
+
+GET     /account/login                    controllers.AccountController.login
+POST    /account/login                    controllers.AccountController.authentication
+GET     /account/profile                  controllers.AccountController.profile
+GET     /account/logout                   controllers.AccountController.logout
+
+
+#gets the form for adding a location
+GET     /addlocation                     controllers.LocationController.loadLocationForm
+
 GET     /                                   controllers.Application.index
+GET     /addtraining                        controllers.TrainingController.addtraining
+GET     /submit                             controllers.TrainingController.submit
+GET     /overview                           controllers.TrainingController.overview
+GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(id: String)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
