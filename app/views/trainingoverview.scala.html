@@ -1,0 +1,25 @@
+@(trainings: List[models.Training])
+
+@display(training:  models.Training) = {
+    training.getName()
+}
+@main("Trainingen"){
+    <div>
+        <h1>Trainingen</h1>
+        <div >
+            <ul class="trainingmenu">
+                <lh>Training</lh>
+                @if(!trainings.isEmpty){
+                    @for(training <- trainings){
+                            <li>@training.getName()</li>
+                        }
+                } else {
+                    <li>"No training yet"</li>
+                }
+           </ul>
+        </div>
+        <div class="trainingtext">
+            <h1>Test</h1>
+        </div>
+    </div>
+}

@@ -1,0 +1,21 @@
+@(form: Form[Location])
+
+@main("Locatie Toevoegen"){
+
+    <div class="formcontent">
+    @helper.form(routes.LocationController.createLocation){
+
+        @helper.CSRF.formField
+
+        @helper.inputText(form("City"))
+        @helper.inputText(form("Street"))
+        @helper.inputText(form("StreetNumber"))
+        @helper.inputText(form("Room"))
+        @helper.inputText(form("Capacity"))
+
+        <button type="submit">Maak Locatie Aan</button>
+
+    </div>
+
+    }
+}

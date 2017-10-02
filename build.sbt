@@ -6,7 +6,7 @@ lazy val `pts4` = (project in file(".")).enablePlugins(PlayJava)
 
 scalaVersion := "2.11.8"
 
-libraryDependencies ++= Seq( javaJdbc , ehcache , javaWs )
+libraryDependencies ++= Seq( javaJdbc ,  cache , javaWs )
 
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.0"
 
