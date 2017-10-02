@@ -7,7 +7,6 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 public class Location {
     // Mongo DB identifiers.
     private static final String M_CITY = "City";
-    private static final String M_STREET = "Street";
     private static final String M_STREETNUMBER = "StreetNumber";
     private static final String M_ROOM = "Room";
     private static final String M_CAPACITY = "Capacity";
@@ -17,17 +16,16 @@ public class Location {
     private String _id;
 
     // Class fields.
-    private String City, Street, StreetNumber, Room;
+    private String City, StreetNumber, Room;
     private int Capacity;
 
-    public Location (){
+    public Location(){
 
     }
 
-    public Location(String _id, String city, String street, String streetNumber, String room, int capacity) {
+    public Location(String _id, String city, String streetNumber, String room, int capacity) {
         this._id = _id;
         City = city;
-        Street = street;
         StreetNumber = streetNumber;
         Room = room;
         Capacity = capacity;
@@ -35,12 +33,10 @@ public class Location {
 
     @JsonCreator
     public Location(@JsonProperty(M_CITY) String city,
-                    @JsonProperty(M_STREET) String street,
                     @JsonProperty(M_STREETNUMBER) String streetNumber,
                     @JsonProperty(M_ROOM) String room,
                     @JsonProperty(M_CAPACITY) int capacity) {
         this.City = city;
-        this.Street = street;
         this.StreetNumber = streetNumber;
         this.Room = room;
         this.Capacity = capacity;
@@ -59,11 +55,6 @@ public class Location {
     public void setCity(String city) {
         City = city;
     }
-
-    @JsonProperty(M_STREET)
-    public String getStreet(){return Street;}
-
-    public void setStreet(String street){Street = street;}
 
     @JsonProperty(M_STREETNUMBER)
     public String getStreetNumber() {
@@ -90,11 +81,6 @@ public class Location {
 
     public void setCapacity(int capacity) {
         Capacity = capacity;
-    }
-
-    @Override
-    public String toString() {
-        return City +" "+ Street+" "+StreetNumber+" "+Room+" "+Capacity;
     }
 }
 

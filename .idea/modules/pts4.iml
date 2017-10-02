@@ -26,8 +26,6 @@
       <sourceFolder url="file://$MODULE_DIR$/../../target/web/public/testone" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../target" />
-      <excludeFolder url="file://$MODULE_DIR$/../../target/jnotify" />
-      <excludeFolder url="file://$MODULE_DIR$/../../target/native_libraries" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/resolution-cache" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/streams" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/web" />
@@ -164,5 +162,15 @@
     <orderEntry type="library" name="SBT: com.google.inject:guice:4.1.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.google.inject.extensions:guice-assistedinject:4.1.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:play-guice_2.11:2.6.3:jar" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library name="JUnit5">
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/junit-jupiter-api-5.0.0.jar!/" />
+          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/opentest4j-1.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

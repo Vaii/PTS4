@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String, isLoggedIn: Boolean, user: User)(content: Html)
 
 <!DOCTYPE html>
 
@@ -14,10 +14,11 @@
             <ul>
                 <li ><a href="" class="navitem">Training</a>
                     <ul>
-                        <li><a href="#">Training Beheren</a></li>
-                        <li><a href="#">Mijn Trainingen</a></li>
-                        <li><a href="#">Inschrijven</a></li>
-                        <li><a href="#">Aangeboden Trainingen</a></li>
+                        <li><a href="@routes.TrainingController.overview()">Training Beheren</a></li>
+                        <li><a href="@routes.TrainingController.overview()">Mijn Trainingen</a></li>
+                        <li><a href="@routes.TrainingController.overview()">Inschrijven</a></li>
+                        <li><a href="@routes.TrainingController.overview()">Aangeboden Trainingen</a></li>
+                        <li><a href="@routes.TrainingController.addtraining()">Training Toevoegen</a></li>
                     </ul>
                 </li>
 
@@ -27,14 +28,21 @@
                         <li><a href="#">StudieKosten Formulier</a></li>
                     </ul>
                 </li>
-                <li ><a href="" class="navitem">Log In</a>
-                    <ul>
-                        <li><a href="#">Registreren</a></li>
-                        <li><a href="#">Aanmelden</a></li>
-                    </ul>
-                </li>
-
+                @if(isLoggedIn) {
+                    <li><a href="@routes.AccountController.logout()" class="navitem">log out</a>
+                    </li>
+                } else{
+                    <li ><a href="@routes.AccountController.login()" class="navitem">Log In</a>
+                        <ul>
+                            <li><a href="#">Registreren</a></li>
+                            <li><a href="#">Aanmelden</a></li>
+                        </ul>
+                    </li>
+                }
                 <li ><a href="" class="navitem">Contact</a></li>
+                @if(isLoggedIn){
+                    <li><a href="@routes.AccountController.profile()">Profile<</a></li>
+                }
             </ul>
         </nav>
         @content

@@ -1,4 +1,4 @@
-ul.trainingmenu lh{
+td.trainingmenu ul lh{
     color: black;
     text-underline: none;
     text-decoration: none;
@@ -9,34 +9,74 @@ ul.trainingmenu lh{
     padding-bottom: 5px;
 }
 
-ul.trainingmenu {
+td.trainingmenu ul{
     float: left;
     list-style-type: none;
-    border: 1px solid black;
+    border: 1px solid deepskyblue;
     padding: 1px;
     border-radius: 10px
 }
-ul.trainingmenu li{
+td.trainingmenu ul li{
     padding-top: 5px;
     padding-bottom:5px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid deepskyblue;
     margin: 5px;
     text-align: center;
     text-underline: none;
 }
 
-ul.trainingmenu li:last-child{
+td.trainingmenu ul li:last-child{
     border-bottom: none;
 }
-ul.trainingmenu li a{
+td.trainingmenu ul li a{
     color: #666;
     text-underline: none;
     text-decoration: none;
     display: block;
     background-color: transparent;
 }
-ul.trainingmenu li a:hover{
-    background-color: dimgray;
-    border-radius: 10px;
+td.trainingmenu ul li a:hover{
+    background-color: #0078c9;
+    color: white;
+    border-radius: 5px;
     text-underline: none;
+}
+
+td.trainingtext  h1{
+    text-align: left;
+    color: #0078c9;
+    margin-bottom: 0px;
+}
+
+td.trainingtext h2{
+    text-align: left;
+    color: #0078c9;
+    margin-bottom:0px;
+    border-bottom: 1px solid lightblue;
+
+
+}
+
+td.trainingtext  p {
+    margin-top: 0px;
+    padding-right: 40px;
+
+}
+td.trainingtext  {
+    float: right;
+    margin-left:30px;
+    margin-right:30px;
+}
+td.trainingtext button {
+    margin-top: 8px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+td.trainingtext button:hover {
+    background-color: #0078c9;
+    color: white;
 }
