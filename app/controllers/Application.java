@@ -10,7 +10,7 @@ public class Application extends Controller {
         just navigate to the action in the URL, then it will become highlighted */
 
     public Result index() {
-        return ok(index.render("Index", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        return ok(index.render("Info Support Knowledgecentre", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 }
 
