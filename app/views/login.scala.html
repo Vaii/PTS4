@@ -2,7 +2,7 @@
 
 @main(page, isLoggedIn, User) {
 
-    @b3.form(routes.AccountController.authentication){
+    @helper.form(routes.AccountController.authentication){
 
         @helper.CSRF.formField
         <input type="text" placeholder="Email Address" name="username"><br/>
