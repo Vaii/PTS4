@@ -1,5 +1,5 @@
 div.trainingmenu ul lh{
-    color: deepskyblue;
+    color: black;
     text-underline: none;
     text-decoration: none;
     display: block;
@@ -12,12 +12,14 @@ div.trainingmenu ul lh{
 div.trainingmenu ul{
     list-style-type: none;
     padding: 1px;
+    border: 1px solid dodgerblue;
+    border-radius: 5px;
+    background-color: #e8effc
 }
 div.trainingmenu ul li{
     padding-top: 5px;
     padding-bottom:5px;
-    border-bottom: 1px solid deepskyblue;
-    margin: 5px;
+    border-bottom: 1px solid dodgerblue;
     text-align: center;
     text-underline: none;
 }
@@ -54,7 +56,6 @@ div.trainingtext h2{
 
 div.trainingtext  p {
     margin-top: 0px;
-    padding-right: 40px;
 
 }
 div.trainingtext button {
@@ -63,4 +64,11 @@ div.trainingtext button {
 div.trainingtext td button:hover {
     background-color: #0078c9;
     color: white;
+}
+div.col-lg-2 {
+
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-right: 0;
+    margin-left: 0;
 }
