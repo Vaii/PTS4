@@ -1,19 +1,19 @@
 package controllers;
 
 
-import models.Secured;
 import dal.contexts.TrainingMongoContext;
 import dal.repositories.TrainingRepository;
+import models.Secured;
 import models.Training;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.training.addtraining;
+import views.html.training.submit;
+import views.html.training.trainingoverview;
 import views.html.signUpCourse;
-import views.html.Training.*;
-
-
 
 import javax.inject.Inject;
 
@@ -43,6 +43,7 @@ public class TrainingController extends Controller{
         Form<Training> filledForm = form.bindFromRequest();
 
         if(filledForm.hasErrors()) {
+            flash("danger", "Please fill valid in");
             return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training"));
         }
         else {

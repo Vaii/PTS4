@@ -35,7 +35,9 @@ public class Training {
 
     @Constraints.Required
     private Float Duration, Tuition;
+    @Constraints.Required
     private int Capacity;
+    @Constraints.Required
     private java.util.Date Date;
 
     private Location Location;
