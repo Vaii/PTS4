@@ -1,12 +1,14 @@
-@(page: String, isLoggedIn: Boolean, User: User)
+@(page: String, isLoggedIn: Boolean, User: User, form : DynamicForm)
+@import b3.vertical.fieldConstructor
 
 @main(page, isLoggedIn, User) {
 
-    @helper.form(routes.AccountController.authentication){
-
+    @b3.form(routes.AccountController.authentication()){
         @helper.CSRF.formField
-        <input type="text" placeholder="Email Address" name="username"><br/>
-        <input type="password" placeholder="Password" name="password"><br/>
-        <button type="Submit">Log in</button>
+        <p>Email</p>
+        @b3.text(form("email"), 'label -> "Email", 'placeholder -> "Email Address")
+        <p>Password</p>
+        @b3.password(form("password"), 'label -> "Password", 'placeholder -> "Password")
+        @b3.submit('class -> "btn btn-default") {Log in}
     }
 }

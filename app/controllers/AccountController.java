@@ -18,8 +18,8 @@ public class AccountController extends Controller {
 
     private UserRepository userRepo;
     private FormFactory formFactory;
-    private DynamicForm requestData;
     private Form<User> form;
+    private DynamicForm form2;
 
     @Inject
     public AccountController(FormFactory formFactory){
@@ -27,22 +27,22 @@ public class AccountController extends Controller {
         this.formFactory = formFactory;
         this.userRepo = new UserRepository(new UserMongoContext("User"));
         this.form = formFactory.form(User.class);
-
+        this.form2 = formFactory.form();
     }
 
     public Result login(){
-        return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2));
     }
 
     public Result authentication(){
 
-        requestData = formFactory.form().bindFromRequest();
-        String username = requestData.get("username");
-        String password = requestData.get("password");
+        form2 = formFactory.form().bindFromRequest();
+        String username = form2.get("email");
+        String password  = form2.get("password");
 
-        if(requestData.hasErrors()){
+        if(form2.hasErrors()){
             play.Logger.ALogger logger = play.Logger.of(getClass());
-            logger.error("Errors = {}", requestData.errors());
+            logger.error("Errors = {}", form2.errors());
             return redirect(routes.AccountController.login());
         }
         else{
@@ -66,7 +66,7 @@ public class AccountController extends Controller {
         String password = filledForm.field("password").value();
 
         if(password != null && userRepo.addUser(user, password)){
-            return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2));
         }
 
         return ok(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
