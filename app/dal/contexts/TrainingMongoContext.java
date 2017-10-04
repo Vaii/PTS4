@@ -54,7 +54,8 @@ public class TrainingMongoContext implements TrainingContext {
             Training training = results.next();
             trainings.add(training);
         }
-        return trainings;    }
+        return trainings;
+    }
 
     @Override
     public List<Training> getTrainings(Location location) {

@@ -29,7 +29,6 @@ public class AccountController extends Controller {
 
     public Result login(){
         return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
-
     }
 
     public Result authentication(){
@@ -48,7 +47,7 @@ public class AccountController extends Controller {
             if(userRepo.login(username, password)){
                 session().clear();
                 session("email", username);
-                return redirect(routes.Application.index());
+                return redirect(routes.ApplicationController.index());
             }
             return redirect(routes.AccountController.login());
         }
@@ -62,7 +61,7 @@ public class AccountController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result logout(){
         session().clear();
-        return redirect(routes.Application.index());
+        return redirect(routes.ApplicationController.index());
     }
 
 }
