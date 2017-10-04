@@ -8,6 +8,7 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
     <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
 
+    <div class="container">
   <h1>Training toevoegen</h1>
     <br />
       @b3.form(routes.TrainingController.submit()) {
@@ -15,7 +16,7 @@
       <table>
           <tr>@b3.number(form("TrainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</tr>
           <tr>@b3.text(form("Name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</tr>
-          <tr>@b3.text(form("Desciption"), '_label -> "Beschrijving:", 'class -> "form-control-inline",  'placeholder -> "Voer beschrijving in")</tr>
+          <tr>@b3.text(form("Description"), '_label -> "Beschrijving:", 'class -> "form-control-inline",  'placeholder -> "Voer beschrijving in")</tr>
           <tr>@b3.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline",  'placeholder -> "Voer materialen in")</tr>
 
           <tr>@b3.number(form("Duration"), '_label -> "Duur:", 'class -> "form-control-inline", 'step -> "0.01",  'placeholder -> "Voer duur in(bv. 2 dagen)")</tr>
@@ -25,6 +26,7 @@
 
           @b3.submit('class -> "btn btn-primary") { Toevoegen }
       </table>
+      </div>
 
           @*if(form.hasGlobalErrors) {
               <p class="error">

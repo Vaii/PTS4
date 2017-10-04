@@ -32,9 +32,12 @@ public class Training {
     @Constraints.Required
     private String TrainingCode, Name, Description;
     private String RequiredMaterial;
+
+    @Constraints.Required
     private Float Duration, Tuition;
     private int Capacity;
     private java.util.Date Date;
+
     private Location Location;
     private User Teacher;
     private List<User> Trainee;
