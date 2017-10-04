@@ -1,0 +1,39 @@
+.container {
+    margin-top: 20px;
+    width: 1200px;
+    padding-left: 50px;
+    padding-bottom: 50px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+#kruisboog {
+    width: 100%;
+    height: 150px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+#lab {
+    width: 100%;
+    height: 150px;
+}
+
+.addressText {
+    font-size: 15px;
+}
+
+.maps {
+    height: 100%;
+    width: 100%;
+    margin-left: 70px;
+}
+
+.location {
+    margin-top: 70px;
+    margin-bottom: 20px;
+}

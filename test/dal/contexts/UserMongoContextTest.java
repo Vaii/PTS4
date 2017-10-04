@@ -13,6 +13,7 @@ class UserMongoContextTest {
     UserMongoContext context;
     private User testUser;
     private User testUser2;
+
     @BeforeEach
     void setUp() {
         context = new UserMongoContext("UserTest");

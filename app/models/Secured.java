@@ -15,7 +15,6 @@ import play.mvc.Http.Context;
  * getUser(), isLoggedIn(), and getUserInfo() provide static helper methods so that controllers
  * can check if there is a logged in user.
  */
-
 public class Secured extends Security.Authenticator {
 
     private static UserRepository userRepo = new UserRepository(new UserMongoContext("Users"));

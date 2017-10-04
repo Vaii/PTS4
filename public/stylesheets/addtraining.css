@@ -1,10 +1,20 @@
-#trainingform label {
-    float: left;
-    width: 200px;
+.form-control-inline {
+    width: 500px;
 }
 
-#trainingform .customLabel {
-    float: none;
-    display: block;
-    width: 193px;
+.form-vertical {
+    margin-left: 50px; !important;
+}
+
+.form-vertical {
+    font-weight: bold;
+}
+
+h1 {
+    color: #0078c9;
+    margin-left: 50px;
+}
+
+.invalid input:focus:invalid {
+    border-color: red;
 }

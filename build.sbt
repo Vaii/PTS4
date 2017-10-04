@@ -8,6 +8,11 @@ scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq( javaJdbc , ehcache , javaWs )
 
+// Bootstrap 3
+libraryDependencies ++= Seq(
+  "com.adrianhurt" %% "play-bootstrap" % "1.2-P26-B3"
+)
+
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.0"
 
 // https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver
@@ -25,3 +30,4 @@ libraryDependencies += "com.typesafe.play" %% "play-iteratees" % "2.6.1"
 libraryDependencies += "com.typesafe.play" %% "play-iteratees-reactive-streams" % "2.6.1"
 
 libraryDependencies += guice
+
