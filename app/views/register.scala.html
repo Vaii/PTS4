@@ -1,0 +1,13 @@
+@(page: String, isLoggedIn: Boolean, User: User, form : Form[User])
+@import b3.vertical.fieldConstructor
+
+@main(page, isLoggedIn, User) {
+
+    @b3.form(routes.AccountController.registerAccount) {
+        @b3.email( form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")
+        @b3.text( form("FirstName"), '_label -> "Voornaam", 'placeholder -> "Jan Janssen" )
+        @b3.text( form("LastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")
+        @b3.password( form("password"), '_label -> "Wachtwoord")
+        @b3.submit('class -> "btn btn-default"){ Registeren}
+    }
+}
