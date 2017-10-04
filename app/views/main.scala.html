@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/html">
     <head>
         <title>@title</title>
+
         <script
         src="https://code.jquery.com/jquery-2.2.4.min.js"
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
@@ -14,6 +15,7 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/ico" href="@routes.Assets.at("images/favicon.ico")">
+    </head>
 
     <body>
         <nav class="navbar">
@@ -36,19 +38,19 @@
                     </ul>
                 </li>
                 @if(isLoggedIn) {
-                    <li><a href="@routes.AccountController.logout()" class="navitem">log out</a>
+                    <li><a href="@routes.AccountController.logout()" class="navitem">Log out</a>
                     </li>
                 } else{
-                    <li ><a href="@routes.AccountController.login()" class="navitem dropdown-toggle">Log In</a>
+                    <li ><a href="" class="navitem dropdown-toggle">Log In</a>
                         <ul>
-                            <li><a href="#">Registreren</a></li>
-                            <li><a href="#">Aanmelden</a></li>
+                            <li><a href="@routes.AccountController.register()">Registreren</a></li>
+                            <li><a href="@routes.AccountController.login()">Aanmelden</a></li>
                         </ul>
                     </li>
                 }
                 <li ><a href="@routes.ApplicationController.contact()" class="navitem">Contact</a></li>
                 @if(isLoggedIn){
-                    <li><a href="@routes.AccountController.profile()">Profile<</a></li>
+                    <li><a href="@routes.AccountController.profile()">Profile</a></li>
                 }
             </ul>
         </nav>

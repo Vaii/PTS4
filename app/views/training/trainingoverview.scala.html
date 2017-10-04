@@ -37,14 +37,26 @@
                         <p> @training.getDescription()</p>
                     }
                     <h2>Informatie</h2>
-                    <table>
-                        <tr><td><p>Ruimte:</p></td><td><p>@training.getCapacity() plekken</p></td></tr>
-                        <tr><td><p>Benodigde materialen:</p></td><td><p>@training.getRequiredMaterial</p></td></tr>
-                        <tr><td><p>Koste:</p></td><td><p>€@training.getTuition euro per persoon.</p></td></tr>
-                        <tr><td><p>Duur:</p></td><td><p>@training.getDuration dagen</p></td></tr>
-                    </table>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <p>Ruimte:</p>
+                            <p>Benodigde materialen:</p>
+                            <p>Koste:</p>
+                            <p>Duur:</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <p>@training.getCapacity() plekken</p>
+                            <p>@training.getRequiredMaterial</p>
+                            <p>€@training.getTuition euro per persoon.</p>
+                            <p>@training.getDuration dagen</p>
+                        </div>
+                        <div class="col-lg-3">
+                        <button class="btn btn-primary">Inschrijven</button>
+                        </div>
+                    </div>
                     <h2></h2>
-                    <button>Inschrijven</button>
+                    <a href="@routes.TrainingController.signUpCourse()" class="btn btn-primary">Inschrijven</a>
                 } else {
                     <h1>Selecteer een training</h1>
                     <p>Links in het menu kunt u trainingen selecteren.</p>
