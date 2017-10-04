@@ -30,7 +30,7 @@
 Code reference : https://codepen.io/philhoyt/pen/ujHzd
 */
 .navbar{
-    background-color:white ;
+    background-color: #0079C8;
     height: 70px;
 }
 
@@ -50,7 +50,7 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     text-decoration:none;
     font-weight:700;
     font-size:12px;
-    line-height:32px;
+    line-height:70px;
     padding:0 15px;
     font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
 }
@@ -81,7 +81,7 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
 
 .navbar ul ul a{
     line-height:120%;
-    padding:10px 15px
+    padding:10px 15px;
 }
 
 .navbar ul ul ul{
@@ -96,4 +96,19 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
 #mainmenu:hover .dropdown-content {
     display: block;
 }
+
+body {
+    background-color: #DFEBF5; !important;
+}
+
+.container {
+  background-color: white;
+    box-shadow: 5px 0 5px -2px #C0C0C0;
+}
+
+.container h1 {
+    padding-top: 20px;
+}
+
+
 
