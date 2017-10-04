@@ -3,11 +3,8 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
 @main(page, isLoggedIn, User){
-    <div>
-        <table>
-
-            <div >
-                <td class="trainingmenu">
+    <div class="row">
+            <div class="col-lg-2 trainingmenu">
                     <ul>
                         <lh>Training</lh>
                         @if(!trainings.isEmpty){
@@ -18,12 +15,12 @@
                             <li>"No training yet"</li>
                         }
                     </ul>
-                </td>
             </div>
 
 
                 <td class ="trainingtext">
-                    <div class="trainingtext">
+                    <div class="trainingtext col-lg-10" >
+                        <div>
                 @if(training != null){
                     <table>
                         <h1>@training.getName()</h1>
@@ -44,14 +41,13 @@
                         <tr><td><p>Duur:</p></td><td><p>@training.getDuration dagen</p></td></tr>
                     </table>
                     <h2></h2>
-                    <button>Inschrijven</button>
+                    <button class="btn btn-primary">Inschrijven</button>
                 } else {
                     <h1>Selecteer een training</h1>
                     <p>Links in het menu kunt u trainingen selecteren.</p>
                 }
                     </div>
+                    </div>
                 </td>
-
-        </table>
     </div>
 }
