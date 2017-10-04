@@ -10,7 +10,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.signUpCourse;
-import views.html.Training.*;
+import views.html.training.*;
 
 
 import javax.inject.Inject;

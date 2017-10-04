@@ -4,7 +4,8 @@
 
 # Home page
 
-GET     /                                 controllers.Application.index
+GET     /                                 controllers.ApplicationController.index
+GET     /contact                          controllers.ApplicationController.contact
 
 # Trainingen
 
@@ -21,7 +22,7 @@ GET     /account/logout                   controllers.AccountController.logout
 #gets the form for adding a location
 GET     /addlocation                     controllers.LocationController.loadLocationForm
 
-GET     /                                   controllers.Application.index
+GET     /                                   controllers.ApplicationController.index
 GET     /addtraining                        controllers.TrainingController.addtraining
 GET     /submit                             controllers.TrainingController.submit
 GET     /overview                           controllers.TrainingController.overview

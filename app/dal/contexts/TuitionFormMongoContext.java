@@ -3,7 +3,6 @@ package dal.contexts;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.TuitionFormContext;
-import models.Training;
 import models.TuitionForm;
 import models.User;
 import org.bson.types.ObjectId;

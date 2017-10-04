@@ -41,7 +41,7 @@
                         </ul>
                     </li>
                 }
-                <li ><a href="" class="navitem">Contact</a></li>
+                <li ><a href="@routes.ApplicationController.contact()" class="navitem">Contact</a></li>
                 @if(isLoggedIn){
                     <li><a href="@routes.AccountController.profile()">Profile<</a></li>
                 }
