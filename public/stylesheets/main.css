@@ -40,6 +40,8 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     float:left;
     margin: 0 auto;
     padding:0;
+    width:50%;
+
 }
 
 .navbar ul a {
@@ -68,6 +70,10 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
    background-color: #0079C8;
 }
 
+.navbar ul ul li a {
+    background-color: #0264A5;
+}
+
 .navbar ul ul{
     display:none;
     position:absolute;
@@ -77,7 +83,7 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     padding:0;
 }
 .navbar ul ul li{
-    float:none;
+    z-index: 100;
     width:200px;
 }
 
@@ -107,6 +113,8 @@ body {
 .container {
   background-color: white;
     box-shadow: 5px 0 5px -2px #C0C0C0;
+    margin-top: 20px;
+    width: 700px;
 }
 
 .container h1 {
@@ -115,6 +123,8 @@ body {
 
 .logo {
     width: 156px;
+    display: block;
+    margin: 0;
 }
 
 
