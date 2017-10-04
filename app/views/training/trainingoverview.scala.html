@@ -3,20 +3,21 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
 @main(page, isLoggedIn, User) {
-    <div class="row container">
-        <div class="col-lg-2 trainingmenu">
-            <ul>
-                <lh>Training</lh>
-                @if(!trainings.isEmpty) {
-                    @for(training <- trainings) {
-                        <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 trainingmenu">
+                <ul>
+                    <lh>Training</lh>
+                    @if(!trainings.isEmpty) {
+                        @for(training <- trainings) {
+                            <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
+                        }
+                    } else {
+                        <li>"No training yet"</li>
                     }
-                } else {
-                    <li>"No training yet"</li>
-                }
-            </ul>
-        </div>
-            <div class="trainingtext col-lg-9" >
+                </ul>
+            </div>
+            <div class="trainingtext col-lg-10" >
                 <div>
                 @if(training != null) {
                     <div class="row col-lg-12">
@@ -30,27 +31,28 @@
                     }
                     <h2>Informatie</h2>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <p>Ruimte:</p>
                             <p>Benodigde materialen:</p>
                             <p>Koste:</p>
                             <p>Duur:</p>
                         </div>
-                        <div class="col-lg-6">
-                         <p>@training.getCapacity() plekken</p>
-                         <p>@training.getRequiredMaterial</p>
-                         <p>€@training.getTuition euro per persoon.</p>
-                         <p>@training.getDuration dagen</p>
+                        <div class="col-lg-8">
+                            <p>@training.getCapacity() plekken</p>
+                            <p>@training.getRequiredMaterial</p>
+                            <p>€@training.getTuition euro per persoon.</p>
+                            <p>@training.getDuration dagen</p>
                         </div>
-
+                        <div class="col-lg-3">
+                        <button class="btn btn-primary">Inschrijven</button>
+                        </div>
                     </div>
-                    <h2></h2>
-                    <button class="btn btn-primary">Inschrijven</button>
                 } else {
                     <h1>Selecteer een training</h1>
                     <p>Links in het menu kunt u trainingen selecteren.</p>
                 }
                 </div>
             </div>
+        </div>
     </div>
 }
