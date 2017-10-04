@@ -38,6 +38,11 @@ div.trainingmenu ul li a:hover{
     text-underline: none;
 }
 
+div.trainingtext {
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
 div.trainingtext h1{
     text-align: left;
     color: #0078c9;
@@ -69,5 +74,5 @@ div.col-lg-2 {
 }
 
 .container{
-    padding: 20px;
+    padding: 0px;
 }
