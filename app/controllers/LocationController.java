@@ -31,9 +31,20 @@ public class LocationController {
 
     //Loads the generic form for adding a location
     public Result loadLocationForm(){
-        return ok(newlocationform.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "All Locations"));
+        return ok(newlocationform.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "Location Form"));
     }
 
+    public Result locationOverview(){
+        return ok(alllocations.render(locationrepo.getAll(),Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "All Locations"));
+    }
+
+    public Result alterLocationForm(String roomid){
+        if(roomid == null){
+            return locationOverview();
+        }
+        Location location = locationrepo.getLocation(roomid);
+        return ok(alterlocation.render(form, location, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "Alter Location Form"));
+    }
 
     // method to get the results from the html form and redirect the user to the next page
     public Result createLocation(){
@@ -43,10 +54,16 @@ public class LocationController {
         return redirect(routes.LocationController.locationOverview());
     }
     return redirect(routes.LocationController.loadLocationForm());
-
   }
 
-    public Result locationOverview(){
-        return ok(alllocations.render(locationrepo.getAll(),Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "hallo"));
-    }
+  public Result submitAlterLocation(){
+        Form<Location> boundform = form.bindFromRequest();
+        Location data = boundform.get();
+        if(locationrepo.updateLocation(data)){
+            return redirect(routes.LocationController.locationOverview());
+        }
+        return redirect(routes.LocationController.alterLocationForm(data.get_id()));
+  }
+
+
 }

@@ -1,21 +1,21 @@
 @(locations : List[Location], isLoggedIn: Boolean, User: User, Page: String)
 @main(Page, isLoggedIn, User){
 
-    <table>
-        <th>Stad</th>
-        <th>Straatnaam</th>
-        <th>Huisnummer</th>
-        <th>Kamer</th>
-        <th>Capiciteit</th>
-        @for(location <- locations){
-            <tr>
-                <td>@location.getCity</td>
-                <td>@location.getStreetName</td>
-                <td>@location.getStreetNumber</td>
-                <td>@location.getRoom</td>
-                <td>@location.getCapacity</td>
-            </tr>
-        }
+<div class="container">
+    <th>Stad</th>
+    <th>Straatnaam</th>
+    <th>Huisnummer</th>
+    <th>Kamer</th>
+    <th>Capiciteit</th>
+    @for(location <- locations) {
+        <tr a href="@routes.LocationController.alterLocationForm(location.get_id())">
+            <td>@location.getCity</td>
+            <td>@location.getStreetName</td>
+            <td>@location.getStreetNumber</td>
+            <td>@location.getRoom</td>
+            <td>@location.getCapacity</td>
+        </tr>
 
-    </table>
+    }
+</div>
 }

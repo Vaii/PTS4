@@ -21,7 +21,9 @@ GET     /account/logout                   controllers.AccountController.logout
 # Location
 GET     /location/addlocation               controllers.LocationController.loadLocationForm
 GET     /location/alllocations              controllers.LocationController.locationOverview
+GET    /location/alterlocationForm/:id      controllers.LocationController.alterLocationForm(id: String)
 POST    /location/submit                    controllers.LocationController.createLocation
+POST    /location/submit_form               controllers.LocationController.submitAlterLocation
 
 GET     /                                   controllers.Application.index
 GET     /addtraining                        controllers.TrainingController.addtraining
