@@ -40,6 +40,7 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     float:left;
     margin: 0 auto;
     padding:0;
+    width:50%;
 }
 
 .navbar ul a {
