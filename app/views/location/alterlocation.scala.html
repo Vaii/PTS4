@@ -1,19 +1,21 @@
 @import play.data.Form
 @import b3.vertical.fieldConstructor
+@(form: Form[Location], alterlocation: Location, locations : List[Location], isLoggedIn: Boolean, User: User, Page: String)
+@main(Page, isLoggedIn,User) {
 
 
-    @(form: Form[Location], alterlocation: Location)
-        @b3.form(routes.LocationController.loadLocationForm){
+    @b3.form(routes.LocationController.loadLocationForm) {
 
-            @b3.form(routes.LocationController.createLocation()){
-                <table>
-                    <tr>@b3.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'placeholder -> "Eindhoven")</tr>
-                    <tr>@b3.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'placeholder -> "Rachelsmolen")</tr>
-                    <tr>@b3.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'placeholder -> "1")</tr>
-                    <tr>@b3.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'placeholder -> "2.18")</tr>
-                    <tr>@b3.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'placeholder -> "25")</tr>
+        @b3.form(routes.LocationController.createLocation()) {
+            <table>
+                <tr>@b3.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'placeholder -> "Eindhoven")</tr>
+                <tr>@b3.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'placeholder -> "Rachelsmolen")</tr>
+                <tr>@b3.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'placeholder -> "1")</tr>
+                <tr>@b3.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'placeholder -> "2.18")</tr>
+                <tr>@b3.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'placeholder -> "25")</tr>
 
-                    @b3.submit('class -> "btn btn-primary") {toevoegen}
-                </table>
+                @b3.submit('class -> "btn btn-primary") {toevoegen}
+            </table>
         }
     }
+}
