@@ -30,7 +30,7 @@
 Code reference : https://codepen.io/philhoyt/pen/ujHzd
 */
 .navbar{
-    background-color:white ;
+    background-color: #0079C8;
     height: 70px;
 }
 
@@ -38,32 +38,34 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     list-style:none;
     position:relative;
     float:left;
-    margin:0;
+    margin: 0 auto;
     padding:0;
-    color: white;
 }
 
 .navbar ul a {
     display:block;
     color:white;
-    background-color: black;
     text-decoration:none;
     font-weight:700;
-    font-size:12px;
-    line-height:32px;
+    font-size:14px;
+    line-height:70px;
     padding:0 15px;
-    font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
+    font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .navbar ul li {
     position:relative;
     float:left;
     margin:0;
-    padding:0
+    padding:0;
 }
 
 .navbar ul li:hover{
-    background-color: transparent;
+    background-color: #0264A5;
+}
+
+.navbar ul ul li a:hover {
+   background-color: #0079C8;
 }
 
 .navbar ul ul{
@@ -71,22 +73,23 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     position:absolute;
     top:100%;
     left:0;
-    background:#fff;
-    padding:0
+    background:#0264A5;
+    padding:0;
 }
 .navbar ul ul li{
     float:none;
-    width:200px
+    width:200px;
 }
 
 .navbar ul ul a{
     line-height:120%;
-    padding:10px 15px
+    padding:10px 15px;
+    font-weight: normal;
 }
 
-.navbar ul ul ul{
-    top:0;
-    left:100%;
+.navbar ul ul ul {
+    top: 0;
+    left: 100%;
 }
 
 .navbar ul li:hover > ul{
@@ -96,4 +99,23 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
 #mainmenu:hover .dropdown-content {
     display: block;
 }
+
+body {
+    background-color: #DFEBF5; !important;
+}
+
+.container {
+  background-color: white;
+    box-shadow: 5px 0 5px -2px #C0C0C0;
+}
+
+.container h1 {
+    padding-top: 20px;
+}
+
+.logo {
+    width: 156px;
+}
+
+
 

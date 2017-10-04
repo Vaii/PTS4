@@ -14,3 +14,8 @@ h1 {
     color: #0078c9;
     margin-left: 50px;
 }
+
+.container {
+    margin-top: 20px;
+    width: 700px;
+}

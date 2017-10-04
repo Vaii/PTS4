@@ -10,7 +10,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.signUpCourse;
-import views.html.Training.*;
+import views.html.training.*;
 
 
 import javax.inject.Inject;
@@ -38,11 +38,16 @@ public class TrainingController extends Controller{
 
     public Result submit() { // submit new training
         Form<Training> filledForm = form.bindFromRequest();
-        Training newTraining = filledForm.get();
 
-        trainingRepository.addTraining(newTraining);
-        Training t = trainingRepository.getTraining(newTraining.getTrainingCode());
-        return ok(submit.render(t, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        if(filledForm.hasErrors()) {
+            return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training"));
+        }
+        else {
+            Training newTraining = filledForm.get();
+            trainingRepository.addTraining(newTraining);
+            Training t = trainingRepository.getTraining(newTraining.getTrainingCode());
+            return ok(submit.render(t, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        }
     }
 
 

@@ -3,6 +3,7 @@ package models;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
+import play.data.validation.Constraints;
 
 import java.util.Date;
 import java.util.List;
@@ -28,10 +29,15 @@ public class Training {
     private String _id;
 
     // Class identifiers.
-    private String TrainingCode, Name, Description, RequiredMaterial;
+    @Constraints.Required
+    private String TrainingCode, Name, Description;
+    private String RequiredMaterial;
+
+    @Constraints.Required
     private Float Duration, Tuition;
     private int Capacity;
     private java.util.Date Date;
+
     private Location Location;
     private User Teacher;
     private List<User> Trainee;
