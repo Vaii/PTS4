@@ -41,6 +41,7 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     margin: 0 auto;
     padding:0;
     width:50%;
+
 }
 
 .navbar ul a {
@@ -67,6 +68,10 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
 
 .navbar ul ul li a:hover {
    background-color: #0079C8;
+}
+
+.navbar ul ul li a {
+    background-color: #0264A5;
 }
 
 .navbar ul ul{
@@ -116,6 +121,8 @@ body {
 
 .logo {
     width: 156px;
+    display: block;
+    margin: 0;
 }
 
 
