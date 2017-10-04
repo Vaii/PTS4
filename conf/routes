@@ -18,8 +18,10 @@ GET     /account/profile                  controllers.AccountController.profile
 GET     /account/logout                   controllers.AccountController.logout
 
 
-#gets the form for adding a location
-GET     /addlocation                     controllers.LocationController.loadLocationForm
+# Location
+GET     /location/addlocation               controllers.LocationController.loadLocationForm
+GET     /location/alllocations              controllers.LocationController.locationOverview
+POST    /location/sendform                  controllers.LocationController.createLocation
 
 GET     /                                   controllers.Application.index
 GET     /addtraining                        controllers.TrainingController.addtraining

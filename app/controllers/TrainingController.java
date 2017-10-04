@@ -1,16 +1,16 @@
 package controllers;
 
 
-import models.Secured;
 import dal.contexts.TrainingMongoContext;
 import dal.repositories.TrainingRepository;
+import models.Secured;
 import models.Training;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.training.*;
 import views.html.signUpCourse;
-import views.html.Training.*;
 
 
 import javax.inject.Inject;

@@ -6,6 +6,7 @@ import models.Location;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
+import views.html.location.*;
 
 import javax.inject.Inject;
 
@@ -28,7 +29,7 @@ public class LocationController {
 
     //Loads the generic form for adding a location
     public Result loadLocationForm(){
-        return ok(views.html.newlocationform.render(form));
+        return ok(newlocationform.render(form));
     }
 
 
@@ -36,18 +37,22 @@ public class LocationController {
     public Result createLocation(){
         final Form<Location> boundForm = form.bindFromRequest();
 
-        if(boundForm.hasErrors()){
-            play.Logger.ALogger logger = play.Logger.of(getClass());
-            logger.error("errors ={}", boundForm.errors());
-            return badRequest(views.html.newlocationform.render(boundForm));
-        }
-        else{
+//        if(boundForm.hasErrors()){
+//            play.Logger.ALogger logger = play.Logger.of(getClass());
+//            logger.error("errors ={}", boundForm.errors());
+//            return badRequest(newlocationform.render(boundForm));
+//        }
+//        else{
             Location data = boundForm.get();
             if(locationrepo.addLocation(data)){
-                return redirect(routes.LocationController.loadLocationForm());
+                return redirect(routes.LocationController.locationOverview());
             }
             return redirect(routes.LocationController.loadLocationForm());
 
         }
+    //}
+
+    public Result locationOverview(){
+        return ok(alllocations.render(locationrepo.getAll()));
     }
 }
