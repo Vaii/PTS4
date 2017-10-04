@@ -40,6 +40,10 @@ public class User {
         this.Company = company;
     }
 
+    public User(){
+        
+    }
+
     @JsonCreator
     public User(@JsonProperty(M_FIRSTNAME) String firstName,
                 @JsonProperty(M_LASTNAME) String lastName,

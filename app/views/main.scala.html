@@ -32,16 +32,16 @@
                     <li><a href="@routes.AccountController.logout()" class="navitem">log out</a>
                     </li>
                 } else{
-                    <li ><a href="@routes.AccountController.login()" class="navitem">Log In</a>
+                    <li ><a href="" class="navitem">Log In</a>
                         <ul>
-                            <li><a href="#">Registreren</a></li>
-                            <li><a href="#">Aanmelden</a></li>
+                            <li><a href="@routes.AccountController.register()">Registreren</a></li>
+                            <li><a href="@routes.AccountController.login()">Aanmelden</a></li>
                         </ul>
                     </li>
                 }
                 <li ><a href="" class="navitem">Contact</a></li>
                 @if(isLoggedIn){
-                    <li><a href="@routes.AccountController.profile()">Profile<</a></li>
+                    <li><a href="@routes.AccountController.profile()">Profile</a></li>
                 }
             </ul>
         </nav>

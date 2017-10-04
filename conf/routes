@@ -16,6 +16,8 @@ GET     /account/login                    controllers.AccountController.login
 POST    /account/login                    controllers.AccountController.authentication
 GET     /account/profile                  controllers.AccountController.profile
 GET     /account/logout                   controllers.AccountController.logout
+GET     /account/register                 controllers.AccountController.register
+GET     /account/registerAccount          controllers.AccountController.registerAccount
 
 
 #gets the form for adding a location

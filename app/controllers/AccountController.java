@@ -19,12 +19,15 @@ public class AccountController extends Controller {
     private UserRepository userRepo;
     private FormFactory formFactory;
     private DynamicForm requestData;
+    private Form<User> form;
 
     @Inject
     public AccountController(FormFactory formFactory){
 
         this.formFactory = formFactory;
-        this.userRepo = new UserRepository(new UserMongoContext("Users"));
+        this.userRepo = new UserRepository(new UserMongoContext("User"));
+        this.form = formFactory.form(User.class);
+
     }
 
     public Result login(){
@@ -52,6 +55,22 @@ public class AccountController extends Controller {
             }
             return redirect(routes.AccountController.login());
         }
+    }
+
+    public Result register(){
+        return ok(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+    }
+
+    public Result registerAccount(){
+        Form<User> filledForm = form.bindFromRequest();
+        User user = filledForm.get();
+        String password = filledForm.field("password").value();
+
+        if(password != null && userRepo.addUser(user, password)){
+            return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        }
+
+        return ok(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
     }
 
     @Security.Authenticated(Secured.class)
