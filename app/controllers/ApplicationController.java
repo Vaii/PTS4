@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Secured;
+import play.filters.headers.SecurityHeadersFilter;
 import play.mvc.*;
 import views.html.*;
 

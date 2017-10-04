@@ -1,9 +1,125 @@
 @(page: String, isLoggedIn: Boolean, User: User)
 
 @main(page, isLoggedIn, User) {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/contact.css")">
 
-    <div class="Container">
+    <div class="container">
         <h1>Contact</h1>
 
+        <p>Heeft u vragen of opmerkingen? Neemt u dan contact met ons op. Onderstaand vindt u de contactgegevens voor onze diverse vestigingen.</p>
+
+        <hr>
+
+        <div class="location">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="@routes.Assets.at("images/Kruisboog.jpg")" id="kruisboog">
+                </div>
+                <div class="col-md-3">
+                    <div class="addressText">
+                        <h3>Hoofdkantoor nederland</h3>
+                        <p>Kruisboog 42 <br>
+                            3905 TG Veenendaal <br>
+                            T +31 318 552020 <br>
+                            F +31 318 552355</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="maps">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6941.30814105249!2d5.531095297835206!3d52.04107217846141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c65192cc6828c1%3A0xf6fafb809595b30e!2sKruisboog+42%2C+3905+TG+Veenendaal!5e0!3m2!1snl!2snl!4v1507116248264" width="400" height="200" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="location">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="@routes.Assets.at("images/lab.jpg")" id="lab">
+            </div>
+            <div class="col-md-3">
+                <div class="addressText">
+                    <h3>Innovation Lab</h3>
+                    <p>Science Park 608 <br>
+                        1098 XH Amsterdam <br>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="maps">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6892.597026356599!2d4.955600181015542!3d52.354079920548315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c6094ff4f599cd%3A0x2fcf0fe2869cfe06!2sScience+Park+608%2C+1098+XH+Amsterdam!5e0!3m2!1snl!2snl!4v1507118640971" width="400" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="location">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="@routes.Assets.at("images/Mechelen.jpg")" id="lab">
+                </div>
+                <div class="col-md-3">
+                    <div class="addressText">
+                        <h3>Hoofdkantoor België</h3>
+                        <p>Generaal De Wittelaan 17<br>
+                            bus 30 2800 Mechelen<br>
+                            T +32 15 286370<br>
+                            F +32 15 286377
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="maps">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11929.834186432648!2d4.442414956028284!3d51.05421966370896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3e577c6bfcbe7%3A0x78a83767fe95f6e1!2sGeneraal+de+Wittelaan+17%2C+2800+Mechelen%2C+Belgi%C3%AB!5e0!3m2!1snl!2snl!4v1507119002403" width="400" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="location">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="@routes.Assets.at("images/Venedaal.jpg")" id="lab">
+                </div>
+                <div class="col-md-3">
+                    <div class="addressText">
+                        <h3>Kenniscentrum & Traininglocatie Veenendaal</h3>
+                        <p>De Smalle Zijde 39 <br>
+                            3903 LM Veenendaal <br>
+                            T +31 318 501119 <br>
+                            F +31 318 518359
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="maps">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9824.334439967259!2d5.567746145770503!3d52.00535436388479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c653b86b0e921b%3A0xe68e8623d0446b76!2sDe+Smalle+Zijde+39%2C+3903+LM+Veenendaal!5e0!3m2!1snl!2snl!4v1507119492826" width="400" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="location">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="@routes.Assets.at("images/Utrecht.jpg")" id="lab">
+                </div>
+                <div class="col-md-3">
+                    <div class="addressText">
+                        <h3>Traininglocatie Utrecht</h3>
+                        <p>St. Jacobsstraat 12 <br>
+                            3511 BS Utrecht <br>
+                            T +31 318 501119 <br>
+                            F +31 318 518359
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="maps">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16489.752826264004!2d5.10674264051149!3d52.09399268445689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66f43af468581%3A0x1b8db0d2102b5291!2sSt+Jacobsstraat+12%2C+3511+BS+Utrecht!5e0!3m2!1snl!2snl!4v1507119695257" width="400" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 }
