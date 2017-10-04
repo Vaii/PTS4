@@ -10,5 +10,5 @@ public interface LocationContext {
     boolean updateLocation(Location location);
     boolean removeLocation(Location location);
     List<Location> getAll();
-    Location getLocation(String city);
+    Location getLocation(String id);
 }

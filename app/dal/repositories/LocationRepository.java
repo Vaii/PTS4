@@ -33,7 +33,7 @@ public class LocationRepository implements LocationContext{
     }
 
     @Override
-    public Location getLocation(String city) {
-        return context.getLocation(city);
+    public Location getLocation(String id) {
+        return context.getLocation(id);
     }
 }

@@ -7,6 +7,7 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 public class Location {
     // Mongo DB identifiers.
     private static final String M_CITY = "City";
+    private static final String M_STREETNAME = "StreetName";
     private static final String M_STREETNUMBER = "StreetNumber";
     private static final String M_ROOM = "Room";
     private static final String M_CAPACITY = "Capacity";
@@ -16,16 +17,25 @@ public class Location {
     private String _id;
 
     // Class fields.
-    private String City, StreetNumber, Room;
+    private String City;
+
+    public String getStreetName() {
+        return StreetName;
+    }
+
+    private String StreetName;
+    private String StreetNumber;
+    private String Room;
     private int Capacity;
 
     public Location(){
 
     }
 
-    public Location(String _id, String city, String streetNumber, String room, int capacity) {
+    public Location(String _id, String city, String streetName, String streetNumber, String room, int capacity) {
         this._id = _id;
         City = city;
+        StreetName = streetName;
         StreetNumber = streetNumber;
         Room = room;
         Capacity = capacity;
@@ -33,10 +43,12 @@ public class Location {
 
     @JsonCreator
     public Location(@JsonProperty(M_CITY) String city,
+                    @JsonProperty(M_STREETNAME) String streetName,
                     @JsonProperty(M_STREETNUMBER) String streetNumber,
                     @JsonProperty(M_ROOM) String room,
                     @JsonProperty(M_CAPACITY) int capacity) {
         this.City = city;
+        this.StreetName = streetName;
         this.StreetNumber = streetNumber;
         this.Room = room;
         this.Capacity = capacity;

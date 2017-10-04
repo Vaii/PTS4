@@ -52,8 +52,8 @@ public class LocationMongoContext implements LocationContext{
     }
 
     @Override
-    public Location getLocation(String city) {
-        return collection.findOne("{City:#}", city).as(Location.class);
+    public Location getLocation(String id) {
+        return collection.findOne("{_id:#}", id).as(Location.class);
     }
 
     public void removeAll() {
