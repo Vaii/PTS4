@@ -14,7 +14,6 @@ import views.html.training.addtraining;
 import views.html.training.submit;
 import views.html.training.trainingoverview;
 import views.html.signUpCourse;
-
 import javax.inject.Inject;
 
 /**
@@ -69,6 +68,5 @@ public class TrainingController extends Controller{
             return ok(trainingoverview.render(trainingRepository.getAll(),trainingRepository.getTraining(id),
                     "Trainingen" , Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
-
     }
 }
