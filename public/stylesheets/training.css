@@ -2,12 +2,13 @@
     padding: 0px;
 }
 
-.form-vertical {
-    font-weight: bold;
+div.form-group {
+    width: 100%;
+
 }
 
-.form-group {
-    width: 100%;
+div.form-inline label{
+    font-weight: bold;
 }
 
 #newTrn {
@@ -16,7 +17,6 @@
     border-bottom: 1px solid dodgerblue;
     text-align: center;
     text-underline: none;
-
 }
 
 #newTrn:hover a {
@@ -24,12 +24,12 @@
     color: white;
     border-radius: 5px;
     text-underline: none;
-
 }
 
-div.form-group {
-
+#editTrn {
+   margin:0px;
 }
+
 
 div.form-group label{
     font-weight: bold;
