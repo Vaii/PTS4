@@ -20,6 +20,21 @@ div.trainingmenu ul li{
     text-align: center;
     text-underline: none;
 }
+#newTrn{
+    padding-top: 5px;
+    padding-bottom:5px;
+    border-bottom: 1px solid dodgerblue;
+    text-align: center;
+    text-underline: none;
+
+}
+#newTrn:hover a{
+    background-color: limegreen;
+    color: white;
+    border-radius: 5px;
+    text-underline: none;
+
+}
 
 div.trainingmenu ul li:last-child{
     border-bottom: none;
@@ -61,7 +76,7 @@ div.trainingtext p {
 
 }
 div.trainingtext button {
-    margin-top: 8px;
+
 }
 div.trainingtext td button:hover {
     background-color: #0078c9;
@@ -72,7 +87,6 @@ div.col-lg-2 {
     padding-left: 5px;
     background-color: #e8effc;
 }
-
 .container{
     padding: 0px;
 }
