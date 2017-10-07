@@ -1,34 +1,25 @@
-div.trainingmenu ul lh{
-    color: black;
-    text-underline: none;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    font-size:20px;
+.container {
+    padding: 0px;
+}
+
+.form-vertical {
+    font-weight: bold;
+}
+
+.form-group {
+    width: 100%;
+}
+
+#newTrn {
+    padding-top: 5px;
     padding-bottom: 5px;
-}
-
-div.trainingmenu ul{
-    list-style-type: none;
-    padding: 1px;
-    background-color: #e8effc;
-}
-div.trainingmenu ul li{
-    padding-top: 5px;
-    padding-bottom:5px;
-    border-bottom: 1px solid dodgerblue;
-    text-align: center;
-    text-underline: none;
-}
-#newTrn{
-    padding-top: 5px;
-    padding-bottom:5px;
     border-bottom: 1px solid dodgerblue;
     text-align: center;
     text-underline: none;
 
 }
-#newTrn:hover a{
+
+#newTrn:hover a {
     background-color: limegreen;
     color: white;
     border-radius: 5px;
@@ -36,17 +27,51 @@ div.trainingmenu ul li{
 
 }
 
-div.trainingmenu ul li:last-child{
+div.form-group {
+
+}
+
+div.form-group label{
+    font-weight: bold;
+}
+
+div.trainingmenu ul lh {
+    color: black;
+    text-underline: none;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+div.trainingmenu ul {
+    list-style-type: none;
+    padding: 1px;
+    background-color: #e8effc;
+}
+
+div.trainingmenu ul li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid dodgerblue;
+    text-align: center;
+    text-underline: none;
+}
+
+div.trainingmenu ul li:last-child {
     border-bottom: none;
 }
-div.trainingmenu ul li a{
+
+div.trainingmenu ul li a {
     color: #666;
     text-underline: none;
     text-decoration: none;
     display: block;
     background-color: transparent;
 }
-div.trainingmenu ul li a:hover{
+
+div.trainingmenu ul li a:hover {
     background-color: #0078c9;
     color: white;
     border-radius: 5px;
@@ -58,16 +83,16 @@ div.trainingtext {
     padding-left: 20px;
 }
 
-div.trainingtext h1{
+div.trainingtext h1 {
     text-align: left;
     color: #0078c9;
 
 }
 
-div.trainingtext h2{
+div.trainingtext h2 {
     text-align: left;
     color: #0078c9;
-    margin-bottom:0px;
+    margin-bottom: 0px;
     border-bottom: 1px solid lightblue;
 }
 
@@ -75,18 +100,22 @@ div.trainingtext p {
     margin-top: 0px;
 
 }
+
 div.trainingtext button {
 
 }
+
 div.trainingtext td button:hover {
     background-color: #0078c9;
     color: white;
 }
+
 div.col-lg-2 {
     padding-right: 5px;
     padding-left: 5px;
     background-color: #e8effc;
 }
-.container{
-    padding: 0px;
-}
+
+
+
+
