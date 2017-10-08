@@ -35,8 +35,8 @@ public class LocationMongoContext implements LocationContext{
     }
 
     @Override
-    public boolean removeLocation(Location location) {
-        WriteResult result = collection.remove(new ObjectId(location.get_id()));
+    public boolean removeLocation(String location_id) {
+        WriteResult result = collection.remove(new ObjectId(location_id));
         return result.wasAcknowledged();
     }
 

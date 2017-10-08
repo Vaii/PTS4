@@ -69,8 +69,12 @@ public class LocationController {
         return redirect(routes.LocationController.locationOverview());
   }
 
-  public Result deleteLocation(){
-      
+  //TODO make a message so the user knows if the deletion was succesful
+  public Result deleteLocation(String location_id){
+      if(locationrepo.removeLocation(location_id)){
+          return redirect(routes.LocationController.locationOverview());
+      }
+      return redirect(routes.LocationController.locationOverview());
   }
 
 

@@ -17,7 +17,7 @@
                 <tr>@b3.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'value -> location.getCapacity)</tr>
                 <br>
                 @b3.submit('class -> "btn btn-primary") { Wijzigen }
-                <a href="@routes.LocationController."
+                <a href="@routes.LocationController.deleteLocation(location.get_id())   ">Verwijderen</a>
                 @helper.CSRF.formField
             </table>
         }
