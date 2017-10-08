@@ -1,6 +1,92 @@
 @(page: String, isLoggedIn: Boolean, User: User)
 
-@main(page, isLoggedIn, User) {
-    <p> Welcome to Info Support</p>
+    @main(page, isLoggedIn, User) {
+        <script src="@routes.Assets.at("javascripts/imageSlider.js")" type="text/javascript"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/home.css")">
 
-}
+        <div class="container">
+            <div class="headers">
+                <h1>Info Support knowledge centre</h1>
+                <h2>Ontwikkel en verbeter uw vaardigheden</h2>
+            </div>
+            <div class="imageSlider">
+                <ul class="slides">
+                    <input type="radio" name="radio-btn" id="img-1" checked />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="@routes.Assets.at("images/kennisdeling.jpg")" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-3" class="prev">&#x2039;</label>
+                            <label for="img-2" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+
+                    <input type="radio" name="radio-btn" id="img-2" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="@routes.Assets.at("images/Hoofdkantoor-Info-Support.jpg")" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-1" class="prev">&#x2039;</label>
+                            <label for="img-3" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+
+                    <input type="radio" name="radio-btn" id="img-3" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="@routes.Assets.at("images/training-1.jpg")" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-2" class="prev">&#x2039;</label>
+                            <label for="img-1" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+
+                    <li class="nav-dots">
+                        <label for="img-1" class="nav-dot" id="img-dot-1"></label>
+                        <label for="img-2" class="nav-dot" id="img-dot-2"></label>
+                        <label for="img-3" class="nav-dot" id="img-dot-3"></label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="articles">
+                <div class="article-headers">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h2> Aangeboden trainingen</h2>
+                        </div>
+                        <div class="col-md-4">
+                            <h2>Vaker langskomen?</h2>
+                        </div>
+                        <div class="col-md-4">
+                            <h2>Over ons</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-article-1">
+                            <p>Info Support biedt een groot aantal trainingen aan om uw kennis en vaardigheden te verbeteren. Voor een overzicht van alle trainingen klik <a href="@routes.TrainingController.overview()">
+                                hier. </a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-article-1">
+                            <p>Als u meerdere trainingen volgt is het handig een account aan te maken, zo heeft u al uw trainingen overzichtelijk bij elkaar. Om een account aan te maken klik  <a href="@routes.AccountController.register()">
+                                hier. </a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-article-1">
+                            <p>Voor meer informatie over Info Support en voor contact gegevens kunt u  <a href="@routes.ApplicationController.contact()">
+                                hier </a> terecht.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
