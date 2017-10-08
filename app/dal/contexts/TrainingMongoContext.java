@@ -30,7 +30,7 @@ public class TrainingMongoContext implements TrainingContext {
 
     @Override
     public boolean updateTraining(Training training) {
-        WriteResult result = collection.update("{_id=#}", new ObjectId(training.get_id())).with(training);
+        WriteResult result = collection.update("{_id:#}", new ObjectId(training.get_id())).with(training);
         return result.wasAcknowledged();
     }
 
@@ -79,5 +79,9 @@ public class TrainingMongoContext implements TrainingContext {
             trainings.add(training);
         }
         return trainings;
+    }
+
+    public void removeAll() {
+        collection.drop();
     }
 }
