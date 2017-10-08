@@ -80,4 +80,8 @@ public class TrainingMongoContext implements TrainingContext {
         }
         return trainings;
     }
+
+    public void removeAll() {
+        collection.drop();
+    }
 }
