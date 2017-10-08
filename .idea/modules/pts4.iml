@@ -23,7 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../conf" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/main" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/test" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../target/web/public/testone" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../target/web/public/testOne" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../target" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/resolution-cache" />
@@ -164,5 +164,15 @@
     <orderEntry type="library" name="SBT: org.scala-stm:scala-stm_2.11:0.8:jar" level="project" />
     <orderEntry type="library" name="SBT: com.adrianhurt:play-bootstrap-core_2.11:1.2-P26:jar" level="project" />
     <orderEntry type="library" name="SBT: com.adrianhurt:play-bootstrap_2.11:1.2-P26-B3:jar" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library name="JUnit5">
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/junit-jupiter-api-5.0.0.jar!/" />
+          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/opentest4j-1.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -14,8 +14,8 @@ class LocationMongoContextTest {
     @BeforeEach
     void setUp() {
         context = new LocationMongoContext("LocationTest");
-        location1 = new Location("Eindhoven", "51", "R1_5.11", 55);
-        location2 = new Location("Baexem", "33", "8.7", 20);
+        location1 = new Location("Eindhoven", "testStreet", "51", "R1_5.11", 55);
+        location2 = new Location("Baexem", "testStreet" ,"33", "8.7", 20);
     }
 
     @Test
@@ -36,7 +36,6 @@ class LocationMongoContextTest {
         context.updateLocation(location1);
         Location location3 = context.getLocation("Eindhoven");
         assertEquals("15", location3.getStreetNumber());
-
     }
 
     @Test
