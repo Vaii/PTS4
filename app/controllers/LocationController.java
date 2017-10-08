@@ -69,5 +69,9 @@ public class LocationController {
         return redirect(routes.LocationController.locationOverview());
   }
 
+  public Result deleteLocation(){
+      
+  }
+
 
 }
