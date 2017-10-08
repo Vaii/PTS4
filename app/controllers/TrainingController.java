@@ -108,8 +108,8 @@ public class TrainingController extends Controller{
 
     }
 
-    public Result edit(String id) {
-        Form<Training> editFrom = form.fill(trainingRepository.getTraining(id));
+    public Result edit(String code) {
+        Form<Training> editFrom = form.fill(trainingRepository.getTraining(code));
         if(editFrom.hasErrors()){
             flash("danger", "Wrong values");
             return badRequest(managetraining.render(trainingRepository.getAll(),null,
@@ -118,6 +118,7 @@ public class TrainingController extends Controller{
         else {
             Form<Training> filledForm = form.bindFromRequest();
             Training training = filledForm.get();
+            training.set_id(trainingRepository.getTraining(code).get_id());
             trainingRepository.updateTraining(training);
             return ok(edit.render(training,"Trainingen",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }

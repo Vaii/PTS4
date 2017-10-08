@@ -32,7 +32,6 @@
                     @b3.form(routes.TrainingController.edit(training.getTrainingCode())) {
                         @helper.CSRF.formField
                         <div class="row col-lg-12">
-                            <div class="col-lg-12" hidden="true" readonly="true"> @b3.text(form("_id"), '_label -> "Training id:", 'class -> "", 'placeholder -> "Id") </div>
                             <div class="col-lg-12">@b3.number(form("TrainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
                             <div class="col-lg-12">@b3.text(form("Name"), '_label -> "Naam:", 'class -> "", 'placeholder -> "Voer naam in")</div>
                             <div class="col-lg-12">@b3.text(form("Description"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
