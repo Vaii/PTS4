@@ -107,6 +107,10 @@ public class Training {
         return _id;
     }
 
+    public void set_id(String _id){
+        this._id = _id;
+    }
+
     @JsonProperty(M_TRAININGSCODE)
     public String getTrainingCode() {
         return TrainingCode;
