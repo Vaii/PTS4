@@ -19,6 +19,7 @@ import views.html.training.removetraining;
 import views.html.training.*;
 import views.html.training.edit;
 import views.html.signUpCourse;
+import views.html.signUpCourseEmployee;
 import javax.inject.Inject;
 
 /**
@@ -28,7 +29,13 @@ public class TrainingController extends Controller{
 
     @Security.Authenticated(Secured.class)
     public Result signUpCourse(){
-        return ok(signUpCourse.render("Training Inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+
+        if(Secured.getUserInfo(ctx()).getRole() != null ){
+            return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        }
+        else{
+            return ok(signUpCourse.render("Training Inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        }
     }
 
     TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
