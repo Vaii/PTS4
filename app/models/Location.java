@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
+import play.data.validation.Constraints;
 
 public class Location {
     // Mongo DB identifiers.
@@ -18,6 +19,7 @@ public class Location {
     private String _id;
 
     // Class fields.
+    @Constraints.Required
     private String City;
     private String StreetName;
     private String StreetNumber;
