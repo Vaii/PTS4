@@ -107,6 +107,7 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
 
 body {
     background-color: #DFEBF5; !important;
+    margin-bottom: 200px;
 }
 
 .container {
@@ -124,5 +125,31 @@ body {
     width: 156px;
     display: block;
     margin: 0;
+}
+
+footer {
+    width:100%;
+    bottom:0;
+    display: block;
+    background-color: #0078c9;
+    background-image: url("../images/footer_bg.png");
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    min-height: 200px;
+    color: white;
+}
+
+.created {
+    vertical-align: middle;
+    line-height: 200px;
+}
+
+.footer-logo {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 300px;
+    height:100px;
 }
 
