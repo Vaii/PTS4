@@ -60,6 +60,18 @@ public class Training {
         this.Date = date;
     }
 
+    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location) {
+        this.TrainingCode = trainingCode;
+        this.Name = name;
+        this.Description = description;
+        this.RequiredMaterial = requiredMaterial;
+        this.Duration = duration;
+        this.Tuition = tuition;
+        this.Capacity = capacity;
+        this.Date = date;
+        this.Location = location;
+    }
+
     public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<User> trainee, List<Training> prerequisites) {
         this._id = _id;
         this.TrainingCode = trainingCode;

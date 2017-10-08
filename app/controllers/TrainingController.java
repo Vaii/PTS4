@@ -1,8 +1,11 @@
 package controllers;
 
 
+import dal.contexts.LocationMongoContext;
 import dal.contexts.TrainingMongoContext;
+import dal.repositories.LocationRepository;
 import dal.repositories.TrainingRepository;
+import models.Location;
 import models.Secured;
 import models.Training;
 import play.data.Form;
@@ -19,6 +22,8 @@ import views.html.training.*;
 import views.html.training.edit;
 import views.html.signUpCourse;
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ken on 27-9-2017.
@@ -31,7 +36,9 @@ public class TrainingController extends Controller{
     }
 
     TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
+    LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     private Form<Training> form;
+    List<Location> locations = locationRepo.getAll();
 
     @Inject
     public TrainingController(FormFactory formFactory) {
@@ -39,15 +46,14 @@ public class TrainingController extends Controller{
     }
 
     public Result addtraining() {
-        return ok(addtraining.render(form,Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training"));
+        return ok(addtraining.render(form,Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations));
     }
 
     public Result submit() { // submit new training
         Form<Training> filledForm = form.bindFromRequest();
 
         if(filledForm.hasErrors()) {
-            flash("danger", "Please fill valid in");
-            return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training"));
+            return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations));
         }
         else {
             Training newTraining = filledForm.get();
