@@ -1,5 +1,6 @@
 package dal.contexts;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.LocationContext;
@@ -29,8 +30,8 @@ public class LocationMongoContext implements LocationContext{
 
     @Override
     public boolean updateLocation(String location_id, Location location) {
-        collection.update(new ObjectId(location_id), location);
-        return true;
+        WriteResult result = collection.update("{_id:#}", new ObjectId(location_id)).with(location);
+        return result.wasAcknowledged();
     }
 
     @Override
