@@ -38,7 +38,7 @@ body {
 .slides {
     padding: 0;
     width: 1200px;
-    height: 450px;
+    height: 600px;
     display: block;
     margin: 0 auto;
     position: relative;
@@ -61,7 +61,7 @@ body {
     top: 0;
     opacity: 0;
     width: 1200px;
-    height: 450px;
+    height: 600px;
     display: block;
     position: absolute;
 
@@ -90,9 +90,9 @@ body {
     color: #FFF;
     font-size: 156pt;
     text-align: center;
-    line-height: 380px;
+    line-height: 570px;
     font-family: "Varela Round", sans-serif;
-    background-color: rgba(255, 255, 255, .3);
+    /*background-color: rgba(255, 255, 255, .3);*/
     text-shadow: 0px 0px 15px rgb(119, 119, 119);
 }
 
