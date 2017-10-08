@@ -6,12 +6,12 @@
 <div class="container">
         @b3.form(routes.LocationController.submitAlterLocation()) {
             <table>
+                <tr>@b3.text(form("_id"), '_label -> "ID :", 'class -> "form-control-inline", 'readonly ->"true", 'value -> location.get_id())</tr>
                 <tr>@b3.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'value -> location.getCity)</tr>
                 <tr>@b3.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'value -> location.getStreetName)</tr>
                 <tr>@b3.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'value -> location.getStreetNumber)</tr>
                 <tr>@b3.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'value -> location.getRoom)</tr>
                 <tr>@b3.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'value -> location.getCapacity)</tr>
-
                 @b3.submit('class -> "btn btn-primary") { Wijzigen }
                 @helper.CSRF.formField
             </table>

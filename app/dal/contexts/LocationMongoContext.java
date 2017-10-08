@@ -28,9 +28,9 @@ public class LocationMongoContext implements LocationContext{
     }
 
     @Override
-    public boolean updateLocation(Location location) {
-        WriteResult result = collection.save(location);
-        return result.wasAcknowledged();
+    public boolean updateLocation(String location_id, Location location) {
+        collection.update(new ObjectId(location_id), location);
+        return true;
     }
 
     @Override
@@ -53,7 +53,8 @@ public class LocationMongoContext implements LocationContext{
 
     @Override
     public Location getLocation(String id) {
-        return collection.findOne("{_id:#}", id).as(Location.class);
+
+        return collection.findOne("{_id:#}", new ObjectId(id)).as(Location.class);
     }
 
     public void removeAll() {

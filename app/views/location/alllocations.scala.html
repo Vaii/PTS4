@@ -2,20 +2,23 @@
 @main(Page, isLoggedIn, User){
 
 <div class="container">
-    <th>Stad</th>
-    <th>Straatnaam</th>
-    <th>Huisnummer</th>
-    <th>Kamer</th>
-    <th>Capiciteit</th>
-    @for(location <- locations) {
-        <tr a href="@routes.LocationController.alterLocationForm(location.get_id())">
-            <td>@location.getCity</td>
-            <td>@location.getStreetName</td>
-            <td>@location.getStreetNumber</td>
-            <td>@location.getRoom</td>
-            <td>@location.getCapacity</td>
-        </tr>
-
+    @if(!locations.isEmpty){
+        <th>Stad</th>
+        <th>Straatnaam</th>
+        <th>Huisnummer</th>
+        <th>Kamer</th>
+        <th>Capiciteit</th>
+        @for(location <- locations) {
+            <a href="@routes.LocationController.alterLocationForm(location.get_id())">
+                <td>@location.getCity</td>
+                <td>@location.getStreetName</td>
+                <td>@location.getStreetNumber</td>
+                <td>@location.getRoom</td>
+                <td>@location.getCapacity</td>
+            </a>
+        }
+    }   else{
+        <p> Geen Locaties</p>
     }
 </div>
 }

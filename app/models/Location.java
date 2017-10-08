@@ -2,6 +2,7 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 public class Location {
@@ -18,11 +19,6 @@ public class Location {
 
     // Class fields.
     private String City;
-
-    public String getStreetName() {
-        return StreetName;
-    }
-
     private String StreetName;
     private String StreetNumber;
     private String Room;
@@ -67,6 +63,11 @@ public class Location {
     public void setCity(String city) {
         City = city;
     }
+
+    @JsonProperty(M_STREETNAME)
+    public String getStreetName() { return StreetName; }
+
+    public void setStreetName(String streetName) { StreetName = streetName; }
 
     @JsonProperty(M_STREETNUMBER)
     public String getStreetNumber() {
