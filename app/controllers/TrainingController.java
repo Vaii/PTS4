@@ -112,7 +112,7 @@ public class TrainingController extends Controller{
         else {
             Form<Training> filledForm = form.bindFromRequest();
             Training training = filledForm.get();
-
+            training.set_id(id);
             trainingRepository.updateTraining(training);
             return ok(edit.render(training,"Trainingen",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
