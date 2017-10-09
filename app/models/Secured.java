@@ -17,7 +17,7 @@ import play.mvc.Http.Context;
  */
 public class Secured extends Security.Authenticator {
 
-    private static UserRepository userRepo = new UserRepository(new UserMongoContext("Users"));
+    private static UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
 
     @Override
     public String getUsername(Context ctx){

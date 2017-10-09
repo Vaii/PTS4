@@ -5,6 +5,7 @@ import dal.contexts.TrainingMongoContext;
 import dal.repositories.TrainingRepository;
 import models.Secured;
 import models.Training;
+import models.User;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
