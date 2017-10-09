@@ -18,6 +18,7 @@
     </head>
 
     <body>
+        <div id="wrapper">
         <nav class="navbar">
             <a href="@routes.ApplicationController.index()"><img src="@routes.Assets.at("images/infosupportlogo.png")" class="logo" alt="logo"></a>
             <ul>
@@ -59,7 +60,9 @@
                 }
             </ul>
         </nav>
+            <div id="content">
         @content
+            </div>
 
         <footer>
             <div class="row">
@@ -71,5 +74,6 @@
                 </div>
             </div>
         </footer>
+        </div>
     </body>
 </html>
