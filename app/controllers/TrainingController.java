@@ -48,7 +48,15 @@ public class TrainingController extends Controller{
     }
 
     public Result signUpUser(String id){
-        return null;
+
+        Form<User> filledForm = userForm.bindFromRequest();
+        User user = filledForm.get();
+
+        Training training = trainingRepository.getTraining(id);
+        training.addTrainee(user);
+        trainingRepository.updateTraining(training);
+
+        return ok(trainingoverview.render(trainingRepository.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
     TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));

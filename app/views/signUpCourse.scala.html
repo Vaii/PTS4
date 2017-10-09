@@ -8,11 +8,18 @@
     <div class="container">
         <h1>Inschrijven Cursus @Training.getName</h1>
 
+        <p>Training Code: @Training.getTrainingCode</p>
+        <p>Duur: @Training.getDuration</p>
+        <p>Prijs: @Training.getTuition</p>
+        <p>Locatie: @Training.getLocation</p>
+
         @b3.form(routes.TrainingController.signUpUser(Training.getTrainingCode)){
             @helper.CSRF.formField
             <div class="row col-lg-12">
                 <div class="row col-lg-12">@b3.text(form("FirstName"), '_label -> "Voornaam", 'class -> "", 'placeholder -> "Jan")</div>
-                <div class="row col-lg-12">@b3.text(form("LastName"), '_label -> "Achternaam", 'class -> "", 'placeholder -> "Janssen")</div>
+                <div class="row col-lg-12">@b3.text(form("LastName"), '_label -> "Achternaam", 'class -> "", 'placeholder -> "Jansen")</div>
+                <div class="row col-lg-12">@b3.text(form("Company"), '_label -> "Bedrijf", 'class -> "", 'placeholder -> "Software BV")</div>
+                <div class="row col-lg-12">@b3.submit('class -> "btn btn-primary") { Inschrijven }</div>
             </div>
         }
     </div>

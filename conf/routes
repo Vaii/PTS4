@@ -38,7 +38,7 @@ GET     /managetraining/:id                 controllers.TrainingController.manag
 GET     /removetraining/:id                 controllers.TrainingController.removeTraining(id: String)
 GET     /edit/:id                           controllers.TrainingController.edit(id: String)
 GET     /training/signup/:id                controllers.TrainingController.signUpCourse(id: String)
-GET     /training/signup/externalUser       controllers.TrainingController.signUpUser(id: String)
+POST     /training/externalSignUp           controllers.TrainingController.signUpUser(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

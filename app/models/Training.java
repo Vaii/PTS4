@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.validation.Constraints;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Training {
     private List<Training> Prerequisites;
 
     public Training() {
-
+        this.Trainee = new ArrayList<>();
     }
 
     public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date) {
@@ -58,6 +59,7 @@ public class Training {
         this.Tuition = tuition;
         this.Capacity = capacity;
         this.Date = date;
+        this.Trainee = new ArrayList<>();
     }
 
     public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<User> trainee, List<Training> prerequisites) {
