@@ -35,13 +35,16 @@ body {
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
 
 
+.imageSlider {
+    max-width: inherit;
+    margin: auto;
+}
+
 .slides {
-    padding: 0;
-    width: 1200px;
     height: 600px;
     display: block;
-    margin: 0 auto;
     position: relative;
+
 }
 
 .slides * {
@@ -60,7 +63,6 @@ body {
 .slide {
     top: 0;
     opacity: 0;
-    width: 1200px;
     height: 600px;
     display: block;
     position: absolute;
