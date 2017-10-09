@@ -1,5 +1,6 @@
 package dal.contexts;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.LocationContext;
@@ -28,14 +29,14 @@ public class LocationMongoContext implements LocationContext{
     }
 
     @Override
-    public boolean updateLocation(Location location) {
-        WriteResult result = collection.save(location);
+    public boolean updateLocation(String location_id, Location location) {
+        WriteResult result = collection.update("{_id:#}", new ObjectId(location_id)).with(location);
         return result.wasAcknowledged();
     }
 
     @Override
-    public boolean removeLocation(Location location) {
-        WriteResult result = collection.remove(new ObjectId(location.get_id()));
+    public boolean removeLocation(String location_id) {
+        WriteResult result = collection.remove(new ObjectId(location_id));
         return result.wasAcknowledged();
     }
 
@@ -53,7 +54,8 @@ public class LocationMongoContext implements LocationContext{
 
     @Override
     public Location getLocation(String id) {
-        return collection.findOne("{_id:#}", id).as(Location.class);
+
+        return collection.findOne("{_id:#}", new ObjectId(id)).as(Location.class);
     }
 
     public void removeAll() {

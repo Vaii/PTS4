@@ -2,19 +2,27 @@
 @import b3.vertical.fieldConstructor
 @(form: Form[Location], location: Location, isLoggedIn: Boolean, User: User, Page: String)
 @main(Page, isLoggedIn,User) {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/location.css")">
 
 <div class="container">
+    <h1>Locatie Wijzigen</h1>
+    <br>
         @b3.form(routes.LocationController.submitAlterLocation()) {
-            <table>
-                <tr>@b3.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'value -> location.getCity)</tr>
-                <tr>@b3.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'value -> location.getStreetName)</tr>
-                <tr>@b3.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'value -> location.getStreetNumber)</tr>
-                <tr>@b3.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'value -> location.getRoom)</tr>
-                <tr>@b3.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'value -> location.getCapacity)</tr>
+                @b3.text(form("_id"), 'class -> "form-control-inline", 'readonly ->"true", 'hidden ->"hidden", 'value -> location.get_id())
+                @b3.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'value -> location.getCity)
+                @b3.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'value -> location.getStreetName)
+                @b3.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'value -> location.getStreetNumber)
+                @b3.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'value -> location.getRoom)
+                @b3.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'value -> location.getCapacity)
+                <br>
+            <div class="row">
+                <div class="col-lg-4">@b3.submit('class -> "btn btn-primary") { Wijzigen }</div>
 
-                @b3.submit('class -> "btn btn-primary") { Wijzigen }
+                <div class="col-lg-4">
+                    <a href="@routes.LocationController.deleteLocation(location.get_id())" class="btn btn-danger">Verwijderen</a>
+                </div>
+            </div>
                 @helper.CSRF.formField
-            </table>
         }
 </div>
     }

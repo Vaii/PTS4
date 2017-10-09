@@ -2,7 +2,9 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
+import play.data.validation.Constraints;
 
 public class Location {
     // Mongo DB identifiers.
@@ -17,15 +19,15 @@ public class Location {
     private String _id;
 
     // Class fields.
+    @Constraints.Required
     private String City;
-
-    public String getStreetName() {
-        return StreetName;
-    }
-
+    @Constraints.Required
     private String StreetName;
+    @Constraints.Required
     private String StreetNumber;
+    @Constraints.Required
     private String Room;
+    @Constraints.Required
     private int Capacity;
 
     public Location(){
@@ -67,6 +69,11 @@ public class Location {
     public void setCity(String city) {
         City = city;
     }
+
+    @JsonProperty(M_STREETNAME)
+    public String getStreetName() { return StreetName; }
+
+    public void setStreetName(String streetName) { StreetName = streetName; }
 
     @JsonProperty(M_STREETNUMBER)
     public String getStreetNumber() {
