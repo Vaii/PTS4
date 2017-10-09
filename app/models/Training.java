@@ -218,4 +218,8 @@ public class Training {
     public void setPrerequisites(List<Training> prerequisites) {
         this.Prerequisites = prerequisites;
     }
+
+    public boolean addTrainee (User user){
+        return Trainee.add(user);
+    }
 }

@@ -28,15 +28,27 @@ import javax.inject.Inject;
  */
 public class TrainingController extends Controller{
 
-    @Security.Authenticated(Secured.class)
-    public Result signUpCourse(){
+    private Form<User> userForm;
 
-        if(Secured.getUserInfo(ctx()).getRole() != null ){
-            return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+    @Security.Authenticated(Secured.class)
+    public Result signUpCourse(String id){
+
+        if(id == null){
+            return null;
         }
         else{
-            return ok(signUpCourse.render("Training Inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            if(Secured.getUserInfo(ctx()).getRole() != null ){
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), trainingRepository.getTraining(id)));
+            }
+            else{
+                Form<User> signUpForm = userForm.fill(Secured.getUserInfo(ctx()));
+                return ok(signUpCourse.render("Training Inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), trainingRepository.getTraining(id), signUpForm));
+            }
         }
+    }
+
+    public Result signUpUser(String id){
+        return null;
     }
 
     TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
@@ -45,6 +57,7 @@ public class TrainingController extends Controller{
     @Inject
     public TrainingController(FormFactory formFactory) {
         this.form = formFactory.form(Training.class);
+        this.userForm = formFactory.form(User.class);
     }
 
     public Result addtraining() {
