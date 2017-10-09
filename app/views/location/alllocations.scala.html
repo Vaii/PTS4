@@ -1,23 +1,46 @@
 @(locations : List[Location], isLoggedIn: Boolean, User: User, Page: String)
 @main(Page, isLoggedIn, User){
 
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/locationoverview.css")">
 <div class="container">
     @if(!locations.isEmpty){
-        <th>Stad</th>
-        <th>Straatnaam</th>
-        <th>Huisnummer</th>
-        <th>Kamer</th>
-        <th>Capiciteit</th>
+        <div class="row">
+            <div class="col-lg-2"><h3>Stad</h3> </div>
+            <div class="col-lg-3"><h3>Straatnaam</h3></div>
+            <div class="col-lg-3"><h3>Huisnummer</h3></div>
+            <div class="col-lg-2"><h3>Kamer</h3></div>
+            <div class="col-lg-2"><h3>Capiciteit</h3></div>
+        </div>
+
         @for(location <- locations) {
-            <a href="@routes.LocationController.alterLocationForm(location.get_id())">
-                <td>@location.getCity</td>
-                <td>@location.getStreetName</td>
-                <td>@location.getStreetNumber</td>
-                <td>@location.getRoom</td>
-                <td>@location.getCapacity</td>
-            </a>
+            <div class="row">
+                <div class="col-lg-2">
+                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
+                        @location.getCity
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
+                        @location.getStreetName
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
+                        @location.getStreetNumber
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
+                        @location.getRoom
+                    </a>
+                </div>
+                <div class="col-lg-1">
+                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
+                        @location.getCapacity
+                    </a>
+                </div>
+            </div>
+
         }
     }   else{
         <p> Geen Locaties</p>

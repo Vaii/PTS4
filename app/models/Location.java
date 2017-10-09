@@ -21,9 +21,13 @@ public class Location {
     // Class fields.
     @Constraints.Required
     private String City;
+    @Constraints.Required
     private String StreetName;
+    @Constraints.Required
     private String StreetNumber;
+    @Constraints.Required
     private String Room;
+    @Constraints.Required
     private int Capacity;
 
     public Location(){
