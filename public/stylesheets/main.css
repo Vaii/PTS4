@@ -140,6 +140,8 @@ body {
     padding-top: 20px;
 }
 
+/* Footer stuff */
+
 .logo {
     width: 156px;
     display: block;
@@ -150,10 +152,7 @@ footer {
     position: absolute;
     bottom: 0;
     width:100%;
-    background-color: #0078c9;
-    background-image: url("../images/footer_bg.png");
-    background-position: right bottom;
-    background-repeat: no-repeat;
+    background: #0078c9 url("../images/footer_bg.png") no-repeat right bottom;
     min-height: 150px;
     color: white;
 }
