@@ -1,8 +1,31 @@
-@(page: String, isLoggedIn: Boolean, User: User, Training: Training)
+@import play.data.Form
+@import b3.vertical.fieldConstructor
+@import views.html.helper._
+
+
+
+@(page: String, isLoggedIn: Boolean, User: User, Training: Training, form: Form[TuitionForm])
 
 @main(page, isLoggedIn, User) {
 
     <div class="container">
-        <p>yo hallo medewerker</p>
+        <h1>Invullen studiekosten formulier</h1>
+        @b3.form(routes.TrainingController.signUpEmployee(Training.getTrainingCode())){
+
+            @helper.CSRF.formField
+            <div class="col-lg-12">@b3.text(form("Manager"), '_label -> "Manager email", 'class -> "", 'placeholder -> "frank@infosupport.nl")</div>
+            <div class="col-lg-12">@b3.text(form("Employee"), '_label -> "Email medewerker", 'class -> "" , 'value -> User.getEmail, 'readonly -> "true")</div>
+            <div class="col-lg-12">@b3.text(form("Training"), '_label -> "Training Code", 'class -> "", 'value -> Training.getTrainingCode, 'readonly -> "true")</div>
+            <div class="col-lg-12">@b3.date(form("CompanyJoinDate"), '_label -> "Datum in dienst", 'class -> "")</div>
+            <div class="col-lg-12">@b3.text(form("ReasonForCourse"), '_label -> "Reden voor training", 'class -> "")</div>
+            <div class="col-lg-12">@b3.number(form("StudyCosts"), '_label -> "Prijs", 'class -> "", 'value -> Training.getTuition, 'readonly -> "true")</div>
+            <div class="col-lg-12">@b3.number(form("ExaminationFees"), '_label -> "Examen kosten", 'class -> "")</div>
+            <div class="col-lg-12">@b3.number(form("TransportCosts"), '_label -> "Reiskosten", 'class -> "")</div>
+            <div class="col-lg-12">@b3.number(form("AccommodationCosts"), '_label -> "Accomodatie kosten", 'class -> "")</div>
+            <div class="col-lg-12">@b3.number(form("ExtraCosts"), '_label -> "Extra Kosten", 'class -> "")</div>
+            <div class="col-lg-12">@b3.select(form("Category"), options(models.TuitionCategory.values().toSeq.map(_.toString())), '_label -> "Categorie", 'class -> "")</div>
+            <div class="col-lg-12">@b3.submit('class -> "btn btn-primary") { Aanvraag indienen}</div>
+            <br/>
+        }
     </div>
 }

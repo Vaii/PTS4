@@ -43,7 +43,7 @@ public class Training {
 
     private Location Location;
     private User Teacher;
-    private List<User> Trainee;
+    private List<String> Trainee;
     private List<Training> Prerequisites;
 
     public Training() {
@@ -62,7 +62,7 @@ public class Training {
         this.Trainee = new ArrayList<>();
     }
 
-    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<User> trainee, List<Training> prerequisites) {
+    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<String> trainee, List<Training> prerequisites) {
         this._id = _id;
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -89,7 +89,7 @@ public class Training {
                     @JsonProperty(M_DATE)Date date,
                     @JsonProperty(M_LOCATION) Location location,
                     @JsonProperty(M_TEACHER) User teacher,
-                    @JsonProperty(M_TRAINEE) List<User> trainee,
+                    @JsonProperty(M_TRAINEE) List<String> trainee,
                     @JsonProperty(M_PREREQUISITES) List<Training> prerequisites) {
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -204,11 +204,11 @@ public class Training {
     }
 
     @JsonProperty(M_TRAINEE)
-    public List<User> getTrainee() {
+    public List<String> getTrainee() {
         return Trainee;
     }
 
-    public void setTrainee(List<User> trainee) {
+    public void setTrainee(List<String> trainee) {
         Trainee = trainee;
     }
 
@@ -221,7 +221,7 @@ public class Training {
         this.Prerequisites = prerequisites;
     }
 
-    public boolean addTrainee (User user){
-        return Trainee.add(user);
+    public boolean addTrainee (String id){
+        return Trainee.add(id);
     }
 }
