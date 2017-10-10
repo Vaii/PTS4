@@ -1,5 +1,8 @@
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+
 .container {
-    min-width: 1300px;
+    min-width: 60%;
+    max-width: 70em;
 }
 
 body {
@@ -15,7 +18,6 @@ body {
 .articles {
     margin-top: 100px;
     text-align: center;
-
 }
 
 .article-headers {
@@ -26,22 +28,16 @@ body {
     color: black;
     text-align: center;
     margin: 0 auto;
-    width: 20em;
 }
 
 
 /* image slider stuff */
 
-@import url(https://fonts.googleapis.com/css?family=Varela+Round);
-
-
 .slides {
-    padding: 0;
-    width: 1200px;
-    height: 600px;
+    height: 30em;
     display: block;
-    margin: 0 auto;
     position: relative;
+    width: 100%;
 }
 
 .slides * {
@@ -55,18 +51,19 @@ body {
 
 .slides input { display: none; }
 
-.slide-container { display: block; }
+.slide-container {
+    display: block;
+}
 
 .slide {
-    top: 0;
+    right: 0;
+    height: 100%;
     opacity: 0;
-    width: 1200px;
-    height: 600px;
     display: block;
     position: absolute;
 
     transform: scale(0);
-
+    width: 100%;
     transition: all .7s ease-in-out;
 }
 
@@ -76,7 +73,7 @@ body {
 }
 
 .nav label {
-    width: 200px;
+    width: 10%;
     height: 100%;
     display: none;
     position: absolute;
@@ -90,7 +87,7 @@ body {
     color: #FFF;
     font-size: 156pt;
     text-align: center;
-    line-height: 570px;
+    line-height: 2em;
     font-family: "Varela Round", sans-serif;
     /*background-color: rgba(255, 255, 255, .3);*/
     text-shadow: 0px 0px 15px rgb(119, 119, 119);
@@ -99,6 +96,8 @@ body {
 .slide:hover + .nav label { opacity: 0.5; }
 
 .nav label:hover { opacity: 1; }
+
+.nav .prev { left: 0; }
 
 .nav .next { right: 0; }
 

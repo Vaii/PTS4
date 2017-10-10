@@ -4,17 +4,16 @@ import models.Location;
 import models.Role;
 import models.Training;
 import models.User;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TrainingMongoContextTest {
+class TrainingMongoContextTest2 {
     private TrainingMongoContext context;
 
     // test location
@@ -28,7 +27,7 @@ public class TrainingMongoContextTest {
 
     private Training preTraining;
     private Training training;
-    private List<Training> prerequisites;
+    private List<String> prerequisites;
 
     @BeforeEach
     void setUp() {
@@ -42,26 +41,66 @@ public class TrainingMongoContextTest {
         trainees.add(trainee.get_id());
         trainees.add(trainee2.get_id());
 
-        preTraining = new Training("2", "004", "Java Basics", "Voor introductie met Java!",
+        preTraining = new Training("004", "Java Basics", "Voor introductie met Java!",
                 "Laptop", 2.00f, 800.00f, 20, new Date(2017, 9, 9), location, teacher,
                 null, null);
 
         prerequisites = new ArrayList<>();
-        prerequisites.add(preTraining);
+        prerequisites.add(preTraining.get_id());
 
-        training = new Training("1", "005", "Advanced Java", "Voor het verder ontwikkelen van uw Java skills!",
+        training = new Training("005", "Advanced Java", "Voor het verder ontwikkelen van uw Java skills!",
                 "Laptop", 2.00f, 1000.00f, 25, new Date(2017, 10, 8), location, teacher,
                 trainees, prerequisites);
     }
 
     @Test
-    public void addTraining() {
-       // reset();
+    void addTraining() {
+        reset();
         boolean result = context.addTraining(preTraining);
         assertEquals(true, result);
+    }
+
+    @Test
+    void updateTraining() {
+        reset();
+        context.addTraining(preTraining);
+        Training training = context.getTraining("004");
+        assertEquals("Laptop", training.getRequiredMaterial());
+        //assertEquals(800.00f, training.getTuition());
+
+        training.setTuition(500.00f);
+        context.updateTraining(training);
+        Training training2 = context.getTraining("004");
+      //  assertEquals(500.00f, training.getTuition());
+    }
+
+    @Test
+    void removeTraining() {
+
+    }
+
+    @Test
+    void getTraining() {
+    }
+
+    @Test
+    void getTrainings() {
+    }
+
+    @Test
+    void getTrainings1() {
+    }
+
+    @Test
+    void getAll() {
+    }
+
+    @Test
+    void removeAll() {
     }
 
     private void reset() {
         context.removeAll();
     }
+
 }

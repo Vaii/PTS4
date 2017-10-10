@@ -1,7 +1,8 @@
 @import play.data.Form
 @import b3.vertical.fieldConstructor // Declares a vertical field constructor as default
 
-@(form : Form[Training], isLoggedIn : Boolean, User : User, Page : String)
+@import dal.contexts.LocationMongoContext
+@(form : Form[Training], isLoggedIn : Boolean, User : User, Page : String, locations : List[Location])
 
 @main(Page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
@@ -21,6 +22,8 @@
           <tr>@b3.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01",  'placeholder -> "Voer kosten in")</tr>
           <tr>@b3.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline",  'placeholder -> "Voer capaciteit in(bv. 20 personen)")</tr>
           <tr>@b3.date(form("Date"), '_label -> "Datum:", 'class -> "form-control-inline")</tr>
+
+          <tr>@b3.select(form("Location"), options = locations.map(location => location.get_id() -> location.getStreetName), '_label -> "Locatie:", 'class -> "form-control-inline")</tr>
 
           @b3.submit('class -> "btn btn-primary") { Toevoegen }
       </table>

@@ -44,10 +44,11 @@ public class Training {
     private Location Location;
     private User Teacher;
     private List<String> Trainee;
-    private List<Training> Prerequisites;
+    private List<String> Prerequisites;
 
     public Training() {
         this.Trainee = new ArrayList<>();
+        this.Prerequisites = new ArrayList<>();
     }
 
     public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date) {
@@ -62,7 +63,19 @@ public class Training {
         this.Trainee = new ArrayList<>();
     }
 
-    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<String> trainee, List<Training> prerequisites) {
+    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location) {
+        this.TrainingCode = trainingCode;
+        this.Name = name;
+        this.Description = description;
+        this.RequiredMaterial = requiredMaterial;
+        this.Duration = duration;
+        this.Tuition = tuition;
+        this.Capacity = capacity;
+        this.Date = date;
+        this.Location = location;
+    }
+
+    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<String> trainee, List<String> prerequisites) {
         this._id = _id;
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -90,7 +103,7 @@ public class Training {
                     @JsonProperty(M_LOCATION) Location location,
                     @JsonProperty(M_TEACHER) User teacher,
                     @JsonProperty(M_TRAINEE) List<String> trainee,
-                    @JsonProperty(M_PREREQUISITES) List<Training> prerequisites) {
+                    @JsonProperty(M_PREREQUISITES) List<String> prerequisites) {
         this.TrainingCode = trainingCode;
         this.Name = name;
         this.Description = description;
@@ -213,11 +226,11 @@ public class Training {
     }
 
     @JsonProperty(M_PREREQUISITES)
-    public List<Training> getPrerequisites() {
+    public List<String> getPrerequisites() {
         return Prerequisites;
     }
 
-    public void setPrerequisites(List<Training> prerequisites) {
+    public void setPrerequisites(List<String> prerequisites) {
         this.Prerequisites = prerequisites;
     }
 

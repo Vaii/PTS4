@@ -2,23 +2,20 @@
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
-    @main(page, isLoggedIn, User) {
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 trainingmenu">
-                    <ul>
-                        <lh>Training</lh>
-                        @if(!trainings.isEmpty) {
-                            @for(training <- trainings) {
-                                <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
-                            }
-                        } else {
-                            <li>"No training yet"</li>
+@main(page, isLoggedIn, User) {
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 trainingmenu">
+                <ul>
+                    <lh>Training</lh>
+                    @if(!trainings.isEmpty) {
+                        @for(training <- trainings) {
+                            <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
                         }
                     </ul>
-                </div>
-                <div class="trainingtext col-lg-10" >
-                    <div>
+            </div>
+            <div class="trainingtext col-lg-10" >
+                <div>
                     @if(training != null) {
                         <div class="row col-lg-12">
                             <h1>@training.getName()</h1>
@@ -54,12 +51,13 @@
                             </div>
                         </div>
                     } else {
-                        <h1>Selecteer een training</h1>
-                        <p>Links in het menu kunt u trainingen selecteren.</p>
+                        <li>"No training yet"</li>
                     }
-                    </div>
+                </ul>
                 </div>
             </div>
         </div>
-    }
+    </div>
+}
+}
 
