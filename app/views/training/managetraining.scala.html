@@ -28,7 +28,6 @@
                     <h1>Beheren</h1>
                 </div>
                 @if(training != null) {
-
                     @b3.form(routes.TrainingController.edit(training.getTrainingCode())) {
                         @helper.CSRF.formField
                         <div class="row col-lg-12">

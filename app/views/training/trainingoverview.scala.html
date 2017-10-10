@@ -12,54 +12,52 @@
                         @for(training <- trainings) {
                             <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
                         }
+                    </ul>
+            </div>
+            <div class="trainingtext col-lg-10" >
+                <div>
+                    @if(training != null) {
+                        <div class="row col-lg-12">
+                            <h1>@training.getName()</h1>
+                        </div>
+                        <h2>Beschrijving</h2>
+                        @if(training.getDescription == null) {
+                            <p> Geen beschrijving. </p>
+                        } else {
+                            <p> @training.getDescription()</p>
+                        }
+                        <h2>Informatie</h2>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p>Trainingcode:</p>
+                                <p>Ruimte:</p>
+                                <p>Benodigde materialen:</p>
+                                <p>Koste:</p>
+                                <p>Duur:</p>
+                                <p>Datum: </p>
+
+                            </div>
+                            <div class="col-lg-8">
+                                <p>@training.getTrainingCode</p>
+                                <p>@training.getCapacity plekken</p>
+                                <p>@training.getRequiredMaterial</p>
+                                <p>€@training.getTuition euro per persoon.</p>
+                                <p>@training.getDuration dagen</p>
+                                <p>@training.getDate</p>
+                            </div>
+                            <div class="col-lg-3">
+                                <a href="@routes.TrainingController.signUpCourse(training.getTrainingCode())" class="btn btn-primary">
+                                    Inschrijven</a>
+                            </div>
+                        </div>
                     } else {
                         <li>"No training yet"</li>
                     }
                 </ul>
-            </div>
-            <div class="trainingtext col-lg-10" >
-                <div>
-                @if(training != null) {
-                    <div class="row col-lg-12">
-                        <h1>@training.getName()</h1>
-                    </div>
-                    <h2>Beschrijving</h2>
-                    @if(training.getDescription == null) {
-                        <p> Geen beschrijving. </p>
-                    } else {
-                        <p> @training.getDescription()</p>
-                    }
-                    <h2>Informatie</h2>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <p>Trainingcode:</p>
-                            <p>Ruimte:</p>
-                            <p>Benodigde materialen:</p>
-                            <p>Koste:</p>
-                            <p>Duur:</p>
-                            <p>Datum: </p>
-
-                        </div>
-                        <div class="col-lg-8">
-                            <p>@training.getTrainingCode</p>
-                            <p>@training.getCapacity plekken</p>
-                            <p>@training.getRequiredMaterial</p>
-                            <p>€@training.getTuition euro per persoon.</p>
-                            <p>@training.getDuration dagen</p>
-                            <p>@training.getDate</p>
-                        </div>
-                        <div class="col-lg-3">
-                            <a href="@routes.TrainingController.signUpCourse()" class="btn btn-primary">
-                                Inschrijven</a>
-                        </div>
-                    </div>
-                } else {
-                    <h1>Selecteer een training</h1>
-                    <p>Links in het menu kunt u trainingen selecteren.</p>
-                }
                 </div>
             </div>
         </div>
     </div>
+}
 }
 
