@@ -55,7 +55,6 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
 }
 
 .navbar ul p {
-
     display:block;
     color:white;
     text-decoration:none;
@@ -63,6 +62,7 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     font-size:14px;
     line-height:70px;
     padding:0 15px;
+    margin: auto 0;
     font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
