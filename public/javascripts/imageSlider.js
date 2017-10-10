@@ -1,0 +1,4 @@
+function fakeClick() {
+    $('#elementid').click();
+}
+

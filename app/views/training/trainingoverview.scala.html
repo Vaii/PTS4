@@ -1,69 +1,65 @@
-@(trainings: List[models.Training], training : models.Training, page : String, isLoggedIn : Boolean, User : User)
+@(trainings: List[models.Training], training: models.Training, page: String, isLoggedIn: Boolean, User: User)
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
-@main(page, isLoggedIn, User){
-    <div>
-        <table>
-
-            <div >
-                <td class="trainingmenu">
-                    <ul>
-                        <lh>Training</lh>
-                        @if(!trainings.isEmpty){
-                            @for(training <- trainings){
-                                <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
-                            }
-                        } else {
-                            <li>"No training yet"</li>
+@main(page, isLoggedIn, User) {
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 trainingmenu">
+                <ul>
+                    <lh>Training</lh>
+                    @if(!trainings.isEmpty) {
+                        @for(training <- trainings) {
+                            <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
                         }
-                    </ul>
-                </td>
+                    } else {
+                        <li>"No training yet"</li>
+                    }
+                </ul>
             </div>
-
-
-                <td class ="trainingtext">
-                    <div class="trainingtext">
-                @if(training != null){
-                    <table>
+            <div class="trainingtext col-lg-10" >
+                <div>
+                @if(training != null) {
+                    <div class="row col-lg-12">
                         <h1>@training.getName()</h1>
-
-                    </table>
-
-                        <h2>Beschrijving</h2>
+                    </div>
+                    <h2>Beschrijving</h2>
                     @if(training.getDescription == null) {
                         <p> Geen beschrijving. </p>
-                    } else{
+                    } else {
                         <p> @training.getDescription()</p>
                     }
                     <h2>Informatie</h2>
-
                     <div class="row">
                         <div class="col-lg-4">
+                            <p>Trainingcode:</p>
                             <p>Ruimte:</p>
                             <p>Benodigde materialen:</p>
                             <p>Koste:</p>
                             <p>Duur:</p>
+                            <p>Datum: </p>
+
                         </div>
                         <div class="col-lg-8">
-                            <p>@training.getCapacity() plekken</p>
+                            <p>@training.getTrainingCode</p>
+                            <p>@training.getCapacity plekken</p>
                             <p>@training.getRequiredMaterial</p>
                             <p>€@training.getTuition euro per persoon.</p>
                             <p>@training.getDuration dagen</p>
+                            <p>@training.getDate</p>
                         </div>
                         <div class="col-lg-3">
-                        <button class="btn btn-primary">Inschrijven</button>
+                            <a href="@routes.TrainingController.signUpCourse()" class="btn btn-primary">
+                                Inschrijven</a>
                         </div>
                     </div>
-                    <h2></h2>
-                    <a href="@routes.TrainingController.signUpCourse()" class="btn btn-primary">Inschrijven</a>
                 } else {
                     <h1>Selecteer een training</h1>
                     <p>Links in het menu kunt u trainingen selecteren.</p>
                 }
-                    </div>
-                </td>
-
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 }
+

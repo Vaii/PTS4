@@ -1,8 +1,11 @@
 package controllers;
 
 
+import dal.contexts.LocationMongoContext;
 import dal.contexts.TrainingMongoContext;
+import dal.repositories.LocationRepository;
 import dal.repositories.TrainingRepository;
+import models.Location;
 import models.Secured;
 import models.Training;
 import play.data.Form;
@@ -13,8 +16,14 @@ import play.mvc.Security;
 import views.html.training.addtraining;
 import views.html.training.submit;
 import views.html.training.trainingoverview;
+import views.html.training.managetraining;
+import views.html.training.removetraining;
+import views.html.training.*;
+import views.html.training.edit;
 import views.html.signUpCourse;
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ken on 27-9-2017.
@@ -27,7 +36,9 @@ public class TrainingController extends Controller{
     }
 
     TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
+    LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     private Form<Training> form;
+    List<Location> locations = locationRepo.getAll();
 
     @Inject
     public TrainingController(FormFactory formFactory) {
@@ -35,15 +46,14 @@ public class TrainingController extends Controller{
     }
 
     public Result addtraining() {
-        return ok(addtraining.render(form,Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training"));
+        return ok(addtraining.render(form,Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations));
     }
 
     public Result submit() { // submit new training
         Form<Training> filledForm = form.bindFromRequest();
 
         if(filledForm.hasErrors()) {
-            flash("danger", "Please fill valid in");
-            return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training"));
+            return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations));
         }
         else {
             Training newTraining = filledForm.get();
@@ -67,6 +77,50 @@ public class TrainingController extends Controller{
         else {
             return ok(trainingoverview.render(trainingRepository.getAll(),trainingRepository.getTraining(id),
                     "Trainingen" , Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        }
+    }
+
+    public Result manage(){
+        return ok(managetraining.render(trainingRepository.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()),Secured.getUserInfo(ctx()),form));
+    }
+
+    public Result manageTraining(String id){
+        if (id == null){
+            return ok(managetraining.render(trainingRepository.getAll(),null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),form));
+        }
+        else {
+            Form<Training> editForm = form.fill(trainingRepository.getTraining(id));
+            return ok(managetraining.render(trainingRepository.getAll(),trainingRepository.getTraining(id),
+                    "Trainingen" , Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),editForm));
+        }
+    }
+
+    public Result removeTraining(String id){
+        if (id == null){
+            return ok(managetraining.render(trainingRepository.getAll(),null,"Trainingen", Secured.isLoggedIn(ctx()),Secured.getUserInfo(ctx()),form));
+        }
+        else {
+            Training t = trainingRepository.getTraining(id);
+            trainingRepository.removeTraining(t);
+            return ok(removetraining.render(t,"Trainingen", Secured.isLoggedIn(ctx()),Secured.getUserInfo(ctx())));
+        }
+
+    }
+
+    public Result edit(String code) {
+        Form<Training> editFrom = form.fill(trainingRepository.getTraining(code));
+        if(editFrom.hasErrors()){
+            flash("danger", "Wrong values");
+            return badRequest(managetraining.render(trainingRepository.getAll(),null,
+                    "Trainingen" , Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),form));
+        }
+        else {
+            Form<Training> filledForm = form.bindFromRequest();
+            Training training = filledForm.get();
+            training.set_id(trainingRepository.getTraining(code).get_id());
+            trainingRepository.updateTraining(training);
+            return ok(edit.render(training,"Trainingen",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
     }
 }
