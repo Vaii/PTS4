@@ -22,7 +22,7 @@
         <nav class="navbar">
             <a href="@routes.ApplicationController.index()"><img src="@routes.Assets.at("images/infosupportlogo.png")" class="logo" alt="logo"></a>
             <ul>
-                <li ><a href="" class="navitem dropdown-toggle">Training</a>
+                <li ><p class="navitem dropdown-toggle">Training</p>
                     <ul>
                         <li><a href="@routes.TrainingController.manage()" class="navitem dropdown-toggle">
                             Training Beheren</a>
@@ -37,7 +37,7 @@
                     </ul>
                 </li>
 
-                <li ><a href="" class="navitem dropdown-toggle">Manager</a>
+                <li ><p class="navitem dropdown-toggle">Manager</p>
                     <ul>
                         <li><a href="#">Mijn Medewerker</a></li>
                         <li><a href="#">StudieKosten Formulier</a></li>
@@ -47,7 +47,7 @@
                     <li><a href="@routes.AccountController.logout()" class="navitem">Log out</a>
                     </li>
                 } else {
-                    <li ><a href="" class="navitem dropdown-toggle">Log In</a>
+                    <li ><p class="navitem dropdown-toggle">Log In</p>
                         <ul>
                             <li><a href="@routes.AccountController.register()">Registreren</a></li>
                             <li><a href="@routes.AccountController.login()">Aanmelden</a></li>

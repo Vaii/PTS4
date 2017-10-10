@@ -54,6 +54,18 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
     font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+.navbar ul p {
+
+    display:block;
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+    font-size:14px;
+    line-height:70px;
+    padding:0 15px;
+    font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 .navbar ul li {
     position:relative;
     float:left;
