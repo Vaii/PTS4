@@ -55,16 +55,28 @@ class TrainingMongoContextTest2 {
 
     @Test
     void addTraining() {
+        reset();
         boolean result = context.addTraining(preTraining);
         assertEquals(true, result);
     }
 
     @Test
     void updateTraining() {
+        reset();
+        context.addTraining(preTraining);
+        Training training = context.getTraining("004");
+        assertEquals("Laptop", training.getRequiredMaterial());
+        //assertEquals(800.00f, training.getTuition());
+
+        training.setTuition(500.00f);
+        context.updateTraining(training);
+        Training training2 = context.getTraining("004");
+      //  assertEquals(500.00f, training.getTuition());
     }
 
     @Test
     void removeTraining() {
+
     }
 
     @Test
@@ -85,6 +97,10 @@ class TrainingMongoContextTest2 {
 
     @Test
     void removeAll() {
+    }
+
+    private void reset() {
+        context.removeAll();
     }
 
 }
