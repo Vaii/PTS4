@@ -38,12 +38,15 @@ public class LocationController {
         return ok(alllocations.render(locationrepo.getAll(),Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "All Locations"));
     }
 
-    public Result alterLocationForm(String roomid){
-        if(roomid == null){
-            return locationOverview();
+    public Result alterLocationForm(String id){
+        if(id != null){
+            Location location = locationrepo.getLocation(id);
+            if(location != null){
+                return ok(alterlocation.render(form, location, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Alter Location Form"));
+            }
         }
-        Location location = locationrepo.getLocation(roomid);
-        return ok(alterlocation.render(form, location, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "Alter Location Form"));
+        return locationOverview();
+
     }
 
     // method to get the results from the html form and redirect the user to the next page
@@ -59,10 +62,19 @@ public class LocationController {
   public Result submitAlterLocation(){
         Form<Location> boundform = form.bindFromRequest();
         Location data = boundform.get();
-        if(locationrepo.updateLocation(data)){
+        String location_id = boundform.field("_id").value();
+        if(locationrepo.updateLocation(location_id, data)){
             return redirect(routes.LocationController.locationOverview());
         }
-        return redirect(routes.LocationController.alterLocationForm(data.get_id()));
+        return redirect(routes.LocationController.locationOverview());
+  }
+
+  //TODO make a message so the user knows if the deletion was succesful
+  public Result deleteLocation(String location_id){
+      if(locationrepo.removeLocation(location_id)){
+          return redirect(routes.LocationController.locationOverview());
+      }
+      return redirect(routes.LocationController.locationOverview());
   }
 
 
