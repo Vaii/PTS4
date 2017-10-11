@@ -71,7 +71,7 @@ public class AccountController extends Controller {
         }
         else if(password.equals(validation)){
             if(userRepo.addUser(user, password)){
-                return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2));
+                return ok(registerSuccess.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
             }
             return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
         }
