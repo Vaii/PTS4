@@ -19,6 +19,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.index;
+import views.html.successSignUp;
 import views.html.training.addtraining;
 import views.html.training.submit;
 import views.html.training.trainingoverview;
@@ -68,7 +69,7 @@ public class TrainingController extends Controller{
             TuitionForm filledForm = filledTuitionForm.get();
             filledForm.setTotalCosts(filledForm.getStudyCosts() + filledForm.getAccommodationCosts() + filledForm.getExaminationFees() + filledForm.getTransportCosts() + filledForm.getExtraCosts());
             tutRepo.addForm(filledForm);
-            return ok(index.render("Index", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            return ok(successSignUp.render("Success", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
     }
 
