@@ -76,7 +76,7 @@ public class TrainingController extends Controller{
     TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
     LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     private Form<Training> form;
-    List<Location> locations = locationRepo.getAll();
+    List<Location> locations = new ArrayList<>();
 
     @Inject
     public TrainingController(FormFactory formFactory) {
@@ -85,6 +85,7 @@ public class TrainingController extends Controller{
     }
 
     public Result addtraining() {
+        List<Location> locations = locationRepo.getAll();
         return ok(addtraining.render(form,Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations));
     }
 

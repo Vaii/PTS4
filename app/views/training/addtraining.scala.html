@@ -23,8 +23,7 @@
           <tr>@b3.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline",  'placeholder -> "Voer capaciteit in(bv. 20 personen)")</tr>
           <tr>@b3.date(form("Date"), '_label -> "Datum:", 'class -> "form-control-inline")</tr>
 
-          <tr>@b3.select(form("Location"), options = locations.map(location => location.get_id() -> location.getStreetName), '_label -> "Locatie:", 'class -> "form-control-inline")</tr>
-
+          <tr>@b3.select(form("LocationID"), options = locations.map(location => location.get_id() -> location.getStreetName), '_label -> "Locatie:", 'class -> "form-control-inline")</tr>
           @b3.submit('class -> "btn btn-primary") { Toevoegen }
       </table>
       </div>

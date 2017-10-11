@@ -20,7 +20,7 @@ public class Training {
     private static final String M_TUITION = "Tuition";
     private static final String M_CAPACITY = "Capacity";
     private static final String M_DATE = "Date";
-    private static final String M_LOCATION = "Location";
+    private static final String M_LOCATION = "LocationID";
     private static final String M_TEACHER = "Teacher";
     private static final String M_TRAINEE = "Trainee";
     private static final String M_PREREQUISITES = "Prerequisites";
@@ -41,7 +41,8 @@ public class Training {
     @Constraints.Required
     private java.util.Date Date;
 
-    private Location Location;
+    @Constraints.Required
+    private String LocationID;
     private User Teacher;
     private List<String> Trainee;
     private List<String> Prerequisites;
@@ -63,7 +64,7 @@ public class Training {
         this.Trainee = new ArrayList<>();
     }
 
-    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location) {
+    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, String locationID) {
         this.TrainingCode = trainingCode;
         this.Name = name;
         this.Description = description;
@@ -72,10 +73,10 @@ public class Training {
         this.Tuition = tuition;
         this.Capacity = capacity;
         this.Date = date;
-        this.Location = location;
+        this.LocationID = locationID;
     }
 
-    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<String> trainee, List<String> prerequisites) {
+    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, String locationID, User teacher, List<String> trainee, List<String> prerequisites) {
         this._id = _id;
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -85,7 +86,7 @@ public class Training {
         this.Tuition = tuition;
         this.Capacity = capacity;
         this.Date = date;
-        this.Location = location;
+        this.LocationID = locationID;
         this.Teacher = teacher;
         this.Trainee = trainee;
         this.Prerequisites = prerequisites;
@@ -100,7 +101,7 @@ public class Training {
                     @JsonProperty(M_TUITION) float tuition,
                     @JsonProperty(M_CAPACITY) int capacity,
                     @JsonProperty(M_DATE)Date date,
-                    @JsonProperty(M_LOCATION) Location location,
+                    @JsonProperty(M_LOCATION) String locationID,
                     @JsonProperty(M_TEACHER) User teacher,
                     @JsonProperty(M_TRAINEE) List<String> trainee,
                     @JsonProperty(M_PREREQUISITES) List<String> prerequisites) {
@@ -112,7 +113,7 @@ public class Training {
         this.Tuition = tuition;
         this.Capacity = capacity;
         this.Date = date;
-        this.Location = location;
+        this.LocationID = locationID;
         this.Teacher = teacher;
         this.Trainee = trainee;
         this.Prerequisites = prerequisites;
@@ -199,12 +200,12 @@ public class Training {
     }
 
     @JsonProperty(M_LOCATION)
-    public Location getLocation() {
-        return Location;
+    public String getLocationID() {
+        return LocationID;
     }
 
-    public void setLocation(Location location) {
-        this.Location = location;
+    public void setLocationID(String locationID) {
+        this.LocationID = locationID;
     }
 
     @JsonProperty(M_TEACHER)
