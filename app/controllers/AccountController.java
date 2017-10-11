@@ -31,7 +31,7 @@ public class AccountController extends Controller {
     }
 
     public Result login(){
-        return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2));
+        return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
     }
 
     public Result authentication(){
@@ -52,7 +52,7 @@ public class AccountController extends Controller {
                 session("email", username);
                 return redirect(routes.ApplicationController.index());
             }
-            return redirect(routes.AccountController.login());
+            return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
         }
     }
 
