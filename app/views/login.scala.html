@@ -1,4 +1,4 @@
-@(page: String, isLoggedIn: Boolean, User: User, form : DynamicForm)
+@(page: String, isLoggedIn: Boolean, User: User, form : DynamicForm, hasError: Boolean)
 @import b3.vertical.fieldConstructor
 
 @main(page, isLoggedIn, User) {
@@ -8,6 +8,11 @@
     @b3.form(routes.AccountController.authentication()){
         @helper.CSRF.formField
         <table>
+            @if(hasError) {
+                <div class="alert alert-danger">
+                    Onjuist email of wachtwoord
+                </div>
+            }
             <tr><p>Email</p></tr>
             <tr>@b3.text(form("email"), 'label -> "Email", 'placeholder -> "Email Address", 'required -> "required")</tr>
             <tr><p>Password</p></tr>
