@@ -3,45 +3,77 @@
 
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/locationoverview.css")">
 <div class="container">
-    @if(!locations.isEmpty){
-        <div class="row">
-            <div class="col-lg-2"><h3>Stad</h3> </div>
-            <div class="col-lg-3"><h3>Straatnaam</h3></div>
-            <div class="col-lg-3"><h3>Huisnummer</h3></div>
-            <div class="col-lg-2"><h3>Kamer</h3></div>
-            <div class="col-lg-2"><h3>Capiciteit</h3></div>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1>Locatie Overzicht</h1>
         </div>
-
+    </div>
+    @if(!locations.isEmpty){
+        <br>
+        <div class="row">
         @for(location <- locations) {
-            <div class="row">
-                <div class="col-lg-2">
-                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
-                        @location.getCity
-                    </a>
+                <div class="col-lg-3 contentcontainer">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p class="bold">Stad:</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>
+                            @location.getCity
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p class="bold">Straat:</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>
+                            @location.getStreetName
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p class="bold">Huisnummer:</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>
+                            @location.getStreetNumber
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p class="bold">Lokaal:</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>
+                                @location.getRoom
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p class="bold">Capaciteit:</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>
+                                @location.getCapacity
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <a href="@routes.LocationController.alterLocationForm(location.get_id())" class="btn btn-primary">Wijzig</a>
+                        </div>
+                        <div class="col-lg-6">
+                            <a href="@routes.LocationController.deleteLocation(location.get_id())" class="btn btn-danger">Verwijder</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-3">
-                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
-                        @location.getStreetName
-                    </a>
-                </div>
-                <div class="col-lg-3">
-                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
-                        @location.getStreetNumber
-                    </a>
-                </div>
-                <div class="col-lg-3">
-                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
-                        @location.getRoom
-                    </a>
-                </div>
-                <div class="col-lg-1">
-                    <a href="@routes.LocationController.alterLocationForm(location.get_id())">
-                        @location.getCapacity
-                    </a>
-                </div>
-            </div>
-
         }
+        </div>
     }   else{
         <p> Geen Locaties</p>
     }

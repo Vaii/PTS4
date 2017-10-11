@@ -77,5 +77,4 @@ public class LocationController {
       return redirect(routes.LocationController.locationOverview());
   }
 
-
 }
