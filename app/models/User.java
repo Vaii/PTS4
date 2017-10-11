@@ -18,26 +18,32 @@ public class User {
     private static final String M_COMPANY = "Company";
     private static final String M_SALT = "Salt";
     private static final String M_HASHEDPASSWORD = "HashedPassword";
+    private static final String M_PHONENUMBER = "PhoneNumber";
 
     // Mongo DB ID.
     @MongoObjectId
     private String _id;
 
     // Class fields.
+    @play.data.validation.Constraints.Required
     private String FirstName,LastName;
+    @play.data.validation.Constraints.Required
     private String Email;
     private Role Role;
+    @play.data.validation.Constraints.Required
     private String Company;
     private String Salt;
     private String HashedPassword;
+    @play.data.validation.Constraints.Required
+    private String PhoneNumber;
 
-    public User(String firstName, String lastName, String email, Role role, String company) {
-        this._id = _id;
+    public User(String firstName, String lastName, String email, Role role, String company, String phoneNumber) {
         this.FirstName = firstName;
         this.LastName = lastName;
         this.Email = email;
         this.Role = role;
         this.Company = company;
+        this.PhoneNumber = phoneNumber;
     }
 
     public User(){
@@ -51,7 +57,8 @@ public class User {
                 @JsonProperty(M_ROLE) Role role,
                 @JsonProperty(M_COMPANY) String company,
                 @JsonProperty(M_SALT) String salt,
-                @JsonProperty(M_HASHEDPASSWORD) String hashedPassword) {
+                @JsonProperty(M_HASHEDPASSWORD) String hashedPassword,
+                @JsonProperty(M_PHONENUMBER) String phoneNumber) {
         this.FirstName = firstName;
         this.LastName = lastName;
         this.Email = email;
@@ -59,6 +66,16 @@ public class User {
         this.Company = company;
         this.Salt = salt;
         this.HashedPassword = hashedPassword;
+        this.PhoneNumber = phoneNumber;
+    }
+
+    @JsonProperty(M_PHONENUMBER)
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumer) {
+        PhoneNumber = phoneNumer;
     }
 
     public String get_id() {

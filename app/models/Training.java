@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.validation.Constraints;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,11 +43,12 @@ public class Training {
 
     private Location Location;
     private User Teacher;
-    private List<User> Trainee;
-    private List<Training> Prerequisites;
+    private List<String> Trainee;
+    private List<String> Prerequisites;
 
     public Training() {
-
+        this.Trainee = new ArrayList<>();
+        this.Prerequisites = new ArrayList<>();
     }
 
     public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date) {
@@ -58,6 +60,7 @@ public class Training {
         this.Tuition = tuition;
         this.Capacity = capacity;
         this.Date = date;
+        this.Trainee = new ArrayList<>();
     }
 
     public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location) {
@@ -72,7 +75,7 @@ public class Training {
         this.Location = location;
     }
 
-    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<User> trainee, List<Training> prerequisites) {
+    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, Location location, User teacher, List<String> trainee, List<String> prerequisites) {
         this._id = _id;
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -99,8 +102,8 @@ public class Training {
                     @JsonProperty(M_DATE)Date date,
                     @JsonProperty(M_LOCATION) Location location,
                     @JsonProperty(M_TEACHER) User teacher,
-                    @JsonProperty(M_TRAINEE) List<User> trainee,
-                    @JsonProperty(M_PREREQUISITES) List<Training> prerequisites) {
+                    @JsonProperty(M_TRAINEE) List<String> trainee,
+                    @JsonProperty(M_PREREQUISITES) List<String> prerequisites) {
         this.TrainingCode = trainingCode;
         this.Name = name;
         this.Description = description;
@@ -214,20 +217,24 @@ public class Training {
     }
 
     @JsonProperty(M_TRAINEE)
-    public List<User> getTrainee() {
+    public List<String> getTrainee() {
         return Trainee;
     }
 
-    public void setTrainee(List<User> trainee) {
+    public void setTrainee(List<String> trainee) {
         Trainee = trainee;
     }
 
     @JsonProperty(M_PREREQUISITES)
-    public List<Training> getPrerequisites() {
+    public List<String> getPrerequisites() {
         return Prerequisites;
     }
 
-    public void setPrerequisites(List<Training> prerequisites) {
+    public void setPrerequisites(List<String> prerequisites) {
         this.Prerequisites = prerequisites;
+    }
+
+    public boolean addTrainee (String id){
+        return Trainee.add(id);
     }
 }

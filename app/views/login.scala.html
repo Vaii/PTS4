@@ -3,12 +3,17 @@
 
 @main(page, isLoggedIn, User) {
 
+    <div class="container">
+        <h1>Inloggen</h1>
     @b3.form(routes.AccountController.authentication()){
         @helper.CSRF.formField
-        <p>Email</p>
-        @b3.text(form("email"), 'label -> "Email", 'placeholder -> "Email Address")
-        <p>Password</p>
-        @b3.password(form("password"), 'label -> "Password", 'placeholder -> "Password")
-        @b3.submit('class -> "btn btn-default") {Log in}
+        <table>
+            <tr><p>Email</p></tr>
+            <tr>@b3.text(form("email"), 'label -> "Email", 'placeholder -> "Email Address", 'required -> "required")</tr>
+            <tr><p>Password</p></tr>
+            <tr>@b3.password(form("password"), 'label -> "Password", 'placeholder -> "Password", 'required -> "required")</tr>
+            <tr>@b3.submit('class -> "btn btn-default") {Log in}</tr>
+        </table>
     }
+    </div>
 }

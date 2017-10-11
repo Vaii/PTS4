@@ -18,7 +18,8 @@ import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
 import static play.mvc.Results.redirect;
 
-public class LocationController {
+public class LocationController extends Controller {
+
     private final Form<Location> form;
     private ArrayList<Location>availablelocations;
     private LocationRepository locationrepo;
