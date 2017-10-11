@@ -53,7 +53,7 @@ public class TrainingController extends Controller{
                 Training signUpFor = trainingRepository.getTraining(id);
                 signUpFor.addTrainee(Secured.getUserInfo(ctx()).get_id());
                 trainingRepository.updateTraining(signUpFor);
-                return ok(trainingoverview.render(trainingRepository.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+                return ok(successSignUp.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
             }
         }
     }

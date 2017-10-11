@@ -4,8 +4,8 @@
 
 # Home page
 
-GET     /                                 controllers.ApplicationController.index
-GET     /contact                          controllers.ApplicationController.contact
+GET     /                                   controllers.ApplicationController.index
+GET     /contact                            controllers.ApplicationController.contact
 
 # Trainingen
 
@@ -13,12 +13,12 @@ GET     /contact                          controllers.ApplicationController.cont
 
 # Account management
 
-GET     /account/login                    controllers.AccountController.login
-POST    /account/login                    controllers.AccountController.authentication
-GET     /account/profile                  controllers.AccountController.profile
-GET     /account/logout                   controllers.AccountController.logout
-GET     /account/register                 controllers.AccountController.register
-GET     /account/registerAccount          controllers.AccountController.registerAccount
+GET     /account/login                      controllers.AccountController.login
+POST    /account/login                      controllers.AccountController.authentication
+GET     /account/profile                    controllers.AccountController.profile
+GET     /account/logout                     controllers.AccountController.logout
+GET     /account/register                   controllers.AccountController.register
+GET     /account/registerAccount            controllers.AccountController.registerAccount
 
 
 # Location
@@ -42,7 +42,7 @@ POST    /training/externalSignUp            controllers.TrainingController.signU
 GET     /edit/:code                         controllers.TrainingController.edit(code: String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                       controllers.Assets.at(path="/public", file)
 
 
     
