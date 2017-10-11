@@ -84,11 +84,13 @@ public class TrainingController extends Controller{
         this.tuitionFormForm = formFactory.form(TuitionForm.class);
     }
 
+    @Security.Authenticated(Secured.class)
     public Result addtraining() {
         List<Location> locations = locationRepo.getAll();
         return ok(addtraining.render(form,Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result submit() { // submit new training
         Form<Training> filledForm = form.bindFromRequest();
 
@@ -120,10 +122,12 @@ public class TrainingController extends Controller{
         }
     }
 
+    @Security.Authenticated(Secured.class)
     public Result manage(){
         return ok(managetraining.render(trainingRepository.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()),Secured.getUserInfo(ctx()),form));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result manageTraining(String id){
         if (id == null){
             return ok(managetraining.render(trainingRepository.getAll(),null,
@@ -136,6 +140,7 @@ public class TrainingController extends Controller{
         }
     }
 
+    @Security.Authenticated(Secured.class)
     public Result removeTraining(String id){
         if (id == null){
             return ok(managetraining.render(trainingRepository.getAll(),null,"Trainingen", Secured.isLoggedIn(ctx()),Secured.getUserInfo(ctx()),form));
@@ -148,6 +153,7 @@ public class TrainingController extends Controller{
 
     }
 
+    @Security.Authenticated(Secured.class)
     public Result edit(String code) {
         Form<Training> editFrom = form.fill(trainingRepository.getTraining(code));
         if(editFrom.hasErrors()){
