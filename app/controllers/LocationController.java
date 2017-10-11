@@ -31,14 +31,17 @@ public class LocationController extends Controller {
     }
 
     //Loads the generic form for adding a location
+    @Security.Authenticated(Secured.class)
     public Result loadLocationForm(){
         return ok(newlocationform.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "Location Form"));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result locationOverview(){
         return ok(alllocations.render(locationrepo.getAll(),Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "All Locations"));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result alterLocationForm(String id){
         if(id != null){
             Location location = locationrepo.getLocation(id);
@@ -51,6 +54,7 @@ public class LocationController extends Controller {
     }
 
     // method to get the results from the html form and redirect the user to the next page
+    @Security.Authenticated(Secured.class)
     public Result createLocation(){
     Form<Location> boundForm = form.bindFromRequest();
     Location data = boundForm.get();
@@ -60,6 +64,7 @@ public class LocationController extends Controller {
     return redirect(routes.LocationController.loadLocationForm());
   }
 
+  @Security.Authenticated(Secured.class)
   public Result submitAlterLocation(){
         Form<Location> boundform = form.bindFromRequest();
         Location data = boundform.get();
@@ -71,6 +76,7 @@ public class LocationController extends Controller {
   }
 
   //TODO make a message so the user knows if the deletion was succesful
+  @Security.Authenticated(Secured.class)
   public Result deleteLocation(String location_id){
       if(locationrepo.removeLocation(location_id)){
           return redirect(routes.LocationController.locationOverview());
