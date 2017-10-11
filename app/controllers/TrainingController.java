@@ -38,6 +38,16 @@ public class TrainingController extends Controller{
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
+    TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
+    LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
+    private Form<Training> form;
+    List<Location> locations = new ArrayList<>();
+
+    @Inject
+    public TrainingController(FormFactory formFactory) {
+        this.form = formFactory.form(Training.class);
+        this.tuitionFormForm = formFactory.form(TuitionForm.class);
+    }
 
     @Security.Authenticated(Secured.class)
     public Result signUpCourse(String id){
@@ -73,17 +83,6 @@ public class TrainingController extends Controller{
         }
     }
 
-    TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
-    LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
-    private Form<Training> form;
-    List<Location> locations = new ArrayList<>();
-
-    @Inject
-    public TrainingController(FormFactory formFactory) {
-        this.form = formFactory.form(Training.class);
-        this.tuitionFormForm = formFactory.form(TuitionForm.class);
-    }
-
     @Security.Authenticated(Secured.class)
     public Result addtraining() {
         List<Location> locations = locationRepo.getAll();
@@ -105,7 +104,6 @@ public class TrainingController extends Controller{
         }
     }
 
-
     public Result overview(){
         return ok(trainingoverview.render(trainingRepository.getAll(),null,
                 "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
@@ -124,18 +122,18 @@ public class TrainingController extends Controller{
 
     @Security.Authenticated(Secured.class)
     public Result manage(){
-        return ok(managetraining.render(trainingRepository.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()),Secured.getUserInfo(ctx()),form));
+        return ok(managetraining.render(trainingRepository.getAll(),locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()),Secured.getUserInfo(ctx()),form));
     }
 
     @Security.Authenticated(Secured.class)
     public Result manageTraining(String id){
         if (id == null){
-            return ok(managetraining.render(trainingRepository.getAll(),null,
+            return ok(managetraining.render(trainingRepository.getAll(),locationRepo.getAll(),null,
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),form));
         }
         else {
             Form<Training> editForm = form.fill(trainingRepository.getTraining(id));
-            return ok(managetraining.render(trainingRepository.getAll(),trainingRepository.getTraining(id),
+            return ok(managetraining.render(trainingRepository.getAll(),locationRepo.getAll(),trainingRepository.getTraining(id),
                     "Trainingen" , Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),editForm));
         }
     }
@@ -143,7 +141,7 @@ public class TrainingController extends Controller{
     @Security.Authenticated(Secured.class)
     public Result removeTraining(String id){
         if (id == null){
-            return ok(managetraining.render(trainingRepository.getAll(),null,"Trainingen", Secured.isLoggedIn(ctx()),Secured.getUserInfo(ctx()),form));
+            return ok(managetraining.render(trainingRepository.getAll(),locationRepo.getAll(),null,"Trainingen", Secured.isLoggedIn(ctx()),Secured.getUserInfo(ctx()),form));
         }
         else {
             Training t = trainingRepository.getTraining(id);
@@ -158,7 +156,7 @@ public class TrainingController extends Controller{
         Form<Training> editFrom = form.fill(trainingRepository.getTraining(code));
         if(editFrom.hasErrors()){
             flash("danger", "Wrong values");
-            return badRequest(managetraining.render(trainingRepository.getAll(),null,
+            return badRequest(managetraining.render(trainingRepository.getAll(),locationRepo.getAll(),null,
                     "Trainingen" , Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),form));
         }
         else {
