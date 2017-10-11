@@ -2,11 +2,16 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.util.Date;
 
+/**
+ * The tuition form is used internally by Info Support.
+ * When an employee signs up for a course this form will need to be filled out and send to his manager.
+ * <p>
+ * The manager can then approve or deny his request.
+ */
 public class TuitionForm {
     // Mongo DB identifiers.
     private static final String M_MANAGER = "Manager";
@@ -27,8 +32,10 @@ public class TuitionForm {
     private String _id;
 
     // Class fields.
+    // MongoDB ID's of both users.
     @play.data.validation.Constraints.Required
     private String Manager, Employee;
+    // MongoDB ID of the training.
     @play.data.validation.Constraints.Required
     private String Training;
     @play.data.validation.Constraints.Required
@@ -77,7 +84,7 @@ public class TuitionForm {
         this.Category = category;
     }
 
-    public TuitionForm(){
+    public TuitionForm() {
 
     }
 

@@ -30,12 +30,12 @@ public class TuitionFormRepository implements TuitionFormContext {
     }
 
     @Override
-    public List<TuitionForm> getForm(User manager) {
-        return context.getForm(manager);
+    public List<TuitionForm> getForm(String managerID) {
+        return context.getForm(managerID);
     }
 
     @Override
-    public List<TuitionForm> getForms(User employee) {
-        return context.getForms(employee);
+    public List<TuitionForm> getForms(String employeeID) {
+        return context.getForms(employeeID);
     }
 }

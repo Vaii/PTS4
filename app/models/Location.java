@@ -2,10 +2,15 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.validation.Constraints;
 
+/**
+ * The location class represents data for a real-life location.
+ * These location can be linked to a training.
+ *
+ * @see Training
+ */
 public class Location {
     // Mongo DB identifiers.
     private static final String M_CITY = "City";
@@ -30,7 +35,7 @@ public class Location {
     @Constraints.Required
     private int Capacity;
 
-    public Location(){
+    public Location() {
 
     }
 
@@ -71,9 +76,13 @@ public class Location {
     }
 
     @JsonProperty(M_STREETNAME)
-    public String getStreetName() { return StreetName; }
+    public String getStreetName() {
+        return StreetName;
+    }
 
-    public void setStreetName(String streetName) { StreetName = streetName; }
+    public void setStreetName(String streetName) {
+        StreetName = streetName;
+    }
 
     @JsonProperty(M_STREETNUMBER)
     public String getStreetNumber() {

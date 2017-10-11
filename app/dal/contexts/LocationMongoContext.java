@@ -1,6 +1,5 @@
 package dal.contexts;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.LocationContext;
@@ -20,7 +19,6 @@ public class LocationMongoContext implements LocationContext{
         connector = new DBConnector();
         collection = connector.getCollection(coll);
     }
-
 
     @Override
     public boolean addLocation(Location location) {

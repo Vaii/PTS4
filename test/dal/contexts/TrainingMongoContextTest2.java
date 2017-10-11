@@ -42,14 +42,14 @@ class TrainingMongoContextTest2 {
         trainees.add(trainee2.get_id());
 
         preTraining = new Training("004", "Java Basics", "Voor introductie met Java!",
-                "Laptop", 2.00f, 800.00f, 20, new Date(2017, 9, 9), location.get_id(), teacher,
+                "Laptop", 2.00f, 800.00f, 20, new Date(2017, 9, 9), location.get_id(), teacher.get_id(),
                 null, null);
 
         prerequisites = new ArrayList<>();
         prerequisites.add(preTraining.get_id());
 
         training = new Training("005", "Advanced Java", "Voor het verder ontwikkelen van uw Java skills!",
-                "Laptop", 2.00f, 1000.00f, 25, new Date(2017, 10, 8), location.get_id(), teacher,
+                "Laptop", 2.00f, 1000.00f, 25, new Date(2017, 10, 8), location.get_id(), teacher.get_id(),
                 trainees, prerequisites);
     }
 
