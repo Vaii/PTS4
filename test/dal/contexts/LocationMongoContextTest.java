@@ -44,7 +44,7 @@ class LocationMongoContextTest {
         reset();
         context.addLocation(location1);
         assertEquals("51", context.getLocation("Eindhoven").getStreetNumber());
-        context.removeLocation(location1);
+        context.removeLocation(location1.get_id());
         assertEquals(null, context.getLocation("Eindhoven"));
     }
 
