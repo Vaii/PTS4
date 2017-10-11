@@ -31,7 +31,6 @@
                             </ul>
                         </li>
                         <li><a href="@routes.TrainingController.overview()">Mijn Trainingen</a></li>
-                        <li><a href="@routes.TrainingController.overview()">Inschrijven</a></li>
                         <li><a href="@routes.TrainingController.overview()">Aangeboden Trainingen</a></li>
 
                     </ul>
@@ -39,15 +38,13 @@
                 <li><a href="" class="navitem dropdown-toggle">Locatie</a>
                     <ul>
                         <li><a href="@routes.LocationController.loadLocationForm()">Locatie Toevoegen</a></li>
-                        <li><a href="@routes.LocationController.locationOverview()">Locatie Verwijderen</a></li>
-                        <li><a href="@routes.LocationController.locationOverview()">Locatie Wijzigen</a></li>
-                        <li><a href="@routes.LocationController.locationOverview()">Locatie Overzicht</a></li>
+                        <li><a href="@routes.LocationController.locationOverview()">Locatie Beheren</a></li>
                     </ul>
                 </li>
                 <li ><p class="navitem dropdown-toggle">Manager</p>
                     <ul>
                         <li><a href="#">Mijn Medewerker</a></li>
-                        <li><a href="#">StudieKosten Formulier</a></li>
+                        <li><a href="#">Studiekosten Formulier</a></li>
                     </ul>
                 </li>
                 @if(isLoggedIn) {
