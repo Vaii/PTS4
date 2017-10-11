@@ -1,34 +1,32 @@
+@import b3.vertical.fieldConstructor
 @import play.data.Form
-@import b3.vertical.fieldConstructor // Declares a vertical field constructor as default
+@(form: Form[Training], isLoggedIn: Boolean, User: User, Page: String, locations: List[Location])
 
-@import dal.contexts.LocationMongoContext
-@(form : Form[Training], isLoggedIn : Boolean, User : User, Page : String, locations : List[Location])
+    @shared.main(Page, isLoggedIn, User) {
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
 
-@main(Page, isLoggedIn, User) {
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
-  
-    <div class="container">
-  <h1>Training toevoegen</h1>
-    <br />
-      @b3.form(routes.TrainingController.submit()) {
-          @helper.CSRF.formField
-      <table>
-          <tr>@b3.number(form("TrainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</tr>
-          <tr>@b3.text(form("Name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</tr>
-          <tr>@b3.text(form("Description"), '_label -> "Beschrijving:", 'class -> "form-control-inline",  'placeholder -> "Voer beschrijving in")</tr>
-          <tr>@b3.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline",  'placeholder -> "Voer materialen in")</tr>
+        <div class="container">
+            <h1>Training toevoegen</h1>
+            <br />
+            @b3.form(routes.TrainingController.submit()) {
+                @helper.CSRF.formField
+                <table>
+                    <tr>@b3.number(form("TrainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</tr>
+                    <tr>@b3.text(form("Name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</tr>
+                    <tr>@b3.text(form("Description"), '_label -> "Beschrijving:", 'class -> "form-control-inline", 'placeholder -> "Voer beschrijving in")</tr>
+                    <tr>@b3.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline", 'placeholder -> "Voer materialen in")</tr>
 
-          <tr>@b3.number(form("Duration"), '_label -> "Duur:", 'class -> "form-control-inline", 'step -> "0.01",  'placeholder -> "Voer duur in(bv. 2 dagen)")</tr>
-          <tr>@b3.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01",  'placeholder -> "Voer kosten in")</tr>
-          <tr>@b3.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline",  'placeholder -> "Voer capaciteit in(bv. 20 personen)")</tr>
-          <tr>@b3.date(form("Date"), '_label -> "Datum:", 'class -> "form-control-inline")</tr>
+                    <tr>@b3.number(form("Duration"), '_label -> "Duur:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</tr>
+                    <tr>@b3.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</tr>
+                    <tr>@b3.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</tr>
+                    <tr>@b3.date(form("Date"), '_label -> "Datum:", 'class -> "form-control-inline")</tr>
 
-          <tr>@b3.select(form("LocationID"), options = locations.map(location => location.get_id() -> location.getStreetName), '_label -> "Locatie:", 'class -> "form-control-inline")</tr>
-          @b3.submit('class -> "btn btn-primary") { Toevoegen }
-      </table>
-      </div>
+                    <tr>@b3.select(form("LocationID"), options = locations.map(location => location.get_id() -> location.getStreetName), '_label -> "Locatie:", 'class -> "form-control-inline")</tr>
+                    @b3.submit('class -> "btn btn-primary") { Toevoegen }
+                </table>
+            </div>
 
-}
+    }
 
-}
+    }
 

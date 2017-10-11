@@ -1,5 +1,9 @@
 package models;
 
+/**
+ * Category of a tuition form defined by Info Support.
+ * used internal by Info Support.
+ */
 public enum TuitionCategory {
     Category_1("Cursussen en studies die je volgt om achterstanden in kennis- c.q. vaardigheden in te lopen, met als doel ingezet te kunnen worden (bij de klant)."),
     Category_2("Alle overige cursussen en studies"),
@@ -11,5 +15,7 @@ public enum TuitionCategory {
         this.value = value;
     }
 
-    public String getValue() { return value; }
+    public String getValue() {
+        return value;
+    }
 }
