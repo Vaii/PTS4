@@ -64,39 +64,39 @@ class TrainingMongoContextTest2 {
     void updateTraining() {
         reset();
         context.addTraining(preTraining);
-        Training training = context.getTraining("004");
-        assertEquals("Laptop", training.getRequiredMaterial());
-        //assertEquals(800.00f, training.getTuition());
+        Training training1 = context.getTraining("004");
+        assertEquals("Laptop", training1.getRequiredMaterial());
+        assertEquals(800.00f, (float)training1.getTuition());
 
-        training.setTuition(500.00f);
-        context.updateTraining(training);
+        training1.setTuition(500.00f);
+        context.updateTraining(training1);
         Training training2 = context.getTraining("004");
-      //  assertEquals(500.00f, training.getTuition());
+        assertEquals(500.00f, (float)training2.getTuition());
     }
 
     @Test
     void removeTraining() {
-
+        reset();
+        context.addTraining(training);
+        assertEquals("Advanced Java", context.getTraining("005").getName());
+        context.removeTraining(training);
+        assertEquals(null, context.getTraining("005"));
     }
 
     @Test
     void getTraining() {
-    }
-
-    @Test
-    void getTrainings() {
-    }
-
-    @Test
-    void getTrainings1() {
+        reset();
+        context.addTraining(training);
+        assertEquals("Advanced Java", context.getTraining("005").getName());
     }
 
     @Test
     void getAll() {
-    }
+        reset();
+        context.addTraining(preTraining);
+        context.addTraining(training);
 
-    @Test
-    void removeAll() {
+        assertEquals(2, context.getAll().size());
     }
 
     private void reset() {

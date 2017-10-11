@@ -106,5 +106,6 @@ public enum Role {
     Testmanager,
     TrainerI,
     TrainerII,
-    TrainerIII
+    TrainerIII,
+    Extern
 }
