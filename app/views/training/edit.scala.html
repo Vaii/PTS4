@@ -1,14 +1,14 @@
 @(newTraining: Training, page: String, isLoggedIn: Boolean, User: User)
-@main(page, isLoggedIn, User) {
-    <div class="container">
-        <div class="row">
-            <p>De training @newTraining.getName (@newTraining.getTrainingCode) is aangepast!</p>
-        </div>
+    @shared.main(page, isLoggedIn, User) {
+        <div class="container">
+            <div class="row">
+                <p>De training @newTraining.getName (@newTraining.getTrainingCode) is aangepast!</p>
+            </div>
 
-        <div class="row" >
-            <div class="col-lg-12" >
-                <a class="btn btn-success" href="@routes.TrainingController.manage()"><p>Ga terug</p></a>
+            <div class="row" >
+                <div class="col-lg-12" >
+                    <a class="btn btn-success" href="@routes.TrainingController.manage()"><p>Ga terug</p></a>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }

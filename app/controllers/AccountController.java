@@ -8,8 +8,10 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.*;
-import views.html.*;
-import play.cache.*;
+import views.html.account.login;
+import views.html.account.profile;
+import views.html.account.register;
+import views.html.account.registerSuccess;
 
 import javax.inject.Inject;
 

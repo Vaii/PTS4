@@ -1,8 +1,9 @@
+
 @(page: String, isLoggedIn: Boolean, User: User)
 
-@main(page, isLoggedIn, User) {
+@shared.main(page, isLoggedIn, User) {
     <script src="@routes.Assets.at("javascripts/imageSlider.js")" type="text/javascript"></script>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/home.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/home.css")">
 
     <div class="container">
         <div class="headers">
@@ -35,7 +36,7 @@
             <input type="radio" name="radio-btn" id="img-3" />
             <li class="slide-container">
                 <div class="slide">
-                    <img src="@routes.Assets.at("images/training-1.jpg")" />
+                    <img src="@routes.Assets.at("images/Training-1.jpg")" />
                 </div>
                 <div class="nav">
                     <label for="img-2" class="prev">&#x2039;</label>

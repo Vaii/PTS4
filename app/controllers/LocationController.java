@@ -10,13 +10,7 @@ import play.mvc.Result;
 import views.html.location.*;
 import play.mvc.*;
 import javax.inject.Inject;
-
 import java.util.ArrayList;
-
-import static play.mvc.Http.Context.Implicit.ctx;
-import static play.mvc.Results.badRequest;
-import static play.mvc.Results.ok;
-import static play.mvc.Results.redirect;
 
 public class LocationController extends Controller {
 

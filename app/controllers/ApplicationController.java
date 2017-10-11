@@ -1,9 +1,9 @@
 package controllers;
 
 import models.Secured;
-import play.filters.headers.SecurityHeadersFilter;
 import play.mvc.*;
-import views.html.*;
+import views.html.site.contact;
+import views.html.site.index;
 
 public class ApplicationController extends Controller {
 

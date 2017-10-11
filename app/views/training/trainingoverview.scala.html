@@ -2,108 +2,108 @@
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
-@main(page, isLoggedIn, User) {
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-2 trainingmenu">
-                <ul>
-                    <lh>Training</lh>
-                    @if(!trainings.isEmpty) {
-                        @for(training <- trainings) {
-                            <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
+    @shared.main(page, isLoggedIn, User) {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 trainingmenu">
+                    <ul>
+                        <lh>Training</lh>
+                        @if(!trainings.isEmpty) {
+                            @for(training <- trainings) {
+                                <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
+                            }
+                        } else {
+                            <li>"No training yet"</li>
                         }
-                    } else {
-                        <li>"No training yet"</li>
-                    }
-                </ul>
-            </div>
-            <div class="trainingtext col-lg-10" >
-                <div>
-                @if(training != null) {
-                    <div class="row col-lg-12">
-                        <h1>@training.getName()</h1>
-                    </div>
-                    <h2>Beschrijving</h2>
-                    @if(training.getDescription == null) {
-                        <p> Geen beschrijving. </p>
-                    } else {
-                        <p> @training.getDescription()</p>
-                    }
-                    <h2>Informatie</h2>
-                    <div class="row">
+                    </ul>
+                </div>
+                <div class="trainingtext col-lg-10" >
+                    <div>
+                    @if(training != null) {
+                        <div class="row col-lg-12">
+                            <h1>@training.getName()</h1>
+                        </div>
+                        <h2>Beschrijving</h2>
+                        @if(training.getDescription == null) {
+                            <p> Geen beschrijving. </p>
+                        } else {
+                            <p> @training.getDescription()</p>
+                        }
+                        <h2>Informatie</h2>
+                        <div class="row">
 
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <p>Trainingcode:</p>
-                                </div>
-                                <div class="col-lg-8">
-                                    <p>@training.getTrainingCode</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <p>Ruimte:</p>
-                                </div>
-                                <div class="col-lg-8">
-                                    <p>@training.getCapacity plekken</p>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Trainingcode:</p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p>@training.getTrainingCode</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <p>Benodigde materialen:</p>
-                                </div>
-                                <div class="col-lg-8">
-                                    <p>@training.getRequiredMaterial</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <p>Koste:</p>
-                                </div>
-                                <div class="col-lg-8">
-                                    <p>€@training.getTuition euro per persoon.</p>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Ruimte:</p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p>@training.getCapacity plekken</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <p>Duur:</p>
-                                </div>
-                                <div class="col-lg-8">
-                                    <p>@training.getDuration() dagen</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <p>Datum: </p>
-                                </div>
-                                <div class="col-lg-8">
-                                    <p>@training.getDate</p>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Benodigde materialen:</p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p>@training.getRequiredMaterial</p>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Koste:</p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p>€@training.getTuition euro per persoon.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Duur:</p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p>@training.getDuration() dagen</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Datum: </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p>@training.getDate</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <a href="@routes.TrainingController.signUpCourse(training.getTrainingCode())" class="btn btn-primary">
+                                    Inschrijven</a>
+                            </div>
                         </div>
-                        <div class="col-lg-3">
-                            <a href="@routes.TrainingController.signUpCourse(training.getTrainingCode())" class="btn btn-primary">
-                                Inschrijven</a>
-                        </div>
+                    } else {
+                        <h1>Selecteer een training</h1>
+                        <p>Links in het menu kunt u trainingen selecteren.</p>
+                    }
                     </div>
-                } else {
-                    <h1>Selecteer een training</h1>
-                    <p>Links in het menu kunt u trainingen selecteren.</p>
-                }
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
 

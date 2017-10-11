@@ -1,81 +1,81 @@
-@(locations : List[Location], isLoggedIn: Boolean, User: User, Page: String)
-@main(Page, isLoggedIn, User){
+@(locations: List[Location], isLoggedIn: Boolean, User: User, Page: String)
+    @shared.main(Page, isLoggedIn, User) {
 
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/locationoverview.css")">
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <h1>Locatie Overzicht</h1>
-        </div>
-    </div>
-    @if(!locations.isEmpty){
-        <br>
-        <div class="row">
-        @for(location <- locations) {
-                <div class="col-lg-3 contentcontainer">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <p class="bold">Stad:</p>
-                        </div>
-                        <div class="col-lg-2">
-                            <p>
-                            @location.getCity
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <p class="bold">Straat:</p>
-                        </div>
-                        <div class="col-lg-2">
-                            <p>
-                            @location.getStreetName
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <p class="bold">Huisnummer:</p>
-                        </div>
-                        <div class="col-lg-2">
-                            <p>
-                            @location.getStreetNumber
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <p class="bold">Lokaal:</p>
-                        </div>
-                        <div class="col-lg-2">
-                            <p>
-                                @location.getRoom
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <p class="bold">Capaciteit:</p>
-                        </div>
-                        <div class="col-lg-2">
-                            <p>
-                                @location.getCapacity
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <a href="@routes.LocationController.alterLocationForm(location.get_id())" class="btn btn-primary">Wijzig</a>
-                        </div>
-                        <div class="col-lg-6">
-                            <a href="@routes.LocationController.deleteLocation(location.get_id())" class="btn btn-danger">Verwijder</a>
-                        </div>
-                    </div>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/locationoverview.css")">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1>Locatie Overzicht</h1>
                 </div>
-        }
+            </div>
+            @if(!locations.isEmpty) {
+                <br>
+                <div class="row">
+                @for(location <- locations) {
+                    <div class="col-lg-3 contentcontainer">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p class="bold">Stad:</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <p>
+                                @location.getCity
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p class="bold">Straat:</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <p>
+                                @location.getStreetName
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p class="bold">Huisnummer:</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <p>
+                                @location.getStreetNumber
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p class="bold">Lokaal:</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <p>
+                                @location.getRoom
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p class="bold">Capaciteit:</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <p>
+                                @location.getCapacity
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="@routes.LocationController.alterLocationForm(location.get_id())" class="btn btn-primary">Wijzig</a>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="@routes.LocationController.deleteLocation(location.get_id())" class="btn btn-danger">Verwijder</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+            } else {
+                <p> Geen Locaties</p>
+            }
         </div>
-    }   else{
-        <p> Geen Locaties</p>
     }
-</div>
-}
