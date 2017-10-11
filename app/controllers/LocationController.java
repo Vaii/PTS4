@@ -18,7 +18,8 @@ import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
 import static play.mvc.Results.redirect;
 
-public class LocationController {
+public class LocationController extends Controller {
+
     private final Form<Location> form;
     private ArrayList<Location>availablelocations;
     private LocationRepository locationrepo;
@@ -30,14 +31,17 @@ public class LocationController {
     }
 
     //Loads the generic form for adding a location
+    @Security.Authenticated(Secured.class)
     public Result loadLocationForm(){
         return ok(newlocationform.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "Location Form"));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result locationOverview(){
         return ok(alllocations.render(locationrepo.getAll(),Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "All Locations"));
     }
 
+    @Security.Authenticated(Secured.class)
     public Result alterLocationForm(String id){
         if(id != null){
             Location location = locationrepo.getLocation(id);
@@ -50,6 +54,7 @@ public class LocationController {
     }
 
     // method to get the results from the html form and redirect the user to the next page
+    @Security.Authenticated(Secured.class)
     public Result createLocation(){
     Form<Location> boundForm = form.bindFromRequest();
     Location data = boundForm.get();
@@ -59,6 +64,7 @@ public class LocationController {
     return redirect(routes.LocationController.loadLocationForm());
   }
 
+  @Security.Authenticated(Secured.class)
   public Result submitAlterLocation(){
         Form<Location> boundform = form.bindFromRequest();
         Location data = boundform.get();
@@ -70,12 +76,12 @@ public class LocationController {
   }
 
   //TODO make a message so the user knows if the deletion was succesful
+  @Security.Authenticated(Secured.class)
   public Result deleteLocation(String location_id){
       if(locationrepo.removeLocation(location_id)){
           return redirect(routes.LocationController.locationOverview());
       }
       return redirect(routes.LocationController.locationOverview());
   }
-
 
 }

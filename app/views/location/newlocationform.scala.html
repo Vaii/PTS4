@@ -14,7 +14,7 @@
             <tr>@b3.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'placeholder -> "Rachelsmolen")</tr>
             <tr>@b3.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'placeholder -> "1")</tr>
             <tr>@b3.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'placeholder -> "2.18")</tr>
-            <tr>@b3.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'placeholder -> "25")</tr>
+            <tr>@b3.number(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'placeholder -> "25")</tr>
 
             <br>
             @b3.submit('class -> "btn btn-primary") { Toevoegen }

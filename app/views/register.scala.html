@@ -3,11 +3,19 @@
 
 @main(page, isLoggedIn, User) {
 
+    <div class="container">
+        <h1>Registreren</h1>
     @b3.form(routes.AccountController.registerAccount) {
-        @b3.email( form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")
-        @b3.text( form("FirstName"), '_label -> "Voornaam", 'placeholder -> "Jan Janssen" )
-        @b3.text( form("LastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")
-        @b3.password( form("password"), '_label -> "Wachtwoord")
-        @b3.submit('class -> "btn btn-default"){ Registeren}
+        <table>
+            <tr>@b3.email( form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
+            <tr>@b3.text( form("FirstName"), '_label -> "Voornaam", 'placeholder -> "Jan" )</tr>
+            <tr>@b3.text( form("LastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
+            <tr>@b3.number( form("PhoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "06131313")</tr>
+            <tr>@b3.text( form("Company"), '_label -> "Bedrijf", 'placeholder -> "Software BV")</tr>
+            <tr>@b3.password( form("password"), '_label -> "Wachtwoord", 'required -> "required")</tr>
+            <tr>@b3.password( form("validation"), '_label -> "Wachtwoord validatie", 'required -> "required")</tr>
+            <tr>@b3.submit('class -> "btn btn-default"){ Registeren}</tr>
+        </table>
     }
+    </div>
 }

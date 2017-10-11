@@ -2,5 +2,23 @@
     background-color: white;
     box-shadow: 5px 0 5px -2px #C0C0C0;
     margin-top: 20px;
-    width: 850px;
+    width: 80%;
+}
+
+.contentcontainer{
+    border:1px solid black;
+    border-radius: 5px;
+    box-shadow: 5px 0 5px -2px #C0C0C0;
+    border-color: deepskyblue;
+    padding:20px;
+    margin:4%;
+    margin-bottom: 1%;
+}
+
+.bold{
+    font-weight:bold ;
+}
+h1 {
+    color: #0078c9;
+    margin-left: 50px;
 }

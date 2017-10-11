@@ -64,12 +64,18 @@ public class AccountController extends Controller {
         Form<User> filledForm = form.bindFromRequest();
         User user = filledForm.get();
         String password = filledForm.field("password").value();
+        String validation = filledForm.field("validation").value();
 
-        if(password != null && userRepo.addUser(user, password)){
-            return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2));
+        if(filledForm.hasErrors()){
+            return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
         }
-
-        return ok(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+        else if(password.equals(validation)){
+            if(userRepo.addUser(user, password)){
+                return ok(registerSuccess.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            }
+            return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+        }
+        return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
     }
 
     @Security.Authenticated(Secured.class)

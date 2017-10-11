@@ -20,31 +20,40 @@ public class TuitionForm {
     private static final String M_ACCOMODATIONCOSTS = "AccommodationCosts";
     private static final String M_EXTRACOSTS = "ExtraCosts";
     private static final String M_TOTALCOSTS = "TotalCosts";
-    private static final String M_CATEGORY = "TotalCosts";
+    private static final String M_CATEGORY = "Category";
 
     // Mongo DB ID.
     @MongoObjectId
     private String _id;
 
     // Class fields.
-    private User Manager, Employee;
-    private Training Training;
+    @play.data.validation.Constraints.Required
+    private String Manager, Employee;
+    @play.data.validation.Constraints.Required
+    private String Training;
+    @play.data.validation.Constraints.Required
     private Date CompanyJoinDate;
+    @play.data.validation.Constraints.Required
     private String ReasonForCourse;
-
+    @play.data.validation.Constraints.Required
     private double StudyCosts;
+    @play.data.validation.Constraints.Required
     private double ExaminationFees;
+    @play.data.validation.Constraints.Required
     private double TransportCosts;
+    @play.data.validation.Constraints.Required
     private double AccommodationCosts;
+    @play.data.validation.Constraints.Required
     private double ExtraCosts;
+    @play.data.validation.Constraints.Required
     private double TotalCosts;
-
+    @play.data.validation.Constraints.Required
     private TuitionCategory Category;
 
     @JsonCreator
-    public TuitionForm(@JsonProperty(M_MANAGER) User manager,
-                       @JsonProperty(M_EMPLOYEE) User employee,
-                       @JsonProperty(M_TRAINING) Training training,
+    public TuitionForm(@JsonProperty(M_MANAGER) String manager,
+                       @JsonProperty(M_EMPLOYEE) String employee,
+                       @JsonProperty(M_TRAINING) String training,
                        @JsonProperty(M_COMPANYJOINDATE) Date companyJoinDate,
                        @JsonProperty(M_REASONFORCOURSE) String reasonForCourse,
                        @JsonProperty(M_STUDYCOSTS) double studyCosts,
@@ -68,34 +77,38 @@ public class TuitionForm {
         this.Category = category;
     }
 
+    public TuitionForm(){
+
+    }
+
     public String get_id() {
         return _id;
     }
 
     @JsonProperty(M_MANAGER)
-    public User getManager() {
+    public String getManager() {
         return Manager;
     }
 
-    public void setManager(User manager) {
+    public void setManager(String manager) {
         Manager = manager;
     }
 
     @JsonProperty(M_EMPLOYEE)
-    public User getEmployee() {
+    public String getEmployee() {
         return Employee;
     }
 
-    public void setEmployee(User employee) {
+    public void setEmployee(String employee) {
         Employee = employee;
     }
 
     @JsonProperty(M_TRAINING)
-    public Training getTraining() {
+    public String getTraining() {
         return Training;
     }
 
-    public void setTraining(Training training) {
+    public void setTraining(String training) {
         this.Training = training;
     }
 
