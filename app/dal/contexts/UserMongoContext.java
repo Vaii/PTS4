@@ -68,7 +68,13 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public boolean login(String email, String password) {
-        return getUser(email).checkLogin(password);
+        User userToCheck = getUser(email);
+
+        if(userToCheck != null) {
+            return userToCheck.checkLogin(password);
+        }
+
+        return false;
     }
 
     /**
