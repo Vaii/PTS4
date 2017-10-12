@@ -92,16 +92,27 @@ public class TrainingController extends Controller {
     }
 
     public Result overview() {
-        return ok(trainingoverview.render(trainingRepository.getAll(), null,
+        return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies() ,new ArrayList<>(), null,
                 "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
-    public Result trainingOverview(String id) {
-        if (id == null) {
-            return ok(trainingoverview.render(trainingRepository.getAll(), null,
+    public Result overviewCategory(String category) {
+        if(category == null) {
+            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),new ArrayList<>(), null,
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         } else {
-            return ok(trainingoverview.render(trainingRepository.getAll(), trainingRepository.getTraining(id),
+            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        }
+
+    }
+
+    public Result trainingOverview(String category, String id) {
+        if (id == null) {
+            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        } else {
+            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), trainingRepository.getTraining(id),
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
     }
