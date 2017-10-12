@@ -1,0 +1,26 @@
+
+@(page: String, isLoggedIn: Boolean, User: User, Message: String, PageToRedirect: String)
+
+@shared.main(page, isLoggedIn, User) {
+    <!--
+        Use this page for single message pages that require a redirect.
+        The parameter 'Message' is what is shown on the page.
+        The parameter 'URL' is where you want to go after the message.
+        The URL parameter follows the routes files convention. I.E:
+        "/Contact" will redirect to the Contact view.
+        "/account/register" will redirect to the Register view
+
+    -->
+    <head>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/message.css")">
+        <meta http-equiv="Refresh" content="4; url=@routes.ApplicationController.customRedirect(PageToRedirect)">
+    </head>
+
+    <div class="container">
+
+        <h1>@Message</h1>
+
+        <p>je wordt automatisch doorverwezen...<br>
+        Klik<a href="@routes.ApplicationController.customRedirect(PageToRedirect)"> hier</a>  als je niet doorverwezen wordt</p>
+    </div>
+}

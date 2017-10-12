@@ -6,6 +6,8 @@
 
 GET     /                                   controllers.ApplicationController.index
 GET     /contact                            controllers.ApplicationController.contact
+GET     /customRedirect                     controllers.ApplicationController.customRedirect(url: String)
+GET     /message                            controllers.ApplicationController.message(url: String, messageText: String)
 
 # Trainingen
 
