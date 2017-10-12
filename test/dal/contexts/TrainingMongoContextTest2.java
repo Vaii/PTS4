@@ -7,9 +7,7 @@ import models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,14 +40,14 @@ class TrainingMongoContextTest2 {
         trainees.add(trainee2.get_id());
 
         preTraining = new Training("004", "Java Basics", "Voor introductie met Java!",
-                "Laptop", 2.00f, 800.00f, 20, new Date(2017, 9, 9), location.get_id(), teacher.get_id(),
+                "Laptop", 2.00f, 800.00f, 20, new Date(2017, 9, 9), "java", location.get_id(), teacher.get_id(),
                 null, null);
 
         prerequisites = new ArrayList<>();
         prerequisites.add(preTraining.get_id());
 
         training = new Training("005", "Advanced Java", "Voor het verder ontwikkelen van uw Java skills!",
-                "Laptop", 2.00f, 1000.00f, 25, new Date(2017, 10, 8), location.get_id(), teacher.get_id(),
+                "Laptop", 2.00f, 1000.00f, 25, new Date(2017, 10, 8), "JAVA", location.get_id(), teacher.get_id(),
                 trainees, prerequisites);
     }
 
@@ -97,6 +95,39 @@ class TrainingMongoContextTest2 {
         context.addTraining(training);
 
         assertEquals(2, context.getAll().size());
+    }
+
+    @Test
+    void getTrainingByCategory() {
+        reset();
+        context.addTraining(preTraining);
+        context.addTraining(training);
+
+        List<Training> results = new ArrayList<>();
+        results = context.getTrainingByCategory("java");
+        assertEquals(2, results.size());
+
+        results.clear();
+
+        assertEquals(0, results.size());
+
+        results = context.getTrainingByCategory("JAVA");
+        assertEquals(2, results.size());
+    }
+
+    @Test
+    void getTrainingFrequency() {
+        reset();
+        context.addTraining(preTraining);
+        context.addTraining(training);
+
+        Map<String, Integer> results = new TreeMap<>();
+        results = context.getTrainingFrequencies();
+
+        assertEquals(1, results.size());
+
+        assertEquals(2,(int) results.get("Java"));
+
     }
 
     private void reset() {
