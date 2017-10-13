@@ -88,7 +88,7 @@ public class TrainingController extends Controller {
             Training newTraining = filledForm.get();
             trainingRepository.addTraining(newTraining);
             Training t = trainingRepository.getTraining(newTraining.getTrainingCode());
-            return ok(submit.render(t, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            return ok(message.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + t.getName() + " is aangemaakt", "/managetraining"));
         }
     }
 
