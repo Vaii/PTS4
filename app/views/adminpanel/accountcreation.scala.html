@@ -8,6 +8,7 @@
     <div class="container">
         <h1>Registreren</h1>
         @b3.form(routes.AdminController.createUser()) {
+            @helper.CSRF.formField
             <table>
                 <tr>@b3.email(form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
                 <tr>@b3.text(form("FirstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</tr>
