@@ -61,6 +61,9 @@
                     <li ><a href="@routes.ApplicationController.contact()" class="navitem">Contact</a></li>
                     @if(isLoggedIn) {
                         <li><a href="@routes.AccountController.profile()">Profile</a></li>
+                        @if(user.getRole.equals(Role.MedewerkerKenniscentrum)){
+                            <li><a href="@routes.AdminController."</li>
+                        }
                     }
                 </ul>
             </nav>
