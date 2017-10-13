@@ -1,7 +1,7 @@
 @import b3.vertical.fieldConstructor
 @import play.data.Form
 
-@(trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training])
+@(categories: Map[String, Integer], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training])
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
@@ -10,12 +10,22 @@
             <div class="row">
                 <div class="col-lg-2 trainingmenu">
                     <ul>
+                        <lh>Categorie</lh>
+                        @if(!categories.isEmpty) {
+                            @for((key, value) <- categories) {
+                                <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="col-lg-2 trainingmenu">
+                    <ul>
                         <lh>Training</lh>
                         <li id="newTrn"><a href="@routes.TrainingController.addtraining()">
                             Nieuwe Training Toevoegen</a> </li>
                         @if(!trainings.isEmpty) {
                             @for(training <- trainings) {
-                                <li ><a href="@routes.TrainingController.manageTraining(training.getTrainingCode())"> @training.getName</a></li>
+                                <li ><a href="@routes.TrainingController.manageTraining(training.getCategory(),training.getTrainingCode())"> @training.getName</a></li>
                             }
                         } else {
                             <li><p>Geen beschikbare trainingen.</p></li>
@@ -24,12 +34,12 @@
                     </ul>
                 </div>
 
-                <div class="row col-lg-10 trainingtext">
+                <div class="row col-lg-8 trainingtext">
                     <div class="col-lg-12">
                         <h1>Beheren</h1>
                     </div>
                     @if(training != null) {
-                        @b3.form(routes.TrainingController.edit(training.getTrainingCode())) {
+                        @b3.form(routes.TrainingController.edit(training.getCategory ,training.getTrainingCode())) {
                             @helper.CSRF.formField
                             <div class="row col-lg-12">
                                 <div class="col-lg-12">@b3.number(form("TrainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
@@ -40,18 +50,19 @@
                                 <div class="col-lg-12">@b3.number(form("Tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
                                 <div class="col-lg-12">@b3.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "f", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
                                 <div class="col-lg-12">@b3.date(form("Date"), '_label -> "Datum:", 'class -> "")</div>
+                                <div class="col-lg-12">@b3.text(form("category"), '_label -> "Category:", 'class -> "", 'placeholder -> "Voer categorie in")</div>
                                 <div class="col-lg-12">@b3.select(form("LocationID"), options = locations.map(location => location.get_id() -> location.getStreetName), '_label -> "Locatie:", 'class -> "form-control-inline")</div>
                             </div>
                             <div class="row col-lg">
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())" class="btn btn-primary">
+                                    <a href="@routes.TrainingController.trainingOverview(training.getCategory(), training.getTrainingCode())" class="btn btn-primary">
                                         Naar Training</a>
                                 </div>
                                 <div class="col-lg-4" id="editTrn">
-                                @b3.submit('class -> "btn btn-warning") { Wijzigen }
+                                    @b3.submit('class -> "btn btn-warning") { Wijzigen }
                                 </div>
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.removeTraining(training.getTrainingCode())" class="btn btn-danger">
+                                    <a href="@routes.TrainingController.removeTraining(training.getCategory() ,training.getTrainingCode())" class="btn btn-danger">
                                         Verwijderen</a>
                                 </div>
                                 }

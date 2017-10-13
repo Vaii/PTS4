@@ -5,6 +5,7 @@ import dal.DBConnector;
 import dal.interfaces.TrainingContext;
 import models.Location;
 import models.Training;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -12,6 +13,8 @@ import play.data.format.Formats;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class TrainingMongoContext implements TrainingContext {
     private DBConnector connector;
@@ -79,6 +82,35 @@ public class TrainingMongoContext implements TrainingContext {
             trainings.add(training);
         }
         return trainings;
+    }
+
+    @Override
+    public List<Training> getTrainingByCategory(String category) {
+        MongoCursor<Training> results = collection.find("{Category:#}", StringUtils.capitalize(category.toLowerCase())).as(Training.class);
+        List<Training> trainings = new ArrayList<>();
+
+        while(results.hasNext()) {
+            Training training = results.next();
+            trainings.add(training);
+        }
+        return trainings;
+    }
+
+    @Override
+    public Map<String, Integer> getTrainingFrequencies() {
+        Map<String, Integer> results = new TreeMap<>();
+        List<Training> trainings = new ArrayList<>();
+        trainings = getAll();
+
+        for(Training t : trainings) {
+            if(!results.containsKey(t.getCategory())) {
+                results.put(t.getCategory(), 1);
+            } else {
+                results.put(t.getCategory(), results.get(t.getCategory())+ 1);
+            }
+        }
+
+        return results;
     }
 
     public void removeAll() {

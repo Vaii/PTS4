@@ -1,23 +1,34 @@
-@(trainings: List[models.Training], training: models.Training, page: String, isLoggedIn: Boolean, User: User)
+@(categories: Map[String, Integer], trainings: List[models.Training], training: models.Training, page: String, isLoggedIn: Boolean, User: User)
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
-    @shared.main(page, isLoggedIn, User) {
+@shared.main(page, isLoggedIn, User) {
+    <div class="col-lg-10">
         <div class="container">
             <div class="row">
+                <div class="col-lg-2 trainingmenu">
+                    <ul>
+                        <lh>Categorie</lh>
+                        @if(!categories.isEmpty) {
+                            @for((key, value) <- categories) {
+                             <li><a href="@routes.TrainingController.overviewCategory(key)">@key (@value)</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
                 <div class="col-lg-2 trainingmenu">
                     <ul>
                         <lh>Training</lh>
                         @if(!trainings.isEmpty) {
                             @for(training <- trainings) {
-                                <li ><a href="@routes.TrainingController.trainingOverview(training.getTrainingCode())"> @training.getName</a></li>
+                                <li ><a href="@routes.TrainingController.trainingOverview(training.getCategory(), training.getTrainingCode())"> @training.getName</a></li>
                             }
                         } else {
                             <li>"No training yet"</li>
                         }
                     </ul>
                 </div>
-                <div class="trainingtext col-lg-10" >
+                <div class="trainingtext col-lg-8" >
                     <div>
                     @if(training != null) {
                         <div class="row col-lg-12">
@@ -92,6 +103,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Categorie: </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p>@training.getCategory</p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-3">
                                 <a href="@routes.TrainingController.signUpCourse(training.getTrainingCode())" class="btn btn-primary">
                                     Inschrijven</a>
@@ -105,5 +126,6 @@
                 </div>
             </div>
         </div>
-    }
+    </div>
+}
 

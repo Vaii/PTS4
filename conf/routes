@@ -35,13 +35,15 @@ POST    /location/submit_form               controllers.LocationController.submi
 GET     /addtraining                        controllers.TrainingController.addtraining
 GET     /submit                             controllers.TrainingController.submit
 GET     /overview                           controllers.TrainingController.overview
-GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(id: String)
+GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(category: String, id: String)
 GET     /managetraining                     controllers.TrainingController.manage
-GET     /managetraining/:id                 controllers.TrainingController.manageTraining(id: String)
-GET     /removetraining/:id                 controllers.TrainingController.removeTraining(id: String)
+GET     /managetrainingcategory/:category   controllers.TrainingController.manageCategory(category: String)
+GET     /managetraining/:id                 controllers.TrainingController.manageTraining(category: String, id: String)
+GET     /removetraining/:id                 controllers.TrainingController.removeTraining(category: String, id: String)
 GET     /training/signup/:id                controllers.TrainingController.signUpCourse(id: String)
 POST    /training/externalSignUp            controllers.TrainingController.signUpEmployee(id: String)
-GET     /edit/:code                         controllers.TrainingController.edit(code: String)
+GET     /edit/:code                         controllers.TrainingController.edit(category: String, code: String)
+GET     /trainingCategory/:category         controllers.TrainingController.overviewCategory(category: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)

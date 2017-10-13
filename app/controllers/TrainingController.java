@@ -17,6 +17,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.account.successSignUp;
+import views.html.shared.message;
 import views.html.training.*;
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -87,46 +88,67 @@ public class TrainingController extends Controller {
             Training newTraining = filledForm.get();
             trainingRepository.addTraining(newTraining);
             Training t = trainingRepository.getTraining(newTraining.getTrainingCode());
-            return ok(submit.render(t, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            return ok(message.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + t.getName() + " is aangemaakt", "/managetraining"));
         }
     }
 
     public Result overview() {
-        return ok(trainingoverview.render(trainingRepository.getAll(), null,
+        return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies() ,new ArrayList<>(), null,
                 "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
-    public Result trainingOverview(String id) {
-        if (id == null) {
-            return ok(trainingoverview.render(trainingRepository.getAll(), null,
+    public Result overviewCategory(String category) {
+        if(category == null) {
+            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),new ArrayList<>(), null,
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         } else {
-            return ok(trainingoverview.render(trainingRepository.getAll(), trainingRepository.getTraining(id),
+            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        }
+
+    }
+
+    public Result trainingOverview(String category, String id) {
+        if (id == null) {
+            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        } else {
+            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), trainingRepository.getTraining(id),
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
     }
 
     @Security.Authenticated(Secured.class)
     public Result manage() {
-        return ok(managetraining.render(trainingRepository.getAll(), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+        return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), new ArrayList<>(), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+    }
+
+    public Result manageCategory(String category) {
+        if (category == null) {
+            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(),new ArrayList<>(), locationRepo.getAll(), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+        } else {
+            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+        }
     }
 
     @Security.Authenticated(Secured.class)
-    public Result manageTraining(String id) {
+    public Result manageTraining(String category, String id) {
         if (id == null) {
-            return ok(managetraining.render(trainingRepository.getAll(), locationRepo.getAll(), null,
+            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null,
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
         } else {
             Form<Training> editForm = form.fill(trainingRepository.getTraining(id));
-            return ok(managetraining.render(trainingRepository.getAll(), locationRepo.getAll(), trainingRepository.getTraining(id),
+            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), trainingRepository.getTraining(id),
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm));
         }
     }
 
     @Security.Authenticated(Secured.class)
-    public Result removeTraining(String id) {
+    public Result removeTraining(String category, String id) {
         if (id == null) {
-            return ok(managetraining.render(trainingRepository.getAll(), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
         } else {
             Training t = trainingRepository.getTraining(id);
             trainingRepository.removeTraining(t);
@@ -136,18 +158,18 @@ public class TrainingController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result edit(String code) {
+    public Result edit(String category, String code) {
         Form<Training> editFrom = form.fill(trainingRepository.getTraining(code));
         if (editFrom.hasErrors()) {
             flash("danger", "Wrong values");
-            return badRequest(managetraining.render(trainingRepository.getAll(), locationRepo.getAll(), null,
+            return badRequest(managetraining.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null,
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
         } else {
             Form<Training> filledForm = form.bindFromRequest();
             Training training = filledForm.get();
             training.set_id(trainingRepository.getTraining(code).get_id());
             trainingRepository.updateTraining(training);
-            return ok(edit.render(training, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            return ok(message.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + training.getName() + " is gewijzigd", "/managetraining"));
         }
     }
 }

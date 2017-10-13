@@ -6,6 +6,7 @@ import models.Training;
 import play.data.format.Formats;
 
 import java.util.List;
+import java.util.Map;
 
 public class TrainingRepository implements TrainingContext {
     private TrainingContext context;
@@ -47,5 +48,15 @@ public class TrainingRepository implements TrainingContext {
     @Override
     public List<Training> getAll() {
         return context.getAll();
+    }
+
+    @Override
+    public List<Training> getTrainingByCategory(String category) {
+        return context.getTrainingByCategory(category);
+    }
+
+    @Override
+    public Map<String, Integer> getTrainingFrequencies() {
+        return context.getTrainingFrequencies();
     }
 }
