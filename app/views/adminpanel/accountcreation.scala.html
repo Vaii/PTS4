@@ -8,12 +8,13 @@
     <div class="container">
         <h1>Registreren</h1>
         @b3.form(routes.AdminController.createUser()) {
+            @helper.CSRF.formField
             <table>
                 <tr>@b3.email(form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
                 <tr>@b3.text(form("FirstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</tr>
                 <tr>@b3.text(form("LastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
                 <tr>@b3.number(form("PhoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
-                <tr>@b3.text(form("Company"), '_label -> "Bedrijf", 'placeholder -> "Software BV")</tr>
+                <tr>@b3.text(form("Company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'readonly -> "true", 'value -> "InfoSupport")</tr>
                 <tr>@b3.select(form("Role"), options(models.Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</tr>
                 <tr>@b3.password(form("password"), '_label -> "Wachtwoord", 'required -> "required")</tr>
                 <tr>@b3.password(form("validation"), '_label -> "Wachtwoord validatie", 'required -> "required")</tr>
