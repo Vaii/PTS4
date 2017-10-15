@@ -4,13 +4,12 @@ package controllers;
 import dal.contexts.LocationMongoContext;
 import dal.contexts.TrainingMongoContext;
 import dal.contexts.TuitionFormMongoContext;
+import dal.contexts.UserMongoContext;
 import dal.repositories.TrainingRepository;
 import dal.repositories.TuitionFormRepository;
 import dal.repositories.LocationRepository;
-import models.Location;
-import models.Secured;
-import models.Training;
-import models.TuitionForm;
+import dal.repositories.UserRepository;
+import models.*;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -32,8 +31,10 @@ public class TrainingController extends Controller {
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
     TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
     LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
+    UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private Form<Training> form;
     List<Location> locations = new ArrayList<>();
+    List<User>teachers = new ArrayList<>();
 
     @Inject
     public TrainingController(FormFactory formFactory) {
@@ -75,7 +76,8 @@ public class TrainingController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result addtraining() {
         List<Location> locations = locationRepo.getAll();
-        return ok(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations));
+        List<User>teachers = userRepo.getAllTeachers();
+        return ok(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations, teachers));
     }
 
     @Security.Authenticated(Secured.class)
@@ -83,7 +85,7 @@ public class TrainingController extends Controller {
         Form<Training> filledForm = form.bindFromRequest();
 
         if (filledForm.hasErrors()) {
-            return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations));
+            return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations, teachers));
         } else {
             Training newTraining = filledForm.get();
             trainingRepository.addTraining(newTraining);
