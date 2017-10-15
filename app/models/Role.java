@@ -115,5 +115,5 @@ public enum Role {
     TrainerIII,
     Extern,
     MedewerkerKenniscentrum,
-    Docent
+    Teacher
 }

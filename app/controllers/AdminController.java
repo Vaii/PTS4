@@ -5,6 +5,7 @@ import dal.repositories.UserRepository;
 import models.Role;
 import models.Secured;
 import models.User;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -36,7 +37,7 @@ public class AdminController extends Controller{
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
         else{
-            return null;
+            return notFound();
         }
     }
 
@@ -47,7 +48,7 @@ public class AdminController extends Controller{
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
         }
         else{
-            return null;
+            return notFound();
         }
     }
 
