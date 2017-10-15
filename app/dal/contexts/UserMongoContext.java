@@ -87,7 +87,7 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public List<User> getAllTeachers() {
-        MongoCursor<User> results = collection.find("{Role:#}", Role.Teacher).as(User.class);
+        MongoCursor<User> results = collection.find("{Role:#}", Role.Docent).as(User.class);
         List<User> teachers = new ArrayList<>();
 
         while (results.hasNext()) {

@@ -1,7 +1,7 @@
 @import b3.vertical.fieldConstructor
 @import play.data.Form
 
-@(categories: Map[String, Integer], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training])
+@(categories: Map[String, Integer], teachers:List[User], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training])
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
@@ -46,6 +46,7 @@
                                 <div class="col-lg-12">@b3.text(form("Name"), '_label -> "Naam:", 'class -> "", 'placeholder -> "Voer naam in")</div>
                                 <div class="col-lg-12">@b3.text(form("Description"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
                                 <div class="col-lg-12">@b3.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
+                                <div class="col-lg-12">@b3.select(form("TeacherID"), options = teachers.map(teacher => teacher.get_id()->teacher.getFirstName),'_label -> "Docent:", 'class -> "form-control-inline")</div>
                                 <div class="col-lg-12">@b3.number(form("Duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
                                 <div class="col-lg-12">@b3.number(form("Tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
                                 <div class="col-lg-12">@b3.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "f", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
