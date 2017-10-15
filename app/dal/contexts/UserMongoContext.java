@@ -29,8 +29,15 @@ public class UserMongoContext implements UserContext {
         user.setSalt(salt);
         user.setHashedPassword(hashedPassword);
 
-        WriteResult result = collection.save(user);
-        return result.wasAcknowledged();
+        if(user.getCompany().toLowerCase().equals("infosupport")){
+            WriteResult result = collection.save(user);
+            return result.wasAcknowledged();
+        }
+        else{
+            user.setRole(Role.Extern);
+            WriteResult result = collection.save(user);
+            return result.wasAcknowledged();
+        }
     }
 
     @Override
