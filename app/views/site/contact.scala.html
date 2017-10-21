@@ -1,6 +1,6 @@
 @(page: String, isLoggedIn: Boolean, User: User)
 
-@main(page, isLoggedIn, User) {
+@shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/contact.css")">
 
     <div class="container">
@@ -13,7 +13,7 @@
         <div class="location">
             <div class="row">
                 <div class="col-md-3">
-                    <img src="@routes.Assets.at("images/Kruisboog.jpg")" id="kruisboog">
+                    <img src="@routes.Assets.at("/images/Kruisboog.jpg")" id="kruisboog">
                 </div>
                 <div class="col-md-3">
                     <div class="addressText">
@@ -33,25 +33,25 @@
         </div>
 
         <div class="location">
-        <div class="row">
-            <div class="col-md-3">
-                <img src="@routes.Assets.at("images/lab.jpg")" id="lab">
-            </div>
-            <div class="col-md-3">
-                <div class="addressText">
-                    <h3>Innovation Lab</h3>
-                    <p>Science Park 608 <br>
-                        1098 XH Amsterdam <br>
-                    </p>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="@routes.Assets.at("images/lab.jpg")" id="lab">
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="maps">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6892.597026356599!2d4.955600181015542!3d52.354079920548315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c6094ff4f599cd%3A0x2fcf0fe2869cfe06!2sScience+Park+608%2C+1098+XH+Amsterdam!5e0!3m2!1snl!2snl!4v1507118640971" width="400" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                <div class="col-md-3">
+                    <div class="addressText">
+                        <h3>Innovation Lab</h3>
+                        <p>Science Park 608 <br>
+                            1098 XH Amsterdam <br>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="maps">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6892.597026356599!2d4.955600181015542!3d52.354079920548315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c6094ff4f599cd%3A0x2fcf0fe2869cfe06!2sScience+Park+608%2C+1098+XH+Amsterdam!5e0!3m2!1snl!2snl!4v1507118640971" width="400" height="200" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
         <div class="location">
             <div class="row">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="maps">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11929.834186432648!2d4.442414956028284!3d51.05421966370896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3e577c6bfcbe7%3A0x78a83767fe95f6e1!2sGeneraal+de+Wittelaan+17%2C+2800+Mechelen%2C+Belgi%C3%AB!5e0!3m2!1snl!2snl!4v1507119002403" width="400" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11929.834186432648!2d4.442414956028284!3d51.05421966370896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3e577c6bfcbe7%3A0x78a83767fe95f6e1!2sGeneraal+de+Wittelaan+17%2C+2800+Mechelen%2C+Belgi%C3%AB!5e0!3m2!1snl!2snl!4v1507119002403" width="400" height="200" frameborder="0" style="border: 0" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="maps">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9824.334439967259!2d5.567746145770503!3d52.00535436388479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c653b86b0e921b%3A0xe68e8623d0446b76!2sDe+Smalle+Zijde+39%2C+3903+LM+Veenendaal!5e0!3m2!1snl!2snl!4v1507119492826" width="400" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9824.334439967259!2d5.567746145770503!3d52.00535436388479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c653b86b0e921b%3A0xe68e8623d0446b76!2sDe+Smalle+Zijde+39%2C+3903+LM+Veenendaal!5e0!3m2!1snl!2snl!4v1507119492826" width="400" height="200" frameborder="0" style="border: 0" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="maps">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16489.752826264004!2d5.10674264051149!3d52.09399268445689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66f43af468581%3A0x1b8db0d2102b5291!2sSt+Jacobsstraat+12%2C+3511+BS+Utrecht!5e0!3m2!1snl!2snl!4v1507119695257" width="400" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16489.752826264004!2d5.10674264051149!3d52.09399268445689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66f43af468581%3A0x1b8db0d2102b5291!2sSt+Jacobsstraat+12%2C+3511+BS+Utrecht!5e0!3m2!1snl!2snl!4v1507119695257" width="400" height="200" frameborder="0" style="border: 0" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>

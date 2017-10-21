@@ -9,6 +9,6 @@ public interface TuitionFormContext {
     boolean addForm(TuitionForm form);
     boolean updateForm(TuitionForm form);
     boolean removeForm(TuitionForm form);
-    List<TuitionForm> getForm(User manager);
-    List<TuitionForm> getForms(User employee);
+    List<TuitionForm> getForm(String managerID);
+    List<TuitionForm> getForms(String employeeID);
 }

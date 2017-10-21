@@ -1,9 +1,10 @@
 package controllers;
 
 import models.Secured;
-import play.filters.headers.SecurityHeadersFilter;
 import play.mvc.*;
-import views.html.*;
+import views.html.shared.message;
+import views.html.site.contact;
+import views.html.site.index;
 
 public class ApplicationController extends Controller {
 
@@ -16,6 +17,14 @@ public class ApplicationController extends Controller {
 
     public Result contact() {
         return ok(contact.render("Contact", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+    }
+
+    public Result customRedirect(String url) {
+        return redirect(url);
+    }
+
+    public Result message(String url, String messageText) {
+        return ok(message.render("Contact", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), messageText, url));
     }
 }
 

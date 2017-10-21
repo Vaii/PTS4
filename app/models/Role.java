@@ -1,5 +1,11 @@
 package models;
 
+/**
+ * The role enumeration contains all possible roles within the application.
+ * These contain both Info Support employee positions as well as roles for the application.
+ *
+ * @see User
+ */
 public enum Role {
     AdviseurReward,
     AmbtelijkSecretaris,
@@ -107,5 +113,7 @@ public enum Role {
     TrainerI,
     TrainerII,
     TrainerIII,
-    Extern
+    Extern,
+    MedewerkerKenniscentrum,
+    Docent,
 }

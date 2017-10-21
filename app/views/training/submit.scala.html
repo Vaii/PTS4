@@ -1,4 +1,4 @@
-@(newTraining : Training, page: String, isLoggedIn : Boolean, User : User)
-@main(page, isLoggedIn, User) {
-    <p>De training @newTraining.getName (@newTraining.getTrainingCode) is aangemaakt!</p>
-}
+@(newTraining: Training, page: String, isLoggedIn: Boolean, User: User)
+    @shared.main(page, isLoggedIn, User) {
+        <p>De training @newTraining.getName (@newTraining.getTrainingCode) is aangemaakt!</p>
+    }

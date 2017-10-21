@@ -26,7 +26,7 @@ public class User {
 
     // Class fields.
     @play.data.validation.Constraints.Required
-    private String FirstName,LastName;
+    private String FirstName, LastName;
     @play.data.validation.Constraints.Required
     private String Email;
     private Role Role;
@@ -46,8 +46,8 @@ public class User {
         this.PhoneNumber = phoneNumber;
     }
 
-    public User(){
-        
+    public User() {
+
     }
 
     @JsonCreator
@@ -149,23 +149,23 @@ public class User {
      */
     /**
      * Hashes a password and salt combination using SHA-512.
+     *
      * @param passwordToHash The password in plain text.
-     * @param salt THe salt to add to the password.
+     * @param salt           THe salt to add to the password.
      * @return The hashed combination of password and salt.
      */
-    public String generatePassword(String passwordToHash, String salt){
+    public String generatePassword(String passwordToHash, String salt) {
         String generatedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
             md.update(salt.getBytes("UTF-8"));
             byte[] bytes = md.digest(passwordToHash.getBytes("UTF-8"));
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++){
+            for (int i = 0; i < bytes.length; i++) {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
             generatedPassword = sb.toString();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -174,6 +174,7 @@ public class User {
 
     /**
      * Generate a salt to be used when hashing passwords.
+     *
      * @return The salt.
      */
     public String generateSalt() {
@@ -186,6 +187,7 @@ public class User {
 
     /**
      * Checks the login of a user by comparing the given plain text password with the salt and hashed password in the database.
+     *
      * @param password The password to verify in plain text.
      * @return True if the login is successful.
      */

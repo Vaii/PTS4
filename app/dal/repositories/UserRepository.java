@@ -47,4 +47,8 @@ public class UserRepository implements UserContext {
     public boolean login(String email, String password) {
         return context.login(email, password);
     }
+
+    @Override
+    public List<User> getAllTeachers() { return context.getAllTeachers(); }
+
 }
