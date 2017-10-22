@@ -1,14 +1,8 @@
 package controllers;
 
 
-import dal.contexts.LocationMongoContext;
-import dal.contexts.TrainingMongoContext;
-import dal.contexts.TuitionFormMongoContext;
-import dal.contexts.UserMongoContext;
-import dal.repositories.TrainingRepository;
-import dal.repositories.TuitionFormRepository;
-import dal.repositories.LocationRepository;
-import dal.repositories.UserRepository;
+import dal.contexts.*;
+import dal.repositories.*;
 import models.*;
 import play.data.Form;
 import play.data.FormFactory;
@@ -21,6 +15,7 @@ import views.html.training.*;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ken on 27-9-2017.
@@ -29,9 +24,11 @@ public class TrainingController extends Controller {
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
-    TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
+    TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training2"));
     LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
+    DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+
     private Form<Training> form;
     List<Location> locations = new ArrayList<>();
     List<User>teachers = new ArrayList<>();
@@ -88,6 +85,13 @@ public class TrainingController extends Controller {
             return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations, teachers));
         } else {
             Training newTraining = filledForm.get();
+
+            List<String> dates = new ArrayList<>();
+
+            for(int i = 0; i < 5; i++) { // 5 as an example
+              //  String date = filledForm
+            }
+
             trainingRepository.addTraining(newTraining);
             Training t = trainingRepository.getTraining(newTraining.getTrainingCode());
             return ok(message.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + t.getName() + " is aangemaakt", "/managetraining"));

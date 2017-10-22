@@ -4,6 +4,7 @@
 
     @shared.main(Page, isLoggedIn, User) {
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
+        <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
 
         <div class="container">
             <h1>Training toevoegen</h1>
@@ -20,7 +21,17 @@
                     <tr>@b3.number(form("Duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</tr>
                     <tr>@b3.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</tr>
                     <tr>@b3.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</tr>
-                    <tr>@b3.date(form("Date"), '_label -> "Datum:", 'class -> "form-control-inline")</tr>
+
+                    <div class="form-group  ">
+                    <div id="dynamicInput">
+                        <tr>@*b3.date(form("Date"), '_label -> "Datum:", 'class -> "form-control-inline")*@
+                            <label class="control-label" for="Dates[]">Datum:</label>
+                            <input type="date" id="Date" name="Dates[]" value="" class="form-control form-control-inline">
+                        </tr>
+                    </div></div>
+
+                    <br><input type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
+
                     <tr>@b3.text(form("Category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</tr>
 
                     <tr>@b3.select(form("LocationID"), options = locations.map(location => location.get_id() -> location.getStreetName), '_label -> "Locatie:", 'class -> "form-control-inline")</tr>
