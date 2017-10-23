@@ -3,7 +3,7 @@
 
     @shared.main(page, isLoggedIn, User) {
 
-        <div class="container">
+    <div class="container">
             <h1>Registreren</h1>
             @b4.form(routes.AccountController.registerAccount) {
                 <table>
@@ -13,7 +13,7 @@
                     <tr>@b4.number(form("PhoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "06131313")</tr>
                     <tr>@b4.text(form("Company"), '_label -> "Bedrijf", 'placeholder -> "Software BV")</tr>
                     <tr>@b4.password(form("password"), '_label -> "Wachtwoord", 'required -> "required")</tr>
-                    <tr>@b4.password(form("validation"), '_label -> "Wachtwoord validatie", 'required -> "required")</tr>
+                    <tr>@b4.password(form("validation"), '_label -> "Wachtwoord (herhaling)", 'required -> "required")</tr>
                     <tr>@b4.submit('class -> "btn btn-default") { Registeren}</tr>
                 </table>
             }
