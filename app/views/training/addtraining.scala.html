@@ -1,6 +1,6 @@
 @import b3.vertical.fieldConstructor
 @import play.data.Form
-@(form: Form[Training], isLoggedIn: Boolean, User: User, Page: String, locations: List[Location])
+@(form: Form[Training], isLoggedIn: Boolean, User: User, Page: String, locations: List[Location], teachers : List[User])
 
     @shared.main(Page, isLoggedIn, User) {
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
@@ -15,6 +15,7 @@
                     <tr>@b3.text(form("Name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</tr>
                     <tr>@b3.text(form("Description"), '_label -> "Beschrijving:", 'class -> "form-control-inline", 'placeholder -> "Voer beschrijving in")</tr>
                     <tr>@b3.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline", 'placeholder -> "Voer materialen in")</tr>
+                    <tr>@b3.select(form("TeacherID"), options = teachers.map(teacher => teacher.get_id()->teacher.getFirstName),'_label -> "Docent:", 'class -> "form-control-inline")</tr>
 
                     <tr>@b3.number(form("Duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</tr>
                     <tr>@b3.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</tr>

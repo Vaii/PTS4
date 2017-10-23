@@ -24,31 +24,23 @@
                 <ul>
                     <li ><p class="navitem dropdown-toggle">Training</p>
                         <ul>
-                            @if(isLoggedIn){
-                                @if(user.getRole.equals(Role.MedewerkerKenniscentrum)){
-                                    <li><a href="@routes.TrainingController.manage()" class="navitem dropdown-toggle">
-                                        Training Beheren</a>
-                                        <ul><li><a href="@routes.TrainingController.addtraining()">Training Toevoegen</a></li>
-                                            <li> <a href="@routes.TrainingController.manage()">Training Beheren</a></li>
-                                        </ul>
-                                    </li>
-                                }
-                            }
+                            <li><a href="@routes.TrainingController.manage()" class="navitem dropdown-toggle">
+                                Training Beheren</a>
+                                <ul><li><a href="@routes.TrainingController.addtraining()">Training Toevoegen</a></li>
+                                    <li> <a href="@routes.TrainingController.manage()">Training Beheren</a></li>
+                                </ul>
+                            </li>
                             <li><a href="@routes.TrainingController.overview()">Mijn Trainingen</a></li>
                             <li><a href="@routes.TrainingController.overview()">Aangeboden Trainingen</a></li>
 
                         </ul>
                     </li>
-                    @if(isLoggedIn){
-                        @if(user.getRole.equals(Role.MedewerkerKenniscentrum)){
-                            <li><a href="" class="navitem dropdown-toggle">Locatie</a>
-                                <ul>
-                                    <li><a href="@routes.LocationController.loadLocationForm()">Locatie Toevoegen</a></li>
-                                    <li><a href="@routes.LocationController.locationOverview()">Locatie Beheren</a></li>
-                                </ul>
-                            </li>
-                        }
-                    }
+                    <li><a href="" class="navitem dropdown-toggle">Locatie</a>
+                        <ul>
+                            <li><a href="@routes.LocationController.loadLocationForm()">Locatie Toevoegen</a></li>
+                            <li><a href="@routes.LocationController.locationOverview()">Locatie Beheren</a></li>
+                        </ul>
+                    </li>
                     <li ><p class="navitem dropdown-toggle">Manager</p>
                         <ul>
                             <li><a href="#">Mijn Medewerker</a></li>
@@ -66,12 +58,11 @@
                             </ul>
                         </li>
                     }
-                    @if(isLoggedIn){
-                        @if(user.getRole.equals(Role.MedewerkerKenniscentrum)){
-                            <li><a href="@routes.AdminController.overview()">Account beheer</a></li>
-                        }
-                    }
                     <li ><a href="@routes.ApplicationController.contact()" class="navitem">Contact</a></li>
+                    @if(isLoggedIn) {
+                        <li><a href="@routes.AccountController.profile()">Profile</a></li>
+                            <li><a href="@routes.AdminController."></a></li>
+                    }
                 </ul>
             </nav>
             <div id="content">

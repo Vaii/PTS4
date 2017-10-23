@@ -61,7 +61,7 @@ public class UserMongoContext implements UserContext {
         MongoCursor<User> results = collection.find().as(User.class);
         List<User> users = new ArrayList<>();
 
-        while(results.hasNext()) {
+        while (results.hasNext()) {
             User user = results.next();
             users.add(user);
         }
@@ -78,11 +78,23 @@ public class UserMongoContext implements UserContext {
     public boolean login(String email, String password) {
         User userToCheck = getUser(email);
 
-        if(userToCheck != null) {
+        if (userToCheck != null) {
             return userToCheck.checkLogin(password);
         }
 
         return false;
+    }
+
+    @Override
+    public List<User> getAllTeachers() {
+        MongoCursor<User> results = collection.find("{Role:#}", Role.Docent).as(User.class);
+        List<User> teachers = new ArrayList<>();
+
+        while (results.hasNext()) {
+            User teacher = results.next();
+            teachers.add(teacher);
+        }
+        return teachers;
     }
 
     /**
