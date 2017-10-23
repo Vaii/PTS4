@@ -6,73 +6,91 @@
     <head>
         <title>@title</title>
 
-        <script
-        src="https://code.jquery.com/jquery-2.2.4.min.js"
-        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-        crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-        <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/ico" href="@routes.Assets.at("images/favicon.ico")">
+
     </head>
 
     <body>
         <div id="wrapper">
-            <nav class="navbar">
-                <a href="@routes.ApplicationController.index()"><img src="@routes.Assets.at("images/infosupportlogo.png")" class="logo" alt="logo"></a>
-                <ul>
-                    <li ><p class="navitem dropdown-toggle">Training</p>
-                        <ul>
-                            @if(isLoggedIn){
-                                @if(user.getRole.equals(Role.MedewerkerKenniscentrum)){
-                                    <li><a href="@routes.TrainingController.manage()" class="navitem dropdown-toggle">
-                                        Training Beheren</a>
-                                        <ul><li><a href="@routes.TrainingController.addtraining()">Training Toevoegen</a></li>
-                                            <li> <a href="@routes.TrainingController.manage()">Training Beheren</a></li>
-                                        </ul>
-                                    </li>
-                                }
-                            }
-                            <li><a href="@routes.TrainingController.overview()">Mijn Trainingen</a></li>
-                            <li><a href="@routes.TrainingController.overview()">Aangeboden Trainingen</a></li>
 
-                        </ul>
-                    </li>
-                    @if(isLoggedIn){
-                        @if(user.getRole.equals(Role.MedewerkerKenniscentrum)){
-                            <li><a href="" class="navitem dropdown-toggle">Locatie</a>
-                                <ul>
-                                    <li><a href="@routes.LocationController.loadLocationForm()">Locatie Toevoegen</a></li>
-                                    <li><a href="@routes.LocationController.locationOverview()">Locatie Beheren</a></li>
-                                </ul>
-                            </li>
+            <nav class="navbar navbar-toggleable-md navbar-light bg-primary">
+
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a href="@routes.ApplicationController.index()"><img src="@routes.Assets.at("images/infosupportlogo.png")" class="logo" alt="logo"></a>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav mr-auto ml-auto">
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link" id="trainingDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
+                                Training</a>
+                            <div class="dropdown-menu" aria-labelledby="trainingDropdownMenu">
+                                <a class="dropdown-item" href="@routes.TrainingController.overview()">Mijn Trainingen</a>
+                                <a class="dropdown-item" href="@routes.TrainingController.overview()">Aangeboden Trainingen</a>
+                                @if(isLoggedIn) {
+                                    @if(user.getRole.equals(Role.MedewerkerKenniscentrum)) {
+                                        <a class="dropdown-item" href="@routes.TrainingController.manage()" >Training Beheren</a>
+                                        <a class="dropdown-item" href="@routes.TrainingController.addtraining()">Training Toevoegen</a>
+                                        <a class="dropdown-item" href="@routes.TrainingController.manage()">Training Beheren</a>
+                                    }
+                                }
+                            </div>
+
+                        @if(isLoggedIn) {
+                            @if(user.getRole.equals(Role.MedewerkerKenniscentrum)) {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" id="locationDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
+                                        Locatie</a>
+                                    <div class="dropdown-menu" aria-labelledby="locationDropdownMenu">
+                                        <a class="dropdown-item" href="@routes.LocationController.loadLocationForm()">
+                                            Locatie Toevoegen</a>
+                                        <a class="dropdown-item" href="@routes.LocationController.locationOverview()">
+                                            Locatie Beheren</a>
+                                    </div>
+                            }
                         }
-                    }
-                    <li ><p class="navitem dropdown-toggle">Manager</p>
-                        <ul>
-                            <li><a href="#">Mijn Medewerker</a></li>
-                            <li><a href="#">Studiekosten Formulier</a></li>
-                        </ul>
-                    </li>
-                    @if(isLoggedIn) {
-                        <li><a href="@routes.AccountController.logout()" class="navitem">Log out</a>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="managerDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
+                                Manager</a>
+                            <div class="dropdown-menu" aria-labelledby="managerDropdownMenu">
+                                <a href="#" class="dropdown-item">Mijn Medewerker</a>
+                                <a href="#" class="dropdown-item">Studiekosten Formulier</a>
+                            </div>
                         </li>
-                    } else {
-                        <li ><p class="navitem dropdown-toggle">Log In</p>
-                            <ul>
-                                <li><a href="@routes.AccountController.register()">Registreren</a></li>
-                                <li><a href="@routes.AccountController.login()">Aanmelden</a></li>
-                            </ul>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@routes.ApplicationController.contact()" >Contact</a>
                         </li>
-                    }
-                    <li ><a href="@routes.ApplicationController.contact()" class="navitem">Contact</a></li>
-                    @if(isLoggedIn){
-                        @if(user.getRole.equals(Role.MedewerkerKenniscentrum)){
-                            <li><a href="@routes.AdminController.overview()">Account beheer</a></li>
+
+                    </ul>
+                    <ul class="navbar-nav ml-1">
+                        <li class="nav-item dropdown">
+                        @if(isLoggedIn) {
+                            <a class="nav-link" href="" id="loginDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Mijn account</a>
+                            <div class="dropdown-menu" aria-labelledby="loginDropdownMenu">
+                                <a class="dropdown-item" href="@routes.AdminController.overview()">Account beheer</a>
+                                <a class="dropdown-item" href="@routes.AccountController.logout()">Uitloggen</a>
+                            </div>
+                        } else {
+                            <a class="nav-link" href="" id="loginDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Login</a>
+                            <div class="dropdown-menu" aria-labelledby="loginDropdownMenu">
+                                <a class="dropdown-item" href="@routes.AccountController.register()">Registreren</a>
+                                <a class="dropdown-item" href="@routes.AccountController.login()">Aanmelden</a>
+                            </div>
                         }
-                    }
-                </ul>
+                        </li>
+                    </ul>
+                </div>
             </nav>
             <div id="content">
             @content
@@ -84,7 +102,7 @@
                         <img class="footer-logo" src="@routes.Assets.at("images/infosupportlogo.png")">
                     </div>
                     <div class="col-md-3">
-                        <p class="created">Created by hats Off</p>
+                        <p class="created">Created by Hats Off</p>
                     </div>
                 </div>
             </footer>
