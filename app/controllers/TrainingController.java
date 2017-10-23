@@ -85,8 +85,8 @@ public class TrainingController extends Controller {
             return badRequest(addtraining.render(filledForm, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations, teachers));
         } else {
             Training newTraining = filledForm.get();
+            String dates = filledForm.field("Dates").value();
 
-            List<String> dates = new ArrayList<>();
 
             for(int i = 0; i < 5; i++) { // 5 as an example
               //  String date = filledForm
