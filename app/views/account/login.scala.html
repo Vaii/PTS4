@@ -1,11 +1,11 @@
 @(page: String, isLoggedIn: Boolean, User: User, form: DynamicForm, hasError: Boolean)
-    @import b3.vertical.fieldConstructor
+    @import b4.vertical.fieldConstructor
 
     @shared.main(page, isLoggedIn, User) {
 
         <div class="container">
             <h1>Inloggen</h1>
-            @b3.form(routes.AccountController.authentication()) {
+            @b4.form(routes.AccountController.authentication()) {
                 @helper.CSRF.formField
                 <table>
                     @if(hasError) {
@@ -14,10 +14,10 @@
                         </div>
                     }
                     <tr><p>Email</p></tr>
-                    <tr>@b3.text(form("email"), 'label -> "Email", 'placeholder -> "Email Address", 'required -> "required")</tr>
+                    <tr>@b4.text(form("email"), 'label -> "Email", 'placeholder -> "Email Address", 'required -> "required")</tr>
                     <tr><p>Password</p></tr>
-                    <tr>@b3.password(form("password"), 'label -> "Password", 'placeholder -> "Password", 'required -> "required")</tr>
-                    <tr>@b3.submit('class -> "btn btn-default") {Log in}</tr>
+                    <tr>@b4.password(form("password"), 'label -> "Password", 'placeholder -> "Password", 'required -> "required")</tr>
+                    <tr>@b4.submit('class -> "btn btn-default") {Log in}</tr>
                 </table>
             }
         </div>
