@@ -34,7 +34,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="TEST" name="SBT: xml-apis:xml-apis:1.4.01:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.adrianhurt:play-bootstrap_2.11:1.2-P26-B3:jar" level="project" />
     <orderEntry type="library" name="SBT: com.adrianhurt:play-bootstrap-core_2.11:1.2-P26:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-stm:scala-stm_2.11:0.8:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.11.8:jar" level="project" />
@@ -165,15 +164,6 @@
     <orderEntry type="library" name="SBT: com.google.inject:guice:4.1.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.google.inject.extensions:guice-assistedinject:4.1.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:play-guice_2.11:2.6.3:jar" level="project" />
-    <orderEntry type="module-library" scope="TEST">
-      <library name="JUnit5">
-        <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/junit-jupiter-api-5.0.0.jar!/" />
-          <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/opentest4j-1.0.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="SBT: com.adrianhurt:play-bootstrap_2.11:1.2-P26-B4:jar" level="project" />
   </component>
 </module>

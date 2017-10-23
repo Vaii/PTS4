@@ -10,7 +10,7 @@ libraryDependencies ++= Seq( javaJdbc , ehcache , javaWs )
 
 // Bootstrap 3
 libraryDependencies ++= Seq(
-  "com.adrianhurt" %% "play-bootstrap" % "1.2-P26-B3"
+  "com.adrianhurt" %% "play-bootstrap" % "1.2-P26-B4"
 )
 
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.0"
