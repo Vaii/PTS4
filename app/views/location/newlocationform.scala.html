@@ -1,4 +1,4 @@
-@import b3.vertical.fieldConstructor
+@import b4.vertical.fieldConstructor
 @import play.data.Form
 
 @(form: Form[Location], isLoggedIn: Boolean, User: User, Page: String)
@@ -8,16 +8,16 @@
         <div class="container">
             <h1>Nieuwe Locatie</h1>
             <br>
-            @b3.form(routes.LocationController.createLocation()) {
+            @b4.form(routes.LocationController.createLocation()) {
                 <table>
-                    <tr>@b3.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'placeholder -> "Eindhoven")</tr>
-                    <tr>@b3.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'placeholder -> "Rachelsmolen")</tr>
-                    <tr>@b3.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'placeholder -> "1")</tr>
-                    <tr>@b3.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'placeholder -> "2.18")</tr>
-                    <tr>@b3.number(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'placeholder -> "25")</tr>
+                    <tr>@b4.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'placeholder -> "Eindhoven")</tr>
+                    <tr>@b4.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'placeholder -> "Rachelsmolen")</tr>
+                    <tr>@b4.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'placeholder -> "1")</tr>
+                    <tr>@b4.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'placeholder -> "2.18")</tr>
+                    <tr>@b4.number(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'placeholder -> "25")</tr>
 
                     <br>
-                    @b3.submit('class -> "btn btn-primary") { Toevoegen }
+                    @b4.submit('class -> "btn btn-primary") { Toevoegen }
                     @helper.CSRF.formField
                 </table>
             }
