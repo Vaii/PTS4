@@ -52,7 +52,6 @@ public class LocationMongoContext implements LocationContext{
 
     @Override
     public Location getLocation(String id) {
-
         return collection.findOne("{_id:#}", new ObjectId(id)).as(Location.class);
     }
 
