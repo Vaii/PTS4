@@ -1,4 +1,4 @@
-@import b3.vertical.fieldConstructor
+@import b4.vertical.fieldConstructor
 @import play.data.Form
 @(form: Form[Location], location: Location, isLoggedIn: Boolean, User: User, Page: String)
     @shared.main(Page, isLoggedIn, User) {
@@ -7,16 +7,16 @@
         <div class="container">
             <h1>Locatie Wijzigen</h1>
             <br>
-            @b3.form(routes.LocationController.submitAlterLocation()) {
-                @b3.text(form("_id"), 'class -> "form-control-inline", 'readonly -> "true", 'hidden -> "hidden", 'value -> location.get_id())
-                @b3.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'value -> location.getCity)
-                @b3.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'value -> location.getStreetName)
-                @b3.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'value -> location.getStreetNumber)
-                @b3.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'value -> location.getRoom)
-                @b3.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'value -> location.getCapacity)
+            @b4.form(routes.LocationController.submitAlterLocation()) {
+                @b4.text(form("_id"), 'class -> "form-control-inline", 'readonly -> "true", 'hidden -> "hidden", 'value -> location.get_id())
+                @b4.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'value -> location.getCity)
+                @b4.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'value -> location.getStreetName)
+                @b4.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'value -> location.getStreetNumber)
+                @b4.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'value -> location.getRoom)
+                @b4.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'value -> location.getCapacity)
                 <br>
                 <div class="row">
-                    <div class="col-lg-4">@b3.submit('class -> "btn btn-primary") { Wijzigen }</div>
+                    <div class="col-lg-4">@b4.submit('class -> "btn btn-primary") { Wijzigen }</div>
 
                     <div class="col-lg-4">
                         <a href="@routes.LocationController.deleteLocation(location.get_id())" class="btn btn-danger">

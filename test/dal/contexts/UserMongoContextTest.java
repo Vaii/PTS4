@@ -32,7 +32,7 @@ class UserMongoContextTest {
     void getUser() {
         reset();
         context.addUser(testUser, "123");
-        User user = context.getUser("Henk@testone.nl");
+        User user = context.getUser("Henk@test.nl");
 
         assertEquals("Henk", user.getFirstName());
     }
@@ -53,12 +53,12 @@ class UserMongoContextTest {
         reset();
 
         context.addUser(testUser, "123");
-        User user1 = context.getUser("Henk@testone.nl");
+        User user1 = context.getUser("Henk@test.nl");
         assertEquals("Henk", user1.getFirstName());
 
         testUser.setFirstName("Niet Henk");
         context.updateUser(testUser);
-        User user2 = context.getUser("Henk@testone.nl");
+        User user2 = context.getUser("Henk@test.nl");
 
         assertEquals("Niet Henk", user2.getFirstName());
     }
@@ -67,9 +67,9 @@ class UserMongoContextTest {
     void removeUser() {
         reset();
         context.addUser(testUser, "123");
-        assertEquals("Henk", context.getUser("Henk@testone.nl").getFirstName());
+        assertEquals("Henk", context.getUser("Henk@test.nl").getFirstName());
         context.removeUser(testUser);
-        assertEquals(null, context.getUser("Henk@testone.nl"));
+        assertEquals(null, context.getUser("Henk@test.nl"));
     }
 
     @Test
@@ -79,7 +79,11 @@ class UserMongoContextTest {
         boolean resultFalse = context.login("Henk@testone.nl", "1234");
         assertEquals(false, resultFalse);
 
-        boolean resultTrue = context.login("Henk@testone.nl", "123");
+        boolean resultFalse2 = context.login("Henk@test.nl", "1234");
+        assertEquals(false, resultFalse2);
+
+
+        boolean resultTrue = context.login("Henk@test.nl", "123");
         assertEquals(true, resultTrue);
     }
 
