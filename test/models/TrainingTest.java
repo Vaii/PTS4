@@ -11,7 +11,7 @@ class TrainingTest {
     static Training training2;
 
     @BeforeEach
-    static void setup() {
+     void setup() {
         training = new Training("001", "Test Training 1", "no description", "-", 2f, 1200.00f, 20, new Date(12121212), "Java");
         training2 = new Training("002", "Test Training 2", "no description", "-", 2f, 1200.00f, 20, new Date(12121212), "JAVA");
     }
