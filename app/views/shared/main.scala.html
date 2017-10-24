@@ -17,26 +17,22 @@
 
     <body>
         <div id="wrapper">
-
-            <nav class="navbar navbar-toggleable-md navbar-light bg-primary">
-
+            <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <a href="@routes.ApplicationController.index()"><img src="@routes.Assets.at("images/infosupportlogo.png")" class="logo" alt="logo"></a>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav mr-auto ml-auto">
                         <li class="nav-item dropdown">
 
-                            <a class="nav-link" id="trainingDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
+                            <a class="nav-link dropdown-toggle" id="trainingDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
                                 Training</a>
                             <div class="dropdown-menu" aria-labelledby="trainingDropdownMenu">
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Mijn Trainingen</a>
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Aangeboden Trainingen</a>
                                 @if(isLoggedIn) {
                                     @if(user.getRole.equals(Role.MedewerkerKenniscentrum)) {
-                                        <a class="dropdown-item" href="@routes.TrainingController.manage()" >Training Beheren</a>
                                         <a class="dropdown-item" href="@routes.TrainingController.addtraining()">Training Toevoegen</a>
                                         <a class="dropdown-item" href="@routes.TrainingController.manage()">Training Beheren</a>
                                     }
@@ -46,43 +42,35 @@
                         @if(isLoggedIn) {
                             @if(user.getRole.equals(Role.MedewerkerKenniscentrum)) {
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" id="locationDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
-                                        Locatie</a>
+                                    <a class="nav-link dropdown-toggle" id="locationDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">Locatie</a>
                                     <div class="dropdown-menu" aria-labelledby="locationDropdownMenu">
-                                        <a class="dropdown-item" href="@routes.LocationController.loadLocationForm()">
-                                            Locatie Toevoegen</a>
-                                        <a class="dropdown-item" href="@routes.LocationController.locationOverview()">
-                                            Locatie Beheren</a>
+                                        <a class="dropdown-item" href="@routes.LocationController.loadLocationForm()">Locatie Toevoegen</a>
+                                        <a class="dropdown-item" href="@routes.LocationController.locationOverview()">Locatie Beheren</a>
                                     </div>
                             }
                         }
-
                         <li class="nav-item dropdown">
-                            <a class="nav-link" id="managerDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
-                                Manager</a>
+                            <a class="nav-link dropdown-toggle" id="managerDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">Manager</a>
                             <div class="dropdown-menu" aria-labelledby="managerDropdownMenu">
                                 <a href="#" class="dropdown-item">Mijn Medewerker</a>
                                 <a href="#" class="dropdown-item">Studiekosten Formulier</a>
                             </div>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="@routes.ApplicationController.contact()" >Contact</a>
                         </li>
-
                     </ul>
                     <ul class="navbar-nav ml-1">
                         <li class="nav-item dropdown">
                         @if(isLoggedIn) {
-                            <a class="nav-link" href="" id="loginDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Mijn account</a>
+                            <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" data-toggle="dropdown" data-placement="left" aria-haspopup="true" aria-expanded="false">Mijn account</a>
+
                             <div class="dropdown-menu" aria-labelledby="loginDropdownMenu">
                                 <a class="dropdown-item" href="@routes.AdminController.overview()">Account beheer</a>
                                 <a class="dropdown-item" href="@routes.AccountController.logout()">Uitloggen</a>
                             </div>
                         } else {
-                            <a class="nav-link" href="" id="loginDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Login</a>
+                            <a class="nav-link" href="" id="loginDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
                             <div class="dropdown-menu" aria-labelledby="loginDropdownMenu">
                                 <a class="dropdown-item" href="@routes.AccountController.register()">Registreren</a>
                                 <a class="dropdown-item" href="@routes.AccountController.login()">Aanmelden</a>

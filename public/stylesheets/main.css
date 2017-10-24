@@ -4,15 +4,22 @@ Code reference : https://codepen.io/philhoyt/pen/ujHzd
 /*.navbar{
     background-color: #0079C8;
 }*/
-a.nav-link {
-    color: white;
-}
-#trainingDropdownMenu.nav-link a{
-    color: white;
-}
-#mainmenu:hover .dropdown-content {
+/* Navbar
+ */
+.dropdown:hover>.dropdown-menu {
     display: block;
 }
+
+.navbar-inverse .navbar-nav .nav-link {
+    color: white;
+    font-size:x-large;
+    margin-right:40px;
+    margin-left:40px;
+}
+
+/* Page
+
+ */
 
 html {
     margin: 0;
