@@ -11,21 +11,35 @@ public class DateTime {
     // Mongo DB identifiers.
     private static final String M_DATE = "Date";
     private static final String M_TRAINEES = "Trainees";
+    private static final String M_LOCATION = "LocationID";
 
     // Mongo DB ID.
     @MongoObjectId
     private String _id;
 
     private Date date;
-    private List<User> trainees;
+    private List<String> trainees;
+
+    // MongoDB ID of the location.
+    private String LocationID;
 
     @JsonCreator
-    public DateTime(@JsonProperty(M_DATE) Date date) {
+    public DateTime(@JsonProperty(M_DATE) Date date, @JsonProperty(M_LOCATION) String LocationID) {
         this.date = date;
+        this.LocationID = LocationID;
     }
 
-    public boolean signUp(User user) {
-        return this.trainees.add(user);
+    @JsonProperty(M_LOCATION)
+    public String getLocationID() {
+        return LocationID;
+    }
+
+    public void setLocationID(String locationID) {
+        this.LocationID = locationID;
+    }
+
+    public boolean signUp(String userID) {
+        return this.trainees.add(userID);
     }
 
     public String get_id() {
@@ -35,6 +49,10 @@ public class DateTime {
     @JsonProperty(M_DATE)
     public Date getDate() {
         return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
 

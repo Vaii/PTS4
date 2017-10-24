@@ -1,13 +1,17 @@
+$(document).ready(function() {
+    $("form").addClass('form-inline');
+})
+
+
 var counter = 1;
-var limit = 3;
+// var limit = 3;
 function addInput(divName){
-    if (counter == limit)  {
+   /* if (counter == limit)  {
         alert("You have reached the limit of adding " + counter + " inputs");
-    }
-    else {
+    } */
         var newdiv = document.createElement('div');
-        newdiv.innerHTML = "<label class=\"control-label\" for=\"Dates[]\">Datum " + (counter + 1) + "</label> <br><input type=\"date\" id=\"Date\" name=\"Dates[]\" value=\"\" class=\"form-control form-control-inline\">";
+        newdiv.innerHTML = "<label class=\"control-label\" for=\"Dates[]\">Datum " + (counter + 1) + "" + "</label> <br><input type=\"date\"" +
+            " id=\"Date\" name=\"Dates[]\" value=\"\" " + "class=\"form-control form-control-inline\">" + "";
         document.getElementById(divName).appendChild(newdiv);
         counter++;
-    }
 }

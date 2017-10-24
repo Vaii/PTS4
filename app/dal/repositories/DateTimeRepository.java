@@ -11,7 +11,7 @@ public class DateTimeRepository implements DateTimeContext {
     }
 
     @Override
-    public boolean addDateTime(DateTime dateTime) {
+    public Object addDateTime(DateTime dateTime) {
         return context.addDateTime(dateTime);
     }
 

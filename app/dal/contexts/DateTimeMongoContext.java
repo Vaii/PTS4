@@ -17,9 +17,9 @@ public class DateTimeMongoContext implements DateTimeContext {
     }
 
     @Override
-    public boolean addDateTime(DateTime dateTime) {
+    public Object addDateTime(DateTime dateTime) {
         WriteResult result = collection.save(dateTime);
-        return result.wasAcknowledged();
+        return result.getUpsertedId();
     }
 
     @Override
