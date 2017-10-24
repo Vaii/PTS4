@@ -68,15 +68,18 @@ public class AccountController extends Controller {
         String password = filledForm.field("password").value();
         String validation = filledForm.field("validation").value();
 
+        if(!password.equals(validation)) {
+            return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("validation", "Wachtwoorden komen niet overeen")));
+        }
+
         if(filledForm.hasErrors()){
             return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
         }
-        else if(password.equals(validation)){
-            if(userRepo.addUser(user, password)){
-                return ok(registerSuccess.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
-            }
-            return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+
+        if(userRepo.addUser(user, password)){
+            return ok(registerSuccess.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
+
         return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
     }
 
