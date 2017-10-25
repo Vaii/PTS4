@@ -4,4 +4,4 @@ scala:
 
 script:
   - sbt ++2.11.8
-  - ant test
+  - java -jar junit-platform-console-standalone-1.0.1.jar
