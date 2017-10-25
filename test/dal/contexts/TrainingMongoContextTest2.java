@@ -6,14 +6,16 @@ import models.Training;
 import models.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-
-class TrainingMongoContextTest2 {
+@RunWith(JUnit4.class)
+public class TrainingMongoContextTest2 {
     private TrainingMongoContext context;
 
     // test location
@@ -30,7 +32,7 @@ class TrainingMongoContextTest2 {
     private List<String> prerequisites;
 
     @Before
-    void setUp() {
+   public void setUp() {
         context = new TrainingMongoContext("TrainingTest");
         location = new Location("Eindhoven", "testStreet", "51", "R1_5.11", 55);
 
@@ -54,14 +56,14 @@ class TrainingMongoContextTest2 {
     }
 
     @Test
-    void addTraining() {
+    public void addTraining() {
         reset();
         boolean result = context.addTraining(preTraining);
         assertEquals(true, result);
     }
 
     @Test
-    void updateTraining() {
+    public void updateTraining() {
         reset();
         context.addTraining(preTraining);
         Training training1 = context.getTraining("004");
@@ -75,7 +77,7 @@ class TrainingMongoContextTest2 {
     }
 
     @Test
-    void removeTraining() {
+    public void removeTraining() {
         reset();
         context.addTraining(training);
         assertEquals("Advanced Java", context.getTraining("005").getName());
@@ -84,14 +86,14 @@ class TrainingMongoContextTest2 {
     }
 
     @Test
-    void getTraining() {
+    public void getTraining() {
         reset();
         context.addTraining(training);
         assertEquals("Advanced Java", context.getTraining("005").getName());
     }
 
     @Test
-    void getAll() {
+    public void getAll() {
         reset();
         context.addTraining(preTraining);
         context.addTraining(training);
@@ -100,7 +102,7 @@ class TrainingMongoContextTest2 {
     }
 
     @Test
-    void getTrainingByCategory() {
+    public void getTrainingByCategory() {
         reset();
         context.addTraining(preTraining);
         context.addTraining(training);
@@ -118,7 +120,7 @@ class TrainingMongoContextTest2 {
     }
 
     @Test
-    void getTrainingFrequency() {
+    public void getTrainingFrequency() {
         reset();
         context.addTraining(preTraining);
         context.addTraining(training);

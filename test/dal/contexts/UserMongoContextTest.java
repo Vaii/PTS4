@@ -4,34 +4,36 @@ import models.Role;
 import models.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-
-class UserMongoContextTest {
+@RunWith(JUnit4.class)
+public class UserMongoContextTest {
     UserMongoContext context;
     private User testUser;
     private User testUser2;
 
     @Before
-    void setUp() {
+    public void setUp() {
         context = new UserMongoContext("UserTest");
         testUser = new User("Henk", "TestPersoon", "Henk@test.nl", Role.AdviseurReward, "Fictief bedrijf", "0613113");
         testUser2 = new User("Jaap", "NormaalPersoon", "jaap@nieteentest.nl", Role.ManagerHRD, "Info Support", "0613141");
     }
 
     @Test
-    void addUser() {
+    public void addUser() {
         reset();
         boolean result = context.addUser(testUser, "123");
         assertEquals(true, result);
     }
 
     @Test
-    void getUser() {
+    public void getUser() {
         reset();
         context.addUser(testUser, "123");
         User user = context.getUser("Henk@test.nl");
@@ -40,7 +42,7 @@ class UserMongoContextTest {
     }
 
     @Test
-    void getAll() {
+    public void getAll() {
         reset();
         context.addUser(testUser2, "123");
         context.addUser(testUser, "123");
@@ -51,7 +53,7 @@ class UserMongoContextTest {
     }
 
     @Test
-    void updateUser() {
+    public void updateUser() {
         reset();
 
         context.addUser(testUser, "123");
@@ -66,7 +68,7 @@ class UserMongoContextTest {
     }
 
     @Test
-    void removeUser() {
+    public void removeUser() {
         reset();
         context.addUser(testUser, "123");
         assertEquals("Henk", context.getUser("Henk@test.nl").getFirstName());
@@ -75,7 +77,7 @@ class UserMongoContextTest {
     }
 
     @Test
-    void login() {
+    public void login() {
         reset();
         context.addUser(testUser, "123");
         boolean resultFalse = context.login("Henk@testone.nl", "1234");

@@ -3,17 +3,19 @@ package dal.contexts;
 import models.Location;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertEquals;
 
-
-class LocationMongoContextTest {
+@RunWith(JUnit4.class)
+public class LocationMongoContextTest {
     private LocationMongoContext context;
     private Location location1;
     private Location location2;
 
     @Before
-    void setUp() {
+    public void setUp() {
         context = new LocationMongoContext("LocationTest");
 
         location1 = new Location("Eindhoven", "Rachelsmolen", "1", "2.18",55 );
@@ -21,14 +23,14 @@ class LocationMongoContextTest {
     }
 
     @Test
-    void addLocation() {
+    public void addLocation() {
         reset();
         boolean result = context.addLocation(location1);
         assertEquals(true, result);
     }
 
     @Test
-    void updateLocation() {
+    public void updateLocation() {
         reset();
         context.addLocation(location1);
         Location location = context.getLocation("Eindhoven");
@@ -41,7 +43,7 @@ class LocationMongoContextTest {
     }
 
     @Test
-    void removeLocation() {
+    public void removeLocation() {
         reset();
         context.addLocation(location1);
         assertEquals("51", context.getLocation("Eindhoven").getStreetNumber());
@@ -50,7 +52,7 @@ class LocationMongoContextTest {
     }
 
     @Test
-    void getAll() {
+    public void getAll() {
         reset();
         context.addLocation(location1);
         context.addLocation(location2);
@@ -59,7 +61,7 @@ class LocationMongoContextTest {
     }
 
     @Test
-    void getLocation() {
+    public void getLocation() {
         reset();
         context.addLocation(location1);
         assertEquals("51", context.getLocation("Eindhoven").getStreetNumber());
