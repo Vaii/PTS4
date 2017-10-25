@@ -72,6 +72,7 @@ public class UserMongoContextTest {
         reset();
         context.addUser(testUser, "123");
         assertEquals("Henk", context.getUser("Henk@test.nl").getFirstName());
+        testUser = context.getUser("Henk@test.nl");
         context.removeUser(testUser);
         assertEquals(null, context.getUser("Henk@test.nl"));
     }
