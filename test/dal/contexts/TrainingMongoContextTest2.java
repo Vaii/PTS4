@@ -4,8 +4,9 @@ import models.Location;
 import models.Role;
 import models.Training;
 import models.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
 
 import java.util.*;
 
@@ -27,7 +28,7 @@ class TrainingMongoContextTest2 {
     private Training training;
     private List<String> prerequisites;
 
-    @BeforeEach
+    @Before
     void setUp() {
         context = new TrainingMongoContext("TrainingTest");
         location = new Location("Eindhoven", "testStreet", "51", "R1_5.11", 55);

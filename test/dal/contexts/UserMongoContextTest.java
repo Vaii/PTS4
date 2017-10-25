@@ -2,8 +2,9 @@ package dal.contexts;
 
 import models.Role;
 import models.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ class UserMongoContextTest {
     private User testUser;
     private User testUser2;
 
-    @BeforeEach
+    @Before
     void setUp() {
         context = new UserMongoContext("UserTest");
         testUser = new User("Henk", "TestPersoon", "Henk@test.nl", Role.AdviseurReward, "Fictief bedrijf", "0613113");

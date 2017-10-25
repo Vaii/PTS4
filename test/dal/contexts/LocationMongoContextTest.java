@@ -1,8 +1,8 @@
 package dal.contexts;
 
 import models.Location;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +11,7 @@ class LocationMongoContextTest {
     private Location location1;
     private Location location2;
 
-    @BeforeEach
+    @Before
     void setUp() {
         context = new LocationMongoContext("LocationTest");
 
