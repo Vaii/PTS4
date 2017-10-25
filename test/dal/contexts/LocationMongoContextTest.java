@@ -6,6 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
@@ -13,13 +16,17 @@ public class LocationMongoContextTest {
     private LocationMongoContext context;
     private Location location1;
     private Location location2;
+    private List<Location> locations;
 
     @Before
     public void setUp() {
         context = new LocationMongoContext("LocationTest");
-
+        context.removeAll();
         location1 = new Location("Eindhoven", "Rachelsmolen", "1", "2.18",55 );
         location2 = new Location("Amsterdam", "Dam", "22A", "2.287B",150 );
+        context.addLocation(location1);
+        context.addLocation(location2);
+        locations = context.getAll();
     }
 
     @Test
@@ -31,24 +38,19 @@ public class LocationMongoContextTest {
 
     @Test
     public void updateLocation() {
-        reset();
-        context.addLocation(location1);
-        Location location = context.getLocation("Eindhoven");
-        assertEquals("51", location.getStreetNumber());
-
-        location1.setStreetNumber("15");
-        context.updateLocation( "Eindhoven", location1);
-        Location location3 = context.getLocation("Eindhoven");
-        assertEquals("15", location3.getStreetNumber());
+        Location x = locations.get(0);
+        x.setCapacity(12345);
+        context.updateLocation(x.get_id(), x);
+        locations = context.getAll();
+        assertEquals(12345, context.getLocation(x.get_id()).getCapacity());
     }
 
     @Test
     public void removeLocation() {
-        reset();
-        context.addLocation(location1);
-        assertEquals("51", context.getLocation("Eindhoven").getStreetNumber());
-        context.removeLocation(location1.get_id());
-        assertEquals(null, context.getLocation("Eindhoven"));
+        Location x = locations.get(0);
+        context.removeLocation(x.get_id());
+        locations = context.getAll();
+        assertEquals(1, locations.size());
     }
 
     @Test
@@ -62,12 +64,11 @@ public class LocationMongoContextTest {
 
     @Test
     public void getLocation() {
-        reset();
-        context.addLocation(location1);
-        assertEquals("51", context.getLocation("Eindhoven").getStreetNumber());
+        Location x = locations.get(0);
+        assertEquals("1", context.getLocation(x.get_id()).getStreetNumber());
     }
 
-    private void reset() {
+    public void reset() {
         context.removeAll();
     }
 
