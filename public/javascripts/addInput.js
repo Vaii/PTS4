@@ -1,7 +1,9 @@
-$(document).ready(function() {
-    $("form").addClass('form-inline');
-})
+alert(json);
+console.log(json);
 
+function initLocationBox() {
+
+}
 
 var counter = 1;
 // var limit = 3;

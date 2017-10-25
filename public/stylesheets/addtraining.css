@@ -2,11 +2,6 @@
     width: 500px;
 }
 
-.form-control {
-    width: 500px; !important;
-    display: block;
-}
-
 .form-vertical {
     margin-left: 50px; !important;
 }
@@ -23,11 +18,11 @@ h1 {
 .invalid input:focus:invalid {
     border-color: red;
 }
-
-#LocationID {
-    float: left; !important;
+.col-lg-4{
+    padding-left:0px;
 }
 
-#LocationID, #Dates {
-    width: 250px; !important;
+.btn btn-default {
+    padding-left: 0px;
+    margin-left: 0px;
 }

@@ -2,6 +2,7 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.validation.Constraints;
@@ -49,6 +50,8 @@ public class Training {
 
     @Constraints.Required
     private String Category;
+
+    private Gson gson = new Gson();
 
     // MongoDB ID of the location.
     @Constraints.Required

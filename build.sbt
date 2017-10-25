@@ -21,6 +21,8 @@ libraryDependencies += "org.mongodb" % "mongo-java-driver" % "3.5.0"
 // https://mvnrepository.com/artifact/org.jongo/jongo
 libraryDependencies += "org.jongo" % "jongo" % "1.3.0"
 
+libraryDependencies += "com.google.code.gson" % "gson" % "2.2.4"
+
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/testone" )
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
