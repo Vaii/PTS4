@@ -2,7 +2,7 @@
 @import play.data.Form
 @import com.fasterxml.jackson.databind.JsonNode
 
-@(form: Form[Training], isLoggedIn: Boolean, User: User, Page: String, locations: List[Location], teachers: List[User], locationJson : JsonNode)
+@(form: Form[Training], isLoggedIn: Boolean, User: User, Page: String, locations: List[Location], teachers: List[User], locationJson : JsonNode, teacherJson : JsonNode)
 
 @shared.main(Page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
@@ -12,9 +12,12 @@
                 elt.innerHTML = string;
                 return elt.innerText;
             }
-        var json = "@locationJson";
-        json = JSON.parse(unescapeHTML(json));
-        //var ids = JSON.parse(locationJson).html();
+
+        var locJson = "@locationJson";
+        locJson = JSON.parse(unescapeHTML(locJson));
+
+        var teachJson = "@teacherJson";
+        teachJson = JSON.parse(unescapeHTML(teachJson));
 
     </script>
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
@@ -33,25 +36,36 @@
             <div class="form-group  ">
                 <div id="dynamicInput">
                     <div class="row">
-                        <div class="col-lg-4">
-                            <label class="control-label" for="Dates[]">Datum:</label>
-                            <input type="date" id="Dates" name="Dates[]" value="" class="form-control">
-                        </div>
-                        <div class="col-lg-4">
-                        @b4.select(
-                            field = form("LocationID"),
-                            options = locations.map(location => location.get_id() -> location.getStreetName),
-                            '_label -> "Locatie:", '_default -> "Selecteer een locatie",
-                            'class -> "form-control"
-                        )
-                        </div>
-                        <div class="col-lg-4">
-                            @b4.select(form("TeacherID"), options = teachers.map(teacher => teacher.get_id() -> teacher.getFirstName), '_label -> "Docent:", 'class -> "form-control")
-                        </div>
+                            <div class="col-lg-3">
+                                <label class="control-label" for="Dates[]">Datum:</label>
+                                <input type="date" id="Dates" name="Dates[]" value="" class="form-control">
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="form-control-label" for="LocationID[]">Locatie:</label>
+                                <select id="LocationID" name="LocationID[]" required="true" class="form-control form-control">
+                                    <option value="" class="blank" selected="true" disabled="disabled">Selecteer een locatie</option>
+                                    @for(location <- locations) {
+                                        <option value="@location.get_id()" >@location.getStreetName</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="form-control-label" for="TeacherID[]">Docent:</label>
+                                <select id="TeacherID" name="TeacherID[]" class="form-control form-control">
+                                    <option value="" class="blank" selected="true" disabled="disabled">Selecteer een docent</option>
+                                    @for(teacher <- teachers) {
+                                        <option value="@teacher.get_id()" >@teacher.getFirstName</option>
+                                    }
+                                </select>
+                            </div>
 
                     </div>
+
                 </div>
             </div>
+
             <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
             <br>
             <div class="row">@b4.number(form("Duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
@@ -66,4 +80,3 @@
 }
 
 }
-

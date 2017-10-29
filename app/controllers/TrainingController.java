@@ -81,11 +81,12 @@ public class TrainingController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result addtraining() {
         List<Location> locations = locationRepo.getAll();
+        List<User> teachers = userRepo.getAllTeachers();
 
         JsonNode locationJson = Json.toJson(locations);
+        JsonNode teacherJson = Json.toJson(teachers);
 
-        List<User>teachers = userRepo.getAllTeachers();
-        return ok(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations, teachers, locationJson));
+        return ok(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations, teachers, locationJson, teacherJson));
     }
 
     @Security.Authenticated(Secured.class)
@@ -105,7 +106,7 @@ public class TrainingController extends Controller {
         wantedData.put("LocationID", trainingData.get("LocationID"));
 
         if (form.hasErrors()) {
-            return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations, teachers, null));
+            return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations, teachers, null, null));
         } else {
             Training training = form.bind(wantedData).get();
 
