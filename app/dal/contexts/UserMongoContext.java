@@ -73,6 +73,11 @@ public class UserMongoContext implements UserContext {
     }
 
     @Override
+    public User getUserByID(String id) {
+        return collection.findOne("{_id:#}", id).as(User.class);
+    }
+
+    @Override
     public List<User> getAll() {
         MongoCursor<User> results = collection.find().as(User.class);
         List<User> users = new ArrayList<>();

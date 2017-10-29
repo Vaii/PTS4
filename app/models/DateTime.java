@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -60,6 +62,12 @@ public class DateTime {
 
     @JsonProperty(M_DATE)
     public Date getDate() {
+        return date;
+    }
+
+    public String getDateString() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String date = df.format(this.date);
         return date;
     }
 
