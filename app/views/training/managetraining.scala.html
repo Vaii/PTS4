@@ -1,7 +1,7 @@
 @import b4.vertical.fieldConstructor
 @import play.data.Form
 
-@(categories: Map[String, Integer], teachers:List[User], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training])
+@(categories: Map[String, Integer], teachers:List[User], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], dateTimes : List[DateTime])
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 

@@ -38,7 +38,7 @@
                     <div class="row">
                             <div class="col-lg-3">
                                 <label class="control-label" for="Dates[]">Datum:</label>
-                                <input type="date" id="Dates" name="Dates[]" value="" class="form-control">
+                                <input type="date" id="Dates" name="Dates[]" required="true" value="" class="form-control">
                             </div>
 
                             <div class="col-lg-4">
@@ -53,7 +53,7 @@
 
                             <div class="col-lg-4">
                                 <label class="form-control-label" for="TeacherID[]">Docent:</label>
-                                <select id="TeacherID" name="TeacherID[]" class="form-control form-control">
+                                <select id="TeacherID" name="TeacherID[]" required="true" class="form-control form-control">
                                     <option value="" class="blank" selected="true" disabled="disabled">Selecteer een docent</option>
                                     @for(teacher <- teachers) {
                                         <option value="@teacher.get_id()" >@teacher.getFirstName</option>
@@ -71,7 +71,6 @@
             <div class="row">@b4.number(form("Duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
             <div class="row">@b4.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
             <div class="row">@b4.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
-            <div class="row">@b4.date(form("Date"), '_label -> "Datum:", 'class -> "form-control-inline")</div>
             <div class="row">@b4.text(form("Category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div>
 
             @b4.submit('class -> "btn btn-primary") { Toevoegen }

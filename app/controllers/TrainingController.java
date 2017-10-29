@@ -93,44 +93,19 @@ public class TrainingController extends Controller {
     public Result submit() throws ParseException { // submit new training
         DynamicForm trainingData = formFactory.form().bindFromRequest();
 
-        Map<String, String> wantedData = new HashMap<>();
-        wantedData.put("TrainingCode", trainingData.get("TrainingCode"));
-        wantedData.put("Name", trainingData.get("Name"));
-        wantedData.put("Description", trainingData.get("Description"));
-        wantedData.put("RequiredMaterial", trainingData.get("RequiredMaterial"));
-        wantedData.put("TeacherID", trainingData.get("TeacherID"));
-        wantedData.put("Duration", trainingData.get("Duration"));
-        wantedData.put("Tuition", trainingData.get("Tuition"));
-        wantedData.put("Capacity", trainingData.get("Capacity"));
-        wantedData.put("Category", trainingData.get("Category"));
-        wantedData.put("LocationID", trainingData.get("LocationID"));
+        Map<String, String> baseValues = mapValuesFromRequest(trainingData);
+
+        List<String> dates = getValues(trainingData, "Date");
+        List<String> locationIDs = getValues(trainingData, "Location");
+        List<String> teacherIDs = getValues(trainingData, "Teacher");
 
         if (form.hasErrors()) {
-            return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locations, teachers, null, null));
+            return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locationRepo.getAll(), userRepo.getAllTeachers(), null, null));
         } else {
-            Training training = form.bind(wantedData).get();
+            Training training = form.bind(baseValues).get();
 
-          //  String date1 = trainingData.field("Dates[0]").value();
-           // String date2 = trainingData.field("Dates[1]").value();
-            List<String> dates = new ArrayList<>();
-
-            for(int i = 0; i < 50; i++) {
-                String d = trainingData.field("Dates[" + i + "]").value();
-                if(d == null) {
-                    break;
-                }
-                dates.add(d);
-            }
-            List<String> dateIDs = new ArrayList<>();
-
-            for(String d : dates) {
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-                Date date = format.parse(d);
-                DateTime dt = new DateTime(date, training.getLocationID());
-                String lastId = dateRepo.addDateTime(dt).toString();
-                dateIDs.add(lastId);
-            }
-
+            List<String> dateIDs = getDateIDs(dates, locationIDs, teacherIDs);
+            
             training.setDateIDs(dateIDs);
 
             trainingRepository.addTraining(training);
@@ -167,16 +142,16 @@ public class TrainingController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result manage() {
-        return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+        return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
     }
 
     public Result manageCategory(String category) {
         if (category == null) {
             return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null,
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
         } else {
             return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null,
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
         }
     }
 
@@ -184,18 +159,26 @@ public class TrainingController extends Controller {
     public Result manageTraining(String category, String id) {
         if (id == null) {
             return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null,
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
         } else {
+            Training t = trainingRepository.getTraining(id);
+            List<DateTime> dateTimes = new ArrayList<>();
+
+            for(String dateTime : t.getDateIDs()) {
+                DateTime d = dateRepo.getDateTime(dateTime);
+                dateTimes.add(d);
+            }
+
             Form<Training> editForm = form.fill(trainingRepository.getTraining(id));
             return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), trainingRepository.getTraining(id),
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm));
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm, dateTimes));
         }
     }
 
     @Security.Authenticated(Secured.class)
     public Result removeTraining(String category, String id) {
         if (id == null) {
-            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
         } else {
             Training t = trainingRepository.getTraining(id);
             trainingRepository.removeTraining(t);
@@ -210,7 +193,7 @@ public class TrainingController extends Controller {
         if (editFrom.hasErrors()) {
             flash("danger", "Wrong values");
             return badRequest(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null,
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
         } else {
             Form<Training> filledForm = form.bindFromRequest();
             Training training = filledForm.get();
@@ -218,5 +201,73 @@ public class TrainingController extends Controller {
             trainingRepository.updateTraining(training);
             return ok(message.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + training.getName() + " is gewijzigd", "/managetraining"));
         }
+    }
+
+    private Map<String, String> mapValuesFromRequest(DynamicForm trainingData) {
+        Map<String, String> baseValues = new HashMap<>();
+        baseValues.put("TrainingCode", trainingData.get("TrainingCode"));
+        baseValues.put("Name", trainingData.get("Name"));
+        baseValues.put("Description", trainingData.get("Description"));
+        baseValues.put("RequiredMaterial", trainingData.get("RequiredMaterial"));
+        baseValues.put("Duration", trainingData.get("Duration"));
+        baseValues.put("Tuition", trainingData.get("Tuition"));
+        baseValues.put("Capacity", trainingData.get("Capacity"));
+        baseValues.put("Category", trainingData.get("Category"));
+
+        return baseValues;
+    }
+
+    private List<String> getValues(DynamicForm trainingData, String type) {
+        List<String> dates = new ArrayList<>();
+        List<String> locationIDs = new ArrayList<>();
+        List<String> teacherIDs = new ArrayList<>();
+
+
+        switch(type) {
+            case "Date" :
+                for(int i = 0; i < 50; i++) {
+                String d = trainingData.field("Dates[" + i + "]").value();
+                if(d == null) {
+                    break;
+                }
+                dates.add(d);
+                }
+                return dates;
+            case "Location" :
+                for(int i = 0; i < 50; i++) {
+                    String d = trainingData.field("LocationID[" + i + "]").value();
+                    if(d == null) {
+                        break;
+                    }
+                    locationIDs.add(d);
+                }
+                return locationIDs;
+            case "Teacher" :
+                for(int i = 0; i < 50; i++) {
+                    String d = trainingData.field("TeacherID[" + i + "]").value();
+                    if(d == null) {
+                        break;
+                    }
+                    teacherIDs.add(d);
+                }
+                return teacherIDs;
+        }
+        return null;
+    }
+
+    private List<String> getDateIDs(List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
+        List<String> dateIDs = new ArrayList<>();
+
+        int counter = 0;
+        for(String d : dates) {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            Date date = format.parse(d);
+            DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter));
+            String lastId = dateRepo.addDateTime(dt).toString();
+            dateIDs.add(lastId);
+            counter++;
+        }
+
+        return dateIDs;
     }
 }

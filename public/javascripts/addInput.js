@@ -32,7 +32,7 @@ function addInput(divName){
         var newdiv = document.createElement('div');
         newdiv.className = "row";
         newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"control-label\" for=\"Dates[]\">Datum:</label>" +
-            "<input type=\"date\" id=\"Dates\" name=\"Dates[]\" value=\"\" class=\"form-control\"></div>" +
+            "<input type=\"date\" id=\"Dates\" name=\"Dates[]\" value=\"\" required=\"true\" class=\"form-control\"></div>" +
 
              // Location box
             "<div class=\"col-lg-4\"><label class=\"form-control-label\" for=\"LocationID[]\">Locatie:</label>" +
@@ -44,7 +44,7 @@ function addInput(divName){
             // Teacher box
             "<div class=\"col-lg-4\">\n" +
             "<label class=\"form-control-label\" for=\"TeacherID[]\">Docent:</label>\n" +
-            "<select id=\"TeacherID\" name=\"TeacherID[]\" class=\"form-control form-control\">\n" +
+            "<select id=\"TeacherID\" name=\"TeacherID[]\"  required=\"true\" class=\"form-control form-control\">\n" +
             "<option value=\"\" class=\"blank\" selected=\"true\" disabled=\"disabled\">Selecteer een docent</option>\n" +
             tOptions +
             "</select>\n" +

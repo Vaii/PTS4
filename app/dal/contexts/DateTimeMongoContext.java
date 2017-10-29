@@ -36,6 +36,6 @@ public class DateTimeMongoContext implements DateTimeContext {
 
     @Override
     public DateTime getDateTime(String date_id) {
-        return collection.findOne("{Date:#}", new ObjectId(date_id)).as(DateTime.class);
+        return collection.findOne("{_id:#}", new ObjectId(date_id)).as(DateTime.class);
     }
 }
