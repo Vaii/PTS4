@@ -26,9 +26,9 @@
                     <ul class="navbar-nav mr-auto ml-auto">
                         <li class="nav-item dropdown">
 
-                            <a class="nav-link dropdown-toggle" id="trainingDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
+                            <a class="nav-link dropdown-toggle" id="trainingDropdownMenu" href="">
                                 Training</a>
-                            <div class="dropdown-menu" aria-labelledby="trainingDropdownMenu">
+                            <div class="dropdown-menu">
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Mijn Trainingen</a>
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Aangeboden Trainingen</a>
                                 @if(isLoggedIn) {
@@ -42,8 +42,8 @@
                         @if(isLoggedIn) {
                             @if(user.getRole.equals(Role.MedewerkerKenniscentrum)) {
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="locationDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">Locatie</a>
-                                    <div class="dropdown-menu" aria-labelledby="locationDropdownMenu">
+                                    <a class="nav-link dropdown-toggle" id="locationDropdownMenu" href="">Locatie</a>
+                                    <div class="dropdown-menu">
                                         <a class="dropdown-item" href="@routes.LocationController.loadLocationForm()">Locatie Toevoegen</a>
                                         <a class="dropdown-item" href="@routes.LocationController.locationOverview()">Locatie Beheren</a>
                                     </div>
@@ -53,8 +53,8 @@
                             }
                         }
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="managerDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">Manager</a>
-                            <div class="dropdown-menu" aria-labelledby="managerDropdownMenu">
+                            <a class="nav-link dropdown-toggle" id="managerDropdownMenu" href="">Manager</a>
+                            <div class="dropdown-menu">
                                 <a href="#" class="dropdown-item">Mijn Medewerker</a>
                                 <a href="#" class="dropdown-item">Studiekosten Formulier</a>
                             </div>
@@ -67,9 +67,9 @@
                         <li class="nav-item dropdown">
                         @if(isLoggedIn) {
 
-                            <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" data-toggle="dropdown" data-placement="left" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle fa-fw" aria-hidden="true"></i>Mijn account</a>
+                            <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" ><i class="fa fa-user-circle fa-fw" aria-hidden="true"></i>Mijn account</a>
 
-                            <div class="dropdown-menu" aria-labelledby="loginDropdownMenu">
+                            <div class="dropdown-menu">
                                 <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profiel</a>
                                 <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Uitloggen</a>
                             </div>
