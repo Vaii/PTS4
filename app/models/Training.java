@@ -8,6 +8,7 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.validation.Constraints;
 
 import javax.validation.Constraint;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -214,7 +215,7 @@ public class Training  {
 
     @JsonProperty(M_DATE)
     public String getDate() {
-        return Date;
+        return new SimpleDateFormat("dd-MM-yyyy").format(Date);
     }
 
     public void setDate(String date) {

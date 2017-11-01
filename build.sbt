@@ -8,6 +8,8 @@ scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq( javaJdbc , ehcache , javaWs )
 
+libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+
 // Bootstrap 3
 libraryDependencies ++= Seq(
   "com.adrianhurt" %% "play-bootstrap" % "1.2-P26-B4"

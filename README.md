@@ -1,4 +1,5 @@
-# PTS4
+# PTS4 [![Build Status](https://travis-ci.org/Vaii/PTS4.svg?branch=master)](https://travis-ci.org/Vaii/PTS4)
+
 Proftaak semester 4 software engineering.
 
 
@@ -19,10 +20,4 @@ The following features should be implemented into the system
   - Business Unit managers can see the trainings employees have signed up for and accept or decline these signings.
  
  
-Contact information:
 
-- Ken Odigwe Gomez; 0643965855; k.odigwegomez@student.fontys.nl
-- Daniel Lin;  0627534008;  daniel.lin@student.fontys.nl
-- Max Meijer;  0642363003;  m.meijer@student.fontys.nl
-- Vai van Ommeren; 0646913147; v.vanommeren@student.fontys.nl
-- Mike Kuiper; 0648050582; mike.kuiper@student.fontys.nl 
