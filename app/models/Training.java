@@ -2,7 +2,6 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.validation.Constraints;

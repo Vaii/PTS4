@@ -1,0 +1,24 @@
+@import b4.vertical.fieldConstructor
+@import play.data.Form
+@import views.html.helper._
+
+@(page: String, isLoggedIn: Boolean, User: User, form: Form[User])
+
+@shared.main(page, isLoggedIn, User) {
+    <div class="container">
+        <h1>Account management</h1>
+        @b4.form(routes.AdminController.editUser()) {
+            @helper.CSRF.formField
+            <table>
+                <tr>@b4.hidden(form("_id"), '_label -> "_id")</tr>
+                <tr>@b4.email(form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
+                <tr>@b4.text(form("FirstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</tr>
+                <tr>@b4.text(form("LastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
+                <tr>@b4.number(form("PhoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
+                <tr>@b4.text(form("Company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'value -> "InfoSupport")</tr>
+                <tr>@b4.select(form("Role"), options(models.Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</tr>
+                <tr>@b4.submit('class -> "btn btn-default") { Wijzigen}</tr>
+            </table>
+        }
+    </div>
+}
