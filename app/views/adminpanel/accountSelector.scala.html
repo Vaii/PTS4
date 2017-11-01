@@ -1,0 +1,9 @@
+@(page: String, isLoggedIn: Boolean, User: User, Users: List[models.User])
+
+@shared.main(page, isLoggedIn, User) {
+    <div class="container">
+        @for( x <- Users){
+            <div class="col-lg-12"><a href="@routes.AdminController.manageAccount(x.getEmail())"> @x.getEmail()</a></div>
+        }
+    </div>
+}

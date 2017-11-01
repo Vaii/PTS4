@@ -32,7 +32,7 @@ public class User {
     private String Company;
     @play.data.validation.Constraints.Required
     private String PhoneNumber;
-
+    
     public User() {
 
     }
@@ -63,6 +63,10 @@ public class User {
 
     public String get_id() {
         return _id;
+    }
+
+    public void set_id(String _ID){
+        _id = _ID;
     }
 
     @JsonProperty(M_FIRSTNAME)

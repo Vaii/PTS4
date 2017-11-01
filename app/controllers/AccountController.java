@@ -67,9 +67,15 @@ public class AccountController extends Controller {
         User user = filledForm.get();
         String password = filledForm.field("password").value();
         String validation = filledForm.field("validation").value();
+        String company = filledForm.field("Company").value();
 
         if(!password.equals(validation)) {
             return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("validation", "Wachtwoorden komen niet overeen")));
+        }
+
+        String companycheck = company.replaceAll("\\s+", "").toLowerCase();
+        if(companycheck.equals("infosupport")){
+            return badRequest( register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("Company", "Info Support medewerkers krijgen een account, neem contact op met een administrator")));
         }
 
         if(filledForm.hasErrors()){

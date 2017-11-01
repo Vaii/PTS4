@@ -5,7 +5,6 @@ import dal.repositories.UserRepository;
 import models.Role;
 import models.Secured;
 import models.User;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -14,20 +13,28 @@ import play.mvc.Security;
 import views.html.adminpanel.overview;
 import views.html.adminpanel.accountcreation;
 import views.html.shared.message;
+import views.html.adminpanel.manageaccount;
+import views.html.adminpanel.accountSelector;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class AdminController extends Controller{
 
     private UserRepository uRepo;
     private FormFactory formFactory;
     private Form<User> form;
+    private Form<User> userForm;
+    private Form<User> filledForm;
 
     @Inject
     public AdminController(FormFactory formFactory){
         this.formFactory = formFactory;
         this.uRepo = new UserRepository(new UserMongoContext("User"));
         this.form = formFactory.form(User.class);
+        this.userForm = formFactory.form(User.class);
+        this.filledForm = formFactory.form(User.class);
+
     }
 
     @Security.Authenticated(Secured.class)
@@ -39,6 +46,52 @@ public class AdminController extends Controller{
         else{
             return notFound();
         }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result manageAccount(String email){
+        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MedewerkerKenniscentrum)){
+            userForm = form.fill(uRepo.getUser(email));
+            return ok(manageaccount.render("Manage Account",
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm));
+        }
+        else{
+            return notFound();
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result editUser(){
+
+        filledForm = form.bindFromRequest();
+
+        if(filledForm.hasErrors()){
+            return (badRequest(manageaccount.render("Manage account",
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm)));
+        }
+        User user = filledForm.get();
+
+        if(uRepo.updateUser(user)){
+            return ok(message.render("Edit Succes",
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+                    "Het account is gewijzigd", "/admin"));
+        }
+
+        return notFound();
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result accountSelector(){
+        List<User> allUsers = uRepo.getAll();
+
+        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MedewerkerKenniscentrum)){
+            return ok(accountSelector.render("Select Account",
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), allUsers));
+        }
+        else{
+            return notFound();
+        }
+
     }
 
     @Security.Authenticated(Secured.class)
