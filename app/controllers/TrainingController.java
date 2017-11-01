@@ -29,7 +29,7 @@ public class TrainingController extends Controller {
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
-    TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training2"));
+    TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
     LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
