@@ -34,6 +34,11 @@ public class UserRepository implements UserContext {
     }
 
     @Override
+    public User getUserByID(String id) {
+        return context.getUserByID(id);
+    }
+
+    @Override
     public List<User> getAll() {
         return context.getAll();
     }
