@@ -1,13 +1,13 @@
 @import b4.vertical.fieldConstructor
 @import play.data.Form
 @import views.html.helper._
-@(page: String, isLoggedIn: Boolean, User: User, Training: Training, form: Form[TuitionForm])
+@(page: String, isLoggedIn: Boolean, User: User, date: DateTime, Training: Training, form: Form[TuitionForm])
 
     @shared.main(page, isLoggedIn, User) {
 
         <div class="container">
             <h1>Invullen studiekosten formulier</h1>
-            @b4.form(routes.TrainingController.signUpEmployee(Training.getTrainingCode())) {
+            @b4.form(routes.TrainingController.signUpEmployee(date.get_id(), Training.get_id())) {
 
                 @helper.CSRF.formField
                 <div class="col-lg-12">@b4.text(form("Manager"), '_label -> "Manager email", 'class -> "", 'placeholder -> "frank@infosupport.nl")</div>

@@ -76,7 +76,7 @@
                         <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <p>Koste:</p>
+                                    <p>Kosten:</p>
                                 </div>
                                 <div class="col-lg-8">
                                     <p>€@training.getTuition euro per persoon.</p>
@@ -120,19 +120,12 @@
                                     </div>
                                     <div class="col-lg-8">
                                         @for(date <- viewDates) {
-                                            <p>@date.getDateString <a href="">Inschrijven</a></p>
-                                            <input type="hidden" name="country" value="@date.getDateId">
-
+                                            <p>@date.getDateString <a href="@routes.TrainingController.signUpCourse(date.getDateId, training.getTrainingCode())">Inschrijven</a></p>
                                         }
 
                                     </div>
                                 </div>
                             </div>
-
-                        <div class="col-lg-3">
-                            <a href="@routes.TrainingController.signUpCourse(training.getTrainingCode())" class="btn btn-primary">
-                                Inschrijven</a>
-                        </div>
                     </div>
                 } else {
                     <h1>Selecteer een training</h1>
