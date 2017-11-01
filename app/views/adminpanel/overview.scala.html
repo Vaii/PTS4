@@ -2,6 +2,8 @@
 
 @shared.main(page, isLoggedIn, User) {
     <div class="container">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
+
         <p>Om een nieuwe account aan te maken klik hier</p>
         <a href="@routes.AdminController.creationPage()" class="btn btn-primary">Nieuwe accounts</a>
 

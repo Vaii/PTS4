@@ -1,6 +1,3 @@
-.form-control-inline {
-    width: 500px;
-}
 .form-vertical {
     margin-left: 50px; !important;
 }
@@ -12,4 +9,15 @@
 h1 {
     color: #0078c9;
     margin-left: 50px;
+}
+.container {
+    width: 40%;
+}
+
+.form-control-inline {
+    width: 500px;
+}
+
+.invalid input:focus:invalid {
+    border-color: red;
 }

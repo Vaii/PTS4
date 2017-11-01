@@ -6,3 +6,6 @@ h1 {
 p {
     text-align: center;
 }
+.container {
+    width: 60%;
+}
