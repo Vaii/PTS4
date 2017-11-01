@@ -55,6 +55,7 @@ public class TrainingMongoContextTest2 {
 //                trainees, prerequisites);
 //    }
 
+
     @Test
     public void addTraining() {
         reset();

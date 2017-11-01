@@ -59,6 +59,7 @@
                                         <option value="@teacher.get_id()" >@teacher.getFirstName</option>
                                     }
                                 </select>
+                                <a href="#step2">Remove</a>
                             </div>
 
                     </div>
@@ -71,7 +72,7 @@
             <div class="row">@b4.number(form("Duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
             <div class="row">@b4.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
             <div class="row">@b4.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
-            <div class="row">@b4.text(form("Category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div>
+            <div class="row">@b4.text(form("category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div>
 
             @b4.submit('class -> "btn btn-primary") { Toevoegen }
         </div>

@@ -22,15 +22,19 @@ for (var i = 0; i < teachJson.length; i++) {
     tOptions += opt;
 }
 
+function deleteInput(divName) {
+
+}
+
 var counter = 1;
 // var limit = 3;
 function addInput(divName){
    /* if (counter == limit)  {
         alert("You have reached the limit of adding " + counter + " inputs");
     } */
-
+        var numItems = $('.row').length;
         var newdiv = document.createElement('div');
-        newdiv.className = "row";
+        newdiv.className = "row row" + numItems;
         newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"control-label\" for=\"Dates[]\">Datum:</label>" +
             "<input type=\"date\" id=\"Dates\" name=\"Dates[]\" value=\"\" required=\"true\" class=\"form-control\"></div>" +
 

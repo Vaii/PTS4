@@ -5,11 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ViewDate {
+    private String dateId;
     private Date date;
     private Location location;
     private User teacher;
 
-    public ViewDate(Date date, Location location, User teacher) {
+    public ViewDate(String dateId, Date date, Location location, User teacher) {
+        this.dateId = dateId;
         this.date = date;
         this.location = location;
         this.teacher = teacher;
@@ -31,5 +33,9 @@ public class ViewDate {
 
     public User getTeacher() {
         return teacher;
+    }
+
+    public String getDateId() {
+        return dateId;
     }
 }
