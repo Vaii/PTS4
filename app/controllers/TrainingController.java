@@ -29,14 +29,14 @@ public class TrainingController extends Controller {
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
-    TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
-    LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
-    UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
-    DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+    private TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
+    private LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
+    private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
+    private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
 
     private FormFactory formFactory;
 
-    Form<Training> form;
+    private Form<Training> form;
     List<Location> locations = new ArrayList<>();
     List<User>teachers = new ArrayList<>();
 
@@ -103,6 +103,10 @@ public class TrainingController extends Controller {
             return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locationRepo.getAll(), userRepo.getAllTeachers(), null, null));
         } else {
             Training training = form.bind(baseValues).get();
+            Form<Training> form2 = form.bind(baseValues);
+            if(trainingRepository.getTraining(training.getTrainingCode()) != null) {
+                return badRequest(addtraining.render(form2.withError("TrainingCode", "Trainingscode moet uniek"), Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locationRepo.getAll(), userRepo.getAllTeachers(), null, null));
+            }
 
             List<String> dateIDs = getDateIDs(dates, locationIDs, teacherIDs);
 
