@@ -5,7 +5,7 @@
 @(form: Form[Training], isLoggedIn: Boolean, User: User, Page: String, locations: List[Location], teachers: List[User], locationJson : JsonNode, teacherJson : JsonNode)
 
 @shared.main(Page, isLoggedIn, User) {
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPages.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
     <script>
             function unescapeHTML(string) {
                 var elt = document.createElement("span");
