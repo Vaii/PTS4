@@ -73,6 +73,11 @@ public class UserMongoContext implements UserContext {
     }
 
     @Override
+    public User getUserByID(String id) {
+        return collection.findOne("{_id:#}", new ObjectId(id)).as(User.class);
+    }
+
+    @Override
     public List<User> getAll() {
         MongoCursor<User> results = collection.find().as(User.class);
         List<User> users = new ArrayList<>();
@@ -86,12 +91,19 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public boolean updateUser(User user) {
-        WriteResult result = collection.update("{Email:#}", user.getEmail()).with("{FirstName:#," +
+
+        List<String> HashedDBPassword = collection.distinct("HashedPassword").query("{_id:#}", new ObjectId(user.get_id())).as(String.class);
+        List<String> DbSalt = collection.distinct("Salt").query("{_id:#}", new ObjectId(user.get_id())).as(String.class);
+
+        WriteResult result = collection.update("{_id:#}", new ObjectId(user.get_id())).with("{FirstName:#," +
                 " LastName:#," +
                 " Email:#," +
                 " Role:#," +
                 " Company:#," +
-                " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), user.getPhoneNumber());
+                " Salt:#," +
+                " HashedPassword:#," +
+                " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(),
+                user.getRole(), user.getCompany(),DbSalt.get(0), HashedDBPassword.get(0), user.getPhoneNumber());
 
         return result.wasAcknowledged();
     }

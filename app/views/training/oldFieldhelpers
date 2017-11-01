@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-lg-4">
+        <label class="control-label" for="Dates[]">Datum:</label>
+        <input type="date" id="Dates" name="Dates[]" value="" class="form-control">
+    </div>
+    <div class="col-lg-4">
+        @b4.select(
+        field = form("LocationID"),
+        options = locations.map(location => location.get_id() -> location.getStreetName),
+        '_label -> "Locatie:", '_default -> "Selecteer een locatie",
+        'class -> "form-control"
+        )
+    </div>
+
+    <div class="col-lg-4">
+        @b4.select(form("TeacherID"), options = teachers.map(teacher => teacher.get_id() -> teacher.getFirstName), '_label -> "Docent:", 'class -> "form-control")
+    </div>
+</div>

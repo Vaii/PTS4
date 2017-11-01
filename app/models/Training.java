@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * The training class contains all information for a training.
  */
-public class Training {
+public class Training  {
     // Mongo DB identifiers.
     private static final String M_TRAININGSCODE = "TrainingsCode";
     private static final String M_NAME = "Name";
@@ -24,6 +24,7 @@ public class Training {
     private static final String M_DURATION = "Duration";
     private static final String M_TUITION = "Tuition";
     private static final String M_CAPACITY = "Capacity";
+    private static final String M_DATEIDS = "DateIDs";
     private static final String M_DATE = "Date";
     private static final String M_CATEGORY = "Category";
     private static final String M_LOCATION = "LocationID";
@@ -45,17 +46,14 @@ public class Training {
     private Float Duration, Tuition;
     @Constraints.Required
     private int Capacity;
-    @Constraints.Required
-    private java.util.Date Date;
+
+    private List<String> DateIDs;
 
     @Constraints.Required
     private String Category;
 
-    // MongoDB ID of the location.
-    @Constraints.Required
-    private String LocationID;
-    // MongoDB ID of the teacher.
-    private String TeacherID;
+    // MongoDB ID of the location and teacher
+    private String Date, LocationID, TeacherID;
     // MongoDB ID's of the users signed up for the training.
     private List<String> Trainee;
     // MongoDB ID's of the trainings that are required to follow before this one.
@@ -66,7 +64,7 @@ public class Training {
         this.Prerequisites = new ArrayList<>();
     }
 
-    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, String category) {
+    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category) {
         this.TrainingCode = trainingCode;
         this.Name = name;
         this.Description = description;
@@ -74,14 +72,13 @@ public class Training {
         this.Duration = duration;
         this.Tuition = tuition;
         this.Capacity = capacity;
-        this.Date = date;
         this.Category = category;
         this.Trainee = new ArrayList<>();
         this.Prerequisites = new ArrayList<>();
         prepareForStorage();
     }
 
-    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date,String category, String locationID) {
+    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, String locationID) {
         this.TrainingCode = trainingCode;
         this.Name = name;
         this.Description = description;
@@ -89,7 +86,6 @@ public class Training {
         this.Duration = duration;
         this.Tuition = tuition;
         this.Capacity = capacity;
-        this.Date = date;
         this.Category = category;
         this.LocationID = locationID;
         this.Trainee = new ArrayList<>();
@@ -97,7 +93,7 @@ public class Training {
         prepareForStorage();
     }
 
-    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, Date date, String category, String locationID, String teacherID, List<String> trainee, List<String> prerequisites) {
+    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, String locationID, String teacherID, String date, List<String> trainee, List<String> prerequisites) {
         this._id = _id;
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -106,12 +102,12 @@ public class Training {
         this.Duration = duration;
         this.Tuition = tuition;
         this.Capacity = capacity;
-        this.Date = date;
         this.Category = category;
         this.LocationID = locationID;
         this.TeacherID = teacherID;
         this.Trainee = trainee;
         this.Prerequisites = prerequisites;
+        this.Date = date;
         prepareForStorage();
     }
 
@@ -123,7 +119,7 @@ public class Training {
                     @JsonProperty(M_DURATION) float duration,
                     @JsonProperty(M_TUITION) float tuition,
                     @JsonProperty(M_CAPACITY) int capacity,
-                    @JsonProperty(M_DATE) Date date,
+                    @JsonProperty(M_DATEIDS) List<String> dateIDS,
                     @JsonProperty(M_CATEGORY) String category,
                     @JsonProperty(M_LOCATION) String locationID,
                     @JsonProperty(M_TEACHER) String teacherID,
@@ -136,7 +132,7 @@ public class Training {
         this.Duration = duration;
         this.Tuition = tuition;
         this.Capacity = capacity;
-        this.Date = date;
+        this.DateIDs = dateIDS;
         this.Category = category;
         this.LocationID = locationID;
         this.TeacherID = teacherID;
@@ -221,8 +217,17 @@ public class Training {
         return new SimpleDateFormat("dd-MM-yyyy").format(Date);
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         Date = date;
+    }
+
+    @JsonProperty(M_DATEIDS)
+    public List<String> getDateIDs() {
+        return DateIDs;
+    }
+
+    public void setDateIDs(List<String> dateIDs) {
+        DateIDs = dateIDs;
     }
 
     @JsonProperty(M_LOCATION)
@@ -302,4 +307,5 @@ public class Training {
     private void prepareForStorage() {
         Category = Category.toLowerCase();
     }
+
 }
