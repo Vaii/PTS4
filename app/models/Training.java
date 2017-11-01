@@ -26,10 +26,7 @@ public class Training  {
     private static final String M_TUITION = "Tuition";
     private static final String M_CAPACITY = "Capacity";
     private static final String M_DATEIDS = "DateIDs";
-    private static final String M_DATE = "Date";
     private static final String M_CATEGORY = "Category";
-    private static final String M_LOCATION = "LocationID";
-    private static final String M_TEACHER = "TeacherID";
     private static final String M_TRAINEE = "Trainee";
     private static final String M_PREREQUISITES = "Prerequisites";
 
@@ -53,8 +50,6 @@ public class Training  {
     @Constraints.Required
     private String Category;
 
-    // MongoDB ID of the location and teacher
-    private String Date, LocationID, TeacherID;
     // MongoDB ID's of the users signed up for the training.
     private List<String> Trainee;
     // MongoDB ID's of the trainings that are required to follow before this one.
@@ -79,22 +74,7 @@ public class Training  {
         prepareForStorage();
     }
 
-    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, String locationID) {
-        this.TrainingCode = trainingCode;
-        this.Name = name;
-        this.Description = description;
-        this.RequiredMaterial = requiredMaterial;
-        this.Duration = duration;
-        this.Tuition = tuition;
-        this.Capacity = capacity;
-        this.Category = category;
-        this.LocationID = locationID;
-        this.Trainee = new ArrayList<>();
-        this.Prerequisites = new ArrayList<>();
-        prepareForStorage();
-    }
-
-    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, String locationID, String teacherID, String date, List<String> trainee, List<String> prerequisites) {
+    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, List<String> trainee, List<String> prerequisites) {
         this._id = _id;
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -104,11 +84,8 @@ public class Training  {
         this.Tuition = tuition;
         this.Capacity = capacity;
         this.Category = category;
-        this.LocationID = locationID;
-        this.TeacherID = teacherID;
         this.Trainee = trainee;
         this.Prerequisites = prerequisites;
-        this.Date = date;
         prepareForStorage();
     }
 
@@ -122,8 +99,6 @@ public class Training  {
                     @JsonProperty(M_CAPACITY) int capacity,
                     @JsonProperty(M_DATEIDS) List<String> dateIDS,
                     @JsonProperty(M_CATEGORY) String category,
-                    @JsonProperty(M_LOCATION) String locationID,
-                    @JsonProperty(M_TEACHER) String teacherID,
                     @JsonProperty(M_TRAINEE) List<String> trainee,
                     @JsonProperty(M_PREREQUISITES) List<String> prerequisites) {
         this.TrainingCode = trainingCode;
@@ -135,8 +110,6 @@ public class Training  {
         this.Capacity = capacity;
         this.DateIDs = dateIDS;
         this.Category = category;
-        this.LocationID = locationID;
-        this.TeacherID = teacherID;
         this.Trainee = trainee;
         this.Prerequisites = prerequisites;
         prepareForStorage();
@@ -213,15 +186,6 @@ public class Training  {
         Capacity = capacity;
     }
 
-    @JsonProperty(M_DATE)
-    public String getDate() {
-        return new SimpleDateFormat("dd-MM-yyyy").format(Date);
-    }
-
-    public void setDate(String date) {
-        Date = date;
-    }
-
     @JsonProperty(M_DATEIDS)
     public List<String> getDateIDs() {
         return DateIDs;
@@ -229,24 +193,6 @@ public class Training  {
 
     public void setDateIDs(List<String> dateIDs) {
         DateIDs = dateIDs;
-    }
-
-    @JsonProperty(M_LOCATION)
-    public String getLocationID() {
-        return LocationID;
-    }
-
-    public void setLocationID(String locationID) {
-        this.LocationID = locationID;
-    }
-
-    @JsonProperty(M_TEACHER)
-    public String getTeacherID() {
-        return TeacherID;
-    }
-
-    public void setTeacherID(String teacherID) {
-        TeacherID = teacherID;
     }
 
     @JsonProperty(M_TRAINEE)
