@@ -48,7 +48,7 @@ public class TrainingController extends Controller {
         if (id == null) {
             return null;
         } else {
-            if (Secured.getUserInfo(ctx()).getRole() != null) {
+            if (Secured.getUserInfo(ctx()).getRole() != Role.Extern) {
                 return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), trainingRepository.getTraining(id), tuitionFormForm));
             } else {
                 Training signUpFor = trainingRepository.getTraining(id);
