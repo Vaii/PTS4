@@ -86,7 +86,7 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public boolean updateUser(User user) {
-        WriteResult result = collection.update("{Email:#}", user.getEmail()).with("{FirstName:#," +
+        WriteResult result = collection.update("{_id:#}", user.get_id()).with("{FirstName:#," +
                 " LastName:#," +
                 " Email:#," +
                 " Role:#," +
