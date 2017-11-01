@@ -5,6 +5,7 @@
 @(page: String, isLoggedIn: Boolean, User: User, form: Form[User])
 
 @shared.main(page, isLoggedIn, User) {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
     <div class="container">
         <h1>Registreren</h1>
         @b4.form(routes.AdminController.createUser()) {

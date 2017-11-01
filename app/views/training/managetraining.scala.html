@@ -3,9 +3,10 @@
 
 @(categories: Map[String, Integer], teachers:List[User], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training])
 
-<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
-    @shared.main(page, isLoggedIn, User) {
+
+@shared.main(page, isLoggedIn, User) {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
         <div class="container">
             <div class="row">
                 <div class="col-lg-2 trainingmenu">

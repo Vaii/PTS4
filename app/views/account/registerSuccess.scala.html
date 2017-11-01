@@ -1,7 +1,9 @@
 @(page: String, isLoggedIn: Boolean, User: User)
 
     @shared.main(page, isLoggedIn, User) {
-        <div class="Container">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
+
+    <div class="container">
             <h1>Uw account is successvol aangemaakt!</h1>
         </div>
     }

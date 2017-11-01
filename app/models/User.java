@@ -32,7 +32,7 @@ public class User {
     private String Company;
     @play.data.validation.Constraints.Required
     private String PhoneNumber;
-
+    
     public User() {
 
     }

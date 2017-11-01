@@ -48,7 +48,8 @@ body {
     background-color: white;
     box-shadow: 5px 0 5px -2px #C0C0C0;
     margin-top: 20px;
-    width: 700px;
+    width: 80%;
+    border-radius: 10px;
     margin-bottom: 20px;
 }
 
@@ -95,3 +96,6 @@ footer .row {
     margin-top: 0;
 }
 
+.navbar {
+    padding-right: 0px;
+}
