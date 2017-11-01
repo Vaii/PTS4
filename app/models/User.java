@@ -65,6 +65,10 @@ public class User {
         return _id;
     }
 
+    public void set_id(String _ID){
+        _id = _ID;
+    }
+
     @JsonProperty(M_FIRSTNAME)
     public String getFirstName() {
         return FirstName;

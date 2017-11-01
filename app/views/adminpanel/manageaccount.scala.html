@@ -5,10 +5,8 @@
 @(page: String, isLoggedIn: Boolean, User: User, form: Form[User])
 
 @shared.main(page, isLoggedIn, User) {
-    <h1>hoi</h1>
-
     <div class="container">
-        <h1>Registreren</h1>
+        <h1>Account management</h1>
         @b4.form(routes.AdminController.editUser()) {
             @helper.CSRF.formField
             <table>

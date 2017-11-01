@@ -91,12 +91,19 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public boolean updateUser(User user) {
-        WriteResult result = collection.update("{_id:#}", user.get_id()).with("{FirstName:#," +
+
+        List<String> HashedDBPassword = collection.distinct("HashedPassword").query("{_id:#}", new ObjectId(user.get_id())).as(String.class);
+        List<String> DbSalt = collection.distinct("Salt").query("{_id:#}", new ObjectId(user.get_id())).as(String.class);
+
+        WriteResult result = collection.update("{_id:#}", new ObjectId(user.get_id())).with("{FirstName:#," +
                 " LastName:#," +
                 " Email:#," +
                 " Role:#," +
                 " Company:#," +
-                " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), user.getPhoneNumber());
+                " Salt:#," +
+                " HashedPassword:#," +
+                " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(),
+                user.getRole(), user.getCompany(),DbSalt.get(0), HashedDBPassword.get(0), user.getPhoneNumber());
 
         return result.wasAcknowledged();
     }
