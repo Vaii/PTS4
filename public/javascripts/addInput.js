@@ -22,8 +22,9 @@ for (var i = 0; i < teachJson.length; i++) {
     tOptions += opt;
 }
 
-function deleteInput(divName) {
-
+function deleteInput(classname) {
+    var name = classname.substring(4, classname.length-1);
+    document.getElementById(name).remove();
 }
 
 var counter = 1;
