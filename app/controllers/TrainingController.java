@@ -48,33 +48,39 @@ public class TrainingController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result signUpCourse(String id) {
+    public Result signUpCourse(String id, String trainingID) {
 
         if (id == null) {
-            return null;
+            return notFound();
         } else {
             if (Secured.getUserInfo(ctx()).getRole() != Role.Extern) {
-                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), trainingRepository.getTraining(id), tuitionFormForm));
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id) ,trainingRepository.getTraining(trainingID), tuitionFormForm));
             } else {
-                Training signUpFor = trainingRepository.getTraining(id);
-                signUpFor.addTrainee(Secured.getUserInfo(ctx()).get_id());
-                trainingRepository.updateTraining(signUpFor);
-                return ok(successSignUp.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+                DateTime signUpDate = dateRepo.getDateTime(id);
+                signUpDate.addTrainee(Secured.getUserInfo(ctx()).get_id());
+                dateRepo.updateDateTime(signUpDate);
+                return ok(message.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+                        "U bent succesvol ingeschreven voor de de training", "/"));
             }
         }
     }
 
-    public Result signUpEmployee(String id) {
+    public Result signUpEmployee(String id, String trainingID) {
 
         Form<TuitionForm> filledTuitionForm = tuitionFormForm.bindFromRequest();
 
         if (filledTuitionForm.hasErrors()) {
-            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), trainingRepository.getTraining(id), tuitionFormForm));
+            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepository.getTraining(trainingID), tuitionFormForm));
         } else {
             TuitionForm filledForm = filledTuitionForm.get();
             filledForm.setTotalCosts(filledForm.getStudyCosts() + filledForm.getAccommodationCosts() + filledForm.getExaminationFees() + filledForm.getTransportCosts() + filledForm.getExtraCosts());
             tutRepo.addForm(filledForm);
-            return ok(successSignUp.render("Success", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+
+            DateTime signUpDate = dateRepo.getDateTime(id);
+            signUpDate.addTrainee(Secured.getUserInfo(ctx()).get_id());
+            dateRepo.updateDateTime(signUpDate);
+            return ok(message.render("Inschrijving ingediend", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+                    "De aanvraag voor de training is succesvol ingedient", "/"));
         }
     }
 

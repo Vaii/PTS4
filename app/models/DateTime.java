@@ -6,6 +6,7 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class DateTime {
     private String _id;
 
     private Date date;
+
     private List<String> trainees;
 
     // MongoDB ID of the location.
@@ -28,10 +30,30 @@ public class DateTime {
     private String TeacherID;
 
     @JsonCreator
-    public DateTime(@JsonProperty(M_DATE) Date date, @JsonProperty(M_LOCATION) String LocationID, @JsonProperty(M_TEACHER) String TeacherID) {
+    public DateTime(@JsonProperty(M_DATE) Date date,
+                    @JsonProperty(M_LOCATION) String LocationID,
+                    @JsonProperty(M_TEACHER) String TeacherID,
+                    @JsonProperty(M_TRAINEES) List<String> trainees) {
         this.date = date;
         this.LocationID = LocationID;
         this.TeacherID = TeacherID;
+        this.trainees = trainees;
+    }
+
+    public DateTime(Date date, String LocationID, String TeacherID){
+        this.date = date;
+        this.LocationID = LocationID;
+        this.TeacherID = TeacherID;
+        trainees = new ArrayList<>();
+    }
+
+    @JsonProperty(M_TRAINEES)
+    public List<String> getTrainees() {
+        return trainees;
+    }
+
+    public void setTrainees(List<String> trainees) {
+        this.trainees = trainees;
     }
 
     @JsonProperty(M_LOCATION)
@@ -73,5 +95,9 @@ public class DateTime {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public void addTrainee(String id){
+        trainees.add(id);
     }
 }
