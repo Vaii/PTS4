@@ -74,7 +74,7 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public User getUserByID(String id) {
-        return collection.findOne("{_id:#}", id).as(User.class);
+        return collection.findOne("{_id:#}", new ObjectId(id)).as(User.class);
     }
 
     @Override

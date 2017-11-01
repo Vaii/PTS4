@@ -74,8 +74,4 @@ public class DateTime {
     public void setDate(Date date) {
         this.date = date;
     }
-
-
-
-
 }
