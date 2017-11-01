@@ -9,6 +9,7 @@ public interface UserContext {
     boolean removeUser(User user);
     User getUser(String firstName, String lastName);
     User getUser(String emailadress);
+    User getUserByID(String id);
     List<User> getAll();
     boolean updateUser(User user);
     boolean login(String email, String password);
