@@ -1,4 +1,4 @@
-@(categories: Map[String, Integer], trainings: List[models.Training], training: models.Training, page: String, isLoggedIn: Boolean, User: User)
+@(categories: Map[String, Integer], trainings: List[models.Training], training: models.Training, page: String, isLoggedIn: Boolean, User: User, viewDates : List[ViewDate])
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
 
@@ -112,6 +112,23 @@
                                 </div>
                             </div>
                         </div>
+
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Datums: </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        @for(date <- viewDates) {
+                                            <p>@date.getDateString <a href="">Inschrijven</a></p>
+                                            <input type="hidden" name="country" value="@date.getDateId">
+
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+
                         <div class="col-lg-3">
                             <a href="@routes.TrainingController.signUpCourse(training.getTrainingCode())" class="btn btn-primary">
                                 Inschrijven</a>
