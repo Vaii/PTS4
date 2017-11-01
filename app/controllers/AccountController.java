@@ -75,7 +75,7 @@ public class AccountController extends Controller {
 
         String companycheck = company.replaceAll("\\s+", "").toLowerCase();
         if(companycheck.equals("infosupport")){
-            return badRequest( register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("Company", "Info Support medewerkers krijgen een Account, neem contact op met een administrator")));
+            return badRequest( register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("Company", "Info Support medewerkers krijgen een account, neem contact op met een administrator")));
         }
 
         if(filledForm.hasErrors()){
