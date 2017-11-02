@@ -4,9 +4,12 @@
 @(page: String, isLoggedIn: Boolean, User: User, date: DateTime, Training: Training, form: Form[TuitionForm])
 
     @shared.main(page, isLoggedIn, User) {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
 
         <div class="container">
-            <h1>Invullen studiekosten formulier</h1>
+            <div class="col-lg-12">
+                <h1>Invullen studiekosten formulier</h1>
+            </div>
             @b4.form(routes.TrainingController.signUpEmployee(date.get_id(), Training.get_id())) {
 
                 @helper.CSRF.formField

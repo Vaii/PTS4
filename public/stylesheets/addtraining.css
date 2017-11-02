@@ -18,12 +18,18 @@ h1 {
 .invalid input:focus:invalid {
     border-color: red;
 }
-.col-lg-4{
-    padding-left:0px;
+
+.container {
+    width: 60%;
+    padding-bottom: 20px;
 }
 
-.col-lg-3 {
-    padding-left: 0px;
+.btn {
+    margin-left: 0px;
+}
+
+.btn-danger {
+    margin-top:32px;
 }
 
 .btn btn-default {
@@ -31,7 +37,18 @@ h1 {
     margin-left: 0px;
 }
 
-.container {
-    width: 900px;
+.col-lg {
+    padding-left: 0px;
 }
 
+.col-lg-3 {
+    padding-left: 0px;
+}
+
+.col-lg-4{
+    padding-left:0px;
+}
+
+.col-lg-9 {
+     padding-left:0px;
+ }

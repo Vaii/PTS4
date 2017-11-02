@@ -1,5 +1,5 @@
 .form-vertical {
-    margin-left: 50px; !important;
+    margin-left: 20px; !important;
 }
 
 .form-vertical {
@@ -8,14 +8,17 @@
 
 h1 {
     color: #0078c9;
-    margin-left: 50px;
+    margin-left: 20px;
 }
 .container {
     width: 40%;
 }
 
+.form-group{
+    width:95%;
+}
 .form-control-inline {
-    width: 500px;
+    width: 100%;
 }
 
 .invalid input:focus:invalid {
