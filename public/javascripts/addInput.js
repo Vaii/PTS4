@@ -22,18 +22,17 @@ for (var i = 0; i < teachJson.length; i++) {
     tOptions += opt;
 }
 
-function deleteInput(classname) {
-    var name = classname.substring(4, classname.length-1);
-    document.getElementById(name).remove();
+function deleteInput(className) {
+    var name = className.className;
+    var number = name.substring(18);
+    console.log(number);
+    var row = document.getElementsByClassName("row" + number);
+    console.log(row);
+    row[0].parentNode.removeChild(row[0]);
 }
 
-var counter = 1;
-// var limit = 3;
 function addInput(divName){
-   /* if (counter == limit)  {
-        alert("You have reached the limit of adding " + counter + " inputs");
-    } */
-        var numItems = $('.row').length;
+        var numItems = $('#dynamicInput .row').length - 1;
         var newdiv = document.createElement('div');
         newdiv.className = "row row" + numItems;
         newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"control-label\" for=\"Dates[]\">Datum:</label>" +
@@ -47,18 +46,20 @@ function addInput(divName){
             "</select></div>" +
 
             // Teacher box
-            "<div class=\"col-lg-4\">\n" +
+            "<div class=\"col-lg-5\">\n" +
+            "<div class=\"row\" >\n" +
+            "<div class=\"col-lg-9\">" +
             "<label class=\"form-control-label\" for=\"TeacherID[]\">Docent:</label>\n" +
             "<select id=\"TeacherID\" name=\"TeacherID[]\"  required=\"true\" class=\"form-control form-control\">\n" +
             "<option value=\"\" class=\"blank\" selected=\"true\" disabled=\"disabled\">Selecteer een docent</option>\n" +
             tOptions +
             "</select>\n" +
+            "</div>" +
+            "<div class=\"col-lg-3\">\n" +
+            "<input class=\"btn btn-danger btn" + numItems + "\" type=\"button\" value=\"X\" onClick=\"deleteInput(this);\">\n" +
+            "</div>" +
+            "</div>" +
             "</div>";
 
-
-
-        // <label class=\"control-label\" for=\"Dates[]\">Datum " + (counter + 1) + "" + "</label> <br><input type=\"date\"" +
-  //  " id=\"Date\" name=\"Dates[]\" value=\"\" " + "class=\"form-control form-control-inline\">" + "
         document.getElementById(divName).appendChild(newdiv);
-        counter++;
 }
