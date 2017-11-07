@@ -1,12 +1,28 @@
 @import b4.vertical.fieldConstructor
 @import play.data.Form
+@import com.fasterxml.jackson.databind.JsonNode
 
-@(categories: Map[String, Integer], teachers:List[User], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate])
+@(categories: Map[String, Integer], teachers:List[User], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
 
 
 
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
+    <script>
+            function unescapeHTML(string) {
+                var elt = document.createElement("span");
+                elt.innerHTML = string;
+                return elt.innerText;
+            }
+
+            var locJson = "@locationJson";
+            locJson = JSON.parse(unescapeHTML(locJson));
+
+            var teachJson = "@teacherJson";
+            teachJson = JSON.parse(unescapeHTML(teachJson));
+
+    </script>
+    <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
         <div class="container">
             <div class="row">
                 <div class="col-lg-2 trainingmenu">
@@ -48,11 +64,12 @@
                                 <div class="col-lg-12">@b4.text(form("Description"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
                                 <div class="col-lg-12">@b4.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
 
-                                @*for(i <- 0 to tDates.size() - 1) {*@
+                                <div id="dynamicInput" class="row col-lg">
                                 @for(vd <- viewDates) {
                                     <div class="col-lg-4">
                                         <label class="control-label" for="Dates[]">Datum:</label>
                                         <input type="date" id="Dates" name="Dates[]" required="true" value="@vd.getDateString" class="form-control">
+                                        <input type="hidden" name="DateIDs[]" value="@vd.getDateId" />
                                     </div>
 
                                     <div class="col-lg-4">
@@ -81,6 +98,12 @@
                                         </select>
                                     </div>
                                 }
+
+                                </div>
+
+                               <div class="col-lg-12">
+                                    <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
+                                </div>
 
                                 <div class="col-lg-12">@b4.number(form("Duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
                                 <div class="col-lg-12">@b4.number(form("Tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
