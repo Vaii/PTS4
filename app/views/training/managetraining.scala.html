@@ -24,7 +24,7 @@
     </script>
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
 
-   <!-- <script>
+   <script>
             function removeDate(id)
             {
                 $.ajax({
@@ -35,7 +35,7 @@
                     }
                 });
             }
-    </script> -->
+    </script>
         <div class="container">
             <div class="row">
                 <div class="col-lg-2 trainingmenu">
@@ -77,7 +77,7 @@
                                 <div class="row col-lg-12">@b4.text(form("Description"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
                                 <div class="row col-lg-12">@b4.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
 
-                                <div id="dynamicInput">
+                                <div id="dynamicInput" class="row col-lg-12">
                                 @for(index <- 0 until viewDates.size){
                                     <div class="row col-lg-12 row@(index + 1)">
                                     <div class="col-lg-3">
@@ -123,8 +123,7 @@
 
                                <div class="row col-lg-12">
                                     <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
-                                </div>
-
+                               </div>
                                 <div class="row col-lg-12">@b4.number(form("Duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
                                 <div class="row col-lg-12">@b4.number(form("Tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
                                 <div class="row col-lg-12">@b4.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "f", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
