@@ -208,7 +208,6 @@ public class TrainingController extends Controller {
             trainingRepository.removeTraining(t);
             return ok(removetraining.render(t, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
-
     }
 
     @Security.Authenticated(Secured.class)
@@ -324,7 +323,7 @@ public class TrainingController extends Controller {
                 }
                 return teacherIDs;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
