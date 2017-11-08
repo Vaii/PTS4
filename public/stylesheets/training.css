@@ -118,6 +118,7 @@ div.row.col-lg-12 {
     margin-left:1px;
 }
 
+
 .btn-danger {
     margin-top:32px;
     margin-left:10px;
@@ -132,11 +133,17 @@ div.col-lg-3 {
 
 input.btn.btn-default {
     margin-top:10px;
+    margin-left:30px;
 }
 
 a.btn.btn-danger {
     margin-top:0px;
 }
 div.form-control-label {
+    font-weight: bold;
+}
+#dynamicInput
+{
+    padding-left:0px;
     font-weight: bold;
 }
