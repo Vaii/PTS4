@@ -60,6 +60,7 @@ public class UserMongoContextTest {
         User user1 = context.getUser("Henk@test.nl");
         assertEquals("Henk", user1.getFirstName());
 
+        testUser = context.getUser("Henk@test.nl");
         testUser.setFirstName("Niet Henk");
         context.updateUser(testUser);
         User user2 = context.getUser("Henk@test.nl");

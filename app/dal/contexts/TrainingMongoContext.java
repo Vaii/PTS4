@@ -5,6 +5,7 @@ import dal.DBConnector;
 import dal.interfaces.TrainingContext;
 import models.Location;
 import models.Training;
+import models.User;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
