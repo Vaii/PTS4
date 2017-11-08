@@ -34,7 +34,7 @@ function deleteInput(className) {
 function addInput(divName){
         var numItems = $('#dynamicInput .row').length - 1;
         var newdiv = document.createElement('div');
-        newdiv.className = "row row" + numItems;
+        newdiv.className = "row col-lg-12 row" + numItems;
         newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"control-label\" for=\"Dates[]\">Datum:</label>" +
             "<input type=\"date\" id=\"Dates\" name=\"Dates[]\" value=\"\" required=\"true\" class=\"form-control\"></div>" +
 
