@@ -4,7 +4,7 @@
 
 @(categories: Map[String, Integer], teachers:List[User], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
 
-
+@{ var myCounter : String = "1" }
 
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
@@ -23,6 +23,19 @@
 
     </script>
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
+
+   <!-- <script>
+            function removeDate(id)
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: '/training/delete/' ,
+                    data: {
+                        id:id
+                    }
+                });
+            }
+    </script> -->
         <div class="container">
             <div class="row">
                 <div class="col-lg-2 trainingmenu">
@@ -65,21 +78,20 @@
                                 <div class="row col-lg-12">@b4.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
 
                                 <div id="dynamicInput">
-
-                                @for(vd <- viewDates) {
-                                    <div class="col-lg-12 row">
+                                @for(index <- 0 until viewDates.size){
+                                    <div class="row col-lg-12 row@(index + 1)">
                                     <div class="col-lg-3">
                                         <label class="control-label" for="Dates[]">Datum:</label>
-                                        <input type="date" id="Dates" name="Dates[]" required="true" value="@vd.getDateString" class="form-control">
-                                        <input type="hidden" name="DateIDs[]" value="@vd.getDateId" />
+                                        <input type="date" id="Dates" name="Dates[]" required="true" value="@viewDates(index).getDateString" class="form-control">
+                                        <input type="hidden" name="DateIDs[]" value="@viewDates(index).getDateId" />
                                     </div>
 
                                     <div class="col-lg-4">
                                         <label class="form-control-label" for="LocationID[]">Locatie:</label>
                                         <select id="LocationID" name="LocationID[]" required="true" class="form-control form-control">
-                                            <option value="@vd.getLocation.get_id()" class="blank" selected="true">@vd.getLocation.getStreetName</option>
+                                            <option value="@viewDates(index).getLocation.get_id()" class="blank" selected="true">@viewDates(index).getLocation.getStreetName</option>
                                             @for(location <- locations) {
-                                                @if(location.getStreetName == vd.getLocation.getStreetName) {
+                                                @if(location.getStreetName == viewDates(index).getLocation.getStreetName) {
                                                 } else {
                                                     <option value="@location.get_id()" >@location.getStreetName</option>
                                                 }
@@ -90,22 +102,27 @@
                                     <div class="col-lg-4">
                                         <label class="form-control-label" for="TeacherID[]">Docent:</label>
                                         <select id="TeacherID" name="TeacherID[]" required="true" class="form-control form-control">
-                                           <option value="@vd.getTeacher.get_id()" class="blank" selected="true">@vd.getTeacher.getFirstName</option>
+                                           <option value="@viewDates(index).getTeacher.get_id()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
                                             @for(teacher <- teachers) {
-                                                @if(teacher.getFirstName == vd.getTeacher.getFirstName) {
+                                                @if(teacher.getFirstName == viewDates(index).getTeacher.getFirstName) {
                                                 } else {
                                                 <option value="@teacher.get_id()" >@teacher.getFirstName</option>
                                                 }
                                             }
                                         </select>
                                     </div>
+                                        <div class="col-lg-3">
+                                            <input class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId');">
+                                        </div>
                                     </div>
+
+
                                 }
 
                                 </div>
 
                                <div class="row col-lg-12">
-                                    <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
+                                    <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
                                 </div>
 
                                 <div class="row col-lg-12">@b4.number(form("Duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>

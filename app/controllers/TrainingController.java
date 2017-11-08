@@ -210,6 +210,11 @@ public class TrainingController extends Controller {
         }
     }
 
+    public Result removeDate(String id) {
+        System.out.println(id + " is being removed.");
+        return ok();
+    }
+
     @Security.Authenticated(Secured.class)
     public Result edit(String category, String code) throws ParseException {
         //Form<Training> editFrom = form.fill(trainingRepository.getTraining(code));
