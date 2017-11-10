@@ -19,7 +19,6 @@ public class SharedMongoContext implements SharedContext {
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
 
     public SharedMongoContext() {
-
     }
 
     @Override
@@ -49,5 +48,23 @@ public class SharedMongoContext implements SharedContext {
             dateRepo.removeDateTime(dt);
         }
         return trainingRepo.removeTraining(t);
+    }
+
+    @Override
+    public List<Training> getTrainingsForTeacher(String userId) {
+        List<Training> trainings = new ArrayList<>();
+        List<Training> results = new ArrayList<>();
+        trainings = trainingRepo.getAll();
+
+        for(Training t : trainings) {
+            for(String id : t.getDateIDs()) {
+                DateTime date = dateRepo.getDateTime(id);
+                if(date.getTeacherID().equals(userId)) {
+                    results.add(t);
+                }
+            }
+        }
+
+        return results;
     }
 }
