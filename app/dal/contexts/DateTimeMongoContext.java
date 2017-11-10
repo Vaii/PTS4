@@ -34,8 +34,8 @@ public class DateTimeMongoContext implements DateTimeContext {
     }
 
     @Override
-    public boolean removeDateTime(DateTime dateTime) {
-        WriteResult result = collection.remove(new ObjectId(dateTime.get_id()));
+    public boolean removeDateTime(String dateTimeId) {
+        WriteResult result = collection.remove(new ObjectId(dateTimeId));
         return result.wasAcknowledged();
     }
 

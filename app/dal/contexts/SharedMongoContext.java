@@ -1,5 +1,6 @@
 package dal.contexts;
 
+import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.SharedContext;
 import dal.repositories.DateTimeRepository;
@@ -39,5 +40,14 @@ public class SharedMongoContext implements SharedContext {
         }
 
         return results;
+    }
+
+    @Override
+    public Boolean removeTraining(String trainingCode) {
+        Training t = trainingRepo.getTraining(trainingCode);
+        for(String dt : t.getDateIDs()) {
+            dateRepo.removeDateTime(dt);
+        }
+        return trainingRepo.removeTraining(t);
     }
 }

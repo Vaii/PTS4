@@ -21,8 +21,8 @@ public class DateTimeRepository implements DateTimeContext {
     }
 
     @Override
-    public boolean removeDateTime(DateTime dateTime) {
-        return context.removeDateTime(dateTime);
+    public boolean removeDateTime(String dateTimeId) {
+        return context.removeDateTime(dateTimeId);
     }
 
     @Override

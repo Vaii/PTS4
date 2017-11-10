@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SharedContext {
     List<Training> getTrainings(String userId);
+    Boolean removeTraining(String trainingCode);
 }
