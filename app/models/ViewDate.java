@@ -40,29 +40,4 @@ public class ViewDate {
         return dateId;
     }
 
-    /**
-     * Check overlap with another DateTime object.
-     *
-     * @param myDuration The duration in the parent training of this DateTime object.
-     * @param other The other DateTime object to check overlap with.
-     * @param otherDuration The Duration of the parent training of the other DateTime object.
-     * @return true if there is a overlap between the 2 durations.
-     */
-    public boolean checkOverlap(Float myDuration, DateTime other,Float otherDuration ) {
-
-        Calendar c = Calendar.getInstance();
-        c.setTime(this.date);
-        c.add(Calendar.DATE, myDuration.intValue());
-        Date myEndDate = c.getTime();
-
-        Calendar co = Calendar.getInstance();
-        co.setTime(other.getDate());
-        co.add(Calendar.DATE, otherDuration.intValue());
-        Date otherEndDate = co.getTime();
-
-        return other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
-                otherEndDate.after(this.date) && otherEndDate.before(myEndDate) ||
-                this.date.after(other.getDate()) && this.date.before(otherEndDate);
-
-    }
 }
