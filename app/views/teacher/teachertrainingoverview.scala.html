@@ -5,6 +5,7 @@
     <script src="@routes.Assets.at("/javascripts/showDiv.js")"></script>
     <div class="container">
         <div class="row">
+        @if(!trainings.isEmpty()) {
             <div class=" row col-lg-12">
                 <div class="col-lg-2 offset-lg-5">
                     <a><i class="fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
@@ -14,35 +15,35 @@
                     </label>
                     <a><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></a>
                 </div>
+            </div>
 
-            </div>
-            <div class="row col-lg-12" id="listDiv">
-                <div class="col-lg-2">
-                    <label>Categorie</label>
+                <div class="row col-lg-12" id="listDiv">
+                    <div class="col-lg-2">
+                        <label>Categorie</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Training</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Trainingscode</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Locatie</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Datum</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Aantal inschrijvingen</label>
+                    </div>
                 </div>
-                <div class="col-lg-2">
-                    <label>Training</label>
+                <br/>
+
+                <div class="row col-lg-12" id="calenderDiv" style="display: none;">
+                    <div class="col-lg-4 offset-lg-4">
+                        <input type="date" class="form-control"/>
+                    </div>
                 </div>
-                <div class="col-lg-2">
-                    <label>Trainingscode</label>
-                </div>
-                <div class="col-lg-2">
-                    <label>Locatie</label>
-                </div>
-                <div class="col-lg-2">
-                    <label>Datum</label>
-                </div>
-                <div class="col-lg-2">
-                    <label>Aantal inschrijvingen</label>
-                </div>
-            </div>
-            <br/>
-            <div class="row col-lg-12" id="calenderDiv" style="display: none;">
-                <div class="col-lg-4 offset-lg-4">
-                    <input type="date" class="form-control"/>
-                </div>
-            </div>
-            @if(!trainings.isEmpty) {
                 @for(training <- trainings) {
                     <div> class="col-lg-2>
                         <p>@training.getCategory()</p>
@@ -64,7 +65,7 @@
                     </div>
                 }
             } else {
-                <div class="col-lg-4 offset-lg-4 label"><p>Geen trainingen beschikbaar</p></div>
+                <div class="col-lg-4 offset-lg-4 label"><p>U heeft momenteel geen trainingen.</p></div>
             }
         </div>
     </div>
