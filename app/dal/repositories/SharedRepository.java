@@ -17,4 +17,14 @@ public class SharedRepository implements SharedContext {
     public List<Training> getTrainings(String userId) {
         return context.getTrainings(userId);
     }
+
+    @Override
+    public Boolean removeTraining(String trainingCode) {
+        return context.removeTraining(trainingCode);
+    }
+
+    @Override
+    public List<Training> getTrainingsForTeacher(String userId) {
+        return context.getTrainingsForTeacher(userId);
+    }
 }

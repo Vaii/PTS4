@@ -25,6 +25,12 @@ public class TrainingRepository implements TrainingContext {
         return context.updateTraining(training);
     }
 
+    /**
+     * Removes training without removing datetime objects.
+     *
+     * @deprecated use {@link SharedRepository.removeTraining()} instead.
+     */
+    @Deprecated
     @Override
     public boolean removeTraining(Training training) {
         return context.removeTraining(training);
