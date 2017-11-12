@@ -17,7 +17,8 @@
                 </div>
             </div>
 
-                <div class="row col-lg-12" id="listDiv">
+            <div class="row col-lg-12" id="listDiv">
+                <div class="row col-lg-12">
                     <div class="col-lg-2">
                         <label>Categorie</label>
                     </div>
@@ -37,36 +38,66 @@
                         <label>Aantal inschrijvingen</label>
                     </div>
                 </div>
-                <br/>
-
-                <div class="row col-lg-12" id="calenderDiv" style="display: none;">
-                    <div class="col-lg-4 offset-lg-4">
-                        <input type="date" class="form-control"/>
-                    </div>
-                </div>
                 @for(training <- trainings) {
-                    <div> class="col-lg-2>
-                        <p>@training.getCategory()</p>
-                    </div>
-                    <div class="col-lg-2">
-                        <p>@training.getName()</p>
-                    </div>
-                    <div class="col-lg-2">
-                        <p>@training.getTrainingCode()</p>
-                    </div>
-                    <div class="col-lg-2">
-                        <p>@training.getDateIDs()</p>
-                    </div>
-                    <div class="col-lg-2">
-                        <p></p>
-                    </div>
-                    <div class="col-lg-2">
-                        <p>@training.getCapacity()</p>
+                    <div class="row col-lg-12">
+                        <div class="col-lg-2">
+                            <p>@training.getCategory()</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>@training.getName()</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>@training.getTrainingCode()</p>
+                        </div>
+                        <div class="col-lg-2">
+                        @if(!training.getDateIDs.isEmpty()) {
+                            @for(date <- training.getDateIDs) {
+                                @for(dat <- viewDates) {
+                                    @if(date.equals(dat.getDateId())) {
+                                        <p>
+                                        @dat.getDate() <p>
+                                    } else{
+                                        <p>Onbekend</p>
+                                    }
+                                }
+                            }
+                        } else {
+                            <p>Geen datum bekend.</p>
+                        }
+                        </div>
+                        <div class="col-lg-2">
+                        @if(!training.getDateIDs.isEmpty()) {
+                            @for(date <- training.getDateIDs) {
+                                @for(dat <- viewDates) {
+                                    @if(date.equals(dat.getDateId())) {
+                                        <p>
+                                        @dat.getLocation() <p>
+                                    } else {
+                                        <p>Onbekend</p>
+                                    }
+                                }
+                            }
+                        } else {
+                            <p>Geen datum bekend.</p>
+                        }
+                        </div>
+                        <div class="col-lg-2">
+                            <p>@training.getCapacity()</p>
+                        </div>
                     </div>
                 }
-            } else {
-                <div class="col-lg-4 offset-lg-4 label"><p>U heeft momenteel geen trainingen.</p></div>
-            }
+            </div>
+
+
+            <div class="row col-lg-12" id="calenderDiv" style="display: none;">
+                <div class="col-lg-4 offset-lg-4">
+                    <input type="date" class="form-control"/>
+                </div>
+            </div>
+
+        } else {
+            <div class="col-lg-4 offset-lg-4 label"><p>U heeft momenteel geen trainingen.</p></div>
+        }
         </div>
     </div>
 }
