@@ -16,6 +16,7 @@ import play.mvc.Security;
 import views.html.account.successSignUp;
 import views.html.shared.message;
 import views.html.training.*;
+import views.html.teacher.*;
 import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -33,6 +34,7 @@ public class TrainingController extends Controller {
     private LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+    private SharedRepository sharedRepo = new SharedRepository(new SharedMongoContext());
 
     private FormFactory formFactory;
 
@@ -314,4 +316,11 @@ public class TrainingController extends Controller {
 
         return dateIDs;
     }
+
+    @Security.Authenticated(Secured.class)
+    public Result teacherTrainingOverview() {
+        return ok(teachertrainingoverview.render(sharedRepo.getTrainings(Secured.getUserInfo(ctx()).get_id()),"Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+    }
+
 }
+

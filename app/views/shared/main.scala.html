@@ -71,6 +71,9 @@
 
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profiel</a>
+                                @if(user.getRole.equals(Role.Docent)){
+                                    <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i>Rooster </a>
+                                }
                                 <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Uitloggen</a>
                             </div>
                         } else {
