@@ -23,16 +23,18 @@
 
     </script>
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
+<!--
+    headers: {
+    'Csrf-Token': @*helper.CSRF.formField*@
+    }, -->
 
-   <script>
-            function removeDate(id)
+    <script>
+            function removeDate(id, obj, tCode)
             {
+                deleteInput(obj);
                 $.ajax({
                     type: 'POST',
-                    url: '/training/delete/' ,
-                    data: {
-                        id:id
-                    }
+                    url: '/training/delete/' + id + '/' + tCode
                 });
             }
     </script>
@@ -112,7 +114,7 @@
                                         </select>
                                     </div>
                                         <div class="col-lg-3">
-                                            <input class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId');">
+                                            <input class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId', this, '@training.getTrainingCode');">
                                         </div>
                                     </div>
 

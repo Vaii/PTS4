@@ -210,15 +210,16 @@ public class TrainingController extends Controller {
         }
     }
 
-    public Result removeDate(String id) {
-        System.out.println(id + " is being removed.");
+    public Result removeDate(String id, String trainingCode) {
+        dateRepo.removeDateTime(dateRepo.getDateTime(id));
+        Training t = trainingRepository.getTraining(trainingCode);
+        t.getDateIDs().remove(id);
+        trainingRepository.updateTraining(t);
         return ok();
     }
 
     @Security.Authenticated(Secured.class)
     public Result edit(String category, String code) throws ParseException {
-        //Form<Training> editFrom = form.fill(trainingRepository.getTraining(code));
-
         DynamicForm trainingData = formFactory.form().bindFromRequest();
 
         Map<String, String> baseValues = mapValuesFromRequest(trainingData);
@@ -236,43 +237,28 @@ public class TrainingController extends Controller {
             training.set_id(trainingRepository.getTraining(code).get_id());
             training.setDateIDs(trainingRepository.getTraining(code).getDateIDs());
 
-            List<String> dateIDs = new ArrayList<>();
+            List<String> requestDateIDs = new ArrayList<>();
             for(int i = 0; i < 50; i++) {
                 String d = trainingData.field("DateIDs[" + i + "]").value();
                 if(d == null) {
                     break;
                 }
-                dateIDs.add(d);
+                requestDateIDs.add(d);
             }
 
             List<String> initIDs = training.getDateIDs();
-            int j = 0;
-            for(String d : initIDs) {
-                if(d.equals(dateIDs.get(j))) {
-                    DateTime dt = dateRepo.getDateTime(d);
+            editExistingDates(initIDs, requestDateIDs, dates, locationIDs, teacherIDs);
 
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                    Date date = df.parse(dates.get(j));
-
-                    dt.setDate(date);
-                    dt.setLocationID(locationIDs.get(j));
-                    dt.setTeacherID(teacherIDs.get(j));
-                    dateRepo.updateDateTime(dt);
-                }
-                else {
-                    DateTime dt = dateRepo.getDateTime(d);
-                    dateRepo.removeDateTime(dt);
-                }
-                j++;
-            }
-
-            if(dates.size() > dateIDs.size()) {
-                int begindex = dates.size() - (dates.size() - dateIDs.size());
+            if(dates.size() > requestDateIDs.size()) {
+                int begindex = dates.size() - (dates.size() - requestDateIDs.size());
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-                Date date = format.parse(dates.get(begindex));
-                DateTime dt = new DateTime(date, locationIDs.get(begindex), teacherIDs.get(begindex));
-                String lastId = dateRepo.addDateTime(dt).toString();
-                training.addDateID(lastId);
+
+                for(int i = begindex; i < dates.size(); i++) {
+                    Date date = format.parse(dates.get(i));
+                    DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i));
+                    String lastId = dateRepo.addDateTime(dt).toString();
+                    training.addDateID(lastId);
+                }
             }
 
             trainingRepository.updateTraining(training);
@@ -349,14 +335,38 @@ public class TrainingController extends Controller {
 
     private void createViewDates(Training t, List<ViewDate> viewDates) {
         int counter = 0;
-        for(String dateTime : t.getDateIDs()) {
-            DateTime d = dateRepo.getDateTime(dateTime);
 
-            Location loc = locationRepo.getLocation(d.getLocationID());
-            User teacher = userRepo.getUserByID(d.getTeacherID());
-            ViewDate vd = new ViewDate(t.getDateIDs().get(counter), d.getDate(), loc, teacher);
-            viewDates.add(vd);
-            counter++;
+        if(t.getDateIDs().size() != 0) {
+            for(String dateTime : t.getDateIDs()) {
+                DateTime d = dateRepo.getDateTime(dateTime);
+
+                Location loc = locationRepo.getLocation(d.getLocationID());
+                User teacher = userRepo.getUserByID(d.getTeacherID());
+                ViewDate vd = new ViewDate(t.getDateIDs().get(counter), d.getDate(), loc, teacher);
+                viewDates.add(vd);
+                counter++;
+            }
+        }
+    }
+
+    private void editExistingDates(List<String> initIDs, List<String> requestDateIDs, List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
+        int j = 0;
+
+        if(initIDs.size() != 0) {
+            for(String d : initIDs) {
+                if(d.equals(requestDateIDs.get(j))) {
+                    DateTime dt = dateRepo.getDateTime(d);
+
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = df.parse(dates.get(j));
+
+                    dt.setDate(date);
+                    dt.setLocationID(locationIDs.get(j));
+                    dt.setTeacherID(teacherIDs.get(j));
+                    dateRepo.updateDateTime(dt);
+                }
+                j++;
+            }
         }
     }
 }

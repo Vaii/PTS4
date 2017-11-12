@@ -10,7 +10,7 @@ GET     /customRedirect                     controllers.ApplicationController.cu
 GET     /message                            controllers.ApplicationController.message(url: String, messageText: String)
 
 # Trainingen
-GET  /training/delete/:id                  controllers.TrainingController.removeDate(id: String)
+POST  /training/delete/:id/:code                  controllers.TrainingController.removeDate(id: String, code : String)
 
 # Account management
 

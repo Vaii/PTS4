@@ -24,6 +24,7 @@ for (var i = 0; i < teachJson.length; i++) {
 
 function deleteInput(className) {
     var name = className.className;
+    console.log(className);
     var number = name.substring(18);
     console.log(number);
     var row = document.getElementsByClassName("row" + number);
