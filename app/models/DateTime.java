@@ -66,6 +66,14 @@ public class DateTime {
         trainees = new ArrayList<>();
     }
 
+    public DateTime(Date date, String locationId, String teacherId, float duration) {
+        this.date = date;
+        this.locationID = locationId;
+        this.teacherID = teacherId;
+        this.duration = duration;
+        trainees = new ArrayList<>();
+    }
+
     @JsonProperty(M_TRAINEES)
     public List<String> getTrainees() {
         return trainees;

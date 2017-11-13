@@ -81,7 +81,7 @@ public class TrainingController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result addtraining() {
+    public Result addTraining() {
         List<Location> locations = locationRepo.getAll();
         List<User> teachers = userRepo.getAllTeachers();
 
@@ -117,12 +117,18 @@ public class TrainingController extends Controller {
                 return badRequest(addtraining.render(form2.withError("TrainingCode", "Trainingscode moet uniek zijn"), Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locationRepo.getAll(), userRepo.getAllTeachers(), locationJson, teacherJson));				
             }
 
-            List<String> dateIDs = createDates(dates, locationIDs, teacherIDs);
-
+            List<String> dateIDs = createDates(dates, locationIDs, teacherIDs, training.getDuration());
             training.setDateIDs(dateIDs);
 
             trainingRepo.addTraining(training);
             Training t = trainingRepo.getTraining(training.getTrainingCode());
+
+            for(String dateId : dateIDs) {
+                DateTime date = dateRepo.getDateTime(dateId);
+                date.setTrainingID(t.get_id());
+                dateRepo.updateDateTime(date);
+            }
+
             return ok(message.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + t.getName() + " is aangemaakt", "/managetraining"));
         }
     }
@@ -249,12 +255,13 @@ public class TrainingController extends Controller {
             editExistingDates(initIDs, requestDateIDs, dates, locationIDs, teacherIDs);
 
             if(dates.size() > requestDateIDs.size()) {
-                int begindex = dates.size() - (dates.size() - requestDateIDs.size());
+                int beginIndex = dates.size() - (dates.size() - requestDateIDs.size());
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-                for(int i = begindex; i < dates.size(); i++) {
+                for(int i = beginIndex; i < dates.size(); i++) {
                     Date date = format.parse(dates.get(i));
-                    DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i));
+                    DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
+                    dt.setTrainingID(training.get_id());
                     String lastId = dateRepo.addDateTime(dt).toString();
                     training.addDateID(lastId);
                 }
@@ -315,14 +322,14 @@ public class TrainingController extends Controller {
         return new ArrayList<>();
     }
 
-    private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
+    private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
         List<String> dateIDs = new ArrayList<>();
 
         int counter = 0;
         for(String d : dates) {
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             Date date = format.parse(d);
-            DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter));
+            DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter), duration);
             String lastId = dateRepo.addDateTime(dt).toString();
             dateIDs.add(lastId);
             counter++;
