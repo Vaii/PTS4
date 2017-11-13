@@ -71,7 +71,7 @@ public class DateTime {
     }
 
     public void setTeacherID(String teacherID) {
-        this.LocationID = teacherID;
+        this.TeacherID = teacherID;
     }
 
     public boolean signUp(String userID) {
