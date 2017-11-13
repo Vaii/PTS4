@@ -22,7 +22,7 @@ public class TrainingMongoContextTest2 {
    public void setUp() {
         TrainingContext = new TrainingMongoContext("TrainingTest");
         TrainingContext.removeAll();
-        training = new Training("004", "Java", "Beginnen met Java", "Laptop", 2.0f, 20.0f, 20, null, "Java", null, null);
+        training = new Training("004", "Java", "Beginnen met Java", "Laptop", 2.0f, 20.0f, 20, null, "Java", null);
         TrainingContext.addTraining(training);
     }
 

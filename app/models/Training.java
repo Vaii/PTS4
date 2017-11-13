@@ -26,7 +26,6 @@ public class Training  {
     private static final String M_CAPACITY = "Capacity";
     private static final String M_DATEIDS = "DateIDs";
     private static final String M_CATEGORY = "Category";
-    private static final String M_TRAINEE = "Trainee";
     private static final String M_PREREQUISITES = "Prerequisites";
 
     // Mongo DB ID.
@@ -49,13 +48,10 @@ public class Training  {
     @Constraints.Required
     private String Category;
 
-    // MongoDB ID's of the users signed up for the training.
-    private List<String> Trainee;
     // MongoDB ID's of the trainings that are required to follow before this one.
     private List<String> Prerequisites;
 
     public Training() {
-        this.Trainee = new ArrayList<>();
         this.Prerequisites = new ArrayList<>();
     }
 
@@ -68,12 +64,11 @@ public class Training  {
         this.Tuition = tuition;
         this.Capacity = capacity;
         this.Category = category;
-        this.Trainee = new ArrayList<>();
         this.Prerequisites = new ArrayList<>();
         prepareForStorage();
     }
 
-    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, List<String> trainee, List<String> prerequisites) {
+    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, List<String> prerequisites) {
         this._id = _id;
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -83,7 +78,6 @@ public class Training  {
         this.Tuition = tuition;
         this.Capacity = capacity;
         this.Category = category;
-        this.Trainee = trainee;
         this.Prerequisites = prerequisites;
         prepareForStorage();
     }
@@ -98,7 +92,6 @@ public class Training  {
                     @JsonProperty(M_CAPACITY) int capacity,
                     @JsonProperty(M_DATEIDS) List<String> dateIDS,
                     @JsonProperty(M_CATEGORY) String category,
-                    @JsonProperty(M_TRAINEE) List<String> trainee,
                     @JsonProperty(M_PREREQUISITES) List<String> prerequisites) {
         this.TrainingCode = trainingCode;
         this.Name = name;
@@ -109,7 +102,6 @@ public class Training  {
         this.Capacity = capacity;
         this.DateIDs = dateIDS;
         this.Category = category;
-        this.Trainee = trainee;
         this.Prerequisites = prerequisites;
         prepareForStorage();
     }
@@ -194,13 +186,8 @@ public class Training  {
         DateIDs = dateIDs;
     }
 
-    @JsonProperty(M_TRAINEE)
-    public List<String> getTrainee() {
-        return Trainee;
-    }
-
-    public void setTrainee(List<String> trainee) {
-        Trainee = trainee;
+    public void addDateID(String dateID) {
+        DateIDs.add(dateID);
     }
 
     @JsonProperty(M_PREREQUISITES)
@@ -210,16 +197,6 @@ public class Training  {
 
     public void setPrerequisites(List<String> prerequisites) {
         this.Prerequisites = prerequisites;
-    }
-
-    /**
-     * Signs up a user for the training.
-     *
-     * @param id The mongoDB ID of the user to sign up.
-     * @return true if the user was added to the training, false otherwise.
-     */
-    public boolean addTrainee(String id) {
-        return Trainee.add(id);
     }
 
     /**
