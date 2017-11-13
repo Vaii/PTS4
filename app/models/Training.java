@@ -194,6 +194,10 @@ public class Training  {
         DateIDs = dateIDs;
     }
 
+    public void addDateID(String dateID) {
+        DateIDs.add(dateID);
+    }
+
     @JsonProperty(M_TRAINEE)
     public List<String> getTrainee() {
         return Trainee;
