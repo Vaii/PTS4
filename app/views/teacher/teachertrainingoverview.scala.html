@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 @for(training <- trainings) {
-                    <div class="row col-lg-12">
+                    <div class="row col-lg-12" id="listviewrow">
                         <div class="col-lg-2">
                             <p>@training.getCategory()</p>
                         </div>
@@ -51,15 +51,16 @@
                         </div>
                         <div class="col-lg-2">
                         @if(!training.getDateIDs.isEmpty()) {
-                            @for(date <- training.getDateIDs) {
-                                @for(dat <- viewDates) {
-                                    @if(date.equals(dat.getDateId())) {
-                                        <p>
-                                        @dat.getDate() <p>
-                                    } else{
-                                        <p>Onbekend</p>
-                                    }
-                                }
+                            @for(dat <- viewDates) {
+                                <div class="row" id="listviewrowstreet">
+                                    <p>@dat.getLocation().getRoom()</p>
+                                </div>
+                                <div class="row" id="listviewrowstreet">
+                                    <p>@dat.getLocation().getStreetName() @dat.getLocation().getStreetNumber()</p>
+                                </div>
+                                <div class="row" id="listviewrowstreet">
+                                    <p>@dat.getLocation().getCity()<p>
+                                </div>
                             }
                         } else {
                             <p>Geen datum bekend.</p>
@@ -67,15 +68,8 @@
                         </div>
                         <div class="col-lg-2">
                         @if(!training.getDateIDs.isEmpty()) {
-                            @for(date <- training.getDateIDs) {
-                                @for(dat <- viewDates) {
-                                    @if(date.equals(dat.getDateId())) {
-                                        <p>
-                                        @dat.getLocation() <p>
-                                    } else {
-                                        <p>Onbekend</p>
-                                    }
-                                }
+                            @for(dat <- viewDates) {
+                                <p>@dat.getDateString()<p>
                             }
                         } else {
                             <p>Geen datum bekend.</p>
@@ -87,7 +81,6 @@
                     </div>
                 }
             </div>
-
 
             <div class="row col-lg-12" id="calenderDiv" style="display: none;">
                 <div class="col-lg-4 offset-lg-4">

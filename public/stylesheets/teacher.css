@@ -67,3 +67,11 @@ label {
 .offset-lg-5{
     padding-bottom: 20px;
 }
+#listviewrowstreet {
+    margin:0px;
+}
+listviewrow {
+    border-bottom: 1px solid black;
+
+
+}
