@@ -9,6 +9,7 @@ import models.DateTime;
 import models.Training;
 import models.User;
 import org.jongo.MongoCollection;
+import org.jongo.MongoCursor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,21 +25,7 @@ public class SharedMongoContext implements SharedContext {
     @Override
     public List<Training> getTrainings(String userID) {
         List<Training> trainings= new ArrayList<>();
-        List<Training> results = new ArrayList<>();
-        trainings = trainingRepo.getAll();
-
-        for(Training t : trainings) {
-            for(String id : t.getDateIDs()) {
-                DateTime date = dateRepo.getDateTime(id);
-                for(String userId : date.getTrainees()) {
-                    if(userId.equals(userID)) {
-                        results.add(t);
-                    }
-                }
-            }
-        }
-
-        return results;
+        return null;
     }
 
     @Override

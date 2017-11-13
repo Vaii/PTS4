@@ -9,4 +9,6 @@ public interface DateTimeContext {
     boolean updateDateTime(DateTime dateTime);
     boolean removeDateTime(String dateTimeId);
     DateTime getDateTime(String date_id);
+    List<DateTime> getDateTimeForUser(String userId);
+    List<DateTime> getDateTimeForTeacher(String teacherId);
 }
