@@ -6,6 +6,11 @@ import dal.interfaces.DateTimeContext;
 import models.DateTime;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
+import org.jongo.MongoCursor;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class DateTimeMongoContext implements DateTimeContext {
     private DBConnector connector;
@@ -37,5 +42,9 @@ public class DateTimeMongoContext implements DateTimeContext {
     @Override
     public DateTime getDateTime(String date_id) {
         return collection.findOne("{_id:#}", new ObjectId(date_id)).as(DateTime.class);
+    }
+
+    public void removeAll() {
+        collection.drop();
     }
 }

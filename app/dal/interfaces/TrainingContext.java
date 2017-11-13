@@ -2,6 +2,7 @@ package dal.interfaces;
 
 import models.Location;
 import models.Training;
+import models.User;
 import play.data.format.Formats;
 
 
