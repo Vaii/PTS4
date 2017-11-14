@@ -1,4 +1,7 @@
-package models;
+package models.view;
+
+import models.storage.Location;
+import models.storage.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -1,9 +1,13 @@
-package models;
+package models.util;
 
 import dal.contexts.LocationMongoContext;
 import dal.contexts.UserMongoContext;
 import dal.repositories.LocationRepository;
 import dal.repositories.UserRepository;
+import models.storage.DateTime;
+import models.storage.Location;
+import models.storage.User;
+import models.view.ViewDate;
 
 public class DateCoverter {
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));

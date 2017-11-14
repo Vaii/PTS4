@@ -1,7 +1,7 @@
 package dal.repositories;
 
 import dal.interfaces.DateTimeContext;
-import models.DateTime;
+import models.storage.DateTime;
 
 import java.util.List;
 

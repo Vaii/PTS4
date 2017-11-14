@@ -2,6 +2,8 @@
 @import play.data.Form
 @import views.html.helper._
 
+@import models.storage.Role
+@import models.storage.User
 @(page: String, isLoggedIn: Boolean, User: User, form: Form[User])
 
 @shared.main(page, isLoggedIn, User) {
@@ -16,7 +18,7 @@
                 <tr>@b4.text(form("LastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
                 <tr>@b4.number(form("PhoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
                 <tr>@b4.text(form("Company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'readonly -> "true", 'value -> "InfoSupport")</tr>
-                <tr>@b4.select(form("Role"), options(models.Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</tr>
+                <tr>@b4.select(form("Role"), options(Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</tr>
                 <tr>@b4.password(form("password"), '_label -> "Wachtwoord", 'required -> "required")</tr>
                 <tr>@b4.password(form("validation"), '_label -> "Wachtwoord validatie", 'required -> "required")</tr>
                 <tr>@b4.submit('class -> "btn btn-default") { Registeren}</tr>

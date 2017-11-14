@@ -1,4 +1,4 @@
-package models;
+package models.storage;
 
 /**
  * The status enum contains all possible statuses a tuitionform can have.

@@ -1,8 +1,8 @@
 package dal.repositories;
 
 import dal.interfaces.TrainingContext;
-import models.Location;
-import models.Training;
+import models.storage.Location;
+import models.storage.Training;
 import play.data.format.Formats;
 
 import java.util.List;

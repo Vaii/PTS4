@@ -1,6 +1,6 @@
 package dal.interfaces;
 
-import models.DateTime;
+import models.storage.DateTime;
 
 import java.util.List;
 

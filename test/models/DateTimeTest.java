@@ -1,6 +1,7 @@
 package models;
 
 
+import models.storage.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +10,6 @@ import org.junit.runners.JUnit4;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 

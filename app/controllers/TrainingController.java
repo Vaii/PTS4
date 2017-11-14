@@ -4,7 +4,9 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import dal.contexts.*;
 import dal.repositories.*;
-import models.*;
+import models.storage.*;
+import models.util.OverlapChecker;
+import models.view.ViewDate;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -53,6 +55,13 @@ public class TrainingController extends Controller {
                 return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id) , trainingRepo.getTraining(trainingID), tuitionFormForm));
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
+
+                OverlapChecker checker = new OverlapChecker();
+
+                if(!checker.checkOverlapForTrainee(signUpDate, Secured.getUserInfo(ctx()).get_id())) {
+                    //TODO Redirect to an error page.
+                }
+
                 signUpDate.addTrainee(Secured.getUserInfo(ctx()).get_id());
                 dateRepo.updateDateTime(signUpDate);
                 return ok(message.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
