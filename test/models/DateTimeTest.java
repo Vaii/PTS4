@@ -36,7 +36,7 @@ public class DateTimeTest {
     public void OverlapTest1() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("12/1/2000"), null, null , 5);
 
-        assertTrue(dateTime1.checkOverlap(dateTime2));
+        assertNotNull(dateTime1.checkOverlap(dateTime2));
     }
 
     // The following test will check overlap when the other datetime
@@ -48,7 +48,7 @@ public class DateTimeTest {
     public void OverlapTest2() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("8/1/2000"), null, null , 5);
 
-        assertTrue(dateTime1.checkOverlap(dateTime2));
+        assertNotNull(dateTime1.checkOverlap(dateTime2));
     }
 
     // The following test will check overlap when the other datetime
@@ -60,7 +60,7 @@ public class DateTimeTest {
     public void OverlapTest3() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("12/1/2000"), null, null , 2);
 
-        assertTrue(dateTime1.checkOverlap(dateTime2));
+        assertNotNull(dateTime1.checkOverlap(dateTime2));
 
     }
 
@@ -73,7 +73,7 @@ public class DateTimeTest {
     public void OverlapTest4() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("8/1/2000"), null, null , 10);
 
-        assertTrue(dateTime1.checkOverlap(dateTime2));
+        assertNotNull(dateTime1.checkOverlap(dateTime2));
     }
 
     // The following test will check overlap when the other datetime
@@ -85,7 +85,7 @@ public class DateTimeTest {
     public void OverlapTest5() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("10/1/2000"), null, null , 5);
 
-        assertTrue(dateTime1.checkOverlap(dateTime2));
+        assertNotNull(dateTime1.checkOverlap(dateTime2));
     }
 
     // The following test will check when there is no overlap between the two.
@@ -96,6 +96,6 @@ public class DateTimeTest {
     public void OverlapTest6() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("20/1/2000"), null, null , 10);
 
-        assertFalse(dateTime1.checkOverlap(dateTime2));
+        assertNull(dateTime1.checkOverlap(dateTime2));
     }
 }

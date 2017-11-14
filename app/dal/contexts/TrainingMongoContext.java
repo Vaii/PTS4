@@ -113,6 +113,11 @@ public class TrainingMongoContext implements TrainingContext {
         return results;
     }
 
+    @Override
+    public Training getTrainingById(String Id) {
+        return collection.findOne("{_id:#}", new ObjectId(Id)).as(Training.class);
+    }
+
     public void removeAll() {
         collection.drop();
     }

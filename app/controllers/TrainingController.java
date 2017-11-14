@@ -58,8 +58,10 @@ public class TrainingController extends Controller {
 
                 OverlapChecker checker = new OverlapChecker();
 
-                if(!checker.checkOverlapForTrainee(signUpDate, Secured.getUserInfo(ctx()).get_id())) {
-                    //TODO Redirect to an error page.
+                DateTime overlapError = checker.checkOverlapForTrainee(signUpDate, Secured.getUserInfo(ctx()).get_id());
+
+                if(overlapError != null) {
+                    return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
                 }
 
                 signUpDate.addTrainee(Secured.getUserInfo(ctx()).get_id());

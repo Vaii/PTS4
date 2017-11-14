@@ -14,17 +14,25 @@ public class OverlapChecker {
     private SharedRepository sharedRepo = new SharedRepository(new SharedMongoContext());
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
 
-    public boolean checkOverlapForTrainee(DateTime other, String userId) {
+    public DateTime checkOverlapForTrainee(DateTime other, String userId) {
         List<DateTime> dateTimes = new ArrayList<>();
         dateTimes =  dateRepo.getDateTimeForUser(userId);
 
-        return other.checkOverlap(dateTimes);
+        if(other.checkOverlap(dateTimes) != null) {
+            return other.checkOverlap(dateTimes);
+        }
+
+        return null;
     }
 
-    public boolean checkOverlapForTeacher(DateTime other, String teacherId) {
+    public DateTime checkOverlapForTeacher(DateTime other, String teacherId) {
         List<DateTime> dateTimes = new ArrayList<>();
         dateTimes = dateRepo.getDateTimeForTeacher(teacherId);
 
-        return other.checkOverlap(dateTimes);
+        if(other.checkOverlap(dateTimes) != null) {
+            return other.checkOverlap(dateTimes);
+        }
+
+        return null;
     }
 }

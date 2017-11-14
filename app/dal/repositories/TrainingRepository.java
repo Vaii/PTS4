@@ -65,4 +65,9 @@ public class TrainingRepository implements TrainingContext {
     public Map<String, Integer> getTrainingFrequencies() {
         return context.getTrainingFrequencies();
     }
+
+    @Override
+    public Training getTrainingById(String Id) {
+        return context.getTrainingById(Id);
+    }
 }
