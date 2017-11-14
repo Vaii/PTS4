@@ -75,4 +75,27 @@ public class DateTimeTest {
 
         assertTrue(dateTime1.checkOverlap(dateTime2));
     }
+
+    // The following test will check overlap when the other datetime
+    // and this datetime perfectly overlap.
+    // The following is a graphical representation of the situation.
+    // Date 1 :       |**************|
+    // Date 2 :       |**************|
+    @Test
+    public void OverlapTest5() throws ParseException {
+        dateTime2 = new DateTime(formatter.parse("10/1/2000"), null, null , 5);
+
+        assertTrue(dateTime1.checkOverlap(dateTime2));
+    }
+
+    // The following test will check when there is no overlap between the two.
+    // The following is a graphical representation of the situation.
+    // Date 1 :       |**************|
+    // Date 2 :                         |**************|
+    @Test
+    public void OverlapTest6() throws ParseException {
+        dateTime2 = new DateTime(formatter.parse("20/1/2000"), null, null , 10);
+
+        assertFalse(dateTime1.checkOverlap(dateTime2));
+    }
 }

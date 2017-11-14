@@ -165,7 +165,7 @@ public class DateTime {
 
         return other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
                 otherEndDate.after(this.date) && otherEndDate.before(myEndDate) ||
-                this.date.after(other.getDate()) && this.date.before(otherEndDate);
-
+                this.date.after(other.getDate()) && this.date.before(otherEndDate) ||
+                this.date.equals(other.getDate());
     }
 }
