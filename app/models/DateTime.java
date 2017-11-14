@@ -168,4 +168,13 @@ public class DateTime {
                 this.date.after(other.getDate()) && this.date.before(otherEndDate) ||
                 this.date.equals(other.getDate());
     }
+
+    public boolean checkOverlap(List<DateTime> others) {
+        for(DateTime other : others) {
+            if(checkOverlap(other)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
