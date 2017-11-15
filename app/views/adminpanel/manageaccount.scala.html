@@ -4,7 +4,7 @@
 
 @import models.storage.Role
 @import models.storage.User
-@(page: String, isLoggedIn: Boolean, User: User, form: Form[User])
+@(page: String, isLoggedIn: Boolean, User: User, form: Form[User], manager: Map[String, String])
 
 @shared.main(page, isLoggedIn, User) {
     <div class="container">
@@ -16,6 +16,7 @@
                 <tr>@b4.email(form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
                 <tr>@b4.text(form("FirstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</tr>
                 <tr>@b4.text(form("LastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
+                <tr>@b4.select(form("Manager"), options(manager), '_label -> "Manager", '_default -> "Selecteer een manager", 'value -> User.getManager)</tr>
                 <tr>@b4.number(form("PhoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
                 <tr>@b4.text(form("Company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'value -> "InfoSupport")</tr>
                 <tr>@b4.select(form("Role"), options(Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</tr>

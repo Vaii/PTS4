@@ -54,8 +54,12 @@ public class AdminController extends Controller{
     public Result manageAccount(String email){
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MedewerkerKenniscentrum)){
             userForm = form.fill(uRepo.getUser(email));
+
+            List<User> managers = uRepo.getAllManagers();
+            Map<String, String> managerMap = mapManager(managers);
+
             return ok(manageaccount.render("Manage Account",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap));
         }
         else{
             return notFound();
@@ -67,9 +71,12 @@ public class AdminController extends Controller{
 
         filledForm = form.bindFromRequest();
 
+        List<User> managers = uRepo.getAllManagers();
+        Map<String, String> managerMap = mapManager(managers);
+
         if(filledForm.hasErrors()){
             return (badRequest(manageaccount.render("Manage account",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm)));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap)));
         }
         User user = filledForm.get();
 
@@ -101,17 +108,23 @@ public class AdminController extends Controller{
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MedewerkerKenniscentrum)){
             List<User> manager = uRepo.getAllManagers();
 
-            Map<String, String> managerInfo = new HashMap<>();
-
-            for(User m : manager){
-                managerInfo.put(m.get_id(), m.getEmail());
-            }
+            Map<String, String> managerInfo = mapManager(manager);
             return ok(accountcreation.render("Account Creation",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, managerInfo));
         }
         else{
             return notFound();
         }
+    }
+
+    private Map<String, String> mapManager(List<User> managers){
+
+        Map<String, String> managerMap = new HashMap<>();
+        for(User m : managers){
+            managerMap.put(m.get_id(), m.getEmail());
+        }
+
+        return managerMap;
     }
 
     @Security.Authenticated(Secured.class)
