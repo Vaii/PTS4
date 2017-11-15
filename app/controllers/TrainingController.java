@@ -361,32 +361,15 @@ public class TrainingController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result teacherTrainingOverview() {
-        List<Training> teacherTrainings = sharedRepo.getTrainingsForTeacher(Secured.getUserInfo(ctx()).get_id());
-        List<ViewDate> viewDates = new ArrayList<>();
-        List<ViewDate> viewDates1 = new ArrayList<>();
-        for (Training t : teacherTrainings) {
-            for (String id : t.getDateIDs()) {
-                DateTime dateTime = dateRepo.getDateTime(id);
-                Location loc = locationRepo.getLocation(dateTime.getLocationID());
-                User teacher = userRepo.getUser(dateTime.getTeacherID());
-                ViewDate vd = new ViewDate(id, dateTime.getDate(), loc, teacher);
-                if (!viewDates1.isEmpty()) {
-                    for (ViewDate v : viewDates){
-                        if (vd.getDateId().equals(v.getDateId())) {
-
-                        } else {
-                            viewDates1.add(vd);
-                        }
-                    }
-                }
-                else {
-                    viewDates1.add(vd);
-                }
-            }
+        List<DateTime> teacherDates = dateRepo.getDateTimeForTeacher(Secured.getUserInfo(ctx()).get_id());
+        List<ViewTraining> teacherTrainings = new ArrayList<>();
+        for (DateTime d : teacherDates)
+        {
+            ViewTraining vt = new ViewTraining(trainingRepo.getTraining(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),dateRepo.getDateTime(d.get_id()));
+            teacherTrainings.add(vt);
         }
-        viewDates.addAll(viewDates1);
 
-        return ok(teachertrainingoverview.render(sharedRepo.getTrainingsForTeacher(Secured.getUserInfo(ctx()).get_id()), "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
+        return ok(teachertrainingoverview.render(teacherTrainings, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
     private void createViewDates(Training t, List<ViewDate> viewDates) {
@@ -404,6 +387,8 @@ public class TrainingController extends Controller {
             }
         }
     }
+
+
 
     private void editExistingDates(List<String> initIDs, List<String> requestDateIDs, List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
         int j = 0;
