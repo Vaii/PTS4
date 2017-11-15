@@ -5,3 +5,4 @@ serverVersion=6.7.0.33301
 dashboardUrl=https://sonarcloud.io/dashboard/index/pts4_hats_off
 ceTaskId=AV-_lnxmonIsCQVnVDiQ
 ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AV-_lnxmonIsCQVnVDiQ
+

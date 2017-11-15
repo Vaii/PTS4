@@ -17,7 +17,9 @@ import views.html.adminpanel.manageaccount;
 import views.html.adminpanel.accountSelector;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdminController extends Controller{
 
@@ -95,8 +97,15 @@ public class AdminController extends Controller{
     @Security.Authenticated(Secured.class)
     public Result creationPage(){
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
+            List<User> manager = uRepo.getAllManagers();
+
+            Map<String, String> managerInfo = new HashMap<>();
+
+            for(User m : manager){
+                managerInfo.put(m.get_id(), m.getEmail());
+            }
             return ok(accountcreation.render("Account Creation",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, managerInfo));
         }
         else{
             return notFound();
@@ -109,6 +118,10 @@ public class AdminController extends Controller{
         User newUser = newFilledForm.get();
         String password = newFilledForm.field("password").value();
         String toValidate = newFilledForm.field("validation").value();
+
+        if(filledForm.field("ManagerCreation").value() != null){
+            newUser.setManager(filledForm.field("ManagerCreation").value());
+        }
 
         if(password.equals(toValidate)){
             if(uRepo.addUser(newUser, password)){

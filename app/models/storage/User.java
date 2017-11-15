@@ -27,6 +27,7 @@ public class User {
     private String company;
     @play.data.validation.Constraints.Required
     private String phoneNumber;
+    private String Manager;
     
     public User() {
     }
@@ -37,13 +38,26 @@ public class User {
                 @JsonProperty(M_EMAIL) String email,
                 @JsonProperty(M_ROLE) Role role,
                 @JsonProperty(M_COMPANY) String company,
-                @JsonProperty(M_PHONENUMBER) String phoneNumber) {
+                @JsonProperty(M_PHONENUMBER) String phoneNumber,
+                @JsonProperty(M_MANAGER) String Manager) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.role = role;
         this.company = company;
         this.phoneNumber = phoneNumber;
+        this.Manager = Manager;
+    }
+
+
+    public User(String firstName, String lastName, String email,
+                Role role, String company, String phoneNumber) {
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.Email = email;
+        this.Role = role;
+        this.Company = company;
+        this.PhoneNumber = phoneNumber;
     }
 
     @JsonProperty(M_PHONENUMBER)
@@ -108,4 +122,12 @@ public class User {
         this.company = company;
     }
 
+    @JsonProperty(M_MANAGER)
+    public String getManager() {
+        return Manager;
+    }
+
+    public void setManager(String manager) {
+        Manager = manager;
+    }
 }
