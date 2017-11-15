@@ -3,5 +3,5 @@ projectKey=pts4_hats_off
 serverUrl=https://sonarcloud.io
 serverVersion=6.7.0.33301
 dashboardUrl=https://sonarcloud.io/dashboard/index/pts4_hats_off
-ceTaskId=AV--7ormonIsCQVnVDYi
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AV--7ormonIsCQVnVDYi
+ceTaskId=AV-_IJrY1Q5aQJmOIJFX
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AV-_IJrY1Q5aQJmOIJFX

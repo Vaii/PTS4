@@ -16,8 +16,7 @@ public class SharedMongoContext implements SharedContext {
 
     @Override
     public List<Training> getTrainings(String userID) {
-        List<Training> trainings= new ArrayList<>();
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -31,7 +30,7 @@ public class SharedMongoContext implements SharedContext {
 
     @Override
     public List<Training> getTrainingsForTeacher(String userId) {
-        List<Training> trainings = new ArrayList<>();
+        List<Training> trainings;
         List<Training> results = new ArrayList<>();
         trainings = trainingRepo.getAll();
 

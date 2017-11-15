@@ -10,7 +10,7 @@ import org.jongo.MongoCollection;
  * Class used for establishing a connection with the mongo database.
  */
 
-public class DBConnector {
+public final class DBConnector {
     static private DB database;
     private Jongo jongo;
 

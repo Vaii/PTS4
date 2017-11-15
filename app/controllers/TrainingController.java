@@ -58,7 +58,7 @@ public class TrainingController extends Controller {
         if (id == null) {
             return notFound();
         } else {
-            if (Secured.getUserInfo(ctx()).getRole() != Role.Extern) {
+            if (Secured.getUserInfo(ctx()).getRole() != Role.EXTERN) {
                 return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id) , trainingRepo.getTraining(trainingID), tuitionFormForm));
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
@@ -185,7 +185,7 @@ public class TrainingController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result manage() {
-        return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
+        return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
     }
 
     public Result manageCategory(String category) {

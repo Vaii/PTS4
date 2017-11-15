@@ -99,7 +99,7 @@ public class TrainingMongoContext implements TrainingContext {
     @Override
     public Map<String, Integer> getTrainingFrequencies() {
         Map<String, Integer> results = new TreeMap<>();
-        List<Training> trainings = new ArrayList<>();
+        List<Training> trainings;
         trainings = getAll();
 
         for(Training t : trainings) {

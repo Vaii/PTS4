@@ -44,7 +44,7 @@ public class UserMongoContext implements UserContext {
             return result.wasAcknowledged();
         }
         else{
-            user.setRole(Role.Extern);
+            user.setRole(Role.EXTERN);
             WriteResult result = collection.insert("{FirstName:#," +
                     " LastName:#," +
                     " Email:#," +
@@ -123,7 +123,7 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public List<User> getAllTeachers() {
-        MongoCursor<User> results = collection.find("{Role:#}", Role.Docent).as(User.class);
+        MongoCursor<User> results = collection.find("{Role:#}", Role.DOCENT).as(User.class);
         List<User> teachers = new ArrayList<>();
 
         while (results.hasNext()) {

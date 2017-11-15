@@ -13,8 +13,6 @@ public class DateCoverter {
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
 
-    public DateCoverter() {};
-
     public ViewDate convert(DateTime dt) {
         User Teacher = userRepo.getUserByID(dt.getTeacherID());
         Location location = locationRepo.getLocation(dt.getLocationID());
