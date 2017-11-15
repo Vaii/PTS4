@@ -13,12 +13,12 @@
             @helper.CSRF.formField
             <table>
                 <tr>@b4.hidden(form("_id"), '_label -> "_id")</tr>
-                <tr>@b4.email(form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
-                <tr>@b4.text(form("FirstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</tr>
-                <tr>@b4.text(form("LastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
-                <tr>@b4.number(form("PhoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
-                <tr>@b4.text(form("Company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'value -> "InfoSupport")</tr>
-                <tr>@b4.select(form("Role"), options(Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</tr>
+                <tr>@b4.email(form("email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
+                <tr>@b4.text(form("firstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</tr>
+                <tr>@b4.text(form("lastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
+                <tr>@b4.number(form("phoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
+                <tr>@b4.text(form("company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'value -> "InfoSupport")</tr>
+                <tr>@b4.select(form("role"), options(Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</tr>
                 <tr>@b4.submit('class -> "btn btn-default") { Wijzigen}</tr>
             </table>
         }

@@ -27,7 +27,7 @@ public class ViewDate {
     }
 
     public String getDateString() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         return df.format(this.date);
     }
 

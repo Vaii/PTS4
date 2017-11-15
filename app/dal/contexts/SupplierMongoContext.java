@@ -42,7 +42,7 @@ public class SupplierMongoContext implements SupplierContext{
 
     @Override
     public Supplier getSupplier(String name) {
-        return collection.findOne("{Name:#}", name).as(Supplier.class);
+        return collection.findOne("{name:#}", name).as(Supplier.class);
     }
 
     @Override

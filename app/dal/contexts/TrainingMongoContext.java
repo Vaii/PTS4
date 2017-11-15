@@ -45,12 +45,12 @@ public class TrainingMongoContext implements TrainingContext {
 
     @Override
     public Training getTraining(String trainingCode) {
-        return collection.findOne("{TrainingsCode:#}", trainingCode).as(Training.class);
+        return collection.findOne("{trainingCode:#}", trainingCode).as(Training.class);
     }
 
     @Override
     public List<Training> getTrainings(Formats.DateTime date) {
-        MongoCursor<Training> results = collection.find("{Date:#}", date).as(Training.class);
+        MongoCursor<Training> results = collection.find("{date:#}", date).as(Training.class);
         List<Training> trainings = new ArrayList<>();
 
         while(results.hasNext()) {
@@ -62,7 +62,7 @@ public class TrainingMongoContext implements TrainingContext {
 
     @Override
     public List<Training> getTrainings(Location location) {
-        MongoCursor<Training> results = collection.find("{Location:#}", location).as(Training.class);
+        MongoCursor<Training> results = collection.find("{location:#}", location).as(Training.class);
         List<Training> trainings = new ArrayList<>();
 
         while(results.hasNext()) {
@@ -86,7 +86,7 @@ public class TrainingMongoContext implements TrainingContext {
 
     @Override
     public List<Training> getTrainingByCategory(String category) {
-        MongoCursor<Training> results = collection.find("{Category:#}", StringUtils.capitalize(category.toLowerCase())).as(Training.class);
+        MongoCursor<Training> results = collection.find("{category:#}", StringUtils.capitalize(category.toLowerCase())).as(Training.class);
         List<Training> trainings = new ArrayList<>();
 
         while(results.hasNext()) {

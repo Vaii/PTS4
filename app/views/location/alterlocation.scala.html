@@ -11,11 +11,11 @@
             <br>
             @b4.form(routes.LocationController.submitAlterLocation()) {
                 @b4.text(form("_id"), 'class -> "form-control-inline", 'readonly -> "true", 'hidden -> "hidden", 'value -> location.getId())
-                @b4.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'value -> location.getCity)
-                @b4.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'value -> location.getStreetName)
-                @b4.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'value -> location.getStreetNumber)
-                @b4.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'value -> location.getRoom)
-                @b4.text(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'value -> location.getCapacity)
+                @b4.text(form("city"), '_label -> "Stad :", 'class -> "form-control-inline", 'value -> location.getCity)
+                @b4.text(form("streetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'value -> location.getStreetName)
+                @b4.text(form("streetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'value -> location.getStreetNumber)
+                @b4.text(form("room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'value -> location.getRoom)
+                @b4.text(form("capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'value -> location.getCapacity)
                 <br>
                 <div class="row">
                     <div class="col-lg-4">@b4.submit('class -> "btn btn-primary") { Wijzigen }</div>

@@ -33,26 +33,26 @@ public class UserMongoContext implements UserContext {
         String hashedPassword = generatePassword(password, salt);
 
         if(user.getCompany().equalsIgnoreCase("infosupport")){
-            WriteResult result = collection.insert("{FirstName:#," +
-                                                    " LastName:#," +
-                                                    " Email:#," +
-                                                    " Role:#," +
-                                                    " Company:#," +
-                                                    " Salt:#," +
-                                                    " HashedPassword:#," +
-                                                    " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
+            WriteResult result = collection.insert("{firstName:#," +
+                                                    " lastName:#," +
+                                                    " email:#," +
+                                                    " role:#," +
+                                                    " company:#," +
+                                                    " salt:#," +
+                                                    " hashedPassword:#," +
+                                                    " phoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
             return result.wasAcknowledged();
         }
         else{
             user.setRole(Role.EXTERN);
-            WriteResult result = collection.insert("{FirstName:#," +
-                    " LastName:#," +
-                    " Email:#," +
-                    " Role:#," +
-                    " Company:#," +
-                    " Salt:#," +
-                    " HashedPassword:#," +
-                    " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
+            WriteResult result = collection.insert("{firstName:#," +
+                    " lastName:#," +
+                    " email:#," +
+                    " role:#," +
+                    " company:#," +
+                    " salt:#," +
+                    " hashedPassword:#," +
+                    " phoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
             return result.wasAcknowledged();
         }
     }
@@ -65,12 +65,12 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public User getUser(String firstName, String lastName) {
-        return collection.findOne("{FirstName:#, LastName:#}", firstName, lastName).as(User.class);
+        return collection.findOne("{firstName:#, lastName:#}", firstName, lastName).as(User.class);
     }
 
     @Override
     public User getUser(String emailadress) {
-        return collection.findOne("{Email:#}", emailadress).as(User.class);
+        return collection.findOne("{email:#}", emailadress).as(User.class);
     }
 
     @Override
@@ -93,17 +93,17 @@ public class UserMongoContext implements UserContext {
     @Override
     public boolean updateUser(User user) {
 
-        List<String> hashedDbPassword = collection.distinct("HashedPassword").query("{_id:#}", new ObjectId(user.getId())).as(String.class);
-        List<String> dbSalt = collection.distinct("Salt").query("{_id:#}", new ObjectId(user.getId())).as(String.class);
+        List<String> hashedDbPassword = collection.distinct("hashedPassword").query("{_id:#}", new ObjectId(user.getId())).as(String.class);
+        List<String> dbSalt = collection.distinct("salt").query("{_id:#}", new ObjectId(user.getId())).as(String.class);
 
-        WriteResult result = collection.update("{_id:#}", new ObjectId(user.getId())).with("{FirstName:#," +
-                " LastName:#," +
-                " Email:#," +
-                " Role:#," +
-                " Company:#," +
-                " Salt:#," +
-                " HashedPassword:#," +
-                " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(),
+        WriteResult result = collection.update("{_id:#}", new ObjectId(user.getId())).with("{firstName:#," +
+                " lastName:#," +
+                " email:#," +
+                " role:#," +
+                " company:#," +
+                " salt:#," +
+                " hashedPassword:#," +
+                " phoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(),
                 user.getRole(), user.getCompany(),dbSalt.get(0), hashedDbPassword.get(0), user.getPhoneNumber());
 
         return result.wasAcknowledged();
@@ -111,8 +111,8 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public boolean login(String email, String password) {
-        List<String> hashedDbPassword = collection.distinct("HashedPassword").query("{Email:#}", email).as(String.class);
-        List<String> dbSalt = collection.distinct("Salt").query("{Email:#}", email).as(String.class);
+        List<String> hashedDbPassword = collection.distinct("hashedPassword").query("{email:#}", email).as(String.class);
+        List<String> dbSalt = collection.distinct("salt").query("{email:#}", email).as(String.class);
 
         if(getUser(email) != null) {
             return checkLogin(password, hashedDbPassword.get(0), dbSalt.get(0));
@@ -123,7 +123,7 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public List<User> getAllTeachers() {
-        MongoCursor<User> results = collection.find("{Role:#}", Role.DOCENT).as(User.class);
+        MongoCursor<User> results = collection.find("{role:#}", Role.DOCENT).as(User.class);
         List<User> teachers = new ArrayList<>();
 
         while (results.hasNext()) {

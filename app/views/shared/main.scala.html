@@ -37,7 +37,7 @@
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Mijn Trainingen</a>
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Aangeboden Trainingen</a>
                                 @if(isLoggedIn) {
-                                    @if(user.getRole.equals(Role.MedewerkerKenniscentrum)) {
+                                    @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
                                         <a class="dropdown-item" href="@routes.TrainingController.addTraining()">Training Toevoegen</a>
                                         <a class="dropdown-item" href="@routes.TrainingController.manage()">Training Beheren</a>
                                     }
@@ -45,7 +45,7 @@
                             </div>
 
                         @if(isLoggedIn) {
-                            @if(user.getRole.equals(Role.MedewerkerKenniscentrum)) {
+                            @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="locationDropdownMenu" href="">Locatie</a>
                                     <div class="dropdown-menu">

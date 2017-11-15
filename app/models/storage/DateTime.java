@@ -13,11 +13,11 @@ import java.util.List;
 
 public class DateTime {
     // Mongo DB identifiers.
-    private static final String M_DATE = "Date";
-    private static final String M_TRAINEES = "Trainees";
-    private static final String M_LOCATION = "locationID";
-    private static final String M_TEACHER = "teacherID";
-    private static final String M_TRAINING = "trainingID";
+    private static final String M_DATE = "date";
+    private static final String M_TRAINEES = "trainees";
+    private static final String M_LOCATION = "locationId";
+    private static final String M_TEACHER = "teacherId";
+    private static final String M_TRAINING = "trainingId";
     private static final String M_DURATION = "duration";
 
     // Mongo DB ID.
@@ -115,7 +115,7 @@ public class DateTime {
     }
 
     public String getDateString() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         return df.format(this.date);
     }
 

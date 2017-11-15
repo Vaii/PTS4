@@ -45,7 +45,7 @@ public class DateTimeMongoContext implements DateTimeContext {
 
     @Override
     public List<DateTime> getDateTimeForUser(String userId) {
-        MongoCursor<DateTime> results = collection.find("{Trainees: { $all: [#]}}", userId).as(DateTime.class);
+        MongoCursor<DateTime> results = collection.find("{trainees: { $all: [#]}}", userId).as(DateTime.class);
         List<DateTime> dateTimes = new ArrayList<>();
 
         while(results.hasNext()) {
@@ -57,7 +57,7 @@ public class DateTimeMongoContext implements DateTimeContext {
 
     @Override
     public List<DateTime> getDateTimeForTeacher(String teacherId) {
-        MongoCursor<DateTime> results = collection.find("{teacherID:#}", teacherId).as(DateTime.class);
+        MongoCursor<DateTime> results = collection.find("{teacherId:#}", teacherId).as(DateTime.class);
         List<DateTime> dateTimes = new ArrayList<>();
 
         while(results.hasNext()) {

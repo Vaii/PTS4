@@ -30,9 +30,9 @@ public class TrainingController extends Controller {
     private static final String LOCATION = "Location";
     private static final String ADDTRAINING = "Add training";
     private static final String TEACHER = "Teacher";
-    private static final String TRAININGCODE = "TrainingCode";
+    private static final String TRAININGCODE = "trainingCode";
     private static final String TRAININGEN = "Trainingen";
-    private static final String DATEFORMAT = "dd-MM-yyyy";
+    private static final String DATEFORMAT = "yyyy-MM-dd";
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
@@ -274,7 +274,7 @@ public class TrainingController extends Controller {
 
             if(dates.size() > requestDateIDs.size()) {
                 int beginIndex = dates.size() - (dates.size() - requestDateIDs.size());
-                DateFormat format = new SimpleDateFormat(DATEFORMAT, Locale.ENGLISH);
+                DateFormat format = new SimpleDateFormat(DATEFORMAT);
 
                 for(int i = beginIndex; i < dates.size(); i++) {
                     Date date = format.parse(dates.get(i));
@@ -291,14 +291,14 @@ public class TrainingController extends Controller {
 
     private Map<String, String> mapValuesFromRequest(DynamicForm trainingData) {
         Map<String, String> baseValues = new HashMap<>();
-        baseValues.put("TrainingCode", trainingData.get("TrainingCode"));
-        baseValues.put("Name", trainingData.get("Name"));
-        baseValues.put("Description", trainingData.get("Description"));
-        baseValues.put("RequiredMaterial", trainingData.get("RequiredMaterial"));
-        baseValues.put("Duration", trainingData.get("Duration"));
-        baseValues.put("Tuition", trainingData.get("Tuition"));
-        baseValues.put("Capacity", trainingData.get("Capacity"));
-        baseValues.put("Category", trainingData.get("category"));
+        baseValues.put("trainingCode", trainingData.get("trainingCode"));
+        baseValues.put("name", trainingData.get("name"));
+        baseValues.put("description", trainingData.get("description"));
+        baseValues.put("requiredMaterial", trainingData.get("requiredMaterial"));
+        baseValues.put("duration", trainingData.get("duration"));
+        baseValues.put("tuition", trainingData.get("tuition"));
+        baseValues.put("capacity", trainingData.get("capacity"));
+        baseValues.put("category", trainingData.get("category"));
 
         return baseValues;
     }
@@ -360,7 +360,7 @@ public class TrainingController extends Controller {
 
         int counter = 0;
         for(String d : dates) {
-            DateFormat format = new SimpleDateFormat(DATEFORMAT, Locale.ENGLISH);
+            DateFormat format = new SimpleDateFormat(DATEFORMAT);
             Date date = format.parse(d);
             DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter), duration);
             String lastId = dateRepo.addDateTime(dt).toString();

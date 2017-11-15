@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Training  {
     // Mongo DB identifiers.
-    private static final String M_TRAININGSCODE = "TrainingsCode";
+    private static final String M_TRAININGSCODE = "trainingCode";
     private static final String M_NAME = "name";
     private static final String M_DESCRIPTION = "description";
     private static final String M_REQUIREDMATERIAL = "requiredMaterial";

@@ -40,7 +40,7 @@ public class TuitionFormMongoContext implements TuitionFormContext {
 
     @Override
     public List<TuitionForm> getForm(String managerID) {
-        MongoCursor<TuitionForm> results = collection.find("{Manager:#}", managerID).as(TuitionForm.class);
+        MongoCursor<TuitionForm> results = collection.find("{manager:#}", managerID).as(TuitionForm.class);
         List<TuitionForm> forms = new ArrayList<>();
 
         while(results.hasNext()) {
@@ -52,7 +52,7 @@ public class TuitionFormMongoContext implements TuitionFormContext {
 
     @Override
     public List<TuitionForm> getForms(String employeeID) {
-        MongoCursor<TuitionForm> results = collection.find("{Employee:#}", employeeID).as(TuitionForm.class);
+        MongoCursor<TuitionForm> results = collection.find("{employee:#}", employeeID).as(TuitionForm.class);
         List<TuitionForm> forms = new ArrayList<>();
 
         while(results.hasNext()) {

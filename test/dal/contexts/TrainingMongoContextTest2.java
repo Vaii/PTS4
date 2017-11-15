@@ -26,7 +26,6 @@ public class TrainingMongoContextTest2 {
         trainingContext.addTraining(training);
     }
 
-
     @Test
     public void addTraining() {
         reset();
