@@ -14,9 +14,6 @@ public class SharedMongoContext implements SharedContext {
     private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
 
-    public SharedMongoContext() {
-    }
-
     @Override
     public List<Training> getTrainings(String userID) {
         List<Training> trainings= new ArrayList<>();
