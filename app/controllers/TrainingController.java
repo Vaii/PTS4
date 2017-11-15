@@ -56,7 +56,7 @@ public class TrainingController extends Controller {
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
 
-                DateTime overlapError = detectedOverlap(signUpDate, OverlapType.Student);
+                DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
                 if(overlapError != null) {
                     return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
                 }
@@ -81,7 +81,7 @@ public class TrainingController extends Controller {
             tutRepo.addForm(filledForm);
 
             DateTime signUpDate = dateRepo.getDateTime(id);
-            DateTime overlapError = detectedOverlap(signUpDate, OverlapType.Student);
+            DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
             if(overlapError != null) {
                 return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
             }
@@ -140,7 +140,7 @@ public class TrainingController extends Controller {
             for(String dateId : dateIDs) {
                 DateTime date = dateRepo.getDateTime(dateId);
                 dateTimes.add(date);
-                overlapError = detectedOverlap(date, OverlapType.Teacher);
+                overlapError = detectedOverlap(date, OverlapType.TEACHER);
                 if (overlapError != null) {
                     return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), date, overlapError, "/overview"));
                 }
@@ -284,7 +284,7 @@ public class TrainingController extends Controller {
                 for(int i = beginIndex; i < dates.size(); i++) {
                     Date date = format.parse(dates.get(i));
                     DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
-                    DateTime overlapError= detectedOverlap(dt, OverlapType.Teacher);
+                    DateTime overlapError= detectedOverlap(dt, OverlapType.TEACHER);
                     if(overlapError != null){
                         return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, overlapError, "/overview"));
                     }
@@ -406,7 +406,7 @@ public class TrainingController extends Controller {
     public DateTime detectedOverlap(DateTime signUpDate, OverlapType type){
         OverlapChecker checker = new OverlapChecker();
         DateTime overlapError;
-        if (type == OverlapType.Student){
+        if (type == OverlapType.STUDENT){
             overlapError = checker.checkOverlapForTrainee(signUpDate, Secured.getUserInfo(ctx()).get_id());
         }
         else{
