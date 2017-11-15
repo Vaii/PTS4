@@ -14,9 +14,9 @@ public class DateCoverter {
     private LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
 
     public ViewDate convert(DateTime dt) {
-        User Teacher = userRepo.getUserByID(dt.getTeacherID());
+        User teacher = userRepo.getUserByID(dt.getTeacherID());
         Location location = locationRepo.getLocation(dt.getLocationID());
 
-        return new ViewDate(dt.get_id(), dt.getDate(), location, Teacher);
+        return new ViewDate(dt.getId(), dt.getDate(), location, teacher);
     }
 }

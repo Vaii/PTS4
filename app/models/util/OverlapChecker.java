@@ -1,13 +1,9 @@
 package models.util;
 
 import dal.contexts.DateTimeMongoContext;
-import dal.contexts.SharedMongoContext;
 import dal.repositories.DateTimeRepository;
-import dal.repositories.SharedRepository;
 import models.storage.DateTime;
-import models.storage.Training;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OverlapChecker {

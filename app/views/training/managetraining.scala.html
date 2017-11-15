@@ -95,11 +95,11 @@
                                     <div class="col-lg-4">
                                         <label class="form-control-label" for="LocationID[]">Locatie:</label>
                                         <select id="LocationID" name="LocationID[]" required="true" class="form-control form-control">
-                                            <option value="@viewDates(index).getLocation.get_id()" class="blank" selected="true">@viewDates(index).getLocation.getStreetName</option>
+                                            <option value="@viewDates(index).getLocation.getId()" class="blank" selected="true">@viewDates(index).getLocation.getStreetName</option>
                                             @for(location <- locations) {
                                                 @if(location.getStreetName == viewDates(index).getLocation.getStreetName) {
                                                 } else {
-                                                    <option value="@location.get_id()" >@location.getStreetName</option>
+                                                    <option value="@location.getId()" >@location.getStreetName</option>
                                                 }
                                             }
                                         </select>
@@ -108,11 +108,11 @@
                                     <div class="col-lg-4">
                                         <label class="form-control-label" for="TeacherID[]">Docent:</label>
                                         <select id="TeacherID" name="TeacherID[]" required="true" class="form-control form-control">
-                                           <option value="@viewDates(index).getTeacher.get_id()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
+                                           <option value="@viewDates(index).getTeacher.getId()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
                                             @for(teacher <- teachers) {
                                                 @if(teacher.getFirstName == viewDates(index).getTeacher.getFirstName) {
                                                 } else {
-                                                <option value="@teacher.get_id()" >@teacher.getFirstName</option>
+                                                <option value="@teacher.getId()" >@teacher.getFirstName</option>
                                                 }
                                             }
                                         </select>

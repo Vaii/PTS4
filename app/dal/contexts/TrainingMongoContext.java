@@ -33,13 +33,13 @@ public class TrainingMongoContext implements TrainingContext {
 
     @Override
     public boolean updateTraining(Training training) {
-        WriteResult result = collection.update("{_id:#}", new ObjectId(training.get_id())).with(training);
+        WriteResult result = collection.update("{_id:#}", new ObjectId(training.getId())).with(training);
         return result.wasAcknowledged();
     }
 
     @Override
     public boolean removeTraining(Training training) {
-        WriteResult result = collection.remove(new ObjectId(training.get_id()));
+        WriteResult result = collection.remove(new ObjectId(training.getId()));
         return result.wasAcknowledged();
     }
 
@@ -114,8 +114,8 @@ public class TrainingMongoContext implements TrainingContext {
     }
 
     @Override
-    public Training getTrainingById(String Id) {
-        return collection.findOne("{_id:#}", new ObjectId(Id)).as(Training.class);
+    public Training getTrainingById(String id) {
+        return collection.findOne("{_id:#}", new ObjectId(id)).as(Training.class);
     }
 
     public void removeAll() {

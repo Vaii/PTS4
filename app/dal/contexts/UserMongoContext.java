@@ -32,7 +32,7 @@ public class UserMongoContext implements UserContext {
         String salt = generateSalt();
         String hashedPassword = generatePassword(password, salt);
 
-        if(user.getCompany().toLowerCase().equals("infosupport")){
+        if(user.getCompany().equalsIgnoreCase("infosupport")){
             WriteResult result = collection.insert("{FirstName:#," +
                                                     " LastName:#," +
                                                     " Email:#," +
@@ -59,7 +59,7 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public boolean removeUser(User user) {
-        WriteResult result = collection.remove(new ObjectId(user.get_id()));
+        WriteResult result = collection.remove(new ObjectId(user.getId()));
         return result.wasAcknowledged();
     }
 
@@ -93,10 +93,10 @@ public class UserMongoContext implements UserContext {
     @Override
     public boolean updateUser(User user) {
 
-        List<String> HashedDBPassword = collection.distinct("HashedPassword").query("{_id:#}", new ObjectId(user.get_id())).as(String.class);
-        List<String> DbSalt = collection.distinct("Salt").query("{_id:#}", new ObjectId(user.get_id())).as(String.class);
+        List<String> hashedDbPassword = collection.distinct("HashedPassword").query("{_id:#}", new ObjectId(user.getId())).as(String.class);
+        List<String> dbSalt = collection.distinct("Salt").query("{_id:#}", new ObjectId(user.getId())).as(String.class);
 
-        WriteResult result = collection.update("{_id:#}", new ObjectId(user.get_id())).with("{FirstName:#," +
+        WriteResult result = collection.update("{_id:#}", new ObjectId(user.getId())).with("{FirstName:#," +
                 " LastName:#," +
                 " Email:#," +
                 " Role:#," +
@@ -104,18 +104,18 @@ public class UserMongoContext implements UserContext {
                 " Salt:#," +
                 " HashedPassword:#," +
                 " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(),
-                user.getRole(), user.getCompany(),DbSalt.get(0), HashedDBPassword.get(0), user.getPhoneNumber());
+                user.getRole(), user.getCompany(),dbSalt.get(0), hashedDbPassword.get(0), user.getPhoneNumber());
 
         return result.wasAcknowledged();
     }
 
     @Override
     public boolean login(String email, String password) {
-        List<String> HashedDBPassword = collection.distinct("HashedPassword").query("{Email:#}", email).as(String.class);
-        List<String> DbSalt = collection.distinct("Salt").query("{Email:#}", email).as(String.class);
+        List<String> hashedDbPassword = collection.distinct("HashedPassword").query("{Email:#}", email).as(String.class);
+        List<String> dbSalt = collection.distinct("Salt").query("{Email:#}", email).as(String.class);
 
         if(getUser(email) != null) {
-            return checkLogin(password, HashedDBPassword.get(0), DbSalt.get(0));
+            return checkLogin(password, hashedDbPassword.get(0), dbSalt.get(0));
         }
 
         return false;
@@ -176,18 +176,17 @@ public class UserMongoContext implements UserContext {
      *
      * @return The salt.
      */
-    public String generateSalt() {
+    private String generateSalt() {
         final Random r = new SecureRandom();
         byte[] salt = new byte[32];
         r.nextBytes(salt);
-        String encodedSalt = Base64.encodeBase64String(salt);
-        return encodedSalt;
+        return Base64.encodeBase64String(salt);
     }
 
     /**
      * Be careful with this.
      */
-    public void removeAll() {
+    void removeAll() {
         collection.drop();
     }
 }

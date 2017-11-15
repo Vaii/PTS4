@@ -13,11 +13,11 @@ import play.data.validation.Constraints;
  */
 public class Location {
     // Mongo DB identifiers.
-    private static final String M_CITY = "City";
-    private static final String M_STREETNAME = "StreetName";
-    private static final String M_STREETNUMBER = "StreetNumber";
-    private static final String M_ROOM = "Room";
-    private static final String M_CAPACITY = "Capacity";
+    private static final String M_CITY = "city";
+    private static final String M_STREETNAME = "streetName";
+    private static final String M_STREETNUMBER = "streetNumber";
+    private static final String M_ROOM = "room";
+    private static final String M_CAPACITY = "capacity";
 
     // Mongo DB ID.
     @MongoObjectId
@@ -25,27 +25,27 @@ public class Location {
 
     // Class fields.
     @Constraints.Required
-    private String City;
+    private String city;
     @Constraints.Required
-    private String StreetName;
+    private String streetName;
     @Constraints.Required
-    private String StreetNumber;
+    private String streetNumber;
     @Constraints.Required
-    private String Room;
+    private String room;
     @Constraints.Required
-    private int Capacity;
+    private int capacity;
 
     public Location() {
 
     }
 
-    public Location(String _id, String city, String streetName, String streetNumber, String room, int capacity) {
-        this._id = _id;
-        City = city;
-        StreetName = streetName;
-        StreetNumber = streetNumber;
-        Room = room;
-        Capacity = capacity;
+    public Location(String id, String city, String streetName, String streetNumber, String room, int capacity) {
+        this._id = id;
+        this.city = city;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.room = room;
+        this.capacity = capacity;
     }
 
     @JsonCreator
@@ -54,61 +54,61 @@ public class Location {
                     @JsonProperty(M_STREETNUMBER) String streetNumber,
                     @JsonProperty(M_ROOM) String room,
                     @JsonProperty(M_CAPACITY) int capacity) {
-        this.City = city;
-        this.StreetName = streetName;
-        this.StreetNumber = streetNumber;
-        this.Room = room;
-        this.Capacity = capacity;
+        this.city = city;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.room = room;
+        this.capacity = capacity;
     }
 
 
-    public String get_id() {
+    public String getId() {
         return _id;
     }
 
     @JsonProperty(M_CITY)
     public String getCity() {
-        return City;
+        return city;
     }
 
     public void setCity(String city) {
-        City = city;
+        this.city = city;
     }
 
     @JsonProperty(M_STREETNAME)
     public String getStreetName() {
-        return StreetName;
+        return streetName;
     }
 
     public void setStreetName(String streetName) {
-        StreetName = streetName;
+        this.streetName = streetName;
     }
 
     @JsonProperty(M_STREETNUMBER)
     public String getStreetNumber() {
-        return StreetNumber;
+        return streetNumber;
     }
 
     public void setStreetNumber(String streetNumber) {
-        StreetNumber = streetNumber;
+        this.streetNumber = streetNumber;
     }
 
     @JsonProperty(M_ROOM)
     public String getRoom() {
-        return Room;
+        return room;
     }
 
     public void setRoom(String room) {
-        Room = room;
+        this.room = room;
     }
 
     @JsonProperty(M_CAPACITY)
     public int getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(int capacity) {
-        Capacity = capacity;
+        this.capacity = capacity;
     }
 }
 

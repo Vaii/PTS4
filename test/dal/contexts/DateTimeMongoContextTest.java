@@ -15,8 +15,6 @@ import static org.junit.Assert.assertEquals;
 public class DateTimeMongoContextTest {
 
     private DateTimeMongoContext dateContext = new DateTimeMongoContext("DateTimeTest");
-    private DateTime date1;
-    private DateTime date2;
 
     @Before
     public void setup() {
@@ -27,8 +25,8 @@ public class DateTimeMongoContextTest {
         trainees.add("fakeUser2");
         trainees.add("fakeUser3");
 
-        date1 = new DateTime(null, "FakeLocationID1", "fakeTeacherID1", trainees, "FakeTrainingID1", 10);
-        date2 = new DateTime(null, "FakeLocationID2", "fakeTeacherID2", trainees, "FakeTrainingID2", 10);
+        DateTime date1 = new DateTime(null, "FakeLocationID1", "fakeTeacherID1", trainees, "FakeTrainingID1", 10);
+        DateTime date2 = new DateTime(null, "FakeLocationID2", "fakeTeacherID2", trainees, "FakeTrainingID2", 10);
 
         dateContext.addDateTime(date1);
         dateContext.addDateTime(date2);

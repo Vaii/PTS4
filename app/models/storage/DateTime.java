@@ -46,23 +46,23 @@ public class DateTime {
 
     @JsonCreator
     public DateTime(@JsonProperty(M_DATE) Date date,
-                    @JsonProperty(M_LOCATION) String LocationID,
-                    @JsonProperty(M_TEACHER) String TeacherID,
+                    @JsonProperty(M_LOCATION) String locationId,
+                    @JsonProperty(M_TEACHER) String teacherId,
                     @JsonProperty(M_TRAINEES) List<String> trainees,
                     @JsonProperty(M_TRAINING) String trainingId,
                     @JsonProperty(M_DURATION) float duration){
         this.date = date;
-        this.locationID = LocationID;
-        this.teacherID = TeacherID;
+        this.locationID = locationId;
+        this.teacherID = teacherId;
         this.trainees = trainees;
         this.trainingID = trainingId;
         this.duration = duration;
     }
 
-    public DateTime(Date date, String LocationID, String TeacherID){
+    public DateTime(Date date, String locationId, String teacherId){
         this.date = date;
-        this.locationID = LocationID;
-        this.teacherID = TeacherID;
+        this.locationID = locationId;
+        this.teacherID = teacherId;
         trainees = new ArrayList<>();
     }
 
@@ -105,7 +105,7 @@ public class DateTime {
         return this.trainees.add(userID);
     }
 
-    public String get_id() {
+    public String getId() {
         return _id;
     }
 

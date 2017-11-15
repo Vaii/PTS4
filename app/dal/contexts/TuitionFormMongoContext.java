@@ -34,7 +34,7 @@ public class TuitionFormMongoContext implements TuitionFormContext {
 
     @Override
     public boolean removeForm(TuitionForm form) {
-        WriteResult result = collection.remove(new ObjectId(form.get_id()));
+        WriteResult result = collection.remove(new ObjectId(form.getId()));
         return result.wasAcknowledged();
     }
 

@@ -14,87 +14,87 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JUnit4.class)
 public class TrainingMongoContextTest2 {
     //contexts
-    private TrainingMongoContext TrainingContext;
+    private TrainingMongoContext trainingContext;
     private Training training;
 
 
     @Before
    public void setUp() {
-        TrainingContext = new TrainingMongoContext("TrainingTest");
-        TrainingContext.removeAll();
+        trainingContext = new TrainingMongoContext("TrainingTest");
+        trainingContext.removeAll();
         training = new Training("004", "Java", "Beginnen met Java", "Laptop", 2.0f, 20.0f, 20, null, "Java", null);
-        TrainingContext.addTraining(training);
+        trainingContext.addTraining(training);
     }
 
 
     @Test
     public void addTraining() {
         reset();
-        boolean result = TrainingContext.addTraining(training);
+        boolean result = trainingContext.addTraining(training);
         assertEquals(true, result);
     }
 
     @Test
     public void updateTraining() {
         reset();
-        TrainingContext.addTraining(training);
-        Training training1 = TrainingContext.getTraining("004");
+        trainingContext.addTraining(training);
+        Training training1 = trainingContext.getTraining("004");
         assertEquals("Laptop", training1.getRequiredMaterial());
         assertEquals(20.0f, training1.getTuition(), 0.01f);
 
         training1.setTuition(500.00f);
-        TrainingContext.updateTraining(training1);
-        Training training2 = TrainingContext.getTraining("004");
+        trainingContext.updateTraining(training1);
+        Training training2 = trainingContext.getTraining("004");
         assertEquals(500.00f, (float)training2.getTuition(),0.01f);
     }
 
     @Test
     public void removeTraining() {
         reset();
-        TrainingContext.addTraining(training);
-        assertEquals("Java", TrainingContext.getTraining("004").getName());
-        TrainingContext.removeTraining(training);
-        assertEquals(null, TrainingContext.getTraining("004"));
+        trainingContext.addTraining(training);
+        assertEquals("Java", trainingContext.getTraining("004").getName());
+        trainingContext.removeTraining(training);
+        assertEquals(null, trainingContext.getTraining("004"));
     }
 
     @Test
     public void getTraining() {
         reset();
-        TrainingContext.addTraining(training);
-        assertEquals("Java", TrainingContext.getTraining("004").getName());
+        trainingContext.addTraining(training);
+        assertEquals("Java", trainingContext.getTraining("004").getName());
     }
 
     @Test
     public void getAll() {
         reset();
-        TrainingContext.addTraining(training);
-        assertEquals(1, TrainingContext.getAll().size());
+        trainingContext.addTraining(training);
+        assertEquals(1, trainingContext.getAll().size());
     }
 
     @Test
     public void getTrainingByCategory() {
         reset();
-        TrainingContext.addTraining(training);
+        trainingContext.addTraining(training);
 
         List<Training> results = new ArrayList<>();
-        results = TrainingContext.getTrainingByCategory("Java");
+        results = trainingContext.getTrainingByCategory("Java");
         assertEquals(1, results.size());
 
         results.clear();
 
         assertEquals(0, results.size());
 
-        results = TrainingContext.getTrainingByCategory("Java");
+        results = trainingContext.getTrainingByCategory("Java");
         assertEquals(1, results.size());
     }
 
     @Test
     public void getTrainingFrequency() {
         reset();
-        TrainingContext.addTraining(training);
+        trainingContext.addTraining(training);
 
         Map<String, Integer> results = new TreeMap<>();
-        results = TrainingContext.getTrainingFrequencies();
+        results = trainingContext.getTrainingFrequencies();
 
         assertEquals(1, results.size());
 
@@ -103,7 +103,7 @@ public class TrainingMongoContextTest2 {
     }
 
     private void reset() {
-        TrainingContext.removeAll();
+        trainingContext.removeAll();
     }
 
 }

@@ -22,7 +22,7 @@ public class SharedMongoContext implements SharedContext {
     @Override
     public Boolean removeTraining(String trainingCode) {
         Training t = trainingRepo.getTraining(trainingCode);
-        for(String dt : t.getDateIDs()) {
+        for(String dt : t.getDateIds()) {
             dateRepo.removeDateTime(dt);
         }
         return trainingRepo.removeTraining(t);
@@ -35,7 +35,7 @@ public class SharedMongoContext implements SharedContext {
         trainings = trainingRepo.getAll();
 
         for(Training t : trainings) {
-            for(String id : t.getDateIDs()) {
+            for(String id : t.getDateIds()) {
                 DateTime date = dateRepo.getDateTime(id);
                 if(date.getTeacherID().equals(userId)) {
                     results.add(t);

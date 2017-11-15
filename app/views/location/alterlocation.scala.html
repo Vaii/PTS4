@@ -10,7 +10,7 @@
             <h1>Locatie Wijzigen</h1>
             <br>
             @b4.form(routes.LocationController.submitAlterLocation()) {
-                @b4.text(form("_id"), 'class -> "form-control-inline", 'readonly -> "true", 'hidden -> "hidden", 'value -> location.get_id())
+                @b4.text(form("_id"), 'class -> "form-control-inline", 'readonly -> "true", 'hidden -> "hidden", 'value -> location.getId())
                 @b4.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'value -> location.getCity)
                 @b4.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'value -> location.getStreetName)
                 @b4.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'value -> location.getStreetNumber)
@@ -21,7 +21,7 @@
                     <div class="col-lg-4">@b4.submit('class -> "btn btn-primary") { Wijzigen }</div>
 
                     <div class="col-lg-4">
-                        <a href="@routes.LocationController.deleteLocation(location.get_id())" class="btn btn-danger">
+                        <a href="@routes.LocationController.deleteLocation(location.getId())" class="btn btn-danger">
                             Verwijderen</a>
                     </div>
                 </div>

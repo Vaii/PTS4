@@ -39,15 +39,15 @@ public class LocationMongoContextTest {
     public void updateLocation() {
         Location x = locations.get(0);
         x.setCapacity(12345);
-        context.updateLocation(x.get_id(), x);
+        context.updateLocation(x.getId(), x);
         locations = context.getAll();
-        assertEquals(12345, context.getLocation(x.get_id()).getCapacity());
+        assertEquals(12345, context.getLocation(x.getId()).getCapacity());
     }
 
     @Test
     public void removeLocation() {
         Location x = locations.get(0);
-        context.removeLocation(x.get_id());
+        context.removeLocation(x.getId());
         locations = context.getAll();
         assertEquals(1, locations.size());
     }
@@ -64,7 +64,7 @@ public class LocationMongoContextTest {
     @Test
     public void getLocation() {
         Location x = locations.get(0);
-        assertEquals("1", context.getLocation(x.get_id()).getStreetNumber());
+        assertEquals("1", context.getLocation(x.getId()).getStreetNumber());
     }
 
     public void reset() {

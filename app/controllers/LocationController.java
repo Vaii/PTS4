@@ -58,10 +58,10 @@ public class LocationController extends Controller {
 
   @Security.Authenticated(Secured.class)
   public Result submitAlterLocation(){
-        Form<Location> boundform = form.bindFromRequest();
-        Location data = boundform.get();
-        String location_id = boundform.field("_id").value();
-        if(locationRepo.updateLocation(location_id, data)){
+        Form<Location> boundForm = form.bindFromRequest();
+        Location data = boundForm.get();
+        String locationId = boundForm.field("_id").value();
+        if(locationRepo.updateLocation(locationId, data)){
             return redirect(routes.LocationController.locationOverview());
         }
         return redirect(routes.LocationController.locationOverview());
@@ -69,8 +69,8 @@ public class LocationController extends Controller {
 
   //TODO make a message so the user knows if the deletion was succesful
   @Security.Authenticated(Secured.class)
-  public Result deleteLocation(String location_id){
-      if(locationRepo.removeLocation(location_id)){
+  public Result deleteLocation(String locationId){
+      if(locationRepo.removeLocation(locationId)){
           return redirect(routes.LocationController.locationOverview());
       }
       return redirect(routes.LocationController.locationOverview());

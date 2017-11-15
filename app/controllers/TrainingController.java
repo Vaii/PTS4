@@ -65,13 +65,13 @@ public class TrainingController extends Controller {
 
                 OverlapChecker checker = new OverlapChecker();
 
-                DateTime overlapError = checker.checkOverlapForTrainee(signUpDate, Secured.getUserInfo(ctx()).get_id());
+                DateTime overlapError = checker.checkOverlapForTrainee(signUpDate, Secured.getUserInfo(ctx()).getId());
 
                 if(overlapError != null) {
                     return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
                 }
 
-                signUpDate.addTrainee(Secured.getUserInfo(ctx()).get_id());
+                signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signUpDate);
                 return ok(message.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
                         "U bent succesvol ingeschreven voor de de training", "/"));
@@ -91,7 +91,7 @@ public class TrainingController extends Controller {
             tutRepo.addForm(filledForm);
 
             DateTime signUpDate = dateRepo.getDateTime(id);
-            signUpDate.addTrainee(Secured.getUserInfo(ctx()).get_id());
+            signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
             dateRepo.updateDateTime(signUpDate);
             return ok(message.render("Inschrijving ingediend", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
                     "De aanvraag voor de training is succesvol ingedient", "/"));
@@ -136,14 +136,14 @@ public class TrainingController extends Controller {
             }
 
             List<String> dateIDs = createDates(dates, locationIDs, teacherIDs, training.getDuration());
-            training.setDateIDs(dateIDs);
+            training.setDateIds(dateIDs);
 
             trainingRepo.addTraining(training);
             Training t = trainingRepo.getTraining(training.getTrainingCode());
 
             for(String dateId : dateIDs) {
                 DateTime date = dateRepo.getDateTime(dateId);
-                date.setTrainingID(t.get_id());
+                date.setTrainingID(t.getId());
                 dateRepo.updateDateTime(date);
             }
 
@@ -236,7 +236,7 @@ public class TrainingController extends Controller {
     public Result removeDate(String id, String trainingCode) {
         dateRepo.removeDateTime(id);
         Training t = trainingRepo.getTraining(trainingCode);
-        t.getDateIDs().remove(id);
+        t.getDateIds().remove(id);
         trainingRepo.updateTraining(t);
         return ok();
     }
@@ -257,8 +257,8 @@ public class TrainingController extends Controller {
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             Training training = form.bind(baseValues).get();
-            training.set_id(trainingRepo.getTraining(code).get_id());
-            training.setDateIDs(trainingRepo.getTraining(code).getDateIDs());
+            training.setId(trainingRepo.getTraining(code).getId());
+            training.setDateIds(trainingRepo.getTraining(code).getDateIds());
 
             List<String> requestDateIDs = new ArrayList<>();
             for(int i = 0; i < 50; i++) {
@@ -269,7 +269,7 @@ public class TrainingController extends Controller {
                 requestDateIDs.add(d);
             }
 
-            List<String> initIDs = training.getDateIDs();
+            List<String> initIDs = training.getDateIds();
             editExistingDates(initIDs, requestDateIDs, dates, locationIDs, teacherIDs);
 
             if(dates.size() > requestDateIDs.size()) {
@@ -279,7 +279,7 @@ public class TrainingController extends Controller {
                 for(int i = beginIndex; i < dates.size(); i++) {
                     Date date = format.parse(dates.get(i));
                     DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
-                    dt.setTrainingID(training.get_id());
+                    dt.setTrainingID(training.getId());
                     String lastId = dateRepo.addDateTime(dt).toString();
                     training.addDateID(lastId);
                 }
@@ -374,13 +374,13 @@ public class TrainingController extends Controller {
     private void createViewDates(Training t, List<ViewDate> viewDates) {
         int counter = 0;
 
-        if(t.getDateIDs().size() != 0) {
-            for(String dateTime : t.getDateIDs()) {
+        if(!t.getDateIds().isEmpty()) {
+            for(String dateTime : t.getDateIds()) {
                 DateTime d = dateRepo.getDateTime(dateTime);
 
                 Location loc = locationRepo.getLocation(d.getLocationID());
                 User teacher = userRepo.getUserByID(d.getTeacherID());
-                ViewDate vd = new ViewDate(t.getDateIDs().get(counter), d.getDate(), loc, teacher);
+                ViewDate vd = new ViewDate(t.getDateIds().get(counter), d.getDate(), loc, teacher);
                 viewDates.add(vd);
                 counter++;
             }
@@ -390,7 +390,7 @@ public class TrainingController extends Controller {
     private void editExistingDates(List<String> initIDs, List<String> requestDateIDs, List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
         int j = 0;
 
-        if(initIDs.size() != 0) {
+        if(!initIDs.isEmpty()) {
             for(String d : initIDs) {
                 if(d.equals(requestDateIDs.get(j))) {
                     DateTime dt = dateRepo.getDateTime(d);

@@ -51,7 +51,7 @@
                                 <option value="" class="blank" selected="true" disabled="disabled">
                                     Selecteer een locatie</option>
                                 @for(location <- locations) {
-                                    <option value="@location.get_id()" >@location.getStreetName</option>
+                                    <option value="@location.getId()" >@location.getStreetName</option>
                                 }
                             </select>
                         </div>
@@ -64,7 +64,7 @@
                                         <option value="" class="blank" selected="true" disabled="disabled">
                                             Selecteer een docent</option>
                                         @for(teacher <- teachers) {
-                                            <option value="@teacher.get_id()" >@teacher.getFirstName</option>
+                                            <option value="@teacher.getId()" >@teacher.getFirstName</option>
                                         }
                                     </select>
                                 </div>

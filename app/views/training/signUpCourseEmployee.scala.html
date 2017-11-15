@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 <h1>Invullen studiekosten formulier</h1>
             </div>
-            @b4.form(routes.TrainingController.signUpEmployee(date.get_id(), Training.get_id())) {
+            @b4.form(routes.TrainingController.signUpEmployee(date.getId(), Training.getId())) {
 
                 @helper.CSRF.formField
                 <div class="col-lg-12">@b4.text(form("Manager"), '_label -> "Manager email", 'class -> "", 'placeholder -> "frank@infosupport.nl")</div>
