@@ -1,7 +1,7 @@
 package dal.contexts;
 
-import models.Role;
-import models.User;
+import models.storage.Role;
+import models.storage.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

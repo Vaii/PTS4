@@ -1,7 +1,6 @@
 package dal.interfaces;
 
-import models.Location;
-import play.mvc.Result;
+import models.storage.Location;
 
 import java.util.List;
 
