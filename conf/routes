@@ -32,7 +32,7 @@ POST    /location/submit_form               controllers.LocationController.submi
 
 # Training
 GET     /addtraining                        controllers.TrainingController.addTraining
-GET     /submit                             controllers.TrainingController.submit
+POST     /submit                             controllers.TrainingController.submit
 GET     /overview                           controllers.TrainingController.overview
 GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(category: String, id: String)
 GET     /managetraining                     controllers.TrainingController.manage
