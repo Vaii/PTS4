@@ -3,87 +3,89 @@
 @(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User)
 
 @shared.main(page, isLoggedIn, User) {
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
-        <script src="@routes.Assets.at("/javascripts/showDiv.js")"></script>
-        <div class="container">
-            <div class="row">
-            @if(!trainings.isEmpty()) {
-                <div class=" row col-lg-12">
-                    <div class="col-lg-2 offset-lg-5">
-                        <a><i class="fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
-                        <label class="switch toggle" id="calSwitch">
-                            <input type="checkbox" onclick="showDiv()">
-                            <span class="slider round"> </span>
-                        </label>
-                        <a><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></a>
-                    </div>
-                </div>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
+    <script src="@routes.Assets.at("/javascripts/showDiv.js")"></script>
+    <div class="container">
+        <div class="row">
+        @if(!trainings.isEmpty()) {
+            <div class=" row col-lg-12">
+                <div class="col-lg-2 offset-lg-5">
 
-                <div class="row col-lg-12" id="listDiv">
-                    <div class="row col-lg-12">
-                        <div class="col-lg-2">
-                            <label>Categorie</label>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Training</label>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Trainingscode</label>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Locatie</label>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Datum</label>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Aantal inschrijvingen</label>
-                        </div>
-                    </div>
-                    @for(training <- trainings) {
-                        <div class="row col-lg-12" id="listviewrow">
-                            <div class="col-lg-2">
-                                <p>@training.getTraining().getCategory()</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <p>@training.getTraining().getName()</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <p>@training.getTraining().getTrainingCode()</p>
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="row" id="listviewrowstreet">
-                                    <p>@training.getLocation().getRoom()</p>
-                                </div>
-                                <div class="row" id="listviewrowstreet">
-                                    <p>@training.getLocation().getStreetName() @training.getLocation().getStreetNumber()</p>
-                                </div>
-                                <div class="row" id="listviewrowstreet">
-                                    <p>
-                                    @training.getLocation().getCity() <p>
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <p>
-                                @training.getDate().getDateString() <p>
-                            </div>
-                            <div class="col-lg-2">
-                                <p>@training.getTraining().getCapacity()</p>
-                            </div>
-                        </div>
-                    }
-                </div>
+                            <a><i class="fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
+                            <label class="switch toggle" id="calSwitch">
+                                <input type="checkbox" onclick="showDiv()">
+                                <span class="slider round"> </span>
+                            </label>
+                            <a><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></a>
 
-                <div class="row col-lg-12" id="calenderDiv" style="display: none;">
-                    <div class="col-lg-4 offset-lg-4">
-                        <input type="date" class="form-control"/>
-                    </div>
                 </div>
-
-            } else {
-                <div class="col-lg-4 offset-lg-4 label"><p>U heeft momenteel geen trainingen.</p></div>
-            }
             </div>
+
+            <div class="row col-lg-12" id="listDiv">
+                <div class="row col-lg-12" id="listDivTitle">
+                    <div class="col-lg-2">
+                        <label>Categorie</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Training</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Trainingscode</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Locatie</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Datum</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Aantal inschrijvingen</label>
+                    </div>
+                </div>
+                @for(training <- trainings) {
+                    <div class="row col-lg-12" id="listviewrow">
+                        <div class="col-lg-2">
+                            <p>@training.getTraining().getCategory()</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>@training.getTraining().getName()</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>@training.getTraining().getTrainingCode()</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="row" id="listviewrowstreet">
+                                <p>@training.getLocation().getRoom()</p>
+                            </div>
+                            <div class="row" id="listviewrowstreet">
+                                <p>@training.getLocation().getStreetName() @training.getLocation().getStreetNumber()</p>
+                            </div>
+                            <div class="row" id="listviewrowstreet">
+                                <p>
+                                @training.getLocation().getCity() <p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>
+                            @training.getDate().getDateString() <p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>@training.getDate().getTrainees().size()</p>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="row col-lg-12" id="calenderDiv" style="display: none;">
+                <div class="col-lg-4 offset-lg-4">
+                    <input type="date" class="form-control"/>
+                </div>
+            </div>
+
+        } else {
+            <div class="col-lg-4 offset-lg-4 label"><p>U heeft momenteel geen trainingen.</p></div>
+        }
         </div>
+    </div>
 }
 

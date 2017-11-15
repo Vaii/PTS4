@@ -9,6 +9,10 @@
     height: 34px;
     margin-bottom: -5px;
 }
+.row{
+    margin-left: -5px;
+    margin-right: -5px;
+}
 
 .switch input {display:none;}
 
@@ -69,9 +73,40 @@ label {
 }
 #listviewrowstreet {
     margin:0px;
+
 }
-listviewrow {
-    border-bottom: 1px solid black;
+#listviewrowstreet p {
+    margin-bottom: 0rem;
+}
 
+#listviewrow {
+    border-bottom: 1px solid #0275d8;
+    padding-bottom: 10px;
+    padding-top:10px;
 
+}
+#listviewrow:last-child {
+    border-bottom: none;
+}
+#listDiv {
+    padding:0px;
+    border: 1px solid #0275d8;
+    border-radius: 5px;
+}
+#listDiv.row {
+    margin-left:0px;
+}
+#listDivTitle {
+    background-color: #0275d8;
+    border: 1px solid white;
+    border-radius: 5px; 
+}
+#listDivTitle.row {
+    margin-left:0px;
+}
+#listDivTitle label {
+    color:white;
+}
+.row {
+    margin-left:0px;
 }
