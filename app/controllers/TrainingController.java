@@ -284,6 +284,10 @@ public class TrainingController extends Controller {
                 for(int i = beginIndex; i < dates.size(); i++) {
                     Date date = format.parse(dates.get(i));
                     DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
+                    DateTime overlapError= detectedOverlap(dt, OverlapType.Teacher);
+                    if(overlapError != null){
+                        return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, overlapError, "/overview"));
+                    }
                     dt.setTrainingID(training.get_id());
                     String lastId = dateRepo.addDateTime(dt).toString();
                     training.addDateID(lastId);
