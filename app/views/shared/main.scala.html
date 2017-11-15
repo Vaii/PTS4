@@ -72,18 +72,18 @@
                         <li class="nav-item dropdown">
                         @if(isLoggedIn) {
 
-                            <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" ><i class="fa fa-user-circle fa-fw" aria-hidden="true"></i>Mijn account</a>
+                            <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" ><em class="fa fa-user-circle fa-fw" aria-hidden="true"></em>Mijn account</a>
 
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profiel</a>
-                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Uitloggen</a>
+                                <a class="dropdown-item" href="@routes.AccountController.profile()"><em class="fa fa-user fa-fw" aria-hidden="true"></em> Profiel</a>
+                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <em class="fa fa-sign-out fa-fw" aria-hidden="true"></em>Uitloggen</a>
                             </div>
                         } else {
                         <li class="nav-item">
                             <a class="nav-link" href="@routes.AccountController.register()" >Registreren</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@routes.AccountController.login()" > <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>Inloggen</a>
+                            <a class="nav-link" href="@routes.AccountController.login()" > <em class="fa fa-sign-in fa-fw" aria-hidden="true"></em>Inloggen</a>
                         </li>
                         }
                     </ul>
@@ -96,7 +96,7 @@
             <footer>
                 <div class="row">
                     <div class="col-md-8">
-                        <img class="footer-logo" src="@routes.Assets.at("images/infosupportlogo.png")">
+                        <img class="footer-logo" alt="Info Support" src="@routes.Assets.at("images/infosupportlogo.png")">
                     </div>
                     <div class="col-md-3">
                         <p class="created">Created by Hats Off</p>
