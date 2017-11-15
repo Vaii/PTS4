@@ -17,6 +17,7 @@ public class User {
     private static final String M_ROLE = "Role";
     private static final String M_COMPANY = "Company";
     private static final String M_PHONENUMBER = "PhoneNumber";
+    private static final String M_MANAGER = "Manager";
 
     // Mongo DB ID.
     @MongoObjectId
@@ -32,6 +33,7 @@ public class User {
     private String Company;
     @play.data.validation.Constraints.Required
     private String PhoneNumber;
+    private String Manager;
     
     public User() {
 
@@ -43,7 +45,20 @@ public class User {
                 @JsonProperty(M_EMAIL) String email,
                 @JsonProperty(M_ROLE) Role role,
                 @JsonProperty(M_COMPANY) String company,
-                @JsonProperty(M_PHONENUMBER) String phoneNumber) {
+                @JsonProperty(M_PHONENUMBER) String phoneNumber,
+                @JsonProperty(M_MANAGER) String Manager) {
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.Email = email;
+        this.Role = role;
+        this.Company = company;
+        this.PhoneNumber = phoneNumber;
+        this.Manager = Manager;
+    }
+
+
+    public User(String firstName, String lastName, String email,
+                Role role, String company, String phoneNumber) {
         this.FirstName = firstName;
         this.LastName = lastName;
         this.Email = email;
@@ -114,4 +129,12 @@ public class User {
         this.Company = company;
     }
 
+    @JsonProperty(M_MANAGER)
+    public String getManager() {
+        return Manager;
+    }
+
+    public void setManager(String manager) {
+        Manager = manager;
+    }
 }

@@ -132,6 +132,19 @@ public class UserMongoContext implements UserContext {
         return teachers;
     }
 
+    @Override
+    public List<User> getAllManagers() {
+
+        MongoCursor<User> results = collection.find("{Role:#}", Role.BusinessUnitManager).as(User.class);
+            List<User> managers = new ArrayList<>();
+
+            while(results.hasNext()){
+                managers.add(results.next());
+            }
+
+            return managers;
+    }
+
     /**
      * Checks the login of a user by comparing the given plain text password with the salt and hashed password in the database.
      *
