@@ -18,4 +18,6 @@ public enum TuitionCategory {
     public String getValue() {
         return value;
     }
+
+    //public String getValue
 }
