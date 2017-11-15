@@ -52,13 +52,17 @@
                             </li>
                             }
                         }
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="managerDropdownMenu" href="">Manager</a>
-                            <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item">Mijn Medewerker</a>
-                                <a href="#" class="dropdown-item">Studiekosten Formulier</a>
-                            </div>
-                        </li>
+                        @if(isLoggedIn){
+                            @if(user.getRole.equals(Role.BusinessUnitManager)){
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="managerDropdownMenu" href="">Manager</a>
+                                    <div class="dropdown-menu">
+                                        <a href="#" class="dropdown-item">Mijn Medewerker</a>
+                                        <a href="#" class="dropdown-item">Studiekosten Formulier</a>
+                                    </div>
+                                </li>
+                            }
+                        }
                         <li class="nav-item">
                             <a class="nav-link" href="@routes.ApplicationController.contact()" >Contact</a>
                         </li>
