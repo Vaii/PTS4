@@ -15,8 +15,10 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class UserMongoContext implements UserContext {
+    private static final Logger LOGGER = Logger.getLogger(UserMongoContext.class.getName());
     private DBConnector connector;
     private MongoCollection collection;
 
@@ -163,7 +165,7 @@ public class UserMongoContext implements UserContext {
             }
             generatedPassword = sb.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getLocalizedMessage());
         }
 
         return generatedPassword;

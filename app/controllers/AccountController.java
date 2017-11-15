@@ -23,6 +23,9 @@ public class AccountController extends Controller {
     private Form<User> form;
     private DynamicForm form2;
 
+    private static final String LOGIN = "Login";
+    private static final String REGISTER = "Register";
+
     @Inject
     public AccountController(FormFactory formFactory){
 
@@ -33,7 +36,7 @@ public class AccountController extends Controller {
     }
 
     public Result login(){
-        return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
+        return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
     }
 
     public Result authentication(){
@@ -54,12 +57,12 @@ public class AccountController extends Controller {
                 session("email", username);
                 return redirect(routes.ApplicationController.index());
             }
-            return ok(login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
+            return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
         }
     }
 
     public Result register(){
-        return ok(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+        return ok(register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
     }
 
     public Result registerAccount(){
@@ -70,23 +73,23 @@ public class AccountController extends Controller {
         String company = filledForm.field("Company").value();
 
         if(!password.equals(validation)) {
-            return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("validation", "Wachtwoorden komen niet overeen")));
+            return badRequest(register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("validation", "Wachtwoorden komen niet overeen")));
         }
 
         String companycheck = company.replaceAll("\\s+", "").toLowerCase();
         if(companycheck.equals("infosupport")){
-            return badRequest( register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("Company", "Info Support medewerkers krijgen een account, neem contact op met een administrator")));
+            return badRequest( register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("Company", "Info Support medewerkers krijgen een account, neem contact op met een administrator")));
         }
 
         if(filledForm.hasErrors()){
-            return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+            return badRequest(register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
         }
 
         if(userRepo.addUser(user, password)){
-            return ok(registerSuccess.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            return ok(registerSuccess.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
 
-        return badRequest(register.render("register", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
+        return badRequest(register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
     }
 
     @Security.Authenticated(Secured.class)
