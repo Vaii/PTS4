@@ -1,4 +1,4 @@
-package models;
+package models.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -151,7 +151,7 @@ public class DateTime {
      * @param other The other DateTime object to check overlap with.
      * @return true if there is a overlap between the 2 durations.
      */
-    public boolean checkOverlap(DateTime other ) {
+    public DateTime checkOverlap(DateTime other ) {
 
         Calendar c = Calendar.getInstance();
         c.setTime(this.date);
@@ -163,9 +163,22 @@ public class DateTime {
         co.add(Calendar.DATE, (int) other.getDuration());
         Date otherEndDate = co.getTime();
 
-        return other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
+        if(other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
                 otherEndDate.after(this.date) && otherEndDate.before(myEndDate) ||
-                this.date.after(other.getDate()) && this.date.before(otherEndDate);
+                this.date.after(other.getDate()) && this.date.before(otherEndDate) ||
+                this.date.equals(other.getDate())) {
+            return other;
+        }
 
+        return null;
+    }
+
+    public DateTime checkOverlap(List<DateTime> others) {
+        for(DateTime other : others) {
+            if(checkOverlap(other) != null) {
+                return other;
+            }
+        }
+        return null;
     }
 }

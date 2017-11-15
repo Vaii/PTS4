@@ -3,9 +3,8 @@ package dal.contexts;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.TrainingContext;
-import models.Location;
-import models.Training;
-import models.User;
+import models.storage.Location;
+import models.storage.Training;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
@@ -112,6 +111,11 @@ public class TrainingMongoContext implements TrainingContext {
         }
 
         return results;
+    }
+
+    @Override
+    public Training getTrainingById(String Id) {
+        return collection.findOne("{_id:#}", new ObjectId(Id)).as(Training.class);
     }
 
     public void removeAll() {

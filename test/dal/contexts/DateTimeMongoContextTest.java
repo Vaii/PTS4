@@ -1,6 +1,6 @@
 package dal.contexts;
 
-import models.DateTime;
+import models.storage.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

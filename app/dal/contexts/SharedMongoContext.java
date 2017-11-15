@@ -1,15 +1,10 @@
 package dal.contexts;
 
-import com.mongodb.WriteResult;
-import dal.DBConnector;
 import dal.interfaces.SharedContext;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
-import models.DateTime;
-import models.Training;
-import models.User;
-import org.jongo.MongoCollection;
-import org.jongo.MongoCursor;
+import models.storage.DateTime;
+import models.storage.Training;
 
 import java.util.ArrayList;
 import java.util.List;

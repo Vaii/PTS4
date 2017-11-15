@@ -1,6 +1,6 @@
 package dal.interfaces;
 
-import models.User;
+import models.storage.User;
 
 import java.util.List;
 

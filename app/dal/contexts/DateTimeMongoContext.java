@@ -3,14 +3,12 @@ package dal.contexts;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.DateTimeContext;
-import models.DateTime;
-import models.Training;
+import models.storage.DateTime;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DateTimeMongoContext implements DateTimeContext {

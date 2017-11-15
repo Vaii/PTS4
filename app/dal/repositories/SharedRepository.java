@@ -1,7 +1,7 @@
 package dal.repositories;
 
 import dal.interfaces.SharedContext;
-import models.Training;
+import models.storage.Training;
 
 import java.util.List;
 

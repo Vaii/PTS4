@@ -1,7 +1,7 @@
 package dal.repositories;
 
 import dal.interfaces.LocationContext;
-import models.Location;
+import models.storage.Location;
 
 import java.util.List;
 

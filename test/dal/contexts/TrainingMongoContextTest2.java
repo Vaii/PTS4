@@ -1,6 +1,6 @@
 package dal.contexts;
 
-import models.*;
+import models.storage.Training;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

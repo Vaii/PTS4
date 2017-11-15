@@ -1,6 +1,6 @@
 package dal.interfaces;
 
-import models.Training;
+import models.storage.Training;
 
 import java.util.List;
 

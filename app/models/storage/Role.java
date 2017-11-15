@@ -1,4 +1,4 @@
-package models;
+package models.storage;
 
 /**
  * The role enumeration contains all possible roles within the application.
