@@ -1,6 +1,8 @@
-@(trainings: List[models.ViewTraining], page: String, isLoggedIn: Boolean, User: User)
+@import models.view.ViewTraining
+@import models.storage.User
+@(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User)
 
-    @shared.main(page, isLoggedIn, User) {
+@shared.main(page, isLoggedIn, User) {
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
         <script src="@routes.Assets.at("/javascripts/showDiv.js")"></script>
         <div class="container">
@@ -83,5 +85,5 @@
             }
             </div>
         </div>
-    }
+}
 

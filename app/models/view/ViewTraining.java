@@ -1,4 +1,8 @@
-package models;
+package models.view;
+
+import models.storage.DateTime;
+import models.storage.Location;
+import models.storage.Training;
 
 public class ViewTraining {
         Training training;

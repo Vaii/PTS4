@@ -7,6 +7,7 @@ import dal.repositories.*;
 import models.storage.*;
 import models.util.OverlapChecker;
 import models.view.ViewDate;
+import models.view.ViewTraining;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -376,7 +377,7 @@ public class TrainingController extends Controller {
         List<ViewTraining> teacherTrainings = new ArrayList<>();
         for (DateTime d : teacherDates)
         {
-            ViewTraining vt = new ViewTraining(trainingRepo.getTraining(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),dateRepo.getDateTime(d.get_id()));
+            ViewTraining vt = new ViewTraining(trainingRepo.getTrainingById(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),dateRepo.getDateTime(d.get_id()));
             teacherTrainings.add(vt);
         }
 
