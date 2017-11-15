@@ -136,7 +136,7 @@ public class UserMongoContext implements UserContext {
     @Override
     public List<User> getAllManagers() {
 
-        MongoCursor<User> results = collection.find("{Role:#}", Role.BusinessUnitManager).as(User.class);
+        MongoCursor<User> results = collection.find("{role:#}", Role.BUSINESSUNITMANAGER).as(User.class);
             List<User> managers = new ArrayList<>();
 
             while(results.hasNext()){

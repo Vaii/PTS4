@@ -233,7 +233,7 @@ public class TrainingController extends Controller {
             return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             Training t = trainingRepo.getTraining(id);
-            for(String dateId : t.getDateIDs()) {
+            for(String dateId : t.getDateIds()) {
                 dateRepo.removeDateTime(dateId);
             }
 
@@ -387,12 +387,12 @@ public class TrainingController extends Controller {
         List<ViewDate> viewDates = new ArrayList<>();
 
         int counter = 0;
-        for (String dateTime : t.getDateIDs()) {
+        for (String dateTime : t.getDateIds()) {
             DateTime d = dateRepo.getDateTime(dateTime);
 
             Location loc = locationRepo.getLocation(d.getLocationID());
             User teacher = userRepo.getUserByID(d.getTeacherID());
-            ViewDate vd = new ViewDate(t.getDateIDs().get(counter), d.getDate(), loc, teacher);
+            ViewDate vd = new ViewDate(t.getDateIds().get(counter), d.getDate(), loc, teacher);
             viewDates.add(vd);
             counter++;
         }
@@ -400,11 +400,11 @@ public class TrainingController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result teacherTrainingOverview() {
-        List<DateTime> teacherDates = dateRepo.getDateTimeForTeacher(Secured.getUserInfo(ctx()).get_id());
+        List<DateTime> teacherDates = dateRepo.getDateTimeForTeacher(Secured.getUserInfo(ctx()).getId());
         List<ViewTraining> teacherTrainings = new ArrayList<>();
         for (DateTime d : teacherDates)
         {
-            ViewTraining vt = new ViewTraining(trainingRepo.getTrainingById(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),dateRepo.getDateTime(d.get_id()));
+            ViewTraining vt = new ViewTraining(trainingRepo.getTrainingById(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),dateRepo.getDateTime(d.getId()));
             teacherTrainings.add(vt);
         }
 

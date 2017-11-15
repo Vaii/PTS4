@@ -102,7 +102,7 @@ public class AdminController extends Controller{
             Map<String, String> managerInfo = new HashMap<>();
 
             for(User m : manager){
-                managerInfo.put(m.get_id(), m.getEmail());
+                managerInfo.put(m.getId(), m.getEmail());
             }
             return ok(accountcreation.render("Account Creation",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, managerInfo));
