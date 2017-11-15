@@ -226,6 +226,10 @@ public class TrainingController extends Controller {
             return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             Training t = trainingRepo.getTraining(id);
+            for(String dateId : t.getDateIDs()) {
+                dateRepo.removeDateTime(dateId);
+            }
+
             sharedRepo.removeTraining(t.getTrainingCode());
             return ok(removetraining.render(t, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
