@@ -1,6 +1,11 @@
 @import b4.vertical.fieldConstructor
 @import play.data.Form
 @import views.html.helper._
+@import models.storage.TuitionCategory
+@import models.storage.User
+@import models.storage.Training
+@import models.storage.DateTime
+@import models.storage.TuitionForm
 @(page: String, isLoggedIn: Boolean, User: User, date: DateTime, Training: Training, form: Form[TuitionForm])
 
     @shared.main(page, isLoggedIn, User) {
@@ -23,7 +28,7 @@
                 <div class="col-lg-12">@b4.number(form("TransportCosts"), '_label -> "Reiskosten", 'class -> "")</div>
                 <div class="col-lg-12">@b4.number(form("AccommodationCosts"), '_label -> "Accomodatie kosten", 'class -> "")</div>
                 <div class="col-lg-12">@b4.number(form("ExtraCosts"), '_label -> "Extra Kosten", 'class -> "")</div>
-                <div class="col-lg-12">@b4.select(form("Category"), options(models.TuitionCategory.values().toSeq.map(_.toString())), '_label -> "Categorie", 'class -> "")</div>
+                <div class="col-lg-12">@b4.select(form("Category"), options(TuitionCategory.values().toSeq.map(_.toString())), '_label -> "Categorie", 'class -> "")</div>
                 <div class="col-lg-12">@b4.submit('class -> "btn btn-primary") { Aanvraag indienen}</div>
                 <br/>
             }

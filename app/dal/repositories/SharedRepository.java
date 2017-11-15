@@ -1,7 +1,7 @@
 package dal.repositories;
 
 import dal.interfaces.SharedContext;
-import models.Training;
+import models.storage.Training;
 
 import java.util.List;
 
@@ -16,5 +16,15 @@ public class SharedRepository implements SharedContext {
     @Override
     public List<Training> getTrainings(String userId) {
         return context.getTrainings(userId);
+    }
+
+    @Override
+    public Boolean removeTraining(String trainingCode) {
+        return context.removeTraining(trainingCode);
+    }
+
+    @Override
+    public List<Training> getTrainingsForTeacher(String userId) {
+        return context.getTrainingsForTeacher(userId);
     }
 }

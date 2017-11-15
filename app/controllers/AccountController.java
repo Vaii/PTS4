@@ -2,8 +2,8 @@ package controllers;
 
 import dal.contexts.UserMongoContext;
 import dal.repositories.UserRepository;
-import models.Secured;
-import models.User;
+import models.storage.Secured;
+import models.storage.User;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;

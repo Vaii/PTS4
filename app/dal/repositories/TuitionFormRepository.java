@@ -1,8 +1,7 @@
 package dal.repositories;
 
 import dal.interfaces.TuitionFormContext;
-import models.TuitionForm;
-import models.User;
+import models.storage.TuitionForm;
 
 import java.util.List;
 
