@@ -13,7 +13,12 @@
             @helper.CSRF.formField
             <table>
                 <tr>@b4.hidden(form("_id"), '_label -> "_id")</tr>
-                <tr>@b4.email(form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
+                @if(form.get().get_id().equals(User.get_id())) {
+                    <tr>@b4.email(form("Email"), '_label -> "Email", 'placeholder -> "example@example.com", 'disabled -> true)</tr>
+                } else {
+                    <tr>@b4.email(form("Email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
+                }
+
                 <tr>@b4.text(form("FirstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</tr>
                 <tr>@b4.text(form("LastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
                 <tr>@b4.number(form("PhoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
