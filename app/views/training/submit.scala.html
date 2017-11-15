@@ -1,3 +1,5 @@
+@import models.storage.Training
+@import models.storage.User
 @(newTraining: Training, page: String, isLoggedIn: Boolean, User: User)
     @shared.main(page, isLoggedIn, User) {
         <p>De training @newTraining.getName (@newTraining.getTrainingCode) is aangemaakt!</p>

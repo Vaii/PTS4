@@ -2,8 +2,8 @@ package controllers;
 
 import dal.contexts.LocationMongoContext;
 import dal.repositories.LocationRepository;
-import models.Location;
-import models.Secured;
+import models.storage.Location;
+import models.storage.Secured;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;

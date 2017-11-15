@@ -1,6 +1,6 @@
 package dal.interfaces;
 
-import models.Supplier;
+import models.storage.Supplier;
 
 import java.util.List;
 

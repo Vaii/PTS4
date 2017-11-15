@@ -1,6 +1,6 @@
 package controllers;
 
-import models.Secured;
+import models.storage.Secured;
 import play.mvc.*;
 import views.html.shared.message;
 import views.html.site.contact;

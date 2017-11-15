@@ -1,4 +1,4 @@
-package models;
+package models.storage;
 
 /**
  * Category of a tuition form defined by Info Support.

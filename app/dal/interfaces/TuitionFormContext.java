@@ -1,7 +1,6 @@
 package dal.interfaces;
 
-import models.TuitionForm;
-import models.User;
+import models.storage.TuitionForm;
 
 import java.util.List;
 

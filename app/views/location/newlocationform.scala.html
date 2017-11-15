@@ -1,6 +1,8 @@
 @import b4.vertical.fieldConstructor
 @import play.data.Form
 
+@import models.storage.Location
+@import models.storage.User
 @(form: Form[Location], isLoggedIn: Boolean, User: User, Page: String)
 
     @shared.main(Page, isLoggedIn, User) {

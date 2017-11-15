@@ -1,7 +1,7 @@
 package dal.repositories;
 
 import dal.interfaces.SupplierContext;
-import models.Supplier;
+import models.storage.Supplier;
 
 import java.util.List;
 
