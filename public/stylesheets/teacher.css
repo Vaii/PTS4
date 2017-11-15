@@ -2,6 +2,10 @@
 .container {
     padding:20px;
 }
+.container h1 {
+    padding-top:0px;
+    color: #0275d8;
+}
 .switch {
     position: relative;
     display: inline-block;
@@ -68,9 +72,7 @@ input:checked + .slider:before {
 label {
     font-weight: bold;
 }
-.offset-lg-5{
-    padding-bottom: 20px;
-}
+
 #listviewrowstreet {
     margin:0px;
 
