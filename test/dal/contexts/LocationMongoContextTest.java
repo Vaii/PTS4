@@ -9,17 +9,17 @@ import org.junit.runners.JUnit4;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(JUnit4.class)
 public class LocationMongoContextTest {
-    private LocationMongoContext context;
+    private LocationMongoContext context = new LocationMongoContext("LocationTest");
     private Location location1;
     private Location location2;
     private List<Location> locations;
 
     @Before
     public void setUp() {
-        context = new LocationMongoContext("LocationTest");
         context.removeAll();
         location1 = new Location("Eindhoven", "Rachelsmolen", "1", "2.18",55 );
         location2 = new Location("Amsterdam", "Dam", "22A", "2.287B",150 );
@@ -48,6 +48,7 @@ public class LocationMongoContextTest {
     public void removeLocation() {
         Location x = locations.get(0);
         context.removeLocation(x.getId());
+        locations.clear();
         locations = context.getAll();
         assertEquals(1, locations.size());
     }
@@ -63,8 +64,10 @@ public class LocationMongoContextTest {
 
     @Test
     public void getLocation() {
-        Location x = locations.get(0);
-        assertEquals("1", context.getLocation(x.getId()).getStreetNumber());
+        assertEquals(2, locations.size());
+        Location location = context.getLocation(locations.get(0).getId());
+
+        assertNotNull(location);
     }
 
     public void reset() {
