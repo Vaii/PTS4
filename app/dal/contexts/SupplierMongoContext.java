@@ -36,13 +36,13 @@ public class SupplierMongoContext implements SupplierContext{
 
     @Override
     public boolean removeSupplier(Supplier supplier) {
-        WriteResult result = collection.remove(new ObjectId(supplier.get_id()));
+        WriteResult result = collection.remove(new ObjectId(supplier.getId()));
         return result.wasAcknowledged();
     }
 
     @Override
     public Supplier getSupplier(String name) {
-        return collection.findOne("{Name:#}", name).as(Supplier.class);
+        return collection.findOne("{name:#}", name).as(Supplier.class);
     }
 
     @Override

@@ -67,7 +67,7 @@ public class TrainingRepository implements TrainingContext {
     }
 
     @Override
-    public Training getTrainingById(String Id) {
-        return context.getTrainingById(Id);
+    public Training getTrainingById(String id) {
+        return context.getTrainingById(id);
     }
 }

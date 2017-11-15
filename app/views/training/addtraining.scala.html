@@ -33,10 +33,10 @@
         </div>
         @b4.form(routes.TrainingController.submit()) {
             @helper.CSRF.formField
-            <div class="row col-lg-12">@b4.number(form("TrainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</div>
-            <div class="row col-lg-12">@b4.text(form("Name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</div>
-            <div class="row col-lg-12">@b4.text(form("Description"), '_label -> "Beschrijving:", 'class -> "form-control-inline", 'placeholder -> "Voer beschrijving in")</div>
-            <div class="row col-lg-12">@b4.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline", 'placeholder -> "Voer materialen in")</div>
+            <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</div>
+            <div class="row col-lg-12">@b4.text(form("name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</div>
+            <div class="row col-lg-12">@b4.text(form("description"), '_label -> "Beschrijving:", 'class -> "form-control-inline", 'placeholder -> "Voer beschrijving in")</div>
+            <div class="row col-lg-12">@b4.text(form("requiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline", 'placeholder -> "Voer materialen in")</div>
             <div class="form-group">
                 <div id="dynamicInput">
                     <div class="row col-lg-12">
@@ -51,7 +51,7 @@
                                 <option value="" class="blank" selected="true" disabled="disabled">
                                     Selecteer een locatie</option>
                                 @for(location <- locations) {
-                                    <option value="@location.get_id()" >@location.getStreetName</option>
+                                    <option value="@location.getId()" >@location.getStreetName</option>
                                 }
                             </select>
                         </div>
@@ -64,7 +64,7 @@
                                         <option value="" class="blank" selected="true" disabled="disabled">
                                             Selecteer een docent</option>
                                         @for(teacher <- teachers) {
-                                            <option value="@teacher.get_id()" >@teacher.getFirstName</option>
+                                            <option value="@teacher.getId()" >@teacher.getFirstName</option>
                                         }
                                     </select>
                                 </div>
@@ -78,9 +78,9 @@
                 <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
             </div>
             <br>
-            <div class="row col-lg-12">@b4.number(form("Duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
-            <div class="row col-lg-12">@b4.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
-            <div class="row col-lg-12">@b4.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
+            <div class="row col-lg-12">@b4.number(form("duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
+            <div class="row col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
+            <div class="row col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
             <div class="row col-lg-12">@b4.text(form("category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div>
             <div class="row col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
     </div>

@@ -28,8 +28,8 @@ public class DateTimeRepository implements DateTimeContext {
     }
 
     @Override
-    public DateTime getDateTime(String date_id) {
-        return context.getDateTime(date_id);
+    public DateTime getDateTime(String dateId) {
+        return context.getDateTime(dateId);
     }
 
     @Override

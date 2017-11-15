@@ -33,7 +33,7 @@ public class DateTimeTest {
     // Date 1 :    |**************|
     // Date 2 :         |**************|
     @Test
-    public void OverlapTest1() throws ParseException {
+    public void overlapTest1() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("12/1/2000"), null, null , 5);
 
         assertNotNull(dateTime1.checkOverlap(dateTime2));
@@ -45,7 +45,7 @@ public class DateTimeTest {
     // Date 1 :         |**************|
     // Date 2 :    |**************|
     @Test
-    public void OverlapTest2() throws ParseException {
+    public void overlapTest2() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("8/1/2000"), null, null , 5);
 
         assertNotNull(dateTime1.checkOverlap(dateTime2));
@@ -57,7 +57,7 @@ public class DateTimeTest {
     // Date 1 :    |*********************|
     // Date 2 :       |**************|
     @Test
-    public void OverlapTest3() throws ParseException {
+    public void overlapTest3() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("12/1/2000"), null, null , 2);
 
         assertNotNull(dateTime1.checkOverlap(dateTime2));
@@ -70,7 +70,7 @@ public class DateTimeTest {
     // Date 1 :       |**************|
     // Date 2 :    |*********************|
     @Test
-    public void OverlapTest4() throws ParseException {
+    public void overlapTest4() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("8/1/2000"), null, null , 10);
 
         assertNotNull(dateTime1.checkOverlap(dateTime2));
@@ -82,7 +82,7 @@ public class DateTimeTest {
     // Date 1 :       |**************|
     // Date 2 :       |**************|
     @Test
-    public void OverlapTest5() throws ParseException {
+    public void overlapTest5() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("10/1/2000"), null, null , 5);
 
         assertNotNull(dateTime1.checkOverlap(dateTime2));
@@ -93,7 +93,7 @@ public class DateTimeTest {
     // Date 1 :       |**************|
     // Date 2 :                         |**************|
     @Test
-    public void OverlapTest6() throws ParseException {
+    public void overlapTest6() throws ParseException {
         dateTime2 = new DateTime(formatter.parse("20/1/2000"), null, null , 10);
 
         assertNull(dateTime1.checkOverlap(dateTime2));

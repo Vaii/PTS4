@@ -1,7 +1,8 @@
 organization=meijerm1-github
 projectKey=pts4_hats_off
 serverUrl=https://sonarcloud.io
-serverVersion=6.6.0.30458
+serverVersion=6.7.0.33301
 dashboardUrl=https://sonarcloud.io/dashboard/index/pts4_hats_off
-ceTaskId=AV7cwPCvpGmYpzcHZIuy
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AV7cwPCvpGmYpzcHZIuy
+ceTaskId=AV-_lnxmonIsCQVnVDiQ
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AV-_lnxmonIsCQVnVDiQ
+

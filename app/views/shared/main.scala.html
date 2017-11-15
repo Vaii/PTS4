@@ -37,7 +37,7 @@
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Mijn Trainingen</a>
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Aangeboden Trainingen</a>
                                 @if(isLoggedIn) {
-                                    @if(user.getRole.equals(Role.MedewerkerKenniscentrum)) {
+                                    @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
                                         <a class="dropdown-item" href="@routes.TrainingController.addTraining()">Training Toevoegen</a>
                                         <a class="dropdown-item" href="@routes.TrainingController.manage()">Training Beheren</a>
                                     }
@@ -45,7 +45,7 @@
                             </div>
 
                         @if(isLoggedIn) {
-                            @if(user.getRole.equals(Role.MedewerkerKenniscentrum)) {
+                            @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="locationDropdownMenu" href="">Locatie</a>
                                     <div class="dropdown-menu">
@@ -58,7 +58,7 @@
                             }
                         }
                         @if(isLoggedIn){
-                            @if(user.getRole.equals(Role.BusinessUnitManager)){
+                            @if(user.getRole.equals(Role.BUSINESSUNITMANAGER)){
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="managerDropdownMenu" href="">Manager</a>
                                     <div class="dropdown-menu">
@@ -76,11 +76,11 @@
                         <li class="nav-item dropdown">
                         @if(isLoggedIn) {
 
-                            <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" ><i class="fa fa-user-circle fa-fw" aria-hidden="true"></i>Mijn account</a>
+                            <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" ><em class="fa fa-user-circle fa-fw" aria-hidden="true"></em>Mijn account</a>
 
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profiel</a>
-                                @if(user.getRole.equals(Role.Docent)){
+                                @if(user.getRole.equals(Role.DOCENT)){
                                     <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i>Rooster </a>
                                 }
                                 <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Uitloggen</a>
@@ -90,7 +90,7 @@
                             <a class="nav-link" href="@routes.AccountController.register()" >Registreren</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@routes.AccountController.login()" > <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>Inloggen</a>
+                            <a class="nav-link" href="@routes.AccountController.login()" > <em class="fa fa-sign-in fa-fw" aria-hidden="true"></em>Inloggen</a>
                         </li>
                         }
                     </ul>
@@ -103,7 +103,7 @@
             <footer>
                 <div class="row">
                     <div class="col-md-8">
-                        <img class="footer-logo" src="@routes.Assets.at("images/infosupportlogo.png")">
+                        <img class="footer-logo" alt="Info Support" src="@routes.Assets.at("images/infosupportlogo.png")">
                     </div>
                     <div class="col-md-3">
                         <p class="created">Created by Hats Off</p>

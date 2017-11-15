@@ -6,10 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.validation.Constraints;
 
-import javax.validation.Constraint;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,16 +14,16 @@ import java.util.List;
  */
 public class Training  {
     // Mongo DB identifiers.
-    private static final String M_TRAININGSCODE = "TrainingsCode";
-    private static final String M_NAME = "Name";
-    private static final String M_DESCRIPTION = "Description";
-    private static final String M_REQUIREDMATERIAL = "RequiredMaterial";
-    private static final String M_DURATION = "Duration";
-    private static final String M_TUITION = "Tuition";
-    private static final String M_CAPACITY = "Capacity";
-    private static final String M_DATEIDS = "DateIDs";
-    private static final String M_CATEGORY = "Category";
-    private static final String M_PREREQUISITES = "Prerequisites";
+    private static final String M_TRAININGSCODE = "trainingCode";
+    private static final String M_NAME = "name";
+    private static final String M_DESCRIPTION = "description";
+    private static final String M_REQUIREDMATERIAL = "requiredMaterial";
+    private static final String M_DURATION = "duration";
+    private static final String M_TUITION = "tuition";
+    private static final String M_CAPACITY = "capacity";
+    private static final String M_DATEIDS = "dateIds";
+    private static final String M_CATEGORY = "category";
+    private static final String M_PREREQUISITES = "prerequisites";
 
     // Mongo DB ID.
     @MongoObjectId
@@ -35,50 +32,50 @@ public class Training  {
     // Class identifiers.
     // Training code is a unique identifier defined by the user.
     @Constraints.Required
-    private String TrainingCode, Name, Description;
-    private String RequiredMaterial;
+    private String trainingCode, name, description;
+    private String requiredMaterial;
 
     @Constraints.Required
-    private Float Duration, Tuition;
+    private Float duration, tuition;
     @Constraints.Required
-    private int Capacity;
+    private int capacity;
 
-    private List<String> DateIDs;
+    private List<String> dateIds;
 
     @Constraints.Required
-    private String Category;
+    private String category;
 
     // MongoDB ID's of the trainings that are required to follow before this one.
-    private List<String> Prerequisites;
+    private List<String> prerequisites;
 
     public Training() {
-        this.Prerequisites = new ArrayList<>();
+        this.prerequisites = new ArrayList<>();
     }
 
     public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category) {
-        this.TrainingCode = trainingCode;
-        this.Name = name;
-        this.Description = description;
-        this.RequiredMaterial = requiredMaterial;
-        this.Duration = duration;
-        this.Tuition = tuition;
-        this.Capacity = capacity;
-        this.Category = category;
-        this.Prerequisites = new ArrayList<>();
+        this.trainingCode = trainingCode;
+        this.name = name;
+        this.description = description;
+        this.requiredMaterial = requiredMaterial;
+        this.duration = duration;
+        this.tuition = tuition;
+        this.capacity = capacity;
+        this.category = category;
+        this.prerequisites = new ArrayList<>();
         prepareForStorage();
     }
 
-    public Training(String _id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, List<String> prerequisites) {
-        this._id = _id;
-        this.TrainingCode = trainingCode;
-        this.Name = name;
-        this.Description = description;
-        this.RequiredMaterial = requiredMaterial;
-        this.Duration = duration;
-        this.Tuition = tuition;
-        this.Capacity = capacity;
-        this.Category = category;
-        this.Prerequisites = prerequisites;
+    public Training(String id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, List<String> prerequisites) {
+        this._id = id;
+        this.trainingCode = trainingCode;
+        this.name = name;
+        this.description = description;
+        this.requiredMaterial = requiredMaterial;
+        this.duration = duration;
+        this.tuition = tuition;
+        this.capacity = capacity;
+        this.category = category;
+        this.prerequisites = prerequisites;
         prepareForStorage();
     }
 
@@ -93,110 +90,110 @@ public class Training  {
                     @JsonProperty(M_DATEIDS) List<String> dateIDS,
                     @JsonProperty(M_CATEGORY) String category,
                     @JsonProperty(M_PREREQUISITES) List<String> prerequisites) {
-        this.TrainingCode = trainingCode;
-        this.Name = name;
-        this.Description = description;
-        this.RequiredMaterial = requiredMaterial;
-        this.Duration = duration;
-        this.Tuition = tuition;
-        this.Capacity = capacity;
-        this.DateIDs = dateIDS;
-        this.Category = category;
-        this.Prerequisites = prerequisites;
+        this.trainingCode = trainingCode;
+        this.name = name;
+        this.description = description;
+        this.requiredMaterial = requiredMaterial;
+        this.duration = duration;
+        this.tuition = tuition;
+        this.capacity = capacity;
+        this.dateIds = dateIDS;
+        this.category = category;
+        this.prerequisites = prerequisites;
         prepareForStorage();
     }
 
-    public String get_id() {
+    public String getId() {
         return _id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this._id = id;
     }
 
     @JsonProperty(M_TRAININGSCODE)
     public String getTrainingCode() {
-        return TrainingCode;
+        return trainingCode;
     }
 
     public void setTrainingCode(String trainingCode) {
-        TrainingCode = trainingCode;
+        this.trainingCode = trainingCode;
     }
 
     @JsonProperty(M_NAME)
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     @JsonProperty(M_DESCRIPTION)
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     @JsonProperty(M_REQUIREDMATERIAL)
     public String getRequiredMaterial() {
-        return RequiredMaterial;
+        return requiredMaterial;
     }
 
     public void setRequiredMaterial(String requiredMaterial) {
-        RequiredMaterial = requiredMaterial;
+        this.requiredMaterial = requiredMaterial;
     }
 
     @JsonProperty(M_DURATION)
     public Float getDuration() {
-        return Duration;
+        return duration;
     }
 
     public void setDuration(Float duration) {
-        Duration = duration;
+        this.duration = duration;
     }
 
     @JsonProperty(M_TUITION)
     public Float getTuition() {
-        return Tuition;
+        return tuition;
     }
 
     public void setTuition(Float tuition) {
-        Tuition = tuition;
+        this.tuition = tuition;
     }
 
     @JsonProperty(M_CAPACITY)
     public int getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(int capacity) {
-        Capacity = capacity;
+        this.capacity = capacity;
     }
 
     @JsonProperty(M_DATEIDS)
-    public List<String> getDateIDs() {
-        return DateIDs;
+    public List<String> getDateIds() {
+        return dateIds;
     }
 
-    public void setDateIDs(List<String> dateIDs) {
-        DateIDs = dateIDs;
+    public void setDateIds(List<String> dateIds) {
+        this.dateIds = dateIds;
     }
 
     public void addDateID(String dateID) {
-        DateIDs.add(dateID);
+        dateIds.add(dateID);
     }
 
     @JsonProperty(M_PREREQUISITES)
     public List<String> getPrerequisites() {
-        return Prerequisites;
+        return prerequisites;
     }
 
     public void setPrerequisites(List<String> prerequisites) {
-        this.Prerequisites = prerequisites;
+        this.prerequisites = prerequisites;
     }
 
     /**
@@ -207,7 +204,7 @@ public class Training  {
      * @return true if the training was added to the list, false otherwise.
      */
     public boolean addPrerequisite(String id) {
-        return Prerequisites.add(id);
+        return prerequisites.add(id);
     }
 
     /**
@@ -216,11 +213,11 @@ public class Training  {
      */
     @JsonProperty(M_CATEGORY)
     public String getCategory() {
-        return StringUtils.capitalize(Category);
+        return StringUtils.capitalize(category);
     }
 
     public void setCategory(String category) {
-        Category = category.toLowerCase();
+        this.category = category.toLowerCase();
     }
 
     /**
@@ -228,7 +225,7 @@ public class Training  {
      * Turn the training category to lowercase to prevent mix ups.
      */
     private void prepareForStorage() {
-        Category = Category.toLowerCase();
+        category = category.toLowerCase();
     }
 
 }
