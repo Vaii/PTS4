@@ -3,13 +3,12 @@ package dal.contexts;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.DateTimeContext;
-import models.DateTime;
+import models.storage.DateTime;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DateTimeMongoContext implements DateTimeContext {
@@ -34,14 +33,38 @@ public class DateTimeMongoContext implements DateTimeContext {
     }
 
     @Override
-    public boolean removeDateTime(DateTime dateTime) {
-        WriteResult result = collection.remove(new ObjectId(dateTime.get_id()));
+    public boolean removeDateTime(String dateTimeId) {
+        WriteResult result = collection.remove(new ObjectId(dateTimeId));
         return result.wasAcknowledged();
     }
 
     @Override
     public DateTime getDateTime(String date_id) {
         return collection.findOne("{_id:#}", new ObjectId(date_id)).as(DateTime.class);
+    }
+
+    @Override
+    public List<DateTime> getDateTimeForUser(String userId) {
+        MongoCursor<DateTime> results = collection.find("{Trainees: { $all: [#]}}", userId).as(DateTime.class);
+        List<DateTime> dateTimes = new ArrayList<>();
+
+        while(results.hasNext()) {
+            DateTime DateTime = results.next();
+            dateTimes.add(DateTime);
+        }
+        return dateTimes;
+    }
+
+    @Override
+    public List<DateTime> getDateTimeForTeacher(String teacherId) {
+        MongoCursor<DateTime> results = collection.find("{teacherID:#}", teacherId).as(DateTime.class);
+        List<DateTime> dateTimes = new ArrayList<>();
+
+        while(results.hasNext()) {
+            DateTime DateTime = results.next();
+            dateTimes.add(DateTime);
+        }
+        return dateTimes;
     }
 
     public void removeAll() {

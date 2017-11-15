@@ -1,0 +1,23 @@
+@import models.storage.Training
+@import models.storage.User
+@import models.storage.DateTime
+@(page: String, isLoggedIn: Boolean, User: User, newTraining: Training , oldTraining: Training, newDate: DateTime, oldDate: DateTime, PageToRedirect: String)
+
+@shared.main(page, isLoggedIn, User) {
+
+    <head>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/message.css")">
+    </head>
+
+    <div class="container">
+
+        <h1>Oeps er ging iets mis..</h1>
+
+        <p>Je bent al ingeschreven op training @oldTraining.getName op @oldDate.getDate met een duur van @oldDate.getDuration dagen.</p>
+        <p>Deze overlapt met training @newTraining.getName op @newDate.getDate met een duur van @oldDate.getDuration dagen.</p>
+
+        <p>Als je je toch voor training @newTraining.getName op @newDate.getDate wilt inschrijven moet je je eerst voor de ander uitschrijven. </p>
+
+        <p>Klik <a href="@routes.ApplicationController.customRedirect(PageToRedirect)"> hier</a>  om terug te gaan.</p>
+    </div>
+}

@@ -2,10 +2,11 @@ package controllers;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import dal.contexts.*;
 import dal.repositories.*;
-import models.*;
+import models.storage.*;
+import models.util.OverlapChecker;
+import models.view.ViewDate;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -13,7 +14,6 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.account.successSignUp;
 import views.html.shared.message;
 import views.html.training.*;
 import javax.inject.Inject;
@@ -29,16 +29,14 @@ public class TrainingController extends Controller {
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
-    private TrainingRepository trainingRepository = new TrainingRepository(new TrainingMongoContext("Training"));
+    private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+    private SharedRepository sharedRepo = new SharedRepository(new SharedMongoContext());
 
     private FormFactory formFactory;
-
     private Form<Training> form;
-    List<Location> locations = new ArrayList<>();
-    List<User>teachers = new ArrayList<>();
 
     @Inject
     public TrainingController(FormFactory formFactory) {
@@ -54,9 +52,18 @@ public class TrainingController extends Controller {
             return notFound();
         } else {
             if (Secured.getUserInfo(ctx()).getRole() != Role.Extern) {
-                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id) ,trainingRepository.getTraining(trainingID), tuitionFormForm));
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id) , trainingRepo.getTraining(trainingID), tuitionFormForm));
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
+
+                OverlapChecker checker = new OverlapChecker();
+
+                DateTime overlapError = checker.checkOverlapForTrainee(signUpDate, Secured.getUserInfo(ctx()).get_id());
+
+                if(overlapError != null) {
+                    return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
+                }
+
                 signUpDate.addTrainee(Secured.getUserInfo(ctx()).get_id());
                 dateRepo.updateDateTime(signUpDate);
                 return ok(message.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
@@ -70,7 +77,7 @@ public class TrainingController extends Controller {
         Form<TuitionForm> filledTuitionForm = tuitionFormForm.bindFromRequest();
 
         if (filledTuitionForm.hasErrors()) {
-            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepository.getTraining(trainingID), tuitionFormForm));
+            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepo.getTraining(trainingID), tuitionFormForm));
         } else {
             TuitionForm filledForm = filledTuitionForm.get();
             filledForm.setTotalCosts(filledForm.getStudyCosts() + filledForm.getAccommodationCosts() + filledForm.getExaminationFees() + filledForm.getTransportCosts() + filledForm.getExtraCosts());
@@ -85,7 +92,7 @@ public class TrainingController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result addtraining() {
+    public Result addTraining() {
         List<Location> locations = locationRepo.getAll();
         List<User> teachers = userRepo.getAllTeachers();
 
@@ -99,6 +106,12 @@ public class TrainingController extends Controller {
     public Result submit() throws ParseException { // submit new training
         DynamicForm trainingData = formFactory.form().bindFromRequest();
 
+        List<Location> locations = locationRepo.getAll();
+        List<User> teachers = userRepo.getAllTeachers();
+
+        JsonNode locationJson = Json.toJson(locations);
+        JsonNode teacherJson = Json.toJson(teachers);
+
         Map<String, String> baseValues = mapValuesFromRequest(trainingData);
 
         List<String> dates = getValues(trainingData, "Date");
@@ -106,35 +119,42 @@ public class TrainingController extends Controller {
         List<String> teacherIDs = getValues(trainingData, "Teacher");
 
         if (form.hasErrors()) {
-            return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locationRepo.getAll(), userRepo.getAllTeachers(), null, null));
+            return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locationRepo.getAll(), userRepo.getAllTeachers(), locationJson, teacherJson));
         } else {
             Training training = form.bind(baseValues).get();
             Form<Training> form2 = form.bind(baseValues);
-            if(trainingRepository.getTraining(training.getTrainingCode()) != null) {
-                return badRequest(addtraining.render(form2.withError("TrainingCode", "Trainingscode moet uniek"), Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locationRepo.getAll(), userRepo.getAllTeachers(), null, null));
+
+            if(trainingRepo.getTraining(training.getTrainingCode()) != null) {
+                return badRequest(addtraining.render(form2.withError("TrainingCode", "Trainingscode moet uniek zijn"), Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Add Training", locationRepo.getAll(), userRepo.getAllTeachers(), locationJson, teacherJson));				
             }
 
-            List<String> dateIDs = getDateIDs(dates, locationIDs, teacherIDs);
-
+            List<String> dateIDs = createDates(dates, locationIDs, teacherIDs, training.getDuration());
             training.setDateIDs(dateIDs);
 
-            trainingRepository.addTraining(training);
-            Training t = trainingRepository.getTraining(training.getTrainingCode());
+            trainingRepo.addTraining(training);
+            Training t = trainingRepo.getTraining(training.getTrainingCode());
+
+            for(String dateId : dateIDs) {
+                DateTime date = dateRepo.getDateTime(dateId);
+                date.setTrainingID(t.get_id());
+                dateRepo.updateDateTime(date);
+            }
+
             return ok(message.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + t.getName() + " is aangemaakt", "/managetraining"));
         }
     }
 
     public Result overview() {
-        return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies() ,new ArrayList<>(), null,
+        return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies() ,new ArrayList<>(), null,
                 "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
     }
 
     public Result overviewCategory(String category) {
         if(category == null) {
-            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),new ArrayList<>(), null,
+            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(),new ArrayList<>(), null,
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         } else {
-            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), null,
+            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), null,
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         }
 
@@ -142,87 +162,84 @@ public class TrainingController extends Controller {
 
     public Result trainingOverview(String category, String id) {
         if (id == null) {
-            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), null,
+            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), null,
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         } else {
-            Training t = trainingRepository.getTraining(id);
+            Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
 
-            int counter = 0;
-            for(String dateTime : t.getDateIDs()) {
-                DateTime d = dateRepo.getDateTime(dateTime);
+            createViewDates(t, viewDates);
 
-                Location loc = locationRepo.getLocation(d.getLocationID());
-                User teacher = userRepo.getUserByID(d.getTeacherID());
-                ViewDate vd = new ViewDate(t.getDateIDs().get(counter), d.getDate(), loc, teacher);
-                viewDates.add(vd);
-                counter++;
-            }
-
-            return ok(trainingoverview.render(trainingRepository.getTrainingFrequencies(),trainingRepository.getTrainingByCategory(category), trainingRepository.getTraining(id),
+            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
     }
 
     @Security.Authenticated(Secured.class)
     public Result manage() {
-        return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
+        return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
     }
 
     public Result manageCategory(String category) {
         if (category == null) {
-            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null,
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
+            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
-            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null,
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
+            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         }
     }
 
     @Security.Authenticated(Secured.class)
     public Result manageTraining(String category, String id) {
         if (id == null) {
-            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null,
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
+            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
-            Training t = trainingRepository.getTraining(id);
+            List<Location> locations = locationRepo.getAll();
+            List<User> teachers = userRepo.getAllTeachers();
+
+            JsonNode locationJson = Json.toJson(locations);
+            JsonNode teacherJson = Json.toJson(teachers);
+
+            Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
 
-            int counter = 0;
-            for(String dateTime : t.getDateIDs()) {
-                DateTime d = dateRepo.getDateTime(dateTime);
+            createViewDates(t, viewDates);
 
-                Location loc = locationRepo.getLocation(d.getLocationID());
-                User teacher = userRepo.getUserByID(d.getTeacherID());
-                ViewDate vd = new ViewDate(t.getDateIDs().get(counter), d.getDate(), loc, teacher);
-                viewDates.add(vd);
-                counter++;
-            }
-
-            Form<Training> editForm = form.fill(trainingRepository.getTraining(id));
-            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), trainingRepository.getTraining(id),
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm, viewDates));
+            Form<Training> editForm = form.fill(trainingRepo.getTraining(id));
+            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), trainingRepo.getTraining(id),
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm, viewDates, locationJson, teacherJson));
         }
     }
 
     @Security.Authenticated(Secured.class)
     public Result removeTraining(String category, String id) {
         if (id == null) {
-            return ok(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
+            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
-            Training t = trainingRepository.getTraining(id);
-            trainingRepository.removeTraining(t);
+            Training t = trainingRepo.getTraining(id);
+            for(String dateId : t.getDateIDs()) {
+                dateRepo.removeDateTime(dateId);
+            }
+
+            sharedRepo.removeTraining(t.getTrainingCode());
             return ok(removetraining.render(t, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
+    }
 
+    public Result removeDate(String id, String trainingCode) {
+        dateRepo.removeDateTime(id);
+        Training t = trainingRepo.getTraining(trainingCode);
+        t.getDateIDs().remove(id);
+        trainingRepo.updateTraining(t);
+        return ok();
     }
 
     @Security.Authenticated(Secured.class)
     public Result edit(String category, String code) throws ParseException {
-        //Form<Training> editFrom = form.fill(trainingRepository.getTraining(code));
-
         DynamicForm trainingData = formFactory.form().bindFromRequest();
 
         Map<String, String> baseValues = mapValuesFromRequest(trainingData);
@@ -233,17 +250,38 @@ public class TrainingController extends Controller {
 
         if (trainingData.hasErrors()) {
             flash("danger", "Wrong values");
-            return badRequest(managetraining.render(trainingRepository.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepository.getTrainingByCategory(category), locationRepo.getAll(), null,
-                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null));
+            return badRequest(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null,
+                    "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             Training training = form.bind(baseValues).get();
+            training.set_id(trainingRepo.getTraining(code).get_id());
+            training.setDateIDs(trainingRepo.getTraining(code).getDateIDs());
 
-            List<String> dateIDs = getDateIDs(dates, locationIDs, teacherIDs);
+            List<String> requestDateIDs = new ArrayList<>();
+            for(int i = 0; i < 50; i++) {
+                String d = trainingData.field("DateIDs[" + i + "]").value();
+                if(d == null) {
+                    break;
+                }
+                requestDateIDs.add(d);
+            }
 
-            training.setDateIDs(dateIDs);
-            training.set_id(trainingRepository.getTraining(code).get_id());
+            List<String> initIDs = training.getDateIDs();
+            editExistingDates(initIDs, requestDateIDs, dates, locationIDs, teacherIDs);
 
-            trainingRepository.updateTraining(training);
+            if(dates.size() > requestDateIDs.size()) {
+                int beginIndex = dates.size() - (dates.size() - requestDateIDs.size());
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+                for(int i = beginIndex; i < dates.size(); i++) {
+                    Date date = format.parse(dates.get(i));
+                    DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
+                    dt.setTrainingID(training.get_id());
+                    String lastId = dateRepo.addDateTime(dt).toString();
+                    training.addDateID(lastId);
+                }
+            }
+            trainingRepo.updateTraining(training);
             return ok(message.render("Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + training.getName() + " is gewijzigd", "/managetraining"));
         }
     }
@@ -296,22 +334,59 @@ public class TrainingController extends Controller {
                 }
                 return teacherIDs;
         }
-        return null;
+        return new ArrayList<>();
     }
 
-    private List<String> getDateIDs(List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
+    private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
         List<String> dateIDs = new ArrayList<>();
 
         int counter = 0;
         for(String d : dates) {
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             Date date = format.parse(d);
-            DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter));
+            DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter), duration);
             String lastId = dateRepo.addDateTime(dt).toString();
             dateIDs.add(lastId);
             counter++;
         }
 
         return dateIDs;
+    }
+
+    private void createViewDates(Training t, List<ViewDate> viewDates) {
+        int counter = 0;
+
+        if(t.getDateIDs().size() != 0) {
+            for(String dateTime : t.getDateIDs()) {
+                DateTime d = dateRepo.getDateTime(dateTime);
+
+                Location loc = locationRepo.getLocation(d.getLocationID());
+                User teacher = userRepo.getUserByID(d.getTeacherID());
+                ViewDate vd = new ViewDate(t.getDateIDs().get(counter), d.getDate(), loc, teacher);
+                viewDates.add(vd);
+                counter++;
+            }
+        }
+    }
+
+    private void editExistingDates(List<String> initIDs, List<String> requestDateIDs, List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
+        int j = 0;
+
+        if(initIDs.size() != 0) {
+            for(String d : initIDs) {
+                if(d.equals(requestDateIDs.get(j))) {
+                    DateTime dt = dateRepo.getDateTime(d);
+
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = df.parse(dates.get(j));
+
+                    dt.setDate(date);
+                    dt.setLocationID(locationIDs.get(j));
+                    dt.setTeacherID(teacherIDs.get(j));
+                    dateRepo.updateDateTime(dt);
+                }
+                j++;
+            }
+        }
     }
 }

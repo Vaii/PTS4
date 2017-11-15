@@ -3,13 +3,12 @@ package dal.contexts;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import dal.interfaces.UserContext;
-import models.Role;
-import models.User;
+import models.storage.Role;
+import models.storage.User;
 import org.apache.commons.codec.binary.Base64;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
-import org.jongo.Update;
 
 import java.security.MessageDigest;
 import java.security.SecureRandom;

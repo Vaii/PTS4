@@ -10,8 +10,7 @@ GET     /customRedirect                     controllers.ApplicationController.cu
 GET     /message                            controllers.ApplicationController.message(url: String, messageText: String)
 
 # Trainingen
-
-
+POST  /training/delete/:id/:code                  controllers.TrainingController.removeDate(id: String, code : String)
 
 # Account management
 
@@ -32,7 +31,7 @@ POST    /location/submit                    controllers.LocationController.creat
 POST    /location/submit_form               controllers.LocationController.submitAlterLocation
 
 # Training
-GET     /addtraining                        controllers.TrainingController.addtraining
+GET     /addtraining                        controllers.TrainingController.addTraining
 GET     /submit                             controllers.TrainingController.submit
 GET     /overview                           controllers.TrainingController.overview
 GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(category: String, id: String)

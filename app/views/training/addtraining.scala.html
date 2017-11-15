@@ -2,6 +2,9 @@
 @import play.data.Form
 @import com.fasterxml.jackson.databind.JsonNode
 
+@import models.storage.User
+@import models.storage.Location
+@import models.storage.Training
 @(form: Form[Training], isLoggedIn: Boolean, User: User, Page: String, locations: List[Location], teachers: List[User], locationJson: JsonNode, teacherJson: JsonNode)
 
 @shared.main(Page, isLoggedIn, User) {
@@ -24,19 +27,19 @@
 
 
     <div class="container">
-        <div class="row">
+        <div class="row col-lg-12">
         <h1>Training toevoegen</h1>
         <br />
         </div>
         @b4.form(routes.TrainingController.submit()) {
             @helper.CSRF.formField
-            <div class="row">@b4.number(form("TrainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</div>
-            <div class="row">@b4.text(form("Name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</div>
-            <div class="row">@b4.text(form("Description"), '_label -> "Beschrijving:", 'class -> "form-control-inline", 'placeholder -> "Voer beschrijving in")</div>
-            <div class="row">@b4.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline", 'placeholder -> "Voer materialen in")</div>
+            <div class="row col-lg-12">@b4.number(form("TrainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</div>
+            <div class="row col-lg-12">@b4.text(form("Name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</div>
+            <div class="row col-lg-12">@b4.text(form("Description"), '_label -> "Beschrijving:", 'class -> "form-control-inline", 'placeholder -> "Voer beschrijving in")</div>
+            <div class="row col-lg-12">@b4.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline", 'placeholder -> "Voer materialen in")</div>
             <div class="form-group">
                 <div id="dynamicInput">
-                    <div class="row">
+                    <div class="row col-lg-12">
                         <div class="col-lg-3">
                             <label class="control-label" for="Dates[]">Datum:</label>
                             <input type="date" id="Dates" name="Dates[]" required="true" value="" class="form-control">
@@ -71,15 +74,15 @@
 
                 </div>
             </div>
-            <div class="row">
+            <div class="row col-lg-12">
                 <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
             </div>
             <br>
-            <div class="row">@b4.number(form("Duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
-            <div class="row">@b4.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
-            <div class="row">@b4.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
-            <div class="row">@b4.text(form("category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div>
-            <div class="row"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
+            <div class="row col-lg-12">@b4.number(form("Duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
+            <div class="row col-lg-12">@b4.number(form("Tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
+            <div class="row col-lg-12">@b4.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
+            <div class="row col-lg-12">@b4.text(form("category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div>
+            <div class="row col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
     </div>
 }
 
