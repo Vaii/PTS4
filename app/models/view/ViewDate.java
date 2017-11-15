@@ -13,8 +13,6 @@ public class ViewDate {
     private Location location;
     private User teacher;
 
-    public ViewDate() {};
-
     public ViewDate(String dateId, Date date, Location location, User teacher) {
         this.dateId = dateId;
         this.date = date;
