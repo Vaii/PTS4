@@ -1,4 +1,7 @@
-package models;
+package models.view;
+
+import models.storage.Location;
+import models.storage.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,6 +12,8 @@ public class ViewDate {
     private Date date;
     private Location location;
     private User teacher;
+
+    public ViewDate() {};
 
     public ViewDate(String dateId, Date date, Location location, User teacher) {
         this.dateId = dateId;
@@ -38,4 +43,5 @@ public class ViewDate {
     public String getDateId() {
         return dateId;
     }
+
 }

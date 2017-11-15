@@ -1,7 +1,7 @@
 package dal.repositories;
 
 import dal.interfaces.UserContext;
-import models.User;
+import models.storage.User;
 
 import java.util.List;
 

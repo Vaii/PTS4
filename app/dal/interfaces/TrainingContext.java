@@ -1,8 +1,7 @@
 package dal.interfaces;
 
-import models.Location;
-import models.Training;
-import models.User;
+import models.storage.Location;
+import models.storage.Training;
 import play.data.format.Formats;
 
 
@@ -19,4 +18,5 @@ public interface TrainingContext {
     List<Training> getAll();
     List<Training> getTrainingByCategory(String category);
     Map<String, Integer> getTrainingFrequencies();
+    Training getTrainingById(String Id);
 }

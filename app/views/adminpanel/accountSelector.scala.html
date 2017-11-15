@@ -1,4 +1,5 @@
-@(page: String, isLoggedIn: Boolean, User: User, Users: List[models.User])
+@import models.storage.User
+@(page: String, isLoggedIn: Boolean, User: User, Users: List[User])
 
 @shared.main(page, isLoggedIn, User) {
     <div class="container">

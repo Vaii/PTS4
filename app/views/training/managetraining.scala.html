@@ -2,7 +2,11 @@
 @import play.data.Form
 @import com.fasterxml.jackson.databind.JsonNode
 
-@(categories: Map[String, Integer], teachers:List[User], trainings: List[models.Training], locations: List[Location], training: models.Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
+@import models.view.ViewDate
+@import models.storage.Training
+@import models.storage.User
+@import models.storage.Location
+@(categories: Map[String, Integer], teachers:List[User], trainings: List[Training], locations: List[Location], training: Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
 
 @{ var myCounter : String = "1" }
 
@@ -53,7 +57,7 @@
                 <div class="col-lg-2 trainingmenu">
                     <ul>
                         <lh>Training</lh>
-                        <li id="newTrn"><a href="@routes.TrainingController.addtraining()">
+                        <li id="newTrn"><a href="@routes.TrainingController.addTraining()">
                             Nieuwe Training Toevoegen</a> </li>
                         @if(!trainings.isEmpty) {
                             @for(training <- trainings) {

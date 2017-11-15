@@ -1,3 +1,5 @@
+@import models.storage.User
+@import models.storage.Location
 @(locations: List[Location], isLoggedIn: Boolean, User: User, Page: String)
     @shared.main(Page, isLoggedIn, User) {
 

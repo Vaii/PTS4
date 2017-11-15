@@ -1,13 +1,8 @@
-package models;
+package models.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.codec.binary.Base64;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
-
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-import java.util.Random;
 
 public class User {
     // Mongo DB identifiers.

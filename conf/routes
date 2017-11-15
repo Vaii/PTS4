@@ -31,7 +31,7 @@ POST    /location/submit                    controllers.LocationController.creat
 POST    /location/submit_form               controllers.LocationController.submitAlterLocation
 
 # Training
-GET     /addtraining                        controllers.TrainingController.addtraining
+GET     /addtraining                        controllers.TrainingController.addTraining
 GET     /submit                             controllers.TrainingController.submit
 GET     /overview                           controllers.TrainingController.overview
 GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(category: String, id: String)

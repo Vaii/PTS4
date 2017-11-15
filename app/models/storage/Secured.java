@@ -1,4 +1,4 @@
-package models;
+package models.storage;
 
 import dal.contexts.UserMongoContext;
 import dal.repositories.UserRepository;
