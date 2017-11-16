@@ -74,41 +74,41 @@
                         @b4.form(routes.TrainingController.edit(training.getCategory ,training.getTrainingCode())) {
                             @helper.CSRF.formField
                             <div class="row col-lg-12">
-                                <div class="row col-lg-12">@b4.number(form("TrainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
-                                <div class="row col-lg-12">@b4.text(form("Name"), '_label -> "Naam:", 'class -> "", 'placeholder -> "Voer naam in")</div>
-                                <div class="row col-lg-12">@b4.text(form("Description"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
-                                <div class="row col-lg-12">@b4.text(form("RequiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
+                                <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
+                                <div class="row col-lg-12">@b4.text(form("name"), '_label -> "Naam:", 'class -> "", 'placeholder -> "Voer naam in")</div>
+                                <div class="row col-lg-12">@b4.text(form("description"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
+                                <div class="row col-lg-12">@b4.text(form("requiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
 
                                 <div id="dynamicInput" class="row col-lg-12">
                                 @for(index <- 0 until viewDates.size){
                                     <div class="row col-lg-12 row@(index + 1)">
                                     <div class="col-lg-3">
-                                        <label class="control-label" for="Dates[]">Datum:</label>
-                                        <input type="date" id="Dates" name="Dates[]" required="true" value="@viewDates(index).getDateString" class="form-control">
-                                        <input type="hidden" name="DateIDs[]" value="@viewDates(index).getDateId" />
+                                        <label class="control-label" for="dates[]">Datum:</label>
+                                        <input type="date" id="dates" name="dates[]" required="true" value="@viewDates(index).getDateString" class="form-control">
+                                        <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" />
                                     </div>
 
-                                    <div class="col-lg-4">
-                                        <label class="form-control-label" for="LocationID[]">Locatie:</label>
-                                        <select id="LocationID" name="LocationID[]" required="true" class="form-control form-control">
-                                            <option value="@viewDates(index).getLocation.get_id()" class="blank" selected="true">@viewDates(index).getLocation.getStreetName</option>
+                                    <div class="col-lg-3">
+                                        <label class="form-control-label" for="locationId[]">Locatie:</label>
+                                        <select id="locationId" name="locationId[]" required="true" class="form-control form-control">
+                                            <option value="@viewDates(index).getLocation.getId()" class="blank" selected="true">@viewDates(index).getLocation.getStreetName</option>
                                             @for(location <- locations) {
                                                 @if(location.getStreetName == viewDates(index).getLocation.getStreetName) {
                                                 } else {
-                                                    <option value="@location.get_id()" >@location.getStreetName</option>
+                                                    <option value="@location.getId()" >@location.getStreetName</option>
                                                 }
                                             }
                                         </select>
                                     </div>
 
-                                    <div class="col-lg-4">
-                                        <label class="form-control-label" for="TeacherID[]">Docent:</label>
-                                        <select id="TeacherID" name="TeacherID[]" required="true" class="form-control form-control">
-                                           <option value="@viewDates(index).getTeacher.get_id()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
+                                    <div class="col-lg-3">
+                                        <label class="form-control-label" for="teacherID[]">Docent:</label>
+                                        <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control">
+                                           <option value="@viewDates(index).getTeacher.getId()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
                                             @for(teacher <- teachers) {
                                                 @if(teacher.getFirstName == viewDates(index).getTeacher.getFirstName) {
                                                 } else {
-                                                <option value="@teacher.get_id()" >@teacher.getFirstName</option>
+                                                <option value="@teacher.getId()" >@teacher.getFirstName</option>
                                                 }
                                             }
                                         </select>
@@ -126,9 +126,9 @@
                                <div class="row col-lg-12">
                                     <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
                                </div>
-                                <div class="row col-lg-12">@b4.number(form("Duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
-                                <div class="row col-lg-12">@b4.number(form("Tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
-                                <div class="row col-lg-12">@b4.number(form("Capacity"), '_label -> "Capaciteit:", 'class -> "f", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
+                                <div class="row col-lg-12">@b4.number(form("duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
+                                <div class="row col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
+                                <div class="row col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "f", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
                                 <div class="row col-lg-12">@b4.text(form("category"), '_label -> "Category:", 'class -> "", 'placeholder -> "Voer categorie in")</div>
                             </div>
 

@@ -27,14 +27,14 @@ public class LocationMongoContext implements LocationContext{
     }
 
     @Override
-    public boolean updateLocation(String location_id, Location location) {
-        WriteResult result = collection.update("{_id:#}", new ObjectId(location_id)).with(location);
+    public boolean updateLocation(String locationId, Location location) {
+        WriteResult result = collection.update("{_id:#}", new ObjectId(locationId)).with(location);
         return result.wasAcknowledged();
     }
 
     @Override
-    public boolean removeLocation(String location_id) {
-        WriteResult result = collection.remove(new ObjectId(location_id));
+    public boolean removeLocation(String locationId) {
+        WriteResult result = collection.remove(new ObjectId(locationId));
         return result.wasAcknowledged();
     }
 

@@ -6,18 +6,15 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class DateTime {
     // Mongo DB identifiers.
-    private static final String M_DATE = "Date";
-    private static final String M_TRAINEES = "Trainees";
-    private static final String M_LOCATION = "locationID";
-    private static final String M_TEACHER = "teacherID";
-    private static final String M_TRAINING = "trainingID";
+    private static final String M_DATE = "date";
+    private static final String M_TRAINEES = "trainees";
+    private static final String M_LOCATION = "locationId";
+    private static final String M_TEACHER = "teacherId";
+    private static final String M_TRAINING = "trainingId";
     private static final String M_DURATION = "duration";
 
     // Mongo DB ID.
@@ -46,23 +43,23 @@ public class DateTime {
 
     @JsonCreator
     public DateTime(@JsonProperty(M_DATE) Date date,
-                    @JsonProperty(M_LOCATION) String LocationID,
-                    @JsonProperty(M_TEACHER) String TeacherID,
+                    @JsonProperty(M_LOCATION) String locationId,
+                    @JsonProperty(M_TEACHER) String teacherId,
                     @JsonProperty(M_TRAINEES) List<String> trainees,
                     @JsonProperty(M_TRAINING) String trainingId,
                     @JsonProperty(M_DURATION) float duration){
         this.date = date;
-        this.locationID = LocationID;
-        this.teacherID = TeacherID;
+        this.locationID = locationId;
+        this.teacherID = teacherId;
         this.trainees = trainees;
         this.trainingID = trainingId;
         this.duration = duration;
     }
 
-    public DateTime(Date date, String LocationID, String TeacherID){
+    public DateTime(Date date, String locationId, String teacherId){
         this.date = date;
-        this.locationID = LocationID;
-        this.teacherID = TeacherID;
+        this.locationID = locationId;
+        this.teacherID = teacherId;
         trainees = new ArrayList<>();
     }
 
@@ -105,7 +102,7 @@ public class DateTime {
         return this.trainees.add(userID);
     }
 
-    public String get_id() {
+    public String getId() {
         return _id;
     }
 
@@ -115,7 +112,7 @@ public class DateTime {
     }
 
     public String getDateString() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         return df.format(this.date);
     }
 
@@ -162,6 +159,13 @@ public class DateTime {
         co.setTime(other.getDate());
         co.add(Calendar.DATE, (int) other.getDuration());
         Date otherEndDate = co.getTime();
+
+        // Make sure we are not comparing to ourselves.
+        if(this._id != null && other.getId() != null) {
+            if(Objects.equals(this._id, other._id)) {
+                return null;
+            }
+        }
 
         if(other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
                 otherEndDate.after(this.date) && otherEndDate.before(myEndDate) ||

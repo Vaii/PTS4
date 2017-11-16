@@ -24,14 +24,12 @@ import java.util.Map;
 public class AdminController extends Controller{
 
     private UserRepository uRepo;
-    private FormFactory formFactory;
     private Form<User> form;
     private Form<User> userForm;
     private Form<User> filledForm;
 
     @Inject
     public AdminController(FormFactory formFactory){
-        this.formFactory = formFactory;
         this.uRepo = new UserRepository(new UserMongoContext("User"));
         this.form = formFactory.form(User.class);
         this.userForm = formFactory.form(User.class);
@@ -41,7 +39,7 @@ public class AdminController extends Controller{
 
     @Security.Authenticated(Secured.class)
     public Result overview(){
-        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MedewerkerKenniscentrum)){
+        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
             return ok(overview.render("overview",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
@@ -52,7 +50,7 @@ public class AdminController extends Controller{
 
     @Security.Authenticated(Secured.class)
     public Result manageAccount(String email){
-        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MedewerkerKenniscentrum)){
+        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
             userForm = form.fill(uRepo.getUser(email));
             return ok(manageaccount.render("Manage Account",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm));
@@ -86,7 +84,7 @@ public class AdminController extends Controller{
     public Result accountSelector(){
         List<User> allUsers = uRepo.getAll();
 
-        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MedewerkerKenniscentrum)){
+        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
             return ok(accountSelector.render("Select Account",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), allUsers));
         }
@@ -98,13 +96,13 @@ public class AdminController extends Controller{
 
     @Security.Authenticated(Secured.class)
     public Result creationPage(){
-        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MedewerkerKenniscentrum)){
+        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
             List<User> manager = uRepo.getAllManagers();
 
             Map<String, String> managerInfo = new HashMap<>();
 
             for(User m : manager){
-                managerInfo.put(m.get_id(), m.getEmail());
+                managerInfo.put(m.getId(), m.getEmail());
             }
             return ok(accountcreation.render("Account Creation",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, managerInfo));
@@ -116,10 +114,10 @@ public class AdminController extends Controller{
 
     @Security.Authenticated(Secured.class)
     public Result createUser(){
-        Form<User> filledForm = form.bindFromRequest();
-        User newUser = filledForm.get();
-        String password = filledForm.field("password").value();
-        String toValidate = filledForm.field("validation").value();
+        Form<User> newFilledForm = form.bindFromRequest();
+        User newUser = newFilledForm.get();
+        String password = newFilledForm.field("password").value();
+        String toValidate = newFilledForm.field("validation").value();
 
         if(filledForm.field("ManagerCreation").value() != null){
             newUser.setManager(filledForm.field("ManagerCreation").value());

@@ -1,7 +1,7 @@
 @import models.storage.User
-@(page: String, isLoggedIn: Boolean, User: User, Message: String, PageToRedirect: String)
+@(title: String, isLoggedIn: Boolean, User: User, Message: String, PageToRedirect: String)
 
-@shared.main(page, isLoggedIn, User) {
+@shared.main(title, isLoggedIn, User) {
     <!--
         Use this page for single message pages that require a redirect.
         The parameter 'Message' is what is shown on the page.
@@ -12,7 +12,11 @@
 
     -->
     <head>
+        <title>@title</title>
+
+
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/message.css")">
+        <link rel="shortcut icon" type="image/ico" href="@routes.Assets.at("images/favicon.ico")">
         <meta http-equiv="Refresh" content="2; url=@routes.ApplicationController.customRedirect(PageToRedirect)">
     </head>
 
