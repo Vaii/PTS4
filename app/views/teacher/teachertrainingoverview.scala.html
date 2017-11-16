@@ -3,8 +3,25 @@
 @(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User)
 
 @shared.main(page, isLoggedIn, User) {
+    <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/fullcalendar.css")">
     <script src="@routes.Assets.at("/javascripts/showDiv.js")"></script>
+    <script src="@routes.Assets.at("/javascripts/fullcalendar.js")"></script>
+    </head>
+
+    <script>
+            $(document).ready(function() {
+
+                // page is now ready, initialize the calendar...
+
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                })
+
+            });
+    </script>
+
     <div class="container">
         <div class="row">
         @if(!trainings.isEmpty()) {
@@ -77,9 +94,10 @@
                 }
             </div>
 
+
             <div class="row col-lg-12" id="calenderDiv" style="display: none;">
                 <div class="col-lg-4 offset-lg-4">
-                    <input type="date" class="form-control"/>
+                    <div id="calendar"></div>
                 </div>
             </div>
 
@@ -88,5 +106,6 @@
         }
         </div>
     </div>
+
 }
 
