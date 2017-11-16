@@ -1,7 +1,7 @@
 @import models.view.ViewDate
 @import models.storage.Training
 @import models.storage.User
-@(categories: Map[String, Integer], trainings: List[Training], training: Training, page: String, isLoggedIn: Boolean, User: User, viewDates : List[ViewDate])
+@(categories: Map[String, Integer], trainings: List[Training], training: Training, page: String, isLoggedIn: Boolean, User: User, viewDates: List[ViewDate])
 
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
@@ -32,9 +32,7 @@
             <div class="trainingtext col-lg-8" >
                 <div>
                     @if(training != null) {
-                        <div class="row col-lg-12">
-                            <h1>@training.getName()</h1>
-                        </div>lo
+                        <h1>@training.getName()</h1>
                         <h2>Beschrijving</h2>
                         @if(training.getDescription == null) {
                             <p> Geen beschrijving. </p>
@@ -70,7 +68,11 @@
                                         <p>Benodigde materialen:</p>
                                     </div>
                                     <div class="col-lg-8">
+                                    @if(!training.getRequiredMaterial().isEmpty()) {
                                         <p>@training.getRequiredMaterial</p>
+                                    } else {
+                                        <p>Geen</p>
+                                    }
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +90,7 @@
                                         <p>Duur:</p>
                                     </div>
                                     <div class="col-lg-8">
-                                        <p>@training.getDuration() dagen</p>
+                                        <p>@training.getDuration().toInt dagen</p>
                                     </div>
                                 </div>
                                 <div class="row">

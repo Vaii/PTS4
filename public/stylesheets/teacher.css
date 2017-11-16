@@ -66,6 +66,8 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+/* Own Css    */
 .form-control {
     margin-top:15px;
 }
@@ -122,4 +124,6 @@ label {
     padding-right:0px;
     padding-left:0px;
 }
+
+
 

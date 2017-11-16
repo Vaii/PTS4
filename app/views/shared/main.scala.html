@@ -34,7 +34,6 @@
                             <a class="nav-link dropdown-toggle" id="trainingDropdownMenu" href="">
                                 Training</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="@routes.TrainingController.overview()">Mijn Trainingen</a>
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Aangeboden Trainingen</a>
                                 @if(isLoggedIn) {
                                     @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
@@ -80,10 +79,11 @@
 
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profiel</a>
+                                <a class="dropdown-item" href="@routes.TrainingController.overview()"><i class="fa fa-table fa-fw" aria-hidden="true"></i> Mijn Trainingen</a>
                                 @if(user.getRole.equals(Role.DOCENT)){
-                                    <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i>Rooster </a>
+                                    <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> Rooster</a>
                                 }
-                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Uitloggen</a>
+                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Uitloggen</a>
                             </div>
                         } else {
                         <li class="nav-item">
