@@ -8,7 +8,7 @@ var tOptions = "";
 for (var i = 0; i < locJson.length; i++) {
     var loc = locJson[i];
 
-    var opt = "<option value=\"" + loc._id + "\">" + loc.StreetName + "</option>\n";
+    var opt = "<option value=\"" + loc.id + "\">" + loc.streetName + "</option>\n";
 
     lOptions += opt;
 }
@@ -17,7 +17,7 @@ for (var i = 0; i < locJson.length; i++) {
 for (var i = 0; i < teachJson.length; i++) {
     var t = teachJson[i];
 
-    var opt = "<option value=\"" + t._id + "\">" + t.FirstName + "</option>\n";
+    var opt = "<option value=\"" + t.id + "\">" + t.firstName + "</option>\n";
 
     tOptions += opt;
 }
@@ -36,12 +36,12 @@ function addInput(divName){
     var numItems = $('#dynamicInput .row').length - 1;
     var newdiv = document.createElement('div');
     newdiv.className = "row col-lg-12 row" + numItems;
-    newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"control-label\" for=\"Dates[]\">Datum:</label>" +
-        "<input type=\"date\" id=\"Dates\" name=\"Dates[]\" value=\"\" required=\"true\" class=\"form-control\"></div>" +
+    newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"control-label\" for=\"dates[]\">Datum:</label>" +
+        "<input type=\"date\" id=\"dates\" name=\"dates[]\" value=\"\" required=\"true\" class=\"form-control\"></div>" +
 
         // Location box
-        "<div class=\"col-lg-4\"><label class=\"form-control-label\" for=\"LocationID[]\">Locatie:</label>" +
-        "<select id=\"LocationID\" name=\"LocationID[]\" required=\"true\" class=\"form-control form-control\">" +
+        "<div class=\"col-lg-4\"><label class=\"form-control-label\" for=\"locationId[]\">Locatie:</label>" +
+        "<select id=\"locationId\" name=\"locationId[]\" required=\"true\" class=\"form-control form-control\">" +
         "<option value=\"\" class=\"blank\" selected=\"true\" disabled=\"disabled\">Selecteer een locatie</option>" +
         lOptions +
         "</select></div>" +
@@ -50,8 +50,8 @@ function addInput(divName){
         "<div class=\"col-lg-5\">\n" +
         "<div class=\"row\" >\n" +
         "<div class=\"col-lg-9\">" +
-        "<label class=\"form-control-label\" for=\"TeacherID[]\">Docent:</label>\n" +
-        "<select id=\"TeacherID\" name=\"TeacherID[]\"  required=\"true\" class=\"form-control form-control\">\n" +
+        "<label class=\"form-control-label\" for=\"teacherId[]\">Docent:</label>\n" +
+        "<select id=\"teacherId\" name=\"teacherId[]\"  required=\"true\" class=\"form-control form-control\">\n" +
         "<option value=\"\" class=\"blank\" selected=\"true\" disabled=\"disabled\">Selecteer een docent</option>\n" +
         tOptions +
         "</select>\n" +
@@ -69,22 +69,20 @@ function addInputEdit(divName){
     var numItems = $('#dynamicInput .row').length + 1;
     var newdiv = document.createElement('div');
     newdiv.className = "row col-lg-12 row" + numItems;
-    newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"control-label\" for=\"Dates[]\">Datum:</label>" +
-        "<input type=\"date\" id=\"Dates\" name=\"Dates[]\" value=\"\" required=\"true\" class=\"form-control\"></div>" +
+    newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"control-label\" for=\"dates[]\">Datum:</label>" +
+        "<input type=\"date\" id=\"dates\" name=\"dates[]\" value=\"\" required=\"true\" class=\"form-control\"></div>" +
 
         // Location box
-        "<div class=\"col-lg-4\"><label class=\"form-control-label\" for=\"LocationID[]\">Locatie:</label>" +
-        "<select id=\"LocationID\" name=\"LocationID[]\" required=\"true\" class=\"form-control form-control\">" +
+        "<div class=\"col-lg-3\"><label class=\"form-control-label\" for=\"locationId[]\">Locatie:</label>" +
+        "<select id=\"locationId\" name=\"locationId[]\" required=\"true\" class=\"form-control form-control\">" +
         "<option value=\"\" class=\"blank\" selected=\"true\" disabled=\"disabled\">Selecteer een locatie</option>" +
         lOptions +
         "</select></div>" +
 
         // Teacher box
-        "<div class=\"col-lg-5\">\n" +
-        "<div class=\"row\" >\n" +
-        "<div class=\"col-lg-9\">" +
-        "<label class=\"form-control-label\" for=\"TeacherID[]\">Docent:</label>\n" +
-        "<select id=\"TeacherID\" name=\"TeacherID[]\"  required=\"true\" class=\"form-control form-control\">\n" +
+        "<div class=\"col-lg-3\">\n" +
+        "<label class=\"form-control-label\" for=\"teacherId[]\">Docent:</label>\n" +
+        "<select id=\"teacherId\" name=\"teacherId[]\"  required=\"true\" class=\"form-control form-control\">\n" +
         "<option value=\"\" class=\"blank\" selected=\"true\" disabled=\"disabled\">Selecteer een docent</option>\n" +
         tOptions +
         "</select>\n" +

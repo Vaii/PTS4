@@ -146,7 +146,6 @@ public class TrainingController extends Controller {
             List<String> dateIDs = createDates(dates, locationIDs, teacherIDs, training.getDuration());
             training.setDateIds(dateIDs);
 
-            OverlapChecker checker = new OverlapChecker();
             DateTime overlapError;
 
             for(String dateId : dateIDs) {
@@ -192,6 +191,8 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
+            getDatesIds(id);
+            createViewDates(t, viewDates);
 
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
@@ -284,7 +285,7 @@ public class TrainingController extends Controller {
 
             List<String> requestDateIDs = new ArrayList<>();
             for(int i = 0; i < 50; i++) {
-                String d = trainingData.field("DateIDs[" + i + "]").value();
+                String d = trainingData.field("dateIds[" + i + "]").value();
                 if(d == null) {
                     break;
                 }
@@ -347,7 +348,7 @@ public class TrainingController extends Controller {
     private List<String> getLocations(DynamicForm trainingData) {
         List<String> locations = new ArrayList<>();
         for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("LocationID[" + i + "]").value();
+            String d = trainingData.field("locationId[" + i + "]").value();
             if(d == null) {
                 break;
             }
@@ -360,7 +361,7 @@ public class TrainingController extends Controller {
     private List<String> getDates(DynamicForm trainingData) {
         List<String> dates = new ArrayList<>();
         for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("Dates[" + i + "]").value();
+            String d = trainingData.field("dates[" + i + "]").value();
             if(d == null) {
                 break;
             }
@@ -373,7 +374,7 @@ public class TrainingController extends Controller {
     private List<String> getTeachers(DynamicForm trainingData) {
         List<String> teachers = new ArrayList<>();
         for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("TeacherID[" + i + "]").value();
+            String d = trainingData.field("teacherId[" + i + "]").value();
             if(d == null) {
                 break;
             }
@@ -470,7 +471,7 @@ public class TrainingController extends Controller {
         }
     }
 
-    public DateTime detectedOverlap(DateTime signUpDate, OverlapType type){
+    private DateTime detectedOverlap(DateTime signUpDate, OverlapType type){
         OverlapChecker checker = new OverlapChecker();
         DateTime overlapError;
         if (type == OverlapType.STUDENT){
