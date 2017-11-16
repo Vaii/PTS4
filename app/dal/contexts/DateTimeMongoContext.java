@@ -28,7 +28,7 @@ public class DateTimeMongoContext implements DateTimeContext {
 
     @Override
     public boolean updateDateTime(DateTime dateTime) {
-        WriteResult result = collection.update("{_id:#}", new ObjectId(dateTime.get_id())).with(dateTime);
+        WriteResult result = collection.update("{_id:#}", new ObjectId(dateTime.getId())).with(dateTime);
         return result.wasAcknowledged();
     }
 
@@ -39,30 +39,30 @@ public class DateTimeMongoContext implements DateTimeContext {
     }
 
     @Override
-    public DateTime getDateTime(String date_id) {
-        return collection.findOne("{_id:#}", new ObjectId(date_id)).as(DateTime.class);
+    public DateTime getDateTime(String dateId) {
+        return collection.findOne("{_id:#}", new ObjectId(dateId)).as(DateTime.class);
     }
 
     @Override
     public List<DateTime> getDateTimeForUser(String userId) {
-        MongoCursor<DateTime> results = collection.find("{Trainees: { $all: [#]}}", userId).as(DateTime.class);
+        MongoCursor<DateTime> results = collection.find("{trainees: { $all: [#]}}", userId).as(DateTime.class);
         List<DateTime> dateTimes = new ArrayList<>();
 
         while(results.hasNext()) {
-            DateTime DateTime = results.next();
-            dateTimes.add(DateTime);
+            DateTime dateTime = results.next();
+            dateTimes.add(dateTime);
         }
         return dateTimes;
     }
 
     @Override
     public List<DateTime> getDateTimeForTeacher(String teacherId) {
-        MongoCursor<DateTime> results = collection.find("{teacherID:#}", teacherId).as(DateTime.class);
+        MongoCursor<DateTime> results = collection.find("{teacherId:#}", teacherId).as(DateTime.class);
         List<DateTime> dateTimes = new ArrayList<>();
 
         while(results.hasNext()) {
-            DateTime DateTime = results.next();
-            dateTimes.add(DateTime);
+            DateTime dateTime = results.next();
+            dateTimes.add(dateTime);
         }
         return dateTimes;
     }

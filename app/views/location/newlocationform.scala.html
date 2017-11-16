@@ -13,11 +13,11 @@
                 <br>
             </div>
             @b4.form(routes.LocationController.createLocation()) {
-                    <div class="row">@b4.text(form("City"), '_label -> "Stad :", 'class -> "form-control-inline", 'placeholder -> "Eindhoven")</div>
-                    <div class="row">@b4.text(form("StreetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'placeholder -> "Rachelsmolen")</div>
-                    <div class="row">@b4.text(form("StreetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'placeholder -> "1")</div>
-                    <div class="row">@b4.text(form("Room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'placeholder -> "2.18")</div>
-                    <div class="row">@b4.number(form("Capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'placeholder -> "25")</div>
+                    <div class="row">@b4.text(form("city"), '_label -> "Stad :", 'class -> "form-control-inline", 'placeholder -> "Eindhoven")</div>
+                    <div class="row">@b4.text(form("streetName"), '_label -> "Straatnaam :", 'class -> "form-control-inline", 'placeholder -> "Rachelsmolen")</div>
+                    <div class="row">@b4.text(form("streetNumber"), '_label -> "Huisnummer :", 'class -> "form-control-inline", 'placeholder -> "1")</div>
+                    <div class="row">@b4.text(form("room"), '_label -> "Kamer :", 'class -> "form-control-inline", 'placeholder -> "2.18")</div>
+                    <div class="row">@b4.number(form("capacity"), '_label -> "Capiciteit :", 'class -> "form-control-inline", 'placeholder -> "25")</div>
 
                     <div class="row">
                         @b4.submit('class -> "btn btn-primary") { Toevoegen }

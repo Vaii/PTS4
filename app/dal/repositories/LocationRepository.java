@@ -18,13 +18,13 @@ public class LocationRepository implements LocationContext{
     }
 
     @Override
-    public boolean updateLocation(String location_id, Location location) {
-        return context.updateLocation(location_id, location);
+    public boolean updateLocation(String locationId, Location location) {
+        return context.updateLocation(locationId, location);
     }
 
     @Override
-    public boolean removeLocation(String location_id) {
-        return context.removeLocation(location_id);
+    public boolean removeLocation(String locationId) {
+        return context.removeLocation(locationId);
     }
 
     @Override

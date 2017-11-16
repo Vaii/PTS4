@@ -10,18 +10,16 @@ import play.mvc.Result;
 import views.html.location.*;
 import play.mvc.*;
 import javax.inject.Inject;
-import java.util.ArrayList;
 
 public class LocationController extends Controller {
 
     private final Form<Location> form;
-    private ArrayList<Location>availablelocations;
-    private LocationRepository locationrepo;
+    private LocationRepository locationRepo;
 
     @Inject
     public LocationController(FormFactory formFactory){
         this.form = formFactory.form(Location.class);
-        locationrepo = new LocationRepository(new LocationMongoContext("Location"));
+        locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     }
 
     //Loads the generic form for adding a location
@@ -32,13 +30,13 @@ public class LocationController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result locationOverview(){
-        return ok(alllocations.render(locationrepo.getAll(),Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "All Locations"));
+        return ok(alllocations.render(locationRepo.getAll(),Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()) , "All Locations"));
     }
 
     @Security.Authenticated(Secured.class)
     public Result alterLocationForm(String id){
         if(id != null){
-            Location location = locationrepo.getLocation(id);
+            Location location = locationRepo.getLocation(id);
             if(location != null){
                 return ok(alterlocation.render(form, location, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Alter Location Form"));
             }
@@ -52,7 +50,7 @@ public class LocationController extends Controller {
     public Result createLocation(){
     Form<Location> boundForm = form.bindFromRequest();
     Location data = boundForm.get();
-    if(locationrepo.addLocation(data)){
+    if(locationRepo.addLocation(data)){
         return redirect(routes.LocationController.locationOverview());
     }
     return redirect(routes.LocationController.loadLocationForm());
@@ -60,10 +58,10 @@ public class LocationController extends Controller {
 
   @Security.Authenticated(Secured.class)
   public Result submitAlterLocation(){
-        Form<Location> boundform = form.bindFromRequest();
-        Location data = boundform.get();
-        String location_id = boundform.field("_id").value();
-        if(locationrepo.updateLocation(location_id, data)){
+        Form<Location> boundForm = form.bindFromRequest();
+        Location data = boundForm.get();
+        String locationId = boundForm.field("_id").value();
+        if(locationRepo.updateLocation(locationId, data)){
             return redirect(routes.LocationController.locationOverview());
         }
         return redirect(routes.LocationController.locationOverview());
@@ -71,8 +69,8 @@ public class LocationController extends Controller {
 
   //TODO make a message so the user knows if the deletion was succesful
   @Security.Authenticated(Secured.class)
-  public Result deleteLocation(String location_id){
-      if(locationrepo.removeLocation(location_id)){
+  public Result deleteLocation(String locationId){
+      if(locationRepo.removeLocation(locationId)){
           return redirect(routes.LocationController.locationOverview());
       }
       return redirect(routes.LocationController.locationOverview());

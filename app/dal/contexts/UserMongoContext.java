@@ -15,8 +15,10 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class UserMongoContext implements UserContext {
+    private static final Logger LOGGER = Logger.getLogger(UserMongoContext.class.getName());
     private DBConnector connector;
     private MongoCollection collection;
 
@@ -30,45 +32,45 @@ public class UserMongoContext implements UserContext {
         String salt = generateSalt();
         String hashedPassword = generatePassword(password, salt);
 
-        if(user.getCompany().toLowerCase().equals("infosupport")){
-            WriteResult result = collection.insert("{FirstName:#," +
-                                                    " LastName:#," +
-                                                    " Email:#," +
-                                                    " Role:#," +
-                                                    " Company:#," +
-                                                    " Salt:#," +
-                                                    " HashedPassword:#," +
-                                                    " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
+        if(user.getCompany().equalsIgnoreCase("infosupport")){
+            WriteResult result = collection.insert("{firstName:#," +
+                                                    " lastName:#," +
+                                                    " email:#," +
+                                                    " role:#," +
+                                                    " company:#," +
+                                                    " salt:#," +
+                                                    " hashedPassword:#," +
+                                                    " phoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
             return result.wasAcknowledged();
         }
         else{
-            user.setRole(Role.Extern);
-            WriteResult result = collection.insert("{FirstName:#," +
-                    " LastName:#," +
-                    " Email:#," +
-                    " Role:#," +
-                    " Company:#," +
-                    " Salt:#," +
-                    " HashedPassword:#," +
-                    " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
+            user.setRole(Role.EXTERN);
+            WriteResult result = collection.insert("{firstName:#," +
+                    " lastName:#," +
+                    " email:#," +
+                    " role:#," +
+                    " company:#," +
+                    " salt:#," +
+                    " hashedPassword:#," +
+                    " phoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
             return result.wasAcknowledged();
         }
     }
 
     @Override
     public boolean removeUser(User user) {
-        WriteResult result = collection.remove(new ObjectId(user.get_id()));
+        WriteResult result = collection.remove(new ObjectId(user.getId()));
         return result.wasAcknowledged();
     }
 
     @Override
     public User getUser(String firstName, String lastName) {
-        return collection.findOne("{FirstName:#, LastName:#}", firstName, lastName).as(User.class);
+        return collection.findOne("{firstName:#, lastName:#}", firstName, lastName).as(User.class);
     }
 
     @Override
     public User getUser(String emailadress) {
-        return collection.findOne("{Email:#}", emailadress).as(User.class);
+        return collection.findOne("{email:#}", emailadress).as(User.class);
     }
 
     @Override
@@ -91,29 +93,29 @@ public class UserMongoContext implements UserContext {
     @Override
     public boolean updateUser(User user) {
 
-        List<String> HashedDBPassword = collection.distinct("HashedPassword").query("{_id:#}", new ObjectId(user.get_id())).as(String.class);
-        List<String> DbSalt = collection.distinct("Salt").query("{_id:#}", new ObjectId(user.get_id())).as(String.class);
+        List<String> hashedDbPassword = collection.distinct("hashedPassword").query("{_id:#}", new ObjectId(user.getId())).as(String.class);
+        List<String> dbSalt = collection.distinct("salt").query("{_id:#}", new ObjectId(user.getId())).as(String.class);
 
-        WriteResult result = collection.update("{_id:#}", new ObjectId(user.get_id())).with("{FirstName:#," +
-                " LastName:#," +
-                " Email:#," +
-                " Role:#," +
-                " Company:#," +
-                " Salt:#," +
-                " HashedPassword:#," +
-                " PhoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(),
-                user.getRole(), user.getCompany(),DbSalt.get(0), HashedDBPassword.get(0), user.getPhoneNumber());
+        WriteResult result = collection.update("{_id:#}", new ObjectId(user.getId())).with("{firstName:#," +
+                " lastName:#," +
+                " email:#," +
+                " role:#," +
+                " company:#," +
+                " salt:#," +
+                " hashedPassword:#," +
+                " phoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(),
+                user.getRole(), user.getCompany(),dbSalt.get(0), hashedDbPassword.get(0), user.getPhoneNumber());
 
         return result.wasAcknowledged();
     }
 
     @Override
     public boolean login(String email, String password) {
-        List<String> HashedDBPassword = collection.distinct("HashedPassword").query("{Email:#}", email).as(String.class);
-        List<String> DbSalt = collection.distinct("Salt").query("{Email:#}", email).as(String.class);
+        List<String> hashedDbPassword = collection.distinct("hashedPassword").query("{email:#}", email).as(String.class);
+        List<String> dbSalt = collection.distinct("salt").query("{email:#}", email).as(String.class);
 
         if(getUser(email) != null) {
-            return checkLogin(password, HashedDBPassword.get(0), DbSalt.get(0));
+            return checkLogin(password, hashedDbPassword.get(0), dbSalt.get(0));
         }
 
         return false;
@@ -121,7 +123,7 @@ public class UserMongoContext implements UserContext {
 
     @Override
     public List<User> getAllTeachers() {
-        MongoCursor<User> results = collection.find("{Role:#}", Role.Docent).as(User.class);
+        MongoCursor<User> results = collection.find("{role:#}", Role.DOCENT).as(User.class);
         List<User> teachers = new ArrayList<>();
 
         while (results.hasNext()) {
@@ -129,6 +131,19 @@ public class UserMongoContext implements UserContext {
             teachers.add(teacher);
         }
         return teachers;
+    }
+
+    @Override
+    public List<User> getAllManagers() {
+
+        MongoCursor<User> results = collection.find("{role:#}", Role.BUSINESSUNITMANAGER).as(User.class);
+            List<User> managers = new ArrayList<>();
+
+            while(results.hasNext()){
+                managers.add(results.next());
+            }
+
+            return managers;
     }
 
     /**
@@ -163,7 +178,7 @@ public class UserMongoContext implements UserContext {
             }
             generatedPassword = sb.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getLocalizedMessage());
         }
 
         return generatedPassword;
@@ -174,18 +189,17 @@ public class UserMongoContext implements UserContext {
      *
      * @return The salt.
      */
-    public String generateSalt() {
+    private String generateSalt() {
         final Random r = new SecureRandom();
         byte[] salt = new byte[32];
         r.nextBytes(salt);
-        String encodedSalt = Base64.encodeBase64String(salt);
-        return encodedSalt;
+        return Base64.encodeBase64String(salt);
     }
 
     /**
      * Be careful with this.
      */
-    public void removeAll() {
+    void removeAll() {
         collection.drop();
     }
 }

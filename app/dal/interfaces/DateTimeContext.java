@@ -8,7 +8,7 @@ public interface DateTimeContext {
     Object addDateTime(DateTime dateTime);
     boolean updateDateTime(DateTime dateTime);
     boolean removeDateTime(String dateTimeId);
-    DateTime getDateTime(String date_id);
+    DateTime getDateTime(String dateId);
     List<DateTime> getDateTimeForUser(String userId);
     List<DateTime> getDateTimeForTeacher(String teacherId);
 }

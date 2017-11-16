@@ -14,18 +14,18 @@ import java.util.Date;
  */
 public class TuitionForm {
     // Mongo DB identifiers.
-    private static final String M_MANAGER = "Manager";
-    private static final String M_EMPLOYEE = "Employee";
-    private static final String M_TRAINING = "Training";
-    private static final String M_COMPANYJOINDATE = "CompanyJoinDate";
-    private static final String M_REASONFORCOURSE = "ReasonForCourse";
-    private static final String M_STUDYCOSTS = "StudyCosts";
-    private static final String M_EXAMINATIONFEES = "ExaminationFees";
-    private static final String M_TRANSPORTCOSTS = "TransportCosts";
-    private static final String M_ACCOMODATIONCOSTS = "AccommodationCosts";
-    private static final String M_EXTRACOSTS = "ExtraCosts";
-    private static final String M_TOTALCOSTS = "TotalCosts";
-    private static final String M_CATEGORY = "Category";
+    private static final String M_MANAGER = "manager";
+    private static final String M_EMPLOYEE = "employee";
+    private static final String M_TRAINING = "training";
+    private static final String M_COMPANYJOINDATE = "companyJoinDate";
+    private static final String M_REASONFORCOURSE = "reasonForCourse";
+    private static final String M_STUDYCOSTS = "studyCosts";
+    private static final String M_EXAMINATIONFEES = "examinationFees";
+    private static final String M_TRANSPORTCOSTS = "transportCosts";
+    private static final String M_ACCOMODATIONCOSTS = "accommodationCosts";
+    private static final String M_EXTRACOSTS = "extraCosts";
+    private static final String M_TOTALCOSTS = "totalCosts";
+    private static final String M_CATEGORY = "category";
 
     // Mongo DB ID.
     @MongoObjectId
@@ -34,28 +34,28 @@ public class TuitionForm {
     // Class fields.
     // MongoDB ID's of both users.
     @play.data.validation.Constraints.Required
-    private String Manager, Employee;
+    private String manager, employee;
     // MongoDB ID of the training.
     @play.data.validation.Constraints.Required
-    private String Training;
+    private String training;
     @play.data.validation.Constraints.Required
-    private Date CompanyJoinDate;
+    private Date companyJoinDate;
     @play.data.validation.Constraints.Required
-    private String ReasonForCourse;
+    private String reasonForCourse;
     @play.data.validation.Constraints.Required
-    private double StudyCosts;
+    private double studyCosts;
     @play.data.validation.Constraints.Required
-    private double ExaminationFees;
+    private double examinationFees;
     @play.data.validation.Constraints.Required
-    private double TransportCosts;
+    private double transportCosts;
     @play.data.validation.Constraints.Required
-    private double AccommodationCosts;
+    private double accommodationCosts;
     @play.data.validation.Constraints.Required
-    private double ExtraCosts;
+    private double extraCosts;
     @play.data.validation.Constraints.Required
-    private double TotalCosts;
+    private double totalCosts;
     @play.data.validation.Constraints.Required
-    private TuitionCategory Category;
+    private TuitionCategory category;
 
     @JsonCreator
     public TuitionForm(@JsonProperty(M_MANAGER) String manager,
@@ -70,133 +70,133 @@ public class TuitionForm {
                        @JsonProperty(M_EXTRACOSTS) double extraCosts,
                        @JsonProperty(M_TOTALCOSTS) double totalCosts,
                        @JsonProperty(M_CATEGORY) TuitionCategory category) {
-        this.Manager = manager;
-        this.Employee = employee;
-        this.Training = training;
-        this.CompanyJoinDate = companyJoinDate;
-        this.ReasonForCourse = reasonForCourse;
-        this.StudyCosts = studyCosts;
-        this.ExaminationFees = examinationFees;
-        this.TransportCosts = transportCosts;
-        this.AccommodationCosts = accommodationCosts;
-        this.ExtraCosts = extraCosts;
-        this.TotalCosts = totalCosts;
-        this.Category = category;
+        this.manager = manager;
+        this.employee = employee;
+        this.training = training;
+        this.companyJoinDate = companyJoinDate;
+        this.reasonForCourse = reasonForCourse;
+        this.studyCosts = studyCosts;
+        this.examinationFees = examinationFees;
+        this.transportCosts = transportCosts;
+        this.accommodationCosts = accommodationCosts;
+        this.extraCosts = extraCosts;
+        this.totalCosts = totalCosts;
+        this.category = category;
     }
 
     public TuitionForm() {
 
     }
 
-    public String get_id() {
+    public String getId() {
         return _id;
     }
 
     @JsonProperty(M_MANAGER)
     public String getManager() {
-        return Manager;
+        return manager;
     }
 
     public void setManager(String manager) {
-        Manager = manager;
+        this.manager = manager;
     }
 
     @JsonProperty(M_EMPLOYEE)
     public String getEmployee() {
-        return Employee;
+        return employee;
     }
 
     public void setEmployee(String employee) {
-        Employee = employee;
+        this.employee = employee;
     }
 
     @JsonProperty(M_TRAINING)
     public String getTraining() {
-        return Training;
+        return training;
     }
 
     public void setTraining(String training) {
-        this.Training = training;
+        this.training = training;
     }
 
     @JsonProperty(M_COMPANYJOINDATE)
     public Date getCompanyJoinDate() {
-        return CompanyJoinDate;
+        return companyJoinDate;
     }
 
     public void setCompanyJoinDate(Date companyJoinDate) {
-        CompanyJoinDate = companyJoinDate;
+        this.companyJoinDate = companyJoinDate;
     }
 
     @JsonProperty(M_REASONFORCOURSE)
     public String getReasonForCourse() {
-        return ReasonForCourse;
+        return reasonForCourse;
     }
 
     public void setReasonForCourse(String reasonForCourse) {
-        ReasonForCourse = reasonForCourse;
+        this.reasonForCourse = reasonForCourse;
     }
 
     @JsonProperty(M_STUDYCOSTS)
     public double getStudyCosts() {
-        return StudyCosts;
+        return studyCosts;
     }
 
     public void setStudyCosts(double studyCosts) {
-        StudyCosts = studyCosts;
+        this.studyCosts = studyCosts;
     }
 
     @JsonProperty(M_EXAMINATIONFEES)
     public double getExaminationFees() {
-        return ExaminationFees;
+        return examinationFees;
     }
 
     public void setExaminationFees(double examinationFees) {
-        ExaminationFees = examinationFees;
+        this.examinationFees = examinationFees;
     }
 
     @JsonProperty(M_TRANSPORTCOSTS)
     public double getTransportCosts() {
-        return TransportCosts;
+        return transportCosts;
     }
 
     public void setTransportCosts(double transportCosts) {
-        TransportCosts = transportCosts;
+        this.transportCosts = transportCosts;
     }
 
     @JsonProperty(M_ACCOMODATIONCOSTS)
     public double getAccommodationCosts() {
-        return AccommodationCosts;
+        return accommodationCosts;
     }
 
     public void setAccommodationCosts(double accommodationCosts) {
-        AccommodationCosts = accommodationCosts;
+        this.accommodationCosts = accommodationCosts;
     }
 
     @JsonProperty(M_EXTRACOSTS)
     public double getExtraCosts() {
-        return ExtraCosts;
+        return extraCosts;
     }
 
     public void setExtraCosts(double extraCosts) {
-        ExtraCosts = extraCosts;
+        this.extraCosts = extraCosts;
     }
 
     @JsonProperty(M_TOTALCOSTS)
     public double getTotalCosts() {
-        return TotalCosts;
+        return totalCosts;
     }
 
     public void setTotalCosts(double totalCosts) {
-        TotalCosts = totalCosts;
+        this.totalCosts = totalCosts;
     }
 
     @JsonProperty(M_CATEGORY)
     public TuitionCategory getCategory() {
-        return Category;
+        return category;
     }
 
     public void setCategory(TuitionCategory category) {
-        Category = category;
+        this.category = category;
     }
 }
