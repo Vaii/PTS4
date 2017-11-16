@@ -161,8 +161,10 @@ public class DateTime {
         Date otherEndDate = co.getTime();
 
         // Make sure we are not comparing to ourselves.
-        if(Objects.equals(this._id, other._id)) {
-            return null;
+        if(this._id != null && other.getId() != null) {
+            if(Objects.equals(this._id, other._id)) {
+                return null;
+            }
         }
 
         if(other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
