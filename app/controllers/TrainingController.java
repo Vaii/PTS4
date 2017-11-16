@@ -153,6 +153,9 @@ public class TrainingController extends Controller {
                 dateTimes.add(date);
                 overlapError = detectedOverlap(date, OverlapType.TEACHER);
                 if (overlapError != null) {
+                    for(String dateID : dateIDs) {
+                        dateRepo.removeDateTime(dateID);
+                    }
                     return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), date, overlapError, "/overview"));
                 }
             }
