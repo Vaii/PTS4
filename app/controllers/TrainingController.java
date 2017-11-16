@@ -432,7 +432,10 @@ public class TrainingController extends Controller {
             teacherTrainings.add(vt);
         }
 
-        return ok(teachertrainingoverview.render(teacherTrainings, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        JsonNode dateJson = Json.toJson(teacherTrainings);
+
+
+        return ok(teachertrainingoverview.render(teacherTrainings, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateJson));
     }
 
     private void createViewDates(Training t, List<ViewDate> viewDates) {

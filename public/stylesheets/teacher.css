@@ -1,5 +1,11 @@
 /*Source:https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch */
+
+#calenderDiv {
+    min-height : 500px;
+}
+
 .container {
+    min-height : 700px;
     padding:20px;
 }
 .container h1 {

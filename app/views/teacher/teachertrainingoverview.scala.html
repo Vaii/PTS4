@@ -1,6 +1,7 @@
 @import models.view.ViewTraining
 @import models.storage.User
-@(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User)
+@import com.fasterxml.jackson.databind.JsonNode
+@(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User, dates: JsonNode)
 
 @shared.main(page, isLoggedIn, User) {
     <head>
@@ -11,14 +12,51 @@
     </head>
 
     <script>
-            $(document).ready(function() {
 
-                // page is now ready, initialize the calendar...
+            function unescapeHTML(string) {
+                var elt = document.createElement("span");
+                elt.innerHTML = string;
+                return elt.innerText;
+            }
 
-                $('#calendar').fullCalendar({
-                    // put your options and callbacks here
+            var dateJson = "@dates";
+            dateJson = JSON.parse(unescapeHTML(dateJson));
+
+            console.log(JSON.stringify(dateJson, null, 4));
+
+            var result = dateJson.map(a => a.date);
+            result = result.map(a => a.date);
+            console.log(result);
+
+        var events = [];
+
+        function getElements(start,  end,  timezone,  callback) {
+            $.each(result, function(index, element) {
+                events.push({
+                    title: element,
+                    start: element
+                });
+            });
+            callback(events);
+        }
+
+        $(document).ready(function() {
+            // page is now ready, initialize the calendar...
+
+            $('#calendar').fullCalendar({
+
+                eventClick: function(calEvent, jsEvent, view) {
+                    alert('Event: ' + calEvent.title);
+
+                    // change the border color just for fun
+                    $(this).css('border-color', 'red');
+
+                },
+
+                events: function(start, end, timezone, callback) {
+                    getElements(start, end, timezone, callback);
+                }
                 })
-
             });
     </script>
 
@@ -96,7 +134,7 @@
 
 
             <div class="row col-lg-12" id="calenderDiv" style="display: none;">
-                <div class="col-lg-4 offset-lg-4">
+                <div class="col-lg-8 offset-2">
                     <div id="calendar"></div>
                 </div>
             </div>
