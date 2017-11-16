@@ -106,15 +106,7 @@ public class AdminController extends Controller{
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
             List<User> manager = uRepo.getAllManagers();
 
-<<<<<<< HEAD
             Map<String, String> managerInfo = mapManager(manager);
-=======
-            Map<String, String> managerInfo = new HashMap<>();
-
-            for(User m : manager){
-                managerInfo.put(m.getId(), m.getEmail());
-            }
->>>>>>> master
             return ok(accountcreation.render("Account Creation",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, managerInfo));
         }
@@ -127,7 +119,7 @@ public class AdminController extends Controller{
 
         Map<String, String> managerMap = new HashMap<>();
         for(User m : managers){
-            managerMap.put(m.get_id(), m.getEmail());
+            managerMap.put(m.getId(), m.getEmail());
         }
 
         return managerMap;
