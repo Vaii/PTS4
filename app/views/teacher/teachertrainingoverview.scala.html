@@ -29,6 +29,7 @@
             // Loop through the elements in the object array and create events.
             // For events see : https://fullcalendar.io/docs/event_data/Event_Object/
             function getElements(start, end, timezone, callback) {
+                events = [];
                 $.each(dateJson, function (index, element) {
                     // Create date according to ISO 8601 standard.
                     // See: https://en.wikipedia.org/wiki/ISO_8601
@@ -48,9 +49,12 @@
                 callback(events);
             }
 
+            function deleteEvents() {
+                $("#calendar").fullCalendar('removeEvents');
+            }
+
             $(document).ready(function () {
                 // page is now ready, initialize the calendar...
-
                 $('#calendar').fullCalendar({
 
                     // Event that fires on an event click.
