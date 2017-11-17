@@ -12,7 +12,6 @@
     </head>
 
     <script>
-
             function unescapeHTML(string) {
                 var elt = document.createElement("span");
                 elt.innerHTML = string;
@@ -23,8 +22,6 @@
             dateJson = JSON.parse(unescapeHTML(dateJson));
 
             console.log(JSON.stringify(dateJson, null , 4));
-
-
 
             var events = [];
 
@@ -46,13 +43,10 @@
 
             $(document).ready(function () {
                 // page is now ready, initialize the calendar...
-
                 $('#calendar').fullCalendar({
-
                     eventClick: function (calEvent, jsEvent, view) {
-                        alert('Event    : ' + calEvent.title + '\n' + 'Starts at: ' + calEvent.start.toLocaleString() + '\n' + 'Ends at  : ' + calEvent.end.toLocaleString());
+                        alert('Event    : ' + calEvent.title + '\n' + 'Begint op: ' + calEvent.start.toLocaleString() + '\n' + 'Eindigd op  : ' + calEvent.end.toLocaleString());
                     },
-
                     events: function (start, end, timezone, callback) {
                         getElements(start, end, timezone, callback);
                     }
@@ -64,10 +58,10 @@
         <div class="row">
         @if(!trainings.isEmpty()) {
             <div class=" row col-lg-12">
-                <div class="col-lg-10">
+                <div class="col-lg-9">
                     <h1>Rooster</h1>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <a><i class="fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
                     <label class="switch toggle" id="calSwitch">
                         <input type="checkbox" onclick="showDiv()">
@@ -134,7 +128,7 @@
 
 
             <div class="row col-lg-12" id="calenderDiv" style="display: none;">
-                <div class="col-lg-8 offset-2">
+                <div class="col-lg-10 offset-1">
                     <div id="calendar"></div>
                 </div>
             </div>
