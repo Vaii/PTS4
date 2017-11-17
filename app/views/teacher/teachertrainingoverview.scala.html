@@ -13,34 +13,38 @@
 
     <script>
 
+            // Get rid of those weird quotation things.
             function unescapeHTML(string) {
                 var elt = document.createElement("span");
                 elt.innerHTML = string;
                 return elt.innerText;
             }
 
+            // Create object array from the JsonNode.
             var dateJson = "@dates";
             dateJson = JSON.parse(unescapeHTML(dateJson));
 
-            console.log(JSON.stringify(dateJson, null , 4));
-
-
-
             var events = [];
 
+            // Loop through the elements in the object array and create events.
+            // For events see : https://fullcalendar.io/docs/event_data/Event_Object/
             function getElements(start, end, timezone, callback) {
                 $.each(dateJson, function (index, element) {
+                    // Create date according to ISO 8601 standard.
+                    // See: https://en.wikipedia.org/wiki/ISO_8601
                     var startDate = new Date(element.date.date);
-                    console.log('old date: ' +  startDate);
                     var endDate = new Date();
+
+                    // Add the duration to find the end date.
                     endDate.setDate(startDate.getDate() + parseInt(element.date.duration));
-                    console.log('new date: ' + endDate);
+                    // Set all event properties and push it to the calendar.
                     events.push({
                         title: element.training.name,
                         start: startDate,
                         end: endDate
                     });
                 });
+                // Callback to the calendar.
                 callback(events);
             }
 
@@ -49,10 +53,13 @@
 
                 $('#calendar').fullCalendar({
 
+                    // Event that fires on an event click.
+                    // For more information on the event see: https://fullcalendar.io/docs/mouse/eventClick/
                     eventClick: function (calEvent, jsEvent, view) {
                         alert('Event    : ' + calEvent.title + '\n' + 'Starts at: ' + calEvent.start.toLocaleString() + '\n' + 'Ends at  : ' + calEvent.end.toLocaleString());
                     },
 
+                    // Set elements in the calendar.
                     events: function (start, end, timezone, callback) {
                         getElements(start, end, timezone, callback);
                     }
