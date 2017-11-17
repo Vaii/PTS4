@@ -5,10 +5,10 @@
 
 @shared.main(page, isLoggedIn, User) {
     <head>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/fullcalendar.css")">
-    <script src="@routes.Assets.at("/javascripts/showDiv.js")"></script>
-    <script src="@routes.Assets.at("/javascripts/fullcalendar.js")"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/fullcalendar.css")">
+        <script src="@routes.Assets.at("/javascripts/showDiv.js")"></script>
+        <script src="@routes.Assets.at("/javascripts/fullcalendar.js")"></script>
     </head>
 
     <script>
@@ -22,40 +22,40 @@
             var dateJson = "@dates";
             dateJson = JSON.parse(unescapeHTML(dateJson));
 
-            console.log(JSON.stringify(dateJson, null, 4));
+            console.log(JSON.stringify(dateJson, null , 4));
 
-            var result = dateJson.map(a => a.date);
-            result = result.map(a => a.date);
-            console.log(result);
 
-        var events = [];
 
-        function getElements(start,  end,  timezone,  callback) {
-            $.each(result, function(index, element) {
-                events.push({
-                    title: element,
-                    start: element
+            var events = [];
+
+            function getElements(start, end, timezone, callback) {
+                $.each(dateJson, function (index, element) {
+                    var startDate = new Date(element.date.date);
+                    console.log('old date: ' +  startDate);
+                    var endDate = new Date();
+                    endDate.setDate(startDate.getDate() + parseInt(element.date.duration));
+                    console.log('new date: ' + endDate);
+                    events.push({
+                        title: element.training.name,
+                        start: startDate,
+                        end: endDate
+                    });
                 });
-            });
-            callback(events);
-        }
+                callback(events);
+            }
 
-        $(document).ready(function() {
-            // page is now ready, initialize the calendar...
+            $(document).ready(function () {
+                // page is now ready, initialize the calendar...
 
-            $('#calendar').fullCalendar({
+                $('#calendar').fullCalendar({
 
-                eventClick: function(calEvent, jsEvent, view) {
-                    alert('Event: ' + calEvent.title);
+                    eventClick: function (calEvent, jsEvent, view) {
+                        alert('Event    : ' + calEvent.title + '\n' + 'Starts at: ' + calEvent.start.toLocaleString() + '\n' + 'Ends at  : ' + calEvent.end.toLocaleString());
+                    },
 
-                    // change the border color just for fun
-                    $(this).css('border-color', 'red');
-
-                },
-
-                events: function(start, end, timezone, callback) {
-                    getElements(start, end, timezone, callback);
-                }
+                    events: function (start, end, timezone, callback) {
+                        getElements(start, end, timezone, callback);
+                    }
                 })
             });
     </script>
@@ -68,12 +68,12 @@
                     <h1>Rooster</h1>
                 </div>
                 <div class="col-lg-2">
-                            <a><i class="fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
-                            <label class="switch toggle" id="calSwitch">
-                                <input type="checkbox" onclick="showDiv()">
-                                <span class="slider round"> </span>
-                            </label>
-                            <a><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></a>
+                    <a><i class="fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
+                    <label class="switch toggle" id="calSwitch">
+                        <input type="checkbox" onclick="showDiv()">
+                        <span class="slider round"> </span>
+                    </label>
+                    <a><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></a>
                 </div>
             </div>
 
