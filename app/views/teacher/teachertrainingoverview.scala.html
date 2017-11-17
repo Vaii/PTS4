@@ -18,35 +18,49 @@
                 return elt.innerText;
             }
 
+            // Create object array from the JsonNode.
             var dateJson = "@dates";
             dateJson = JSON.parse(unescapeHTML(dateJson));
-
             console.log(JSON.stringify(dateJson, null , 4));
 
             var events = [];
 
+            // Loop through the elements in the object array and create events.
+            // For events see : https://fullcalendar.io/docs/event_data/Event_Object/
             function getElements(start, end, timezone, callback) {
+                events = [];
                 $.each(dateJson, function (index, element) {
+                    // Create date according to ISO 8601 standard.
+                    // See: https://en.wikipedia.org/wiki/ISO_8601
                     var startDate = new Date(element.date.date);
-                    console.log('old date: ' +  startDate);
                     var endDate = new Date();
+
+                    // Add the duration to find the end date.
                     endDate.setDate(startDate.getDate() + parseInt(element.date.duration));
-                    console.log('new date: ' + endDate);
+                    // Set all event properties and push it to the calendar.
                     events.push({
                         title: element.training.name,
                         start: startDate,
                         end: endDate
                     });
                 });
+                // Callback to the calendar.
                 callback(events);
+            }
+
+            function deleteEvents() {
+                $("#calendar").fullCalendar('removeEvents');
             }
 
             $(document).ready(function () {
                 // page is now ready, initialize the calendar...
                 $('#calendar').fullCalendar({
+                    // Event that fires on an event click.
+                    // For more information on the ev>>>>>>> 8ea9907e33358b983ce0fbf1a6a167fc1164f648
                     eventClick: function (calEvent, jsEvent, view) {
                         alert('Event    : ' + calEvent.title + '\n' + 'Begint op: ' + calEvent.start.toLocaleString() + '\n' + 'Eindigd op  : ' + calEvent.end.toLocaleString());
                     },
+                    // Set elements in the calendar.
                     events: function (start, end, timezone, callback) {
                         getElements(start, end, timezone, callback);
                     }
