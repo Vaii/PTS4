@@ -81,7 +81,7 @@
 
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profiel</a>
-                                <a class="dropdown-item" href="@routes.TrainingController.overview()"><i class="fa fa-table fa-fw" aria-hidden="true"></i> Mijn Trainingen</a>
+                                <a class="dropdown-item" href="@routes.TrainingController.personalOverview()"><i class="fa fa-table fa-fw" aria-hidden="true"></i> Mijn Trainingen</a>
                                 @if(user.getRole.equals(Role.DOCENT)){
                                     <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> Rooster</a>
                                 }

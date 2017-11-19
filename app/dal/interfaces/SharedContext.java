@@ -3,6 +3,7 @@ package dal.interfaces;
 import models.storage.Training;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SharedContext {
     /**
@@ -27,4 +28,12 @@ public interface SharedContext {
      * @return A list of trainings the teacher signed up for.
      */
     List<Training> getTrainingsForTeacher(String userId);
+
+
+    /**
+     * Get a list containing all trainings a user is signed up for including category.
+     * @param userId the id of the teacher.
+     * @return A list of categories and size.
+     */
+    Map<String, Integer> getTrainingFrequencies(String userId);
 }

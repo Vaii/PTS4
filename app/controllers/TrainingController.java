@@ -203,6 +203,43 @@ public class TrainingController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
+    public Result personalOverview() {
+        return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()) ,new ArrayList<>(), null,
+                TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result personalOverviewCategory(String category) {
+        if(category == null) {
+            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()),new ArrayList<>(), null,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+        } else {
+            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+        }
+
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result personalTrainingOverview(String category, String id) {
+        if (id == null) {
+            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+        } else {
+            Training t = trainingRepo.getTraining(id);
+
+            List<ViewDate> viewDates = new ArrayList<>();
+            getDatesIds(id);
+            createViewDates(t, viewDates);
+
+            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
+        }
+    }
+
+
+
+    @Security.Authenticated(Secured.class)
     public Result manage() {
         return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
     }
