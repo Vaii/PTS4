@@ -7,8 +7,11 @@
     <head>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/fullcalendar.css")">
+        <link rel="stylesheet" media="screen" href="http://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.css">
         <script src="@routes.Assets.at("/javascripts/showDiv.js")"></script>
         <script src="@routes.Assets.at("/javascripts/fullcalendar.js")"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.js"></script>
     </head>
 
     <script>
@@ -41,7 +44,8 @@
                     events.push({
                         title: element.training.name,
                         start: startDate,
-                        end: endDate
+                        end: endDate,
+                        description : element.training.description
                     });
                 });
                 // Callback to the calendar.
@@ -56,9 +60,16 @@
                 // page is now ready, initialize the calendar...
                 $('#calendar').fullCalendar({
                     // Event that fires on an event click.
-                    // For more information on the ev>>>>>>> 8ea9907e33358b983ce0fbf1a6a167fc1164f648
-                    eventClick: function (calEvent, jsEvent, view) {
-                        alert('Event    : ' + calEvent.title + '\n' + 'Begint op: ' + calEvent.start.toLocaleString() + '\n' + 'Eindigd op  : ' + calEvent.end.toLocaleString());
+                    // For more information on the event see:
+                    eventRender: function (event, element) {
+                        element.qtip({
+                            content: event.title + "<br><br>" + " From: " + event.start.format('MMM Do h:mm A') +"<br>" + " untill: " + event.end.format('MMM Do h:mm A') + "<br><br>" + event.description,
+                            style: {classes: 'qtip-light'},
+                            position: {
+                                my: 'top right',  // Position my top left...
+                                at: 'bottom right', // at the bottom right of...
+                            }
+                        })
                     },
                     // Set elements in the calendar.
                     events: function (start, end, timezone, callback) {
@@ -67,6 +78,14 @@
                 })
             });
     </script>
+
+    <div id="eventContent" title="Event Details" style="display:none;">
+        Start: <span id="startTime"></span><br>
+        End: <span id="endTime"></span><br><br>
+        <p id="eventInfo"></p>
+        <p><strong><a id="eventLink" href="" target="_blank">Read More</a></strong></p>
+    </div>
+
 
     <div class="container">
         <div class="row">
@@ -151,7 +170,8 @@
             <div class="col-lg-4 offset-lg-4 label"><p>U heeft momenteel geen trainingen.</p></div>
         }
         </div>
-    </div>
 
+
+    </div>
 }
 
