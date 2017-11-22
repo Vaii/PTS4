@@ -24,3 +24,8 @@ h1 {
 .invalid input:focus:invalid {
     border-color: red;
 }
+
+.category-box {
+    overflow:hidden;
+    text-overflow: ellipsis;
+}

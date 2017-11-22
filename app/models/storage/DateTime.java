@@ -6,10 +6,7 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class DateTime {
     // Mongo DB identifiers.
@@ -162,6 +159,13 @@ public class DateTime {
         co.setTime(other.getDate());
         co.add(Calendar.DATE, (int) other.getDuration());
         Date otherEndDate = co.getTime();
+
+        // Make sure we are not comparing to ourselves.
+        if(this._id != null && other.getId() != null) {
+            if(Objects.equals(this._id, other._id)) {
+                return null;
+            }
+        }
 
         if(other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
                 otherEndDate.after(this.date) && otherEndDate.before(myEndDate) ||

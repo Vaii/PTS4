@@ -13,8 +13,10 @@ public class OverlapChecker {
         List<DateTime> dateTimes;
         dateTimes =  dateRepo.getDateTimeForUser(userId);
 
-        if(other.checkOverlap(dateTimes) != null) {
-            return other.checkOverlap(dateTimes);
+        DateTime dateError = other.checkOverlap(dateTimes);
+
+        if(dateError != null) {
+            return dateError;
         }
 
         return null;
@@ -24,8 +26,10 @@ public class OverlapChecker {
         List<DateTime> dateTimes;
         dateTimes = dateRepo.getDateTimeForTeacher(teacherId);
 
-        if(other.checkOverlap(dateTimes) != null) {
-            return other.checkOverlap(dateTimes);
+        DateTime errorDate = other.checkOverlap(dateTimes);
+
+        if(errorDate != null) {
+            return errorDate;
         }
 
         return null;

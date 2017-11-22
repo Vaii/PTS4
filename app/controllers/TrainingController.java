@@ -65,10 +65,7 @@ public class TrainingController extends Controller {
                 return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id) , trainingRepo.getTraining(trainingID), tuitionFormForm));
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
-
-                OverlapChecker checker = new OverlapChecker();
-
-                DateTime overlapError = checker.checkOverlapForTrainee(signUpDate, Secured.getUserInfo(ctx()).getId());
+                DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
 
                 if(overlapError != null) {
                     return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
@@ -94,6 +91,11 @@ public class TrainingController extends Controller {
             tutRepo.addForm(filledForm);
 
             DateTime signUpDate = dateRepo.getDateTime(id);
+            DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
+            if(overlapError != null) {
+                return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
+            }
+
             signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
             dateRepo.updateDateTime(signUpDate);
             return ok(message.render("Inschrijving ingediend", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
@@ -127,6 +129,8 @@ public class TrainingController extends Controller {
         List<String> dates = getValues(trainingData, "Date");
         List<String> locationIDs = getValues(trainingData, LOCATION);
         List<String> teacherIDs = getValues(trainingData, TEACHER);
+        ArrayList<DateTime> dateTimes = new ArrayList<>();
+
 
         if (form.hasErrors()) {
             return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), ADDTRAINING, locationRepo.getAll(), userRepo.getAllTeachers(), locationJson, teacherJson));
@@ -142,15 +146,26 @@ public class TrainingController extends Controller {
             List<String> dateIDs = createDates(dates, locationIDs, teacherIDs, training.getDuration());
             training.setDateIds(dateIDs);
 
-            trainingRepo.addTraining(training);
-            Training t = trainingRepo.getTraining(training.getTrainingCode());
+            DateTime overlapError;
 
             for(String dateId : dateIDs) {
                 DateTime date = dateRepo.getDateTime(dateId);
+                dateTimes.add(date);
+                overlapError = detectedOverlap(date, OverlapType.TEACHER);
+                if (overlapError != null) {
+                    for(String dateID : dateIDs) {
+                        dateRepo.removeDateTime(dateID);
+                    }
+                    return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), date, overlapError, "/overview"));
+                }
+            }
+            trainingRepo.addTraining(training);
+            Training t = trainingRepo.getTraining(training.getTrainingCode());
+
+            for(DateTime date : dateTimes) {
                 date.setTrainingID(t.getId());
                 dateRepo.updateDateTime(date);
             }
-
             return ok(message.render(TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + t.getName() + " is aangemaakt", "/managetraining"));
         }
     }
@@ -179,6 +194,8 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
+            getDatesIds(id);
+            createViewDates(t, viewDates);
 
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
@@ -271,7 +288,7 @@ public class TrainingController extends Controller {
 
             List<String> requestDateIDs = new ArrayList<>();
             for(int i = 0; i < 50; i++) {
-                String d = trainingData.field("DateIDs[" + i + "]").value();
+                String d = trainingData.field("dateIds[" + i + "]").value();
                 if(d == null) {
                     break;
                 }
@@ -288,7 +305,13 @@ public class TrainingController extends Controller {
                 for(int i = beginIndex; i < dates.size(); i++) {
                     Date date = format.parse(dates.get(i));
                     DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
+
+                    DateTime overlapError= detectedOverlap(dt, OverlapType.TEACHER);
+                    if(overlapError != null){
+                        return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, overlapError, "/overview"));
+                    }
                     dt.setTrainingID(training.getId());
+
                     String lastId = dateRepo.addDateTime(dt).toString();
                     training.addDateID(lastId);
                 }
@@ -328,7 +351,7 @@ public class TrainingController extends Controller {
     private List<String> getLocations(DynamicForm trainingData) {
         List<String> locations = new ArrayList<>();
         for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("LocationID[" + i + "]").value();
+            String d = trainingData.field("locationId[" + i + "]").value();
             if(d == null) {
                 break;
             }
@@ -341,7 +364,7 @@ public class TrainingController extends Controller {
     private List<String> getDates(DynamicForm trainingData) {
         List<String> dates = new ArrayList<>();
         for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("Dates[" + i + "]").value();
+            String d = trainingData.field("dates[" + i + "]").value();
             if(d == null) {
                 break;
             }
@@ -354,7 +377,7 @@ public class TrainingController extends Controller {
     private List<String> getTeachers(DynamicForm trainingData) {
         List<String> teachers = new ArrayList<>();
         for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("TeacherID[" + i + "]").value();
+            String d = trainingData.field("teacherId[" + i + "]").value();
             if(d == null) {
                 break;
             }
@@ -366,6 +389,7 @@ public class TrainingController extends Controller {
 
     private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
         List<String> dateIDs = new ArrayList<>();
+        String lastId ;
 
         int counter = 0;
 
@@ -373,7 +397,7 @@ public class TrainingController extends Controller {
             DateFormat format = new SimpleDateFormat(DATEFORMAT);
             Date date = format.parse(d);
             DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter), duration);
-            String lastId = dateRepo.addDateTime(dt).toString();
+            lastId = dateRepo.addDateTime(dt).toString();
             dateIDs.add(lastId);
             counter++;
         }
@@ -450,5 +474,16 @@ public class TrainingController extends Controller {
         }
     }
 
+    private DateTime detectedOverlap(DateTime signUpDate, OverlapType type){
+        OverlapChecker checker = new OverlapChecker();
+        DateTime overlapError;
+        if (type == OverlapType.STUDENT){
+            overlapError = checker.checkOverlapForTrainee(signUpDate, Secured.getUserInfo(ctx()).getId());
+        }
+        else{
+            overlapError = checker.checkOverlapForTeacher(signUpDate, signUpDate.getTeacherID());
+        }
+        return overlapError;
+    }
 }
 
