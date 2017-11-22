@@ -18,17 +18,28 @@
             @b4.form(routes.TrainingController.signUpEmployee(date.getId(), Training.getId())) {
 
                 @helper.CSRF.formField
-                <div class="col-lg-12">@b4.text(form("manager"), '_label -> "Manager email", 'class -> "", 'placeholder -> "frank@infosupport.nl")</div>
-                <div class="col-lg-12">@b4.text(form("employee"), '_label -> "Email medewerker", 'class -> "", 'value -> User.getEmail, 'readonly -> "true")</div>
-                <div class="col-lg-12">@b4.text(form("training"), '_label -> "Training Code", 'class -> "", 'value -> Training.getTrainingCode, 'readonly -> "true")</div>
-                <div class="col-lg-12">@b4.date(form("companyJoinDate"), '_label -> "Datum in dienst", 'class -> "")</div>
-                <div class="col-lg-12">@b4.text(form("reasonForCourse"), '_label -> "Reden voor training", 'class -> "")</div>
-                <div class="col-lg-12">@b4.number(form("studyCosts"), '_label -> "Prijs", 'class -> "", 'value -> Training.getTuition, 'readonly -> "true")</div>
-                <div class="col-lg-12">@b4.number(form("examinationFees"), '_label -> "Examen kosten", 'class -> "")</div>
-                <div class="col-lg-12">@b4.number(form("transportCosts"), '_label -> "Reiskosten", 'class -> "")</div>
-                <div class="col-lg-12">@b4.number(form("accommodationCosts"), '_label -> "Accomodatie kosten", 'class -> "")</div>
-                <div class="col-lg-12">@b4.number(form("extraCosts"), '_label -> "Extra Kosten", 'class -> "")</div>
-                <div class="col-lg-12">@b4.select(form("category"), options(TuitionCategory.values().toSeq.map(_.toString())), '_label -> "Categorie", 'class -> "")</div>
+                <div class="col-lg-12">@b4.text(form("Manager"), '_label -> "Manager email", 'class -> "", 'placeholder -> "frank@infosupport.nl")</div>
+                <div class="col-lg-12">@b4.text(form("Employee"), '_label -> "Email medewerker", 'class -> "", 'value -> User.getEmail, 'readonly -> "true")</div>
+                <div class="col-lg-12">@b4.text(form("Training"), '_label -> "Training Code", 'class -> "", 'value -> Training.getTrainingCode, 'readonly -> "true")</div>
+                <div class="col-lg-12">@b4.date(form("CompanyJoinDate"), '_label -> "Datum in dienst", 'class -> "")</div>
+                <div class="col-lg-12">@b4.text(form("ReasonForCourse"), '_label -> "Reden voor training", 'class -> "")</div>
+                <div class="col-lg-12">@b4.number(form("StudyCosts"), '_label -> "Prijs", 'class -> "", 'value -> Training.getTuition, 'readonly -> "true")</div>
+                <div class="col-lg-12">@b4.number(form("ExaminationFees"), '_label -> "Examen kosten", 'class -> "")</div>
+                <div class="col-lg-12">@b4.number(form("TransportCosts"), '_label -> "Reiskosten", 'class -> "")</div>
+                <div class="col-lg-12">@b4.number(form("AccommodationCosts"), '_label -> "Accomodatie kosten", 'class -> "")</div>
+                <div class="col-lg-12">@b4.number(form("ExtraCosts"), '_label -> "Extra Kosten", 'class -> "")</div>
+
+                <div class="form-group   " id="Category_field">
+                <div class="col-lg-12">
+                    <label class="from-control-label" for="Category">Categorie</label>
+                <select id="Category" name="Category" class="form-control category-box">
+                @for(cat <- TuitionCategory.values()){
+                    <option value="@cat.name()">@cat.getValue</option>
+                }
+                </select>
+                </div>
+                </div>
+
                 <div class="col-lg-12">@b4.submit('class -> "btn btn-primary") { Aanvraag indienen}</div>
                 <br/>
             }
