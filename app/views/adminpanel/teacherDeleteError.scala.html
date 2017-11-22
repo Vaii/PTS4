@@ -1,0 +1,36 @@
+@import models.storage.User
+@import models.view.ViewDate
+@(title: String, isLoggedIn: Boolean, User: User, DateTimes :List[ViewDate])
+
+@shared.main(title, isLoggedIn, User) {
+    <!--
+        Use this page for single message pages that require a redirect.
+        The parameter 'Message' is what is shown on the page.
+        The parameter 'URL' is where you want to go after the message.
+        The URL parameter follows the routes files convention. I.E:
+        "/Contact" will redirect to the Contact view.
+        "/account/register" will redirect to the Register view
+
+    -->
+    <head>
+        <title>@title</title>
+
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/message.css")">
+        <link rel="shortcut icon" type="image/ico" href="@routes.Assets.at("images/favicon.ico")">
+    </head>
+
+    <div class="container">
+
+        <h1>Docent kan niet worden verwijderd</h1>
+
+        <p>Deze docent kan niet worden verwijderd want deze is ingepland op de volgende datums:<p>
+        @for(date <- DateTimes) {
+            <p>@date.getDateString</p>
+        }
+
+        <p>Vervang deze docent eerst door een ander om deze te kunnen verwijderen.</p>
+
+        <a class="btn btn-link" href="@routes.AdminController.accountSelector()"> Terug naar account beheer</a>
+    </div>
+}

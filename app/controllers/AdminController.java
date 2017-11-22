@@ -4,9 +4,11 @@ import dal.contexts.DateTimeMongoContext;
 import dal.contexts.UserMongoContext;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.UserRepository;
+import models.storage.DateTime;
 import models.storage.Role;
 import models.storage.Secured;
 import models.storage.User;
+import models.util.DateConverter;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -17,6 +19,7 @@ import views.html.adminpanel.accountcreation;
 import views.html.shared.message;
 import views.html.adminpanel.manageaccount;
 import views.html.adminpanel.accountSelector;
+import views.html.adminpanel.teacherDeleteError;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -43,10 +46,20 @@ public class AdminController extends Controller{
 
     public Result removeUser(String id){
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
-            uRepo.removeUser(uRepo.getUserByID(id)); // Remove user from user table.
-            dRepo.removeUser(id); // Remove user from possible trainee fields.
-
-            dRepo.removeTeacher(id); // Remove user as teacher, Won't break if the user is not a teacher.
+            User userToRemove = uRepo.getUserByID(id);
+            if(userToRemove.getRole().equals(Role.DOCENT)) {
+                List<DateTime> dates = dRepo.getDateTimeForTeacher(userToRemove.getId());
+                if(!dates.isEmpty()) {
+                    // Teacher still has dates assigned to him, cancel the delete operation.
+                    DateConverter converter = new DateConverter();
+                    converter.convert(dates);
+                    return ok(teacherDeleteError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
+                            ,converter.convert(dates)));
+                } else {
+                    uRepo.removeUser(userToRemove); // Remove user from user table.
+                    dRepo.removeUser(id); // Remove user from possible trainee fields.
+                }
+            }
 
             return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
                         ,"Account succesvol verwijderd", "/admin"  ));
