@@ -19,6 +19,7 @@
                 <tr>@b4.text(form("firstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</tr>
                 <tr>@b4.text(form("lastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
                 <tr>@b4.number(form("phoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
+                <tr>@b4.select(form("manager"), options(managers), '_label -> "Manager", '_default -> "Selecteer een manager")</tr>
                 <tr>@b4.text(form("company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'readonly -> "true", 'value -> "InfoSupport")</tr>
                 <tr>@b4.select(form("role"), options(Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</tr>
                 <tr>@b4.password(form("password"), '_label -> "Wachtwoord", 'required -> "required")</tr>
