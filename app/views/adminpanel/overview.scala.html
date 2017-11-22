@@ -3,12 +3,25 @@
 
 @shared.main(page, isLoggedIn, User) {
     <div class="container">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
-
-        <p>Om een nieuwe account aan te maken klik hier</p>
-        <a href="@routes.AdminController.creationPage()" class="btn btn-primary">Nieuwe accounts</a>
-
-        <p>Om een account te beheren klik hier onder</p>
-        <a href="@routes.AdminController.accountSelector()" class="btn btn-primary">Account wijzigen</a>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/adminoverview.css")">
+            <div class="col-lg-6 offset-lg-3 row">
+                <h1>
+                    Account Beheer
+                </h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>
+                        Klik op "Nieuwe Accounts" om een nieuwe account toe te voegen.
+                    </p>
+                    <a href="@routes.AdminController.creationPage()" class="btn btn-success">Nieuwe accounts</a>
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        Klik op  Account wijzigen om een bestaande account aan te passen.
+                    </p>
+                    <a href="@routes.AdminController.accountSelector()" class="btn btn-warning">Account wijzigen</a>
+                </div>
+            </div>
     </div>
 }
