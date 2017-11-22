@@ -23,6 +23,9 @@ import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -35,7 +38,7 @@ public class TrainingController extends Controller {
     private static final String TEACHER = "Teacher";
     private static final String TRAININGCODE = "trainingCode";
     private static final String TRAININGEN = "Trainingen";
-    private static final String DATEFORMAT = "yyyy-MM-dd";
+    private static final String DATEFORMAT = "yyyy-MM-dd HH:mm";
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
@@ -194,7 +197,7 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-            getDatesIds(id);
+
             createViewDates(t, viewDates);
 
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
@@ -231,9 +234,6 @@ public class TrainingController extends Controller {
 
             Training t = trainingRepo.getTraining(id);
             List<ViewDate> viewDates = new ArrayList<>();
-
-            getDatesIds(id);
-
 
             createViewDates(t, viewDates);
 
@@ -303,8 +303,10 @@ public class TrainingController extends Controller {
                 DateFormat format = new SimpleDateFormat(DATEFORMAT);
 
                 for(int i = beginIndex; i < dates.size(); i++) {
-                    Date date = format.parse(dates.get(i));
-                    DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
+                   // Date date = format.parse(dates.get(i));
+                    Instant instant = Instant.parse(dates.get(i));
+                    LocalDateTime localDate = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+                    DateTime dt = new DateTime(localDate, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
 
                     DateTime overlapError= detectedOverlap(dt, OverlapType.TEACHER);
                     if(overlapError != null){
@@ -395,31 +397,16 @@ public class TrainingController extends Controller {
 
         for(String d : dates) {
             DateFormat format = new SimpleDateFormat(DATEFORMAT);
-            Date date = format.parse(d);
-            DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter), duration);
+           // Date date = format.parse(d);
+            Instant instant = Instant.parse(d);
+            LocalDateTime localDate = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+            DateTime dt = new DateTime(localDate, locationIDs.get(counter), teacherIDs.get(counter), duration);
             lastId = dateRepo.addDateTime(dt).toString();
             dateIDs.add(lastId);
             counter++;
         }
 
         return dateIDs;
-    }
-
-    private void getDatesIds(String id) {
-        Training t = trainingRepo.getTraining(id);
-
-        List<ViewDate> viewDates = new ArrayList<>();
-
-        int counter = 0;
-        for (String dateTime : t.getDateIds()) {
-            DateTime d = dateRepo.getDateTime(dateTime);
-
-            Location loc = locationRepo.getLocation(d.getLocationID());
-            User teacher = userRepo.getUserByID(d.getTeacherID());
-            ViewDate vd = new ViewDate(t.getDateIds().get(counter), d.getDate(), loc, teacher);
-            viewDates.add(vd);
-            counter++;
-        }
     }
 
     @Security.Authenticated(Secured.class)
@@ -462,9 +449,10 @@ public class TrainingController extends Controller {
                     DateTime dt = dateRepo.getDateTime(d);
 
                     DateFormat df = new SimpleDateFormat(DATEFORMAT);
-                    Date date = df.parse(dates.get(j));
+                   // Date date = df.parse(dates.get(j));
+                    Instant instant = Instant.parse(dates.get(j));
 
-                    dt.setDate(date);
+                    dt.setDate(Date.from(instant));
                     dt.setLocationID(locationIDs.get(j));
                     dt.setTeacherID(teacherIDs.get(j));
                     dateRepo.updateDateTime(dt);

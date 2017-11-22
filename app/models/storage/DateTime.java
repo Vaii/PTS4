@@ -6,6 +6,8 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 public class DateTime {
@@ -56,15 +58,17 @@ public class DateTime {
         this.duration = duration;
     }
 
-    public DateTime(Date date, String locationId, String teacherId){
-        this.date = date;
+    public DateTime(LocalDateTime date, String locationId, String teacherId){
+        Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+        this.date = convertedDate;
         this.locationID = locationId;
         this.teacherID = teacherId;
         trainees = new ArrayList<>();
     }
 
-    public DateTime(Date date, String locationId, String teacherId, float duration) {
-        this.date = date;
+    public DateTime(LocalDateTime date, String locationId, String teacherId, float duration) {
+        Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+        this.date = convertedDate;
         this.locationID = locationId;
         this.teacherID = teacherId;
         this.duration = duration;

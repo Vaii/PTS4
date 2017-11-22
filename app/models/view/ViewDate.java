@@ -6,6 +6,7 @@ import models.storage.User;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ViewDate {
     private String dateId;
@@ -27,7 +28,7 @@ public class ViewDate {
     }
 
     public String getDateString() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return df.format(this.date);
     }
 
