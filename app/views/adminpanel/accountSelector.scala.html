@@ -8,7 +8,7 @@
     </head>
     <script>
             $(document).ready(function () {
-                $('.btn-danger').on('click', function (e) {
+                $('.btn-outline-danger').on('click', function (e) {
                     e.preventDefault(); // Prevent the href from redirecting directly
                     var linkURL = $(this).attr("href");
                     warnBeforeRedirect(linkURL);
@@ -24,8 +24,6 @@
                     }).then((willDelete) => {
                         if (willDelete) {
                             window.location.href = linkURL;
-                        } else {
-                            swal("Account niet verwijderd!");
                         }
                     });
                 }
