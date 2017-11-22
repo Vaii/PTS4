@@ -2,10 +2,50 @@
 @(page: String, isLoggedIn: Boolean, User: User, Users: List[User])
 
 @shared.main(page, isLoggedIn, User) {
+
+    <head>
+            <!--Sweet alert, more information: https://sweetalert.js.org/guides/  -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </head>
+
+    <script>
+
+            $(document).ready(function () {
+                $('.btn-danger').on('click', function (e) {
+                    e.preventDefault(); // Prevent the href from redirecting directly
+                    var linkURL = $(this).attr("href");
+                    warnBeforeRedirect(linkURL);
+                });
+
+                function warnBeforeRedirect(linkURL) {
+                    swal({
+                        title: "Verwijderen?",
+                        text: "Een verwijderde account kan niet teruggehaald worden!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            window.location.href = linkURL;
+                        } else {
+                            swal("Account niet verwijderd!");
+                        }
+                    });
+                }
+
+            });
+    </script>
+
+
     <div class="container">
-        @for( x <- Users){
-            <div class="col-lg-12"><a href="@routes.AdminController.manageAccount(x.getEmail())"> @x.getEmail()</a><a href="@routes.AdminController.removeUser(x.getId())" class="btn btn-danger">
+    @for(x <- Users) {
+        <div class="col-lg-12"><a href="@routes.AdminController.manageAccount(x.getEmail())"> @x.getEmail()</a>
+            <a id="removeUser" href="@routes.AdminController.removeUser(x.getId())" class="btn btn-danger">
                                         Verwijderen</a></div>
-        }
+
+
+    }
     </div>
+
+
 }

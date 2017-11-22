@@ -178,6 +178,7 @@
     <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.11.8:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-stm:scala-stm_2.11:0.8:jar" level="project" />
     <orderEntry type="library" name="SBT: com.adrianhurt:play-bootstrap-core_2.11:1.2-P26:jar" level="project" />
+    <orderEntry type="library" name="popper" level="application" />
   </component>
   <component name="sonarModuleSettings">
     <option name="localAnalysisScripName" value="&lt;PROJECT&gt;" />
