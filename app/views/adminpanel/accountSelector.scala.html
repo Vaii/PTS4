@@ -2,7 +2,39 @@
 @(page: String, isLoggedIn: Boolean, User: User, Users: List[User])
 
 @shared.main(page, isLoggedIn, User) {
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/accountmanagement.css")">
+    <head>
+            <!--Sweet alert, more information: https://sweetalert.js.org/guides/  -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/accountmanagement.css")">
+    </head>
+
+    <script>
+
+            $(document).ready(function () {
+                $('.btn-danger').on('click', function (e) {
+                    e.preventDefault(); // Prevent the href from redirecting directly
+                    var linkURL = $(this).attr("href");
+                    warnBeforeRedirect(linkURL);
+                });
+
+                function warnBeforeRedirect(linkURL) {
+                    swal({
+                        title: "Verwijderen?",
+                        text: "Een verwijderde account kan niet teruggehaald worden!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            window.location.href = linkURL;
+                        } else {
+                            swal("Account niet verwijderd!");
+                        }
+                    });
+                }
+
+            });
+    </script>
     <div class="container">
         <div class="row offset-lg-3">
             <h1>Account Beheren</h1>
@@ -30,5 +62,3 @@
             </div>
 
         }
-    </div>
-}

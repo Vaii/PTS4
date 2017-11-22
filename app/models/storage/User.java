@@ -129,6 +129,6 @@ public class User {
     }
 
     public void setManager(String manager) {
-        manager = manager;
+        this.manager = manager;
     }
 }

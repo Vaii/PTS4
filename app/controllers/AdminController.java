@@ -145,10 +145,6 @@ public class AdminController extends Controller{
         String password = newFilledForm.field("password").value();
         String toValidate = newFilledForm.field("validation").value();
 
-        if(filledForm.field("ManagerCreation").value() != null){
-            newUser.setManager(filledForm.field("ManagerCreation").value());
-        }
-
         if(password.equals(toValidate)){
             if(uRepo.addUser(newUser, password)){
                 return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())

@@ -25,7 +25,6 @@
                 } else {
                     <tr>@b4.select(form("manager"), options(manager), '_label -> "Manager", '_default -> "Selecteer een manager")</tr>
                 }
-
                 <tr>@b4.hidden(form("id"), '_label -> "id")</tr>
                 <tr>@b4.number(form("phoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
                 <tr>@b4.text(form("company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'value -> "InfoSupport")</tr>

@@ -40,7 +40,8 @@ public class UserMongoContext implements UserContext {
                                                     " company:#," +
                                                     " salt:#," +
                                                     " hashedPassword:#," +
-                                                    " phoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
+                                                    " phoneNumber:#," +
+                                                    " manager:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber(), user.getManager());
             return result.wasAcknowledged();
         }
         else{
@@ -103,8 +104,9 @@ public class UserMongoContext implements UserContext {
                 " company:#," +
                 " salt:#," +
                 " hashedPassword:#," +
-                " phoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(),
-                user.getRole(), user.getCompany(),dbSalt.get(0), hashedDbPassword.get(0), user.getPhoneNumber());
+                " phoneNumber:#," +
+                " manager:#}" ,user.getFirstName(), user.getLastName(), user.getEmail(),
+                user.getRole(), user.getCompany(),dbSalt.get(0), hashedDbPassword.get(0), user.getPhoneNumber(), user.getManager());
 
         return result.wasAcknowledged();
     }
@@ -144,6 +146,11 @@ public class UserMongoContext implements UserContext {
             }
 
             return managers;
+    }
+
+    @Override
+    public List<User> getUserByManager() {
+       return null;
     }
 
     /**
