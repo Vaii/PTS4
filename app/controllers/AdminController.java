@@ -1,6 +1,8 @@
 package controllers;
 
+import dal.contexts.DateTimeMongoContext;
 import dal.contexts.UserMongoContext;
+import dal.repositories.DateTimeRepository;
 import dal.repositories.UserRepository;
 import models.storage.Role;
 import models.storage.Secured;
@@ -24,6 +26,7 @@ import java.util.Map;
 public class AdminController extends Controller{
 
     private UserRepository uRepo;
+    private DateTimeRepository dRepo;
     private Form<User> form;
     private Form<User> userForm;
     private Form<User> filledForm;
@@ -31,6 +34,7 @@ public class AdminController extends Controller{
     @Inject
     public AdminController(FormFactory formFactory){
         this.uRepo = new UserRepository(new UserMongoContext("User"));
+        this.dRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
         this.form = formFactory.form(User.class);
         this.userForm = formFactory.form(User.class);
         this.filledForm = formFactory.form(User.class);
@@ -39,13 +43,15 @@ public class AdminController extends Controller{
 
     public Result removeUser(String id){
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
-            if(uRepo.removeUser(uRepo.getUserByID(id))){
-                return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
+            uRepo.removeUser(uRepo.getUserByID(id)); // Remove user from user table.
+            dRepo.removeUser(id); // Remove user from possible trainee fields.
+
+            dRepo.removeTeacher(id); // Remove user as teacher, Won't break if the user is not a teacher.
+
+            return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
                         ,"Account succesvol verwijderd", "/admin"  ));
-            }
-            else{
-                return notFound();
-            }
+
+
         }
         return notFound();
     }
