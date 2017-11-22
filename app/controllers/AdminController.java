@@ -37,6 +37,19 @@ public class AdminController extends Controller{
 
     }
 
+    public Result removeUser(String id){
+        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
+            if(uRepo.removeUser(uRepo.getUserByID(id))){
+                return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
+                        ,"Account succesvol verwijderd", "/admin"  ));
+            }
+            else{
+                return notFound();
+            }
+        }
+        return notFound();
+    }
+
     @Security.Authenticated(Secured.class)
     public Result overview(){
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){

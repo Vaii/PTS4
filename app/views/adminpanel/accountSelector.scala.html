@@ -4,7 +4,8 @@
 @shared.main(page, isLoggedIn, User) {
     <div class="container">
         @for( x <- Users){
-            <div class="col-lg-12"><a href="@routes.AdminController.manageAccount(x.getEmail())"> @x.getEmail()</a></div>
+            <div class="col-lg-12"><a href="@routes.AdminController.manageAccount(x.getEmail())"> @x.getEmail()</a><a href="@routes.AdminController.removeUser(x.getId())" class="btn btn-danger">
+                                        Verwijderen</a></div>
         }
     </div>
 }

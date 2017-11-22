@@ -75,7 +75,7 @@ public class User {
     }
 
     public void setId(String id){
-        _id = id;
+        this._id = id;
     }
 
     @JsonProperty(M_FIRSTNAME)
