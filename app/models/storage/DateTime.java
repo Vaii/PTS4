@@ -24,7 +24,7 @@ public class DateTime {
     private String _id;
 
     // the date on which the training will be held.
-    private Date date;
+    private LocalDateTime date;
 
     // List of id's from users that have signed up for this training.
     private List<String> trainees;
@@ -43,8 +43,10 @@ public class DateTime {
     // Is also added here to prevent the need of getting an entire training object to do overlap checking.
     private float duration;
 
+    public DateTime() {}
+
     @JsonCreator
-    public DateTime(@JsonProperty(M_DATE) Date date,
+    public DateTime(@JsonProperty(M_DATE) LocalDateTime date,
                     @JsonProperty(M_LOCATION) String locationId,
                     @JsonProperty(M_TEACHER) String teacherId,
                     @JsonProperty(M_TRAINEES) List<String> trainees,
@@ -59,16 +61,14 @@ public class DateTime {
     }
 
     public DateTime(LocalDateTime date, String locationId, String teacherId){
-        Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
-        this.date = convertedDate;
+        this.date = date;
         this.locationID = locationId;
         this.teacherID = teacherId;
         trainees = new ArrayList<>();
     }
 
     public DateTime(LocalDateTime date, String locationId, String teacherId, float duration) {
-        Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
-        this.date = convertedDate;
+        this.date = date;
         this.locationID = locationId;
         this.teacherID = teacherId;
         this.duration = duration;
@@ -111,7 +111,7 @@ public class DateTime {
     }
 
     @JsonProperty(M_DATE)
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -120,7 +120,7 @@ public class DateTime {
         return df.format(this.date);
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -153,14 +153,16 @@ public class DateTime {
      * @return true if there is a overlap between the 2 durations.
      */
     public DateTime checkOverlap(DateTime other ) {
+        Date convertedDatetime = Date.from(this.date.atZone(ZoneId.systemDefault()).toInstant());
+        Date convertedDatetime2 = Date.from(other.getDate().atZone(ZoneId.systemDefault()).toInstant());
 
         Calendar c = Calendar.getInstance();
-        c.setTime(this.date);
+        c.setTime(convertedDatetime);
         c.add(Calendar.DATE, (int) duration);
         Date myEndDate = c.getTime();
 
         Calendar co = Calendar.getInstance();
-        co.setTime(other.getDate());
+        co.setTime(convertedDatetime2);
         co.add(Calendar.DATE, (int) other.getDuration());
         Date otherEndDate = co.getTime();
 
@@ -171,10 +173,10 @@ public class DateTime {
             }
         }
 
-        if(other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
-                otherEndDate.after(this.date) && otherEndDate.before(myEndDate) ||
-                this.date.after(other.getDate()) && this.date.before(otherEndDate) ||
-                this.date.equals(other.getDate())) {
+        if(convertedDatetime2.after(convertedDatetime) && convertedDatetime2.before(myEndDate) ||
+                otherEndDate.after(convertedDatetime) && otherEndDate.before(myEndDate) ||
+                convertedDatetime.after(convertedDatetime2) && convertedDatetime.before(otherEndDate) ||
+                this.date.equals(convertedDatetime2)) {
             return other;
         }
 

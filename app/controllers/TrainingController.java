@@ -8,6 +8,7 @@ import models.storage.*;
 import models.util.OverlapChecker;
 import models.view.ViewDate;
 import models.view.ViewTraining;
+import org.springframework.format.annotation.DateTimeFormat;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -24,8 +25,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -45,7 +48,7 @@ public class TrainingController extends Controller {
     private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
-    private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+    private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime2"));
     private SharedRepository sharedRepo = new SharedRepository(new SharedMongoContext());
 
     private FormFactory formFactory;
@@ -300,12 +303,11 @@ public class TrainingController extends Controller {
 
             if(dates.size() > requestDateIDs.size()) {
                 int beginIndex = dates.size() - (dates.size() - requestDateIDs.size());
-                DateFormat format = new SimpleDateFormat(DATEFORMAT);
+               // DateFormat format = new SimpleDateFormat(DATEFORMAT);
+                DateTimeFormatter f = DateTimeFormatter.ofPattern(DATEFORMAT);
 
                 for(int i = beginIndex; i < dates.size(); i++) {
-                   // Date date = format.parse(dates.get(i));
-                    Instant instant = Instant.parse(dates.get(i));
-                    LocalDateTime localDate = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+                    LocalDateTime localDate = LocalDateTime.from(f.parse(dates.get(i)));
                     DateTime dt = new DateTime(localDate, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
 
                     DateTime overlapError= detectedOverlap(dt, OverlapType.TEACHER);
@@ -392,14 +394,14 @@ public class TrainingController extends Controller {
     private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
         List<String> dateIDs = new ArrayList<>();
         String lastId ;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         int counter = 0;
 
         for(String d : dates) {
             DateFormat format = new SimpleDateFormat(DATEFORMAT);
-           // Date date = format.parse(d);
-            Instant instant = Instant.parse(d);
-            LocalDateTime localDate = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+            // Date date = format.parse(d);
+            LocalDateTime localDate = LocalDateTime.parse(d);
             DateTime dt = new DateTime(localDate, locationIDs.get(counter), teacherIDs.get(counter), duration);
             lastId = dateRepo.addDateTime(dt).toString();
             dateIDs.add(lastId);
@@ -449,10 +451,9 @@ public class TrainingController extends Controller {
                     DateTime dt = dateRepo.getDateTime(d);
 
                     DateFormat df = new SimpleDateFormat(DATEFORMAT);
-                   // Date date = df.parse(dates.get(j));
-                    Instant instant = Instant.parse(dates.get(j));
+                    Date date = df.parse(dates.get(j));
 
-                    dt.setDate(Date.from(instant));
+                    dt.setDate(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
                     dt.setLocationID(locationIDs.get(j));
                     dt.setTeacherID(teacherIDs.get(j));
                     dateRepo.updateDateTime(dt);
