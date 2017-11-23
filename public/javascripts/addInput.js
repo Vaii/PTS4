@@ -69,7 +69,7 @@ function addInputEdit(divName){
     var numItems = $('#dynamicInput .row').length + 1;
     var newdiv = document.createElement('div');
     newdiv.className = "row col-lg-12 row" + numItems;
-    newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"control-label\" for=\"dates[]\">Datum:</label>" +
+    newdiv.innerHTML = "<div class=\"col-lg-5\"><label class=\"control-label\" for=\"dates[]\">Datum:</label>" +
         "<input type=\"datetime-local\" id=\"dates\" name=\"dates[]\" value=\"\" required=\"true\" class=\"form-control\"></div>" +
 
         // Location box
@@ -87,7 +87,7 @@ function addInputEdit(divName){
         tOptions +
         "</select>\n" +
         "</div>" +
-        "<div class=\"col-lg-3\">\n" +
+        "<div class=\"col-lg-1\">\n" +
         "<input class=\"btn btn-danger btn" + numItems + "\" type=\"button\" value=\"X\" onClick=\"deleteInput(this);\">\n" +
         "</div>" +
         "</div>" +

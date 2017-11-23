@@ -41,14 +41,14 @@ public class TrainingController extends Controller {
     private static final String TEACHER = "Teacher";
     private static final String TRAININGCODE = "trainingCode";
     private static final String TRAININGEN = "Trainingen";
-    private static final String DATEFORMAT = "yyyy-MM-dd HH:mm";
+    private static final String DATEFORMAT = "yyyy-MM-dd'T'hh:mm";
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
     private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
-    private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime2"));
+    private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
     private SharedRepository sharedRepo = new SharedRepository(new SharedMongoContext());
 
     private FormFactory formFactory;
@@ -303,12 +303,12 @@ public class TrainingController extends Controller {
 
             if(dates.size() > requestDateIDs.size()) {
                 int beginIndex = dates.size() - (dates.size() - requestDateIDs.size());
-               // DateFormat format = new SimpleDateFormat(DATEFORMAT);
+                DateFormat format = new SimpleDateFormat(DATEFORMAT);
                 DateTimeFormatter f = DateTimeFormatter.ofPattern(DATEFORMAT);
 
                 for(int i = beginIndex; i < dates.size(); i++) {
-                    LocalDateTime localDate = LocalDateTime.from(f.parse(dates.get(i)));
-                    DateTime dt = new DateTime(localDate, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
+                    Date date = format.parse(dates.get(i));
+                    DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
 
                     DateTime overlapError= detectedOverlap(dt, OverlapType.TEACHER);
                     if(overlapError != null){
@@ -394,15 +394,13 @@ public class TrainingController extends Controller {
     private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
         List<String> dateIDs = new ArrayList<>();
         String lastId ;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateFormat format = new SimpleDateFormat(DATEFORMAT);
 
         int counter = 0;
 
         for(String d : dates) {
-            DateFormat format = new SimpleDateFormat(DATEFORMAT);
-            // Date date = format.parse(d);
-            LocalDateTime localDate = LocalDateTime.parse(d);
-            DateTime dt = new DateTime(localDate, locationIDs.get(counter), teacherIDs.get(counter), duration);
+            Date date = format.parse(d);
+            DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter), duration);
             lastId = dateRepo.addDateTime(dt).toString();
             dateIDs.add(lastId);
             counter++;
@@ -453,7 +451,7 @@ public class TrainingController extends Controller {
                     DateFormat df = new SimpleDateFormat(DATEFORMAT);
                     Date date = df.parse(dates.get(j));
 
-                    dt.setDate(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()));
+                    dt.setDate(date);
                     dt.setLocationID(locationIDs.get(j));
                     dt.setTeacherID(teacherIDs.get(j));
                     dateRepo.updateDateTime(dt);

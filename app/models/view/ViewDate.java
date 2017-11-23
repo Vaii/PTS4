@@ -13,28 +13,36 @@ import java.util.Locale;
 
 public class ViewDate {
     private String dateId;
-    private LocalDateTime date;
+    private Date date;
     private Location location;
     private User teacher;
 
     public ViewDate() {};
 
-    public ViewDate(String dateId, LocalDateTime date, Location location, User teacher) {
+    public ViewDate(String dateId, Date date, Location location, User teacher) {
         this.dateId = dateId;
         this.date = date;
         this.location = location;
         this.teacher = teacher;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
+    /*
+     * Format date to string that is uneditable.
+     */
     public String getDateString() {
-        //DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        TemporalAccessor ta = f.parse(this.date.toString());
-        return ta.toString();
+        DateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        return df.format(date);
+    }
+    /*
+     * Use for edit boxes in view.
+     */
+    public String getEditableString() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        return df.format(date);
     }
 
     public Location getLocation() {

@@ -6,8 +6,6 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 public class DateTime {
@@ -24,7 +22,7 @@ public class DateTime {
     private String _id;
 
     // the date on which the training will be held.
-    private LocalDateTime date;
+    private Date date;
 
     // List of id's from users that have signed up for this training.
     private List<String> trainees;
@@ -46,7 +44,7 @@ public class DateTime {
     public DateTime() {}
 
     @JsonCreator
-    public DateTime(@JsonProperty(M_DATE) LocalDateTime date,
+    public DateTime(@JsonProperty(M_DATE) Date date,
                     @JsonProperty(M_LOCATION) String locationId,
                     @JsonProperty(M_TEACHER) String teacherId,
                     @JsonProperty(M_TRAINEES) List<String> trainees,
@@ -60,14 +58,14 @@ public class DateTime {
         this.duration = duration;
     }
 
-    public DateTime(LocalDateTime date, String locationId, String teacherId){
+    public DateTime(Date date, String locationId, String teacherId){
         this.date = date;
         this.locationID = locationId;
         this.teacherID = teacherId;
         trainees = new ArrayList<>();
     }
 
-    public DateTime(LocalDateTime date, String locationId, String teacherId, float duration) {
+    public DateTime(Date date, String locationId, String teacherId, float duration) {
         this.date = date;
         this.locationID = locationId;
         this.teacherID = teacherId;
@@ -111,16 +109,16 @@ public class DateTime {
     }
 
     @JsonProperty(M_DATE)
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
     public String getDateString() {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat("hh:mm dd-MM-yyyy");
         return df.format(this.date);
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -153,8 +151,8 @@ public class DateTime {
      * @return true if there is a overlap between the 2 durations.
      */
     public DateTime checkOverlap(DateTime other ) {
-        Date convertedDatetime = Date.from(this.date.atZone(ZoneId.systemDefault()).toInstant());
-        Date convertedDatetime2 = Date.from(other.getDate().atZone(ZoneId.systemDefault()).toInstant());
+        Date convertedDatetime = this.date;
+        Date convertedDatetime2 = other.getDate();
 
         Calendar c = Calendar.getInstance();
         c.setTime(convertedDatetime);
