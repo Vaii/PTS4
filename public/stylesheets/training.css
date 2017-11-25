@@ -8,6 +8,11 @@ div.form-group {
     width: 100%;
 
 }
+h1 {
+    text-align: left;
+    color: #0078c9;
+
+}
 
 #newTrn {
     padding-top: 5px;

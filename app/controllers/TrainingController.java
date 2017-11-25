@@ -204,17 +204,17 @@ public class TrainingController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result personalOverview() {
-        return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()) ,new ArrayList<>(), null,
+        return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()) ,new ArrayList<>(), null,
                 TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
     }
 
     @Security.Authenticated(Secured.class)
     public Result personalOverviewCategory(String category) {
         if(category == null) {
-            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()),new ArrayList<>(), null,
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()),new ArrayList<>(), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         } else {
-            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         }
 
@@ -223,7 +223,7 @@ public class TrainingController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result personalTrainingOverview(String category, String id) {
         if (id == null) {
-            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         } else {
             Training t = trainingRepo.getTraining(id);
@@ -232,7 +232,7 @@ public class TrainingController extends Controller {
             getDatesIds(id);
             createViewDates(t, viewDates);
 
-            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
     }

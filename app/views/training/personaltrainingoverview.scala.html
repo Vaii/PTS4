@@ -6,9 +6,10 @@
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
     <div class="container">
-    @if(!trainings.isEmpty()) {
-        <div class="row">
-            <div class="col-lg-2 trainingmenu">
+        <div>
+            @if(!trainings.isEmpty) {
+                <div class="row">
+                <div class="col-lg-2 trainingmenu">
                 <ul>
                     <lh>Categorie</lh>
                     @if(!categories.isEmpty) {
@@ -18,7 +19,7 @@
                     }
                 </ul>
             </div>
-            <div class="col-lg-2 trainingmenu">
+                <div class="col-lg-2 trainingmenu">
                 <ul>
                     <lh>Training</lh>
                     @if(!trainings.isEmpty()) {
@@ -30,7 +31,7 @@
                     }
                 </ul>
             </div>
-            <div class="trainingtext col-lg-8" >
+                <div class="trainingtext col-lg-8" >
                 <div>
                     @if(training != null) {
                         <h1>@training.getName()</h1>
@@ -104,7 +105,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <p>Datums: </p>
+                                        <p>Datum ingeschreven: </p>
                                     </div>
                                     <div class="col-lg-8">
                                     @for(date <- viewDates) {
@@ -120,14 +121,24 @@
                 </div>
                 </div>
             </div>
+                </div>
+            } else {
+                <div class="row">
+                    <div class="row col-lg-12">
+                        <div class="col-lg-4 offset-lg-4">
+                            <h1>Mijn trainingen</h1>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12">
+
+                        <div class="col-lg-6 offset-lg-3">
+                            <p>U heeft zich nog niet ingeschereven voor een training, klik <a href="@routes.TrainingController.overview()">
+                                hier</a> om u in te schrijven voor een training.</p>
+                        </div>
+                    </div>
+
+                </div>
+            }
         </div>
-    } else {
-        <div class="row">
-            <div class="col-lg-4 offset-lg-4">
-                <p>U heeft zich nog niet ingeschereven voor een training, klik <a href="@routes.TrainingController.overview()">
-                    hier</a> om u in te schrijven voor een training.</p>
-            </div>
-        </div>
-    }
     </div>
 }
