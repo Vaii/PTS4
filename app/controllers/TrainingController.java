@@ -8,6 +8,7 @@ import models.storage.*;
 import models.util.OverlapChecker;
 import models.view.ViewDate;
 import models.view.ViewTraining;
+import org.springframework.format.annotation.DateTimeFormat;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -23,6 +24,11 @@ import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -35,7 +41,7 @@ public class TrainingController extends Controller {
     private static final String TEACHER = "Teacher";
     private static final String TRAININGCODE = "trainingCode";
     private static final String TRAININGEN = "Trainingen";
-    private static final String DATEFORMAT = "yyyy-MM-dd";
+    private static final String DATEFORMAT = "yyyy-MM-dd'T'hh:mm";
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
@@ -194,7 +200,7 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-            getDatesIds(id);
+
             createViewDates(t, viewDates);
 
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
@@ -231,9 +237,6 @@ public class TrainingController extends Controller {
 
             Training t = trainingRepo.getTraining(id);
             List<ViewDate> viewDates = new ArrayList<>();
-
-            getDatesIds(id);
-
 
             createViewDates(t, viewDates);
 
@@ -301,6 +304,7 @@ public class TrainingController extends Controller {
             if(dates.size() > requestDateIDs.size()) {
                 int beginIndex = dates.size() - (dates.size() - requestDateIDs.size());
                 DateFormat format = new SimpleDateFormat(DATEFORMAT);
+                DateTimeFormatter f = DateTimeFormatter.ofPattern(DATEFORMAT);
 
                 for(int i = beginIndex; i < dates.size(); i++) {
                     Date date = format.parse(dates.get(i));
@@ -390,11 +394,11 @@ public class TrainingController extends Controller {
     private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
         List<String> dateIDs = new ArrayList<>();
         String lastId ;
+        DateFormat format = new SimpleDateFormat(DATEFORMAT);
 
         int counter = 0;
 
         for(String d : dates) {
-            DateFormat format = new SimpleDateFormat(DATEFORMAT);
             Date date = format.parse(d);
             DateTime dt = new DateTime(date, locationIDs.get(counter), teacherIDs.get(counter), duration);
             lastId = dateRepo.addDateTime(dt).toString();
@@ -403,23 +407,6 @@ public class TrainingController extends Controller {
         }
 
         return dateIDs;
-    }
-
-    private void getDatesIds(String id) {
-        Training t = trainingRepo.getTraining(id);
-
-        List<ViewDate> viewDates = new ArrayList<>();
-
-        int counter = 0;
-        for (String dateTime : t.getDateIds()) {
-            DateTime d = dateRepo.getDateTime(dateTime);
-
-            Location loc = locationRepo.getLocation(d.getLocationID());
-            User teacher = userRepo.getUserByID(d.getTeacherID());
-            ViewDate vd = new ViewDate(t.getDateIds().get(counter), d.getDate(), loc, teacher);
-            viewDates.add(vd);
-            counter++;
-        }
     }
 
     @Security.Authenticated(Secured.class)

@@ -82,9 +82,9 @@
                                 <div id="dynamicInput" class="row col-lg-12">
                                 @for(index <- 0 until viewDates.size){
                                     <div class="row col-lg-12 row@(index + 1)">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-5">
                                         <label class="control-label" for="dates[]">Datum:</label>
-                                        <input type="date" id="dates" name="dates[]" required="true" value="@viewDates(index).getDateString" class="form-control">
+                                        <input type="datetime-local" id="dates" name="dates[]" required="true" value="@viewDates(index).getEditableString" class="form-control">
                                         <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" />
                                     </div>
 
@@ -113,7 +113,7 @@
                                             }
                                         </select>
                                     </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-1">
                                             <input class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId', this, '@training.getTrainingCode');">
                                         </div>
                                     </div>
