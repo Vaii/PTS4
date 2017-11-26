@@ -61,6 +61,14 @@ div.trainingmenu ul li {
     text-align: center;
     text-underline: none;
 }
+div.trainingmenu ul li.active {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid dodgerblue;
+    text-align: center;
+    text-underline: none;
+    font-weight: bold;
+}
 
 div.trainingmenu ul li:last-child {
     border-bottom: none;
