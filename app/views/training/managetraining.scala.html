@@ -45,7 +45,15 @@
                         <lh>Categorie</lh>
                         @if(!categories.isEmpty) {
                             @for((key, value) <- categories) {
-                                <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
+                                @if(!trainings.isEmpty){
+                                    @if(trainings.get(0).getCategory.equals(key)){
+                                        <li class="active"><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
+                                    } else {
+                                        <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
+                                    }
+                                } else{
+                                    <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
+                                }
                             }
                         }
                     </ul>
@@ -56,8 +64,16 @@
                         <li id="newTrn"><a href="@routes.TrainingController.addTraining()">
                             Nieuwe Training Toevoegen</a> </li>
                         @if(!trainings.isEmpty) {
-                            @for(training <- trainings) {
-                                <li ><a href="@routes.TrainingController.manageTraining(training.getCategory(),training.getTrainingCode())"> @training.getName</a></li>
+                            @for(t <- trainings) {
+                                @if(training != null) {
+                                    @if(t.getId.equals(training.getId)) {
+                                        <li class="active" ><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                    } else {
+                                        <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                    }
+                                } else {
+                                    <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                }
                             }
                         } else {
                             <li><p>Geen beschikbare trainingen.</p></li>

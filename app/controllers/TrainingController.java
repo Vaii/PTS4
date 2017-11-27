@@ -200,13 +200,47 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-
             createViewDates(t, viewDates);
-
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
     }
+
+    @Security.Authenticated(Secured.class)
+    public Result personalOverview() {
+        return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()) ,new ArrayList<>(), null,
+                TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result personalOverviewCategory(String category) {
+        if(category == null) {
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()),new ArrayList<>(), null,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+        } else {
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+        }
+
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result personalTrainingOverview(String category, String id) {
+        if (id == null) {
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+        } else {
+            Training t = trainingRepo.getTraining(id);
+
+            List<ViewDate> viewDates = new ArrayList<>();
+            createViewDates(t, viewDates);
+
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
+        }
+    }
+
+
 
     @Security.Authenticated(Secured.class)
     public Result manage() {
@@ -419,7 +453,10 @@ public class TrainingController extends Controller {
             teacherTrainings.add(vt);
         }
 
-        return ok(teachertrainingoverview.render(teacherTrainings, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        JsonNode dateJson = Json.toJson(teacherTrainings);
+
+
+        return ok(teachertrainingoverview.render(teacherTrainings, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateJson));
     }
 
     private void createViewDates(Training t, List<ViewDate> viewDates) {

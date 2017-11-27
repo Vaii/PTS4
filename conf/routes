@@ -44,6 +44,11 @@ POST    /training/externalSignUp            controllers.TrainingController.signU
 GET     /edit/:code                         controllers.TrainingController.edit(category: String, code: String)
 GET     /trainingCategory/:category         controllers.TrainingController.overviewCategory(category: String)
 GET     /teachertrainingoverview            controllers.TrainingController.teacherTrainingOverview
+GET     /personalOverview                   controllers.TrainingController.personalOverview
+GET     /personalTrainingCategory/:category controllers.TrainingController.personalOverviewCategory(category: String)
+GET     /personalTrainingOverview/:id       controllers.TrainingController.personalTrainingOverview(category: String, id: String)
+
+
 
 # Admin Panel
 GET     /admin                              controllers.AdminController.overview
