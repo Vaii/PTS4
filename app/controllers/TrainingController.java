@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import dal.contexts.*;
 import dal.repositories.*;
 import models.storage.*;
+import models.util.DateConverter;
 import models.util.OverlapChecker;
 import models.view.ViewDate;
 import models.view.ViewTraining;
-import org.springframework.format.annotation.DateTimeFormat;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -24,10 +24,6 @@ import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -53,6 +49,8 @@ public class TrainingController extends Controller {
 
     private FormFactory formFactory;
     private Form<Training> form;
+    private DateConverter converter = new DateConverter();
+
 
     @Inject
     public TrainingController(FormFactory formFactory) {
@@ -198,7 +196,7 @@ public class TrainingController extends Controller {
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         } else {
             List<ViewDate> viewDates = new ArrayList<>();
-            createViewDates(t, viewDates);
+            viewDates =  converter.getViewDates(id);
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
@@ -231,7 +229,7 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-            createViewDates(t, viewDates);
+            viewDates = converter.getViewDates(id);
 
             return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
@@ -270,8 +268,7 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
             List<ViewDate> viewDates = new ArrayList<>();
 
-            createViewDates(t, viewDates);
-
+            viewDates = converter.getViewDates(id);
 
             Form<Training> editForm = form.fill(trainingRepo.getTraining(id));
             return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), trainingRepo.getTraining(id),
@@ -456,24 +453,6 @@ public class TrainingController extends Controller {
 
         return ok(teachertrainingoverview.render(teacherTrainings, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateJson));
     }
-
-    private void createViewDates(Training t, List<ViewDate> viewDates) {
-        int counter = 0;
-
-        if(!t.getDateIds().isEmpty()) {
-            for(String dateTime : t.getDateIds()) {
-                DateTime d = dateRepo.getDateTime(dateTime);
-
-                Location loc = locationRepo.getLocation(d.getLocationID());
-                User teacher = userRepo.getUserByID(d.getTeacherID());
-                ViewDate vd = new ViewDate(t.getDateIds().get(counter), d.getDate(), loc, teacher);
-                viewDates.add(vd);
-                counter++;
-            }
-        }
-    }
-
-
 
     private void editExistingDates(List<String> initIDs, List<String> requestDateIDs, List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
         int j = 0;
