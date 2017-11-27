@@ -194,9 +194,7 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-            getDatesIds(id);
             createViewDates(t, viewDates);
-
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
@@ -229,7 +227,6 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-            getDatesIds(id);
             createViewDates(t, viewDates);
 
             return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
@@ -268,9 +265,6 @@ public class TrainingController extends Controller {
 
             Training t = trainingRepo.getTraining(id);
             List<ViewDate> viewDates = new ArrayList<>();
-
-            getDatesIds(id);
-
 
             createViewDates(t, viewDates);
 
@@ -440,23 +434,6 @@ public class TrainingController extends Controller {
         }
 
         return dateIDs;
-    }
-
-    private void getDatesIds(String id) {
-        Training t = trainingRepo.getTraining(id);
-
-        List<ViewDate> viewDates = new ArrayList<>();
-
-        int counter = 0;
-        for (String dateTime : t.getDateIds()) {
-            DateTime d = dateRepo.getDateTime(dateTime);
-
-            Location loc = locationRepo.getLocation(d.getLocationID());
-            User teacher = userRepo.getUserByID(d.getTeacherID());
-            ViewDate vd = new ViewDate(t.getDateIds().get(counter), d.getDate(), loc, teacher);
-            viewDates.add(vd);
-            counter++;
-        }
     }
 
     @Security.Authenticated(Secured.class)
