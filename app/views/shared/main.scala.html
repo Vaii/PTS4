@@ -12,9 +12,11 @@
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
+        <script src="@routes.Assets.at("javascripts/moment.min.js")"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/dd707fcffa.css">        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+        <link rel="stylesheet" href="https://use.fontawesome.com/dd707fcffa.css">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/ico" href="@routes.Assets.at("images/favicon.ico")">
 
@@ -34,7 +36,6 @@
                             <a class="nav-link dropdown-toggle" id="trainingDropdownMenu" href="">
                                 Training</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="@routes.TrainingController.overview()">Mijn Trainingen</a>
                                 <a class="dropdown-item" href="@routes.TrainingController.overview()">Aangeboden Trainingen</a>
                                 @if(isLoggedIn) {
                                     @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
@@ -79,11 +80,12 @@
                             <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" ><em class="fa fa-user-circle fa-fw" aria-hidden="true"></em>Mijn account</a>
 
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="@routes.AccountController.profile()"><em class="fa fa-user fa-fw" aria-hidden="true"></em> Profiel</a>
+                                <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profiel</a>
+                                <a class="dropdown-item" href="@routes.TrainingController.personalOverview()"><i class="fa fa-table fa-fw" aria-hidden="true"></i> Mijn Trainingen</a>
                                 @if(user.getRole.equals(Role.DOCENT)){
-                                    <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><em class="fa fa-calendar fa-fw" aria-hidden="true"></em>Rooster </a>
+                                    <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> Rooster</a>
                                 }
-                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <em class="fa fa-sign-out fa-fw" aria-hidden="true"></em>Uitloggen</a>
+                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Uitloggen</a>
                             </div>
                         } else {
                         <li class="nav-item">

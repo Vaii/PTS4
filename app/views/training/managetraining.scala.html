@@ -27,10 +27,6 @@
 
     </script>
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
-<!--
-    headers: {
-    'Csrf-Token': @*helper.CSRF.formField*@
-    }, -->
 
     <script>
             function removeDate(id, obj, tCode)
@@ -49,7 +45,15 @@
                         <lh>Categorie</lh>
                         @if(!categories.isEmpty) {
                             @for((key, value) <- categories) {
-                                <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
+                                @if(!trainings.isEmpty){
+                                    @if(trainings.get(0).getCategory.equals(key)){
+                                        <li class="active"><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
+                                    } else {
+                                        <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
+                                    }
+                                } else{
+                                    <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
+                                }
                             }
                         }
                     </ul>
@@ -60,8 +64,16 @@
                         <li id="newTrn"><a href="@routes.TrainingController.addTraining()">
                             Nieuwe Training Toevoegen</a> </li>
                         @if(!trainings.isEmpty) {
-                            @for(training <- trainings) {
-                                <li ><a href="@routes.TrainingController.manageTraining(training.getCategory(),training.getTrainingCode())"> @training.getName</a></li>
+                            @for(t <- trainings) {
+                                @if(training != null) {
+                                    @if(t.getId.equals(training.getId)) {
+                                        <li class="active" ><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                    } else {
+                                        <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                    }
+                                } else {
+                                    <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                }
                             }
                         } else {
                             <li><p>Geen beschikbare trainingen.</p></li>
@@ -86,15 +98,15 @@
                                 <div id="dynamicInput" class="row col-lg-12">
                                 @for(index <- 0 until viewDates.size){
                                     <div class="row col-lg-12 row@(index + 1)">
-                                    <div class="col-lg-3">
-                                        <label class="control-label" for="Dates[]">Datum:</label>
-                                        <input type="date" id="Dates" name="Dates[]" required="true" value="@viewDates(index).getDateString" class="form-control">
-                                        <input type="hidden" name="DateIDs[]" value="@viewDates(index).getDateId" />
+                                    <div class="col-lg-5">
+                                        <label class="control-label" for="dates[]">Datum:</label>
+                                        <input type="datetime-local" id="dates" name="dates[]" required="true" value="@viewDates(index).getEditableString" class="form-control">
+                                        <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" />
                                     </div>
 
-                                    <div class="col-lg-4">
-                                        <label class="form-control-label" for="LocationID[]">Locatie:</label>
-                                        <select id="LocationID" name="LocationID[]" required="true" class="form-control form-control">
+                                    <div class="col-lg-3">
+                                        <label class="form-control-label" for="locationId[]">Locatie:</label>
+                                        <select id="locationId" name="locationId[]" required="true" class="form-control form-control">
                                             <option value="@viewDates(index).getLocation.getId()" class="blank" selected="true">@viewDates(index).getLocation.getStreetName</option>
                                             @for(location <- locations) {
                                                 @if(location.getStreetName == viewDates(index).getLocation.getStreetName) {
@@ -105,9 +117,9 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-lg-4">
-                                        <label class="form-control-label" for="TeacherID[]">Docent:</label>
-                                        <select id="TeacherID" name="TeacherID[]" required="true" class="form-control form-control">
+                                    <div class="col-lg-3">
+                                        <label class="form-control-label" for="teacherID[]">Docent:</label>
+                                        <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control">
                                            <option value="@viewDates(index).getTeacher.getId()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
                                             @for(teacher <- teachers) {
                                                 @if(teacher.getFirstName == viewDates(index).getTeacher.getFirstName) {
@@ -117,7 +129,7 @@
                                             }
                                         </select>
                                     </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-1">
                                             <input class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId', this, '@training.getTrainingCode');">
                                         </div>
                                     </div>

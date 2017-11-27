@@ -8,6 +8,8 @@ import models.storage.Training;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class SharedMongoContext implements SharedContext {
 
@@ -40,6 +42,22 @@ public class SharedMongoContext implements SharedContext {
                 if(date.getTeacherID().equals(userId)) {
                     results.add(t);
                 }
+            }
+        }
+
+        return results;
+    }
+    @Override
+    public Map<String, Integer> getTrainingFrequencies(String id) {
+        Map<String, Integer> results = new TreeMap<>();
+        List<Training> trainings;
+        trainings = getTrainings(id);
+
+        for(Training t : trainings) {
+            if(!results.containsKey(t.getCategory())) {
+                results.put(t.getCategory(), 1);
+            } else {
+                results.put(t.getCategory(), results.get(t.getCategory())+ 1);
             }
         }
 

@@ -32,7 +32,7 @@ POST    /location/submit_form               controllers.LocationController.submi
 
 # Training
 GET     /addtraining                        controllers.TrainingController.addTraining
-GET     /submit                             controllers.TrainingController.submit
+POST     /submit                             controllers.TrainingController.submit
 GET     /overview                           controllers.TrainingController.overview
 GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(category: String, id: String)
 GET     /managetraining                     controllers.TrainingController.manage
@@ -44,6 +44,11 @@ POST    /training/externalSignUp            controllers.TrainingController.signU
 GET     /edit/:code                         controllers.TrainingController.edit(category: String, code: String)
 GET     /trainingCategory/:category         controllers.TrainingController.overviewCategory(category: String)
 GET     /teachertrainingoverview            controllers.TrainingController.teacherTrainingOverview
+GET     /personalOverview                   controllers.TrainingController.personalOverview
+GET     /personalTrainingCategory/:category controllers.TrainingController.personalOverviewCategory(category: String)
+GET     /personalTrainingOverview/:id       controllers.TrainingController.personalTrainingOverview(category: String, id: String)
+
+
 
 # Admin Panel
 GET     /admin                              controllers.AdminController.overview

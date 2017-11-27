@@ -6,10 +6,7 @@ import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class DateTime {
     // Mongo DB identifiers.
@@ -43,6 +40,8 @@ public class DateTime {
     // Duplicate data can be found in training.
     // Is also added here to prevent the need of getting an entire training object to do overlap checking.
     private float duration;
+
+    public DateTime() {}
 
     @JsonCreator
     public DateTime(@JsonProperty(M_DATE) Date date,
@@ -115,7 +114,7 @@ public class DateTime {
     }
 
     public String getDateString() {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat("hh:mm dd-MM-yyyy");
         return df.format(this.date);
     }
 
@@ -152,21 +151,30 @@ public class DateTime {
      * @return true if there is a overlap between the 2 durations.
      */
     public DateTime checkOverlap(DateTime other ) {
+        Date convertedDatetime = this.date;
+        Date convertedDatetime2 = other.getDate();
 
         Calendar c = Calendar.getInstance();
-        c.setTime(this.date);
+        c.setTime(convertedDatetime);
         c.add(Calendar.DATE, (int) duration);
         Date myEndDate = c.getTime();
 
         Calendar co = Calendar.getInstance();
-        co.setTime(other.getDate());
+        co.setTime(convertedDatetime2);
         co.add(Calendar.DATE, (int) other.getDuration());
         Date otherEndDate = co.getTime();
 
-        if(other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
-                otherEndDate.after(this.date) && otherEndDate.before(myEndDate) ||
-                this.date.after(other.getDate()) && this.date.before(otherEndDate) ||
-                this.date.equals(other.getDate())) {
+        // Make sure we are not comparing to ourselves.
+        if(this._id != null && other.getId() != null) {
+            if(Objects.equals(this._id, other._id)) {
+                return null;
+            }
+        }
+
+        if(convertedDatetime2.after(convertedDatetime) && convertedDatetime2.before(myEndDate) ||
+                otherEndDate.after(convertedDatetime) && otherEndDate.before(myEndDate) ||
+                convertedDatetime.after(convertedDatetime2) && convertedDatetime.before(otherEndDate) ||
+                this.date.equals(convertedDatetime2)) {
             return other;
         }
 
