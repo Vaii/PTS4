@@ -48,7 +48,10 @@
             <div class="trainingtext col-lg-8" >
                 <div>
                     @if(training != null) {
-                        <h1>@training.getName()</h1>
+                        <div class="row">
+                            <h1>@training.getName()</h1>
+                        </div>
+
                         <h2>Beschrijving</h2>
                         @if(training.getDescription == null) {
                             <p> Geen beschrijving. </p>
@@ -130,7 +133,7 @@
                             </div>
                             } else {
                         <h1>Selecteer een training</h1>
-                        <p>Links in het menu kunt u trainingen selecteren.</p>
+                        <p id="selectText">Links in het menu kunt u trainingen selecteren.</p>
                     }
                 </div>
                 </div>
