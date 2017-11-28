@@ -88,7 +88,7 @@ public class TrainingController extends Controller {
         Form<TuitionForm> filledTuitionForm = tuitionFormForm.bindFromRequest();
 
         if (filledTuitionForm.hasErrors()) {
-            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepo.getTraining(trainingID), tuitionFormForm));
+            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepo.getTrainingById(trainingID), tuitionFormForm));
         } else {
             TuitionForm filledForm = filledTuitionForm.get();
             filledForm.setTotalCosts(filledForm.getStudyCosts() + filledForm.getAccommodationCosts() + filledForm.getExaminationFees() + filledForm.getTransportCosts() + filledForm.getExtraCosts());

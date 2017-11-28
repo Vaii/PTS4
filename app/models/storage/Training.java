@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import play.data.validation.Constraints;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -228,4 +229,13 @@ public class Training  {
         category = category.toLowerCase();
     }
 
+    public static BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd;
+    }
+
+    public BigDecimal getRoundedTuition() {
+        return round(tuition, 2);
+    }
 }
