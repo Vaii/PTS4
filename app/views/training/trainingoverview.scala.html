@@ -127,7 +127,10 @@
                                         </div>
                                         <div class="col-lg-8">
                                         @for(date <- viewDates) {
-                                            <p>@date.getDateString <a href="@routes.TrainingController.signUpCourse(date.getDateId, training.getTrainingCode())">Inschrijven</a></p>
+                                            <p>@date.getDateString, <br> @(training.getCapacity - date.getSignUps) / @training.getCapacity plaatsen beschikbaar,
+                                                @if(training.getCapacity - date.getSignUps > 0){
+                                                    <a href="@routes.TrainingController.signUpCourse(date.getDateId, training.getTrainingCode())">Inschrijven</a>
+                                                } else {inschrijven niet meer mogelijk}</p>
                                         }
                                         </div>
                                     </div>

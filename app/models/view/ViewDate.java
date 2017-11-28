@@ -5,23 +5,24 @@ import models.storage.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Date;
-import java.util.Locale;
 
 public class ViewDate {
     private String dateId;
     private Date date;
     private Location location;
     private User teacher;
+    /*
+     * Amount of people that have signed up for this date.
+     */
+    private int signUps;
 
-    public ViewDate(String dateId, Date date, Location location, User teacher) {
+    public ViewDate(String dateId, Date date, Location location, User teacher, int signUps) {
         this.dateId = dateId;
         this.date = date;
         this.location = location;
         this.teacher = teacher;
+        this.signUps = signUps;
     }
 
     public Date getDate() {
@@ -55,4 +56,11 @@ public class ViewDate {
         return dateId;
     }
 
+    public int getSignUps() {
+        return signUps;
+    }
+
+    public void setSignUps(int signUps) {
+        this.signUps = signUps;
+    }
 }

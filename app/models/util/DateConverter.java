@@ -10,7 +10,6 @@ import dal.repositories.TrainingRepository;
 import dal.repositories.UserRepository;
 import models.storage.DateTime;
 import models.storage.Location;
-import models.storage.Training;
 import models.storage.User;
 import models.view.ViewDate;
 
@@ -27,7 +26,8 @@ public class DateConverter {
         User teacher = userRepo.getUserByID(dt.getTeacherID());
         Location location = locationRepo.getLocation(dt.getLocationID());
 
-        return new ViewDate(dt.getId(), dt.getDate(), location, teacher);
+
+        return new ViewDate(dt.getId(), dt.getDate(), location, teacher, dt.getTrainees().size());
     }
 
     public List<ViewDate> convert(List<DateTime> dates) {
