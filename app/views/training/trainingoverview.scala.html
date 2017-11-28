@@ -101,7 +101,7 @@
                                         <p>Kosten:</p>
                                     </div>
                                     <div class="col-lg-8">
-                                        <p>€@training.getRoundedTuition euro per persoon.</p>
+                                        <p>€@training.getRoundedTuition per persoon.</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -130,7 +130,7 @@
                                             <p>@date.getDateString, <br> @(training.getCapacity - date.getSignUps) / @training.getCapacity plaatsen beschikbaar,
                                                 @if(training.getCapacity - date.getSignUps > 0){
                                                     <a href="@routes.TrainingController.signUpCourse(date.getDateId, training.getTrainingCode())">Inschrijven</a>
-                                                } else {inschrijven niet meer mogelijk}</p>
+                                                } else {inschrijven niet meer mogelijk.}</p>
                                         }
                                         </div>
                                     </div>
