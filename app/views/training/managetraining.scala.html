@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="row col-lg-8 trainingtext">
-                    <div class="col-lg-12">
+                    <div class="row col-lg-12">
                         <h1>Beheren</h1>
                     </div>
                     @if(training != null) {
@@ -139,7 +139,7 @@
 
                                 </div>
 
-                               <div class="row col-lg-12">
+                               <div class="row">
                                     <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
                                </div>
                                 <div class="row col-lg-12">@b4.number(form("duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
@@ -163,8 +163,8 @@
                                 }
                     </div>
                     } else {
-                        <div class="col-lg-12">
-                            <p>Selecteer een training</p>
+                        <div class="row col-lg-12">
+                            <p id="selectText">Selecteer een training</p>
                         </div>
                     }
 
