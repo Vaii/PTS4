@@ -124,11 +124,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <p>Datum ingeschreven: </p>
+                                        <p>Datum training: </p>
+                                        <p>Locatie: </p>
                                     </div>
                                     <div class="col-lg-8">
                                     @for(date <- viewDates) {
                                         <p>@date.getDateString <a href="#">Uitschrijven</a></p>
+                                        <p>@date.getLocation.getStreetName @date.getLocation.getStreetNumber , @date.getLocation.getCity</p>
                                     }
                                     </div>
                                 </div>
