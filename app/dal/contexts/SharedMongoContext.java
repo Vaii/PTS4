@@ -50,8 +50,12 @@ public class SharedMongoContext implements SharedContext {
     @Override
     public Map<String, Integer> getTrainingFrequencies(String id) {
         Map<String, Integer> results = new TreeMap<>();
-        List<Training> trainings;
-        trainings = getTrainings(id);
+        List<Training> trainings = new ArrayList<>();
+        List<DateTime> dates = dateRepo.getDateTimeForUser(id);
+
+        for (DateTime dt : dates) {
+            trainings.add(trainingRepo.getTrainingById(dt.getTrainingID()));
+        }
 
         for(Training t : trainings) {
             if(!results.containsKey(t.getCategory())) {
