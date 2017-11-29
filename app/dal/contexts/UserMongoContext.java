@@ -149,8 +149,17 @@ public class UserMongoContext implements UserContext {
     }
 
     @Override
-    public List<User> getUserByManager() {
-       return null;
+    public List<User> getUserByManager(String id) {
+
+        MongoCursor<User> results = collection.find("{manager:#}", id).as(User.class);
+
+        List<User> employees = new ArrayList<>();
+
+        while(results.hasNext()){
+            employees.add(results.next());
+        }
+
+        return employees;
     }
 
     /**

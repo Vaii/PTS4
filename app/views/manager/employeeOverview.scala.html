@@ -1,0 +1,27 @@
+@import models.storage.User
+@import models.storage.DateTime
+@(page: String, isLoggedIn: Boolean, User: User, Users: Map[User, List[DateTime]])
+
+@shared.main(page, isLoggedIn, User) {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+            $(document).ready(function(){
+                $("button").click(function(){
+                    $("#trainingInfo").toggle();
+                });
+            });
+    </script>
+
+    <div class="container">
+
+        @for((key, value) <- Users){
+            <div>@key.getEmail() <button>Toggle</button>
+                <div id="trainingInfo" style="display: none">
+                    @for(a <- value){
+                        <p>@a.getId</p>
+                    }
+                </div>
+        </div>
+        }
+    </div>
+}

@@ -59,6 +59,10 @@ POST    /admin/editAccount                  controllers.AdminController.editUser
 GET     /admin/accountSelection             controllers.AdminController.accountSelector
 GET     /admin/removeUser                   controllers.AdminController.removeUser(id: String)
 
+#Manager Panel
+
+GET     /manager/employees                  controllers.ManagerController.employeeOverview
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)
 
