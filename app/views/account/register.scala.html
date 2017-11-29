@@ -36,7 +36,9 @@
     </script>
 
     <div class="container">
+        <div class="row">
             <h1>Registreren</h1>
+        </div>
             @b4.form(routes.AccountController.registerAccount) {
                     <div class="row">@b4.email(form("email"), '_label -> "Email", 'placeholder -> "example@example.com")</div>
                     <div style="display: none; color:#d9534f" id="validation_error_0" class="form-control-feedback ">Email is al in gebruik</div>
