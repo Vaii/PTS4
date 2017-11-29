@@ -15,4 +15,5 @@ public interface UserContext {
     boolean login(String email, String password);
     List<User>getAllTeachers();
     List<User>getAllManagers();
+    List<User> getUserByManager();
 }

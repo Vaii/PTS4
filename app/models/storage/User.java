@@ -75,7 +75,7 @@ public class User {
     }
 
     public void setId(String id){
-        _id = id;
+        this._id = id;
     }
 
     @JsonProperty(M_FIRSTNAME)
@@ -129,6 +129,6 @@ public class User {
     }
 
     public void setManager(String manager) {
-        manager = manager;
+        this.manager = manager;
     }
 }
