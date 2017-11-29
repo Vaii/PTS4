@@ -14,6 +14,12 @@ public class ViewTraining implements Comparable<ViewTraining> {
                 this.location = location;
                 this.date = date;
         }
+
+        public ViewTraining(Training training, DateTime date){
+            this.training = training;
+            this.date = date;
+        }
+
         public Training getTraining() {
                 return training;
         }

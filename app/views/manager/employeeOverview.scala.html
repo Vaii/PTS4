@@ -1,27 +1,35 @@
 @import models.storage.User
-@import models.storage.DateTime
-@(page: String, isLoggedIn: Boolean, User: User, Users: Map[User, List[DateTime]])
+@import models.view.ViewTraining
+@(page: String, isLoggedIn: Boolean, User: User, Users: Map[User, List[ViewTraining]])
 
 @shared.main(page, isLoggedIn, User) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-            $(document).ready(function(){
-                $("button").click(function(){
-                    $("#trainingInfo").toggle();
-                });
-            });
+            function toggle(id) {
+                var x = document.getElementById(id);
+                console.log(x);
+                console.log(x.style.display);
+
+                if( x.style.display == "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
     </script>
 
     <div class="container">
 
         @for((key, value) <- Users){
-            <div>@key.getEmail() <button>Toggle</button>
-                <div id="trainingInfo" style="display: none">
+            <div>@key.getFirstName() @key.getLastName() <button onclick="toggle('@key.getId()')">Training info</button>
+                <div id="@key.getId()" style="display: none">
                     @for(a <- value){
-                        <p>@a.getId</p>
+                        <p>Naam: @a.getTraining().getName() --- Datum: @a.getDate().getDateString()</p>
                     }
                 </div>
+                <hr>
         </div>
         }
+
     </div>
 }
