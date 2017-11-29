@@ -12,6 +12,11 @@ div.form-group {
 #selectText {
     margin-left:15px;
 }
+#btnAddDate{
+    margin-top:10px;
+    margin-left:30px;
+    margin-bottom: 10px;
+}
 
 #newTrn {
     padding-top: 5px;
@@ -149,8 +154,7 @@ div.col-lg-5 {
 }
 
 input.btn.btn-default {
-    margin-top:10px;
-    margin-left:30px;
+
 }
 
 a.btn.btn-danger {
