@@ -231,6 +231,7 @@ public class TrainingController extends Controller {
 
             List<ViewDate> viewDates = new ArrayList<>();
             viewDates = converter.getViewDates(id);
+            Collections.sort(viewDates);
 
             return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
