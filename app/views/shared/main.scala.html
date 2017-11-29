@@ -22,6 +22,13 @@
 
     </head>
 
+    <script>
+            $("a[href='#top']").click(function() {
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                return false;
+            });
+    </script>
+
     <body>
         <div id="wrapper">
             <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
@@ -104,11 +111,24 @@
 
             <footer>
                 <div class="row">
-                    <div class="col-md-8">
-                        <img class="footer-logo" alt="Info Support" src="@routes.Assets.at("images/infosupportlogo.png")">
+                    <div class="col-lg-4">
+                        <div class="footer-element">
+                            <a href="#top"> <img class="footer-logo" alt="Info Support" src="@routes.Assets.at("images/infosupportlogo.png")"></a>
+                        </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-lg-4">
+                        <div class="footer-element">
+                        <p class="created">Info Support</p>
+                        <p class="created"> <a href="@routes.ApplicationController.contact()">Contact</a></p>
+                        <p class="created"> <a href="https://training.infosupport.com/over"> Over Info Support</a></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="footer-element">
                         <p class="created">Created by Hats Off</p>
+                        <p class="created">Fontys University of Applied Sciences</p>
+                        <p class="created">© 2017</p>
+                        </div>
                     </div>
                 </div>
             </footer>
