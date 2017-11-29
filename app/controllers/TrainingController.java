@@ -197,6 +197,7 @@ public class TrainingController extends Controller {
         } else {
             List<ViewDate> viewDates = new ArrayList<>();
             viewDates =  converter.getViewDates(id);
+            Collections.sort(viewDates);
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
@@ -269,6 +270,7 @@ public class TrainingController extends Controller {
             List<ViewDate> viewDates = new ArrayList<>();
 
             viewDates = converter.getViewDates(id);
+            Collections.sort(viewDates);
 
             Form<Training> editForm = form.fill(trainingRepo.getTraining(id));
             return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), trainingRepo.getTraining(id),
