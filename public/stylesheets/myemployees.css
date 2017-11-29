@@ -1,0 +1,23 @@
+.form-vertical {
+    margin-left: 20px; !important;
+}
+
+.form-vertical {
+    font-weight: bold;
+}
+
+h1 {
+    color: #0078c9;
+    margin-left: 20px;
+}
+.container {
+    width: 50%;
+}
+
+.form-group{
+    width:95%;
+}
+.form-control-inline {
+    width: 100%;
+}
+

@@ -4,6 +4,9 @@ import models.storage.DateTime;
 import models.storage.Location;
 import models.storage.Training;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class ViewTraining implements Comparable<ViewTraining> {
         Training training;
         Location location;
@@ -31,8 +34,6 @@ public class ViewTraining implements Comparable<ViewTraining> {
         public DateTime getDate() {
                 return date;
         }
-
-
         @Override
         public int compareTo(ViewTraining o) {
                 return this.date.getDate().compareTo(o.getDate().getDate());
