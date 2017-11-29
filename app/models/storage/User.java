@@ -128,6 +128,11 @@ public class User {
         return manager;
     }
 
+    public String capatalizedRole(){
+        String Role = this.getRole().toString().toLowerCase();
+        return Role.substring(0,1).toUpperCase() + Role.substring(1);
+    }
+
     public void setManager(String manager) {
         this.manager = manager;
     }
