@@ -15,7 +15,7 @@ POST  /training/delete/:id/:code            controllers.TrainingController.remov
 # Account management
 
 GET     /account/login                      controllers.AccountController.login
-POST    /account/login                      controllers.AccountController.authentication
+POST    /account/redirectlogin              controllers.AccountController.authentication
 GET     /account/profile                    controllers.AccountController.profile
 GET     /account/logout                     controllers.AccountController.logout
 GET     /account/redirectlogin              controllers.AccountController.redirectlogin
@@ -33,7 +33,7 @@ POST    /location/submit_form               controllers.LocationController.submi
 
 # Training
 GET     /addtraining                        controllers.TrainingController.addTraining
-POST     /submit                             controllers.TrainingController.submit
+POST    /submit                             controllers.TrainingController.submit
 GET     /overview                           controllers.TrainingController.overview
 GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(category: String, id: String)
 GET     /managetraining                     controllers.TrainingController.manage
