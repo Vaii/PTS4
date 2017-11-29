@@ -21,14 +21,25 @@
     <div class="container">
 
         @for((key, value) <- Users){
-            <div>@key.getFirstName() @key.getLastName() <button onclick="toggle('@key.getId()')">Training info</button>
+            <div class="row">
+                <div class="col-lg-8">
+                @key.getFirstName() @key.getLastName()
+                </div>
+                <button onclick="toggle('@key.getId()')">Training info</button>
                 <div id="@key.getId()" style="display: none">
                     @for(a <- value){
-                        <p>Naam: @a.getTraining().getName() --- Datum: @a.getDate().getDateString()</p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p>Naam:</p>@a.getTraining().getName()
+                            </div>
+                            <div class="col-lg-6">
+                                <p>Datum: @a.getDate().getDateString()</p>
+                            </div>
+                        </div>
                     }
                 </div>
-                <hr>
         </div>
+            <hr>
         }
 
     </div>
