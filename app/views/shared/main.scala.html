@@ -31,19 +31,42 @@
                 <a href="@routes.ApplicationController.index()"><img src="@routes.Assets.at("images/infosupportlogo.png")" class="logo" alt="logo"></a>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav mr-auto ml-auto">
-                        <li class="nav-item dropdown">
+
+                        @if(user != null) {
+                            @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
+                                <li class="nav-item dropdown">
+
+                                    <a class="nav-link dropdown-toggle" id="trainingDropdownMenu" href="">
+                                        Training</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="@routes.TrainingController.addTraining()">Training Toevoegen</a>
+                                        <a class="dropdown-item" href="@routes.TrainingController.manage()">Training Beheren</a>
+                                    </div>
+                                </li>
+                            } else {
+                                <li class="nav-item">
+                                    <a class="nav-link" id="trainingDropdownMenu" href="@routes.TrainingController.overview()">Training</a>
+                                </li>
+                            }
+                        } else {
+                            <li class="nav-item">
+                                <a class="nav-link" id="trainingDropdownMenu" href="@routes.TrainingController.overview()">Training</a>
+                            </li>
+                        }
+
+                       <!-- <li class="nav-item dropdown">
 
                             <a class="nav-link dropdown-toggle" id="trainingDropdownMenu" href="">
                                 Training</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="@routes.TrainingController.overview()">Aangeboden Trainingen</a>
-                                @if(isLoggedIn) {
-                                    @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
-                                        <a class="dropdown-item" href="@routes.TrainingController.addTraining()">Training Toevoegen</a>
-                                        <a class="dropdown-item" href="@routes.TrainingController.manage()">Training Beheren</a>
-                                    }
-                                }
+
+                            @*if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
+                                <a class="dropdown-item" href="@routes.TrainingController.addTraining()">Training Toevoegen</a>
+                                <a class="dropdown-item" href="@routes.TrainingController.manage()">Training Beheren</a>
+                            } *@
                             </div>
+                        </li> -->
+
 
                         @if(isLoggedIn) {
                             @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
