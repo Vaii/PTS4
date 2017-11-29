@@ -80,7 +80,7 @@ public class User {
 
     @JsonProperty(M_FIRSTNAME)
     public String getFirstName() {
-        return firstName;
+        return firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
     }
 
     public void setFirstName(String firstName) {
