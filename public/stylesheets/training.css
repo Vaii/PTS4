@@ -8,6 +8,11 @@ div.form-group {
     width: 100%;
 
 }
+h1 {
+    text-align: left;
+    color: #0078c9;
+
+}
 
 #newTrn {
     padding-top: 5px;
@@ -55,6 +60,14 @@ div.trainingmenu ul li {
     border-bottom: 1px solid dodgerblue;
     text-align: center;
     text-underline: none;
+}
+div.trainingmenu ul li.active {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid dodgerblue;
+    text-align: center;
+    text-underline: none;
+    font-weight: bold;
 }
 
 div.trainingmenu ul li:last-child {

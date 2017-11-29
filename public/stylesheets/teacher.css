@@ -1,10 +1,17 @@
 /*Source:https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_switch */
+
+#calenderDiv {
+    min-height : 500px;
+}
+
 .container {
+    min-height : 700px;
     padding:20px;
 }
 .container h1 {
     padding-top:0px;
     color: #0275d8;
+    padding-bottom: 50px;
 }
 .switch {
     position: relative;
@@ -66,6 +73,8 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+/* Own Css    */
 .form-control {
     margin-top:15px;
 }
@@ -122,4 +131,5 @@ label {
     padding-right:0px;
     padding-left:0px;
 }
+
 

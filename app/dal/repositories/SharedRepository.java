@@ -4,6 +4,7 @@ import dal.interfaces.SharedContext;
 import models.storage.Training;
 
 import java.util.List;
+import java.util.Map;
 
 public class SharedRepository implements SharedContext {
 
@@ -26,5 +27,10 @@ public class SharedRepository implements SharedContext {
     @Override
     public List<Training> getTrainingsForTeacher(String userId) {
         return context.getTrainingsForTeacher(userId);
+    }
+
+    @Override
+    public Map<String, Integer> getTrainingFrequencies(String userId) {
+        return context.getTrainingFrequencies(userId);
     }
 }

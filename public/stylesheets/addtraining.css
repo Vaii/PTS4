@@ -1,5 +1,5 @@
 .form-control-inline {
-    width: 500px;
+    width: 84.5%;
 }
 
 .form-vertical {
@@ -52,3 +52,6 @@ h1 {
 .col-lg-9 {
      padding-left:0px;
  }
+#dates  {
+    font-size: smaller;
+}

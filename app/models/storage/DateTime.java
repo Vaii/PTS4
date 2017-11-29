@@ -41,6 +41,8 @@ public class DateTime {
     // Is also added here to prevent the need of getting an entire training object to do overlap checking.
     private float duration;
 
+    public DateTime() {}
+
     @JsonCreator
     public DateTime(@JsonProperty(M_DATE) Date date,
                     @JsonProperty(M_LOCATION) String locationId,
@@ -112,7 +114,7 @@ public class DateTime {
     }
 
     public String getDateString() {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat("hh:mm dd-MM-yyyy");
         return df.format(this.date);
     }
 
@@ -149,14 +151,16 @@ public class DateTime {
      * @return true if there is a overlap between the 2 durations.
      */
     public DateTime checkOverlap(DateTime other ) {
+        Date convertedDatetime = this.date;
+        Date convertedDatetime2 = other.getDate();
 
         Calendar c = Calendar.getInstance();
-        c.setTime(this.date);
+        c.setTime(convertedDatetime);
         c.add(Calendar.DATE, (int) duration);
         Date myEndDate = c.getTime();
 
         Calendar co = Calendar.getInstance();
-        co.setTime(other.getDate());
+        co.setTime(convertedDatetime2);
         co.add(Calendar.DATE, (int) other.getDuration());
         Date otherEndDate = co.getTime();
 
@@ -167,10 +171,10 @@ public class DateTime {
             }
         }
 
-        if(other.getDate().after(this.date) && other.getDate().before(myEndDate) ||
-                otherEndDate.after(this.date) && otherEndDate.before(myEndDate) ||
-                this.date.after(other.getDate()) && this.date.before(otherEndDate) ||
-                this.date.equals(other.getDate())) {
+        if(convertedDatetime2.after(convertedDatetime) && convertedDatetime2.before(myEndDate) ||
+                otherEndDate.after(convertedDatetime) && otherEndDate.before(myEndDate) ||
+                convertedDatetime.after(convertedDatetime2) && convertedDatetime.before(otherEndDate) ||
+                this.date.equals(convertedDatetime2)) {
             return other;
         }
 
