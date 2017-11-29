@@ -8,10 +8,9 @@ div.form-group {
     width: 100%;
 
 }
-h1 {
-    text-align: left;
-    color: #0078c9;
 
+#selectText {
+    margin-left:15px;
 }
 
 #newTrn {
@@ -91,13 +90,14 @@ div.trainingmenu ul li a:hover {
 
 div.trainingtext {
     padding-bottom: 20px;
-    padding-left: 20px;
+    padding-left: 40px;
 }
 
 div.trainingtext h1 {
     text-align: left;
     color: #0078c9;
-
+    margin-left:15px;
+    margin-bottom: 30px;
 }
 
 div.trainingtext h2 {
@@ -134,7 +134,6 @@ div.row.col-lg-12 {
 
 .btn-danger {
     margin-top:32px;
-    margin-left:10px;
 }
 
 div.col-lg-9 {
@@ -142,6 +141,11 @@ div.col-lg-9 {
 }
 div.col-lg-3 {
     padding-left:0px;
+
+}
+div.col-lg-5 {
+    padding-left: 0px;
+    padding-right: 15px;
 }
 
 input.btn.btn-default {

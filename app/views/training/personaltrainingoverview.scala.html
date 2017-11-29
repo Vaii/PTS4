@@ -7,7 +7,7 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
     <div class="container">
         <div>
-            @if(!trainings.isEmpty) {
+            @if(!categories.isEmpty) {
                 <div class="row">
                 <div class="col-lg-2 trainingmenu">
                 <ul>
@@ -50,7 +50,10 @@
                 <div class="trainingtext col-lg-8" >
                 <div>
                     @if(training != null) {
-                        <h1>@training.getName()</h1>
+                        <div class="row">
+                            <h1>@training.getName()</h1>
+                        </div>
+
                         <h2>Beschrijving</h2>
                         @if(training.getDescription == null) {
                             <p> Geen beschrijving. </p>
@@ -67,16 +70,6 @@
                                     </div>
                                     <div class="col-lg-8">
                                         <p>@training.getTrainingCode</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p>Ruimte:</p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p>@training.getCapacity plekken</p>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +93,7 @@
                                         <p>Kosten:</p>
                                     </div>
                                     <div class="col-lg-8">
-                                        <p>€@training.getTuition euro per persoon.</p>
+                                        <p>€@training.getRoundedTuition</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -121,11 +114,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <p>Datum ingeschreven: </p>
+                                        <p>Datum training: </p>
+                                        <p>Locatie: </p>
                                     </div>
                                     <div class="col-lg-8">
                                     @for(date <- viewDates) {
                                         <p>@date.getDateString <a href="#">Uitschrijven</a></p>
+                                        <p>@date.getLocation.getStreetName @date.getLocation.getStreetNumber , @date.getLocation.getCity</p>
                                     }
                                     </div>
                                 </div>
@@ -148,7 +143,7 @@
                     <div class="row col-lg-12">
 
                         <div class="col-lg-6 offset-lg-3">
-                            <p>U heeft zich nog niet ingeschereven voor een training, klik <a href="@routes.TrainingController.overview()">hier</a> om u in te schrijven voor een training.</p>
+                            <p id="selectText">U heeft zich nog niet ingeschereven voor een training, klik <a href="@routes.TrainingController.overview()">hier</a> om u in te schrijven voor een training.</p>
                         </div>
                     </div>
 

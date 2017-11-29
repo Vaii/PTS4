@@ -76,15 +76,33 @@ footer {
 
 .created {
     vertical-align: middle;
-    line-height: 150px;
+    line-height: 1px;
+    margin-top: 40px;
+}
+
+footer .col-lg-4 {
+    border-left: thin outset white;
 }
 
 footer .row {
     margin-right: 0;
 }
 
+footer a {
+    color: white;
+}
+
+footer a:hover {
+    color: white;
+}
+
+.footer-element {
+    margin: auto;
+    text-align: center;
+}
+
 .footer-logo {
-    margin-top: 50px;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
     display: block;

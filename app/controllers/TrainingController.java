@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import dal.contexts.*;
 import dal.repositories.*;
 import models.storage.*;
+import models.util.DateConverter;
 import models.util.OverlapChecker;
 import models.view.ViewDate;
 import models.view.ViewTraining;
-import org.springframework.format.annotation.DateTimeFormat;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -24,10 +24,6 @@ import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -53,6 +49,8 @@ public class TrainingController extends Controller {
 
     private FormFactory formFactory;
     private Form<Training> form;
+    private DateConverter converter = new DateConverter();
+
 
     @Inject
     public TrainingController(FormFactory formFactory) {
@@ -90,7 +88,7 @@ public class TrainingController extends Controller {
         Form<TuitionForm> filledTuitionForm = tuitionFormForm.bindFromRequest();
 
         if (filledTuitionForm.hasErrors()) {
-            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepo.getTraining(trainingID), tuitionFormForm));
+            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepo.getTrainingById(trainingID), tuitionFormForm));
         } else {
             TuitionForm filledForm = filledTuitionForm.get();
             filledForm.setTotalCosts(filledForm.getStudyCosts() + filledForm.getAccommodationCosts() + filledForm.getExaminationFees() + filledForm.getTransportCosts() + filledForm.getExtraCosts());
@@ -197,10 +195,9 @@ public class TrainingController extends Controller {
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         } else {
-            Training t = trainingRepo.getTraining(id);
-
             List<ViewDate> viewDates = new ArrayList<>();
-            createViewDates(t, viewDates);
+            viewDates =  converter.getViewDates(id);
+            Collections.sort(viewDates);
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
@@ -233,7 +230,8 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-            createViewDates(t, viewDates);
+            viewDates = converter.getViewDates(id);
+            Collections.sort(viewDates);
 
             return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
@@ -272,8 +270,8 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
             List<ViewDate> viewDates = new ArrayList<>();
 
-            createViewDates(t, viewDates);
-
+            viewDates = converter.getViewDates(id);
+            Collections.sort(viewDates);
 
             Form<Training> editForm = form.fill(trainingRepo.getTraining(id));
             return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), trainingRepo.getTraining(id),
@@ -284,7 +282,7 @@ public class TrainingController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result removeTraining(String category, String id) {
         if (id == null) {
-            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
+            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             Training t = trainingRepo.getTraining(id);
             for(String dateId : t.getDateIds()) {
@@ -453,29 +451,13 @@ public class TrainingController extends Controller {
             teacherTrainings.add(vt);
         }
 
+        Collections.sort(teacherTrainings);
+
         JsonNode dateJson = Json.toJson(teacherTrainings);
 
 
         return ok(teachertrainingoverview.render(teacherTrainings, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateJson));
     }
-
-    private void createViewDates(Training t, List<ViewDate> viewDates) {
-        int counter = 0;
-
-        if(!t.getDateIds().isEmpty()) {
-            for(String dateTime : t.getDateIds()) {
-                DateTime d = dateRepo.getDateTime(dateTime);
-
-                Location loc = locationRepo.getLocation(d.getLocationID());
-                User teacher = userRepo.getUserByID(d.getTeacherID());
-                ViewDate vd = new ViewDate(t.getDateIds().get(counter), d.getDate(), loc, teacher);
-                viewDates.add(vd);
-                counter++;
-            }
-        }
-    }
-
-
 
     private void editExistingDates(List<String> initIDs, List<String> requestDateIDs, List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
         int j = 0;

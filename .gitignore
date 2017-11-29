@@ -98,3 +98,6 @@ dist
 hs_err_pid*
 *.xml
 *.iml
+
+# Coverage reports
+reports/

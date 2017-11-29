@@ -8,10 +8,7 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.*;
-import views.html.account.login;
-import views.html.account.profile;
-import views.html.account.register;
-import views.html.account.registerSuccess;
+import views.html.account.*;
 
 import javax.inject.Inject;
 
@@ -37,6 +34,10 @@ public class AccountController extends Controller {
 
     public Result login(){
         return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
+    }
+
+    public Result redirectlogin(){
+        return ok(redirectlogin.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
     }
 
     public Result authentication(){

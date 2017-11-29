@@ -67,7 +67,6 @@ public class LocationController extends Controller {
         return redirect(routes.LocationController.locationOverview());
   }
 
-  //TODO make a message so the user knows if the deletion was succesful
   @Security.Authenticated(Secured.class)
   public Result deleteLocation(String locationId){
       if(locationRepo.removeLocation(locationId)){

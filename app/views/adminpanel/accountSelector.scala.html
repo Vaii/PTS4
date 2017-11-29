@@ -1,4 +1,6 @@
 @import models.storage.User
+@import org.apache.commons.lang3.text.WordUtils
+
 @(page: String, isLoggedIn: Boolean, User: User, Users: List[User])
 
 @shared.main(page, isLoggedIn, User) {
@@ -33,27 +35,29 @@
     <div class="container">
 
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/accountmanagement.css")">
-        <div class="row offset-lg-3">
+        <div class="row offset-lg-4">
             <h1>Account Beheren</h1>
         </div>
         <div class="row">
-            <div class="col-lg-6">
-                <p>
-                    Klik op het gewenste Email addres om een account te wijzigen.
-                </p>
+            <div class="col-lg-4">
+                <h6>Klik op het gewenste Email addres om een account te wijzigen.</h6>
             </div>
-            <div class="col-lg-6">
-                <p>
-                    Klik op verwijderen om een account te verwijderen.
-                </p>
+            <div class="col-lg-5">
+                <h6>Rollen van de medewerkers</h6>
+            </div>
+            <div class="col-lg-3">
+                <h6>Klik op verwijderen om een account te verwijderen.</h6>
             </div>
         </div>
         @for( x <- Users) {
             <div class="row account">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <a href="@routes.AdminController.manageAccount(x.getEmail())"> @x.getEmail()</a>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-5">
+                    <p>@x.capatalizedRole()</p>
+                </div>
+                <div class="col-lg-3">
                     <a href="@routes.AdminController.removeUser(x.getId())" class="btn btn-outline-danger">Verwijderen</a>
                 </div>
             </div>
