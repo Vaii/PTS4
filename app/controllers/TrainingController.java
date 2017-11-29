@@ -451,6 +451,8 @@ public class TrainingController extends Controller {
             teacherTrainings.add(vt);
         }
 
+        Collections.sort(teacherTrainings);
+
         JsonNode dateJson = Json.toJson(teacherTrainings);
 
 
