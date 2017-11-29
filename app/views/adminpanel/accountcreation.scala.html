@@ -14,17 +14,16 @@
         <h1>Registreren</h1>
         @b4.form(routes.AdminController.createUser()) {
             @helper.CSRF.formField
-            <table>
-                <tr>@b4.email(form("email"), '_label -> "Email", 'placeholder -> "example@example.com")</tr>
-                <tr>@b4.text(form("firstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</tr>
-                <tr>@b4.text(form("lastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</tr>
-                <tr>@b4.number(form("phoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</tr>
-                <tr>@b4.text(form("company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'readonly -> "true", 'value -> "InfoSupport")</tr>
-                <tr>@b4.select(form("role"), options(Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</tr>
-                <tr>@b4.password(form("password"), '_label -> "Wachtwoord", 'required -> "required")</tr>
-                <tr>@b4.password(form("validation"), '_label -> "Wachtwoord validatie", 'required -> "required")</tr>
-                <tr>@b4.submit('class -> "btn btn-default") { Registeren}</tr>
-            </table>
+                <div class="row">@b4.email(form("email"), '_label -> "Email", 'placeholder -> "example@example.com")</div>
+                <div class="row">@b4.text(form("firstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</div>
+                <div class="row">@b4.text(form("lastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</div>
+                <div class="row">@b4.number(form("phoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "0612345678")</div>
+                <div class="row">@b4.select(form("manager"), options(managers), '_label -> "Manager", '_default -> "Selecteer een manager")</div>
+                <div class="row">@b4.text(form("company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'readonly -> "true", 'value -> "InfoSupport")</div>
+                <div class="row">@b4.select(form("role"), options(Role.values().toSeq.map(_.toString())), '_label -> "Categorie")</div>
+                <div class="row">@b4.password(form("password"), '_label -> "Wachtwoord", 'required -> "required")</div>
+                <div class="row">@b4.password(form("validation"), '_label -> "Wachtwoord validatie", 'required -> "required")</div>
+                <div class="row">@b4.submit('class -> "btn btn-default") { Registeren}</div>
         }
     </div>
 }

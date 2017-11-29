@@ -75,12 +75,12 @@ public class User {
     }
 
     public void setId(String id){
-        _id = id;
+        this._id = id;
     }
 
     @JsonProperty(M_FIRSTNAME)
     public String getFirstName() {
-        return firstName;
+        return firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
     }
 
     public void setFirstName(String firstName) {
@@ -126,6 +126,11 @@ public class User {
     @JsonProperty(M_MANAGER)
     public String getManager() {
         return manager;
+    }
+
+    public String capatalizedRole(){
+        String Role = this.getRole().toString().toLowerCase();
+        return Role.substring(0,1).toUpperCase() + Role.substring(1);
     }
 
     public void setManager(String manager) {

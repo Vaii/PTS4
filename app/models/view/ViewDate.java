@@ -7,7 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ViewDate {
+public class ViewDate implements Comparable<ViewDate> {
     private String dateId;
     private Date date;
     private Location location;
@@ -62,5 +62,10 @@ public class ViewDate {
 
     public void setSignUps(int signUps) {
         this.signUps = signUps;
+    }
+
+    @Override
+    public int compareTo(ViewDate other) {
+        return this.date.compareTo(other.getDate());
     }
 }

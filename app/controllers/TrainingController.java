@@ -197,6 +197,7 @@ public class TrainingController extends Controller {
         } else {
             List<ViewDate> viewDates = new ArrayList<>();
             viewDates =  converter.getViewDates(id);
+            Collections.sort(viewDates);
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
@@ -230,6 +231,7 @@ public class TrainingController extends Controller {
 
             List<ViewDate> viewDates = new ArrayList<>();
             viewDates = converter.getViewDates(id);
+            Collections.sort(viewDates);
 
             return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
@@ -269,6 +271,7 @@ public class TrainingController extends Controller {
             List<ViewDate> viewDates = new ArrayList<>();
 
             viewDates = converter.getViewDates(id);
+            Collections.sort(viewDates);
 
             Form<Training> editForm = form.fill(trainingRepo.getTraining(id));
             return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), trainingRepo.getTraining(id),
@@ -447,6 +450,8 @@ public class TrainingController extends Controller {
             ViewTraining vt = new ViewTraining(trainingRepo.getTrainingById(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),dateRepo.getDateTime(d.getId()));
             teacherTrainings.add(vt);
         }
+
+        Collections.sort(teacherTrainings);
 
         JsonNode dateJson = Json.toJson(teacherTrainings);
 

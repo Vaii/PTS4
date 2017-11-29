@@ -7,6 +7,7 @@ import models.storage.DateTime;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
+import org.jongo.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,18 @@ public class DateTimeMongoContext implements DateTimeContext {
             dateTimes.add(dateTime);
         }
         return dateTimes;
+    }
+
+    @Override
+    public boolean removeUser(String userId) {
+        WriteResult result = collection.update("{}").multi().with("{$pull: {trainees: {$in: [#]}}}", userId);
+        return result.wasAcknowledged();
+    }
+
+    @Override
+    public boolean removeTeacher(String teacherId) {
+        WriteResult result = collection.update("{teacherId:#}", teacherId).with("{ $set: { teacherId: #}}", "") ;
+        return result.wasAcknowledged();
     }
 
     public void removeAll() {
