@@ -33,10 +33,13 @@ public class AccountController extends Controller {
     }
 
     public Result login(){
+        flash("url", request().getHeader("referer"));
         return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
+
     }
 
     public Result redirectlogin(){
+        flash("url", request().getHeader("referer"));
         return ok(redirectlogin.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
     }
 
@@ -56,7 +59,11 @@ public class AccountController extends Controller {
             if(userRepo.login(username, password)){
                 session().clear();
                 session("email", username);
-                return redirect(routes.ApplicationController.index());
+
+                flash("url", request().getHeader("referer"));
+                String url = flash("url");
+
+                return redirect(url);
             }
             return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
         }
