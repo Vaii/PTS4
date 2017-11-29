@@ -15,27 +15,25 @@
                 <div class="row">
                 @for(location <- locations) {
                     <div class="col-lg-3 contentcontainer">
-                        <div class="row">
+                        <div class="row col-lg-12">
                             <div class="col-lg-6">
                                 <p class="bold">Stad:</p>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-6">
                                 <p>
                                 @location.getCity
                                 </p>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row col-lg-12">
                             <div class="col-lg-6">
                                 <p class="bold">Straat:</p>
                             </div>
-                            <div class="col-lg-2">
-                                <p>
-                                @location.getStreetName
-                                </p>
+                            <div class="col-lg-6">
+                                <p> @location.getStreetName</p>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row col-lg-12">
                             <div class="col-lg-6">
                                 <p class="bold">Huisnummer:</p>
                             </div>
@@ -45,7 +43,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row col-lg-12">
                             <div class="col-lg-6">
                                 <p class="bold">Lokaal:</p>
                             </div>
@@ -55,7 +53,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row col-lg-12">
                             <div class="col-lg-6">
                                 <p class="bold">Capaciteit:</p>
                             </div>
@@ -65,7 +63,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row col-lg-12">
                             <div class="col-lg-6">
                                 <a href="@routes.LocationController.alterLocationForm(location.getId())" class="btn btn-primary">Wijzig</a>
                             </div>
