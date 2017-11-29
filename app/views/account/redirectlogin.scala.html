@@ -7,8 +7,6 @@
   <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
   <div class="container">
     <div class="row col-lg-12">
-
-      <div class="row col-lg-12">
         <div class="col-lg-6" id="login">
           <div class="row">
             <h1>Inloggen</h1>
@@ -20,9 +18,10 @@
               <p>Onjuist email of wachtwoord</p>
             </div>
           }
-          <div class="row"><p>Email</p></div>
+          <div class="row"><p id="pInfotext">Heeft u al een account? Log dan hier in.</p></div>
+          <div class="row"><p id="label">Email</p></div>
           <div class="row">@b4.text(form("email"), 'label -> "Email", 'placeholder -> "Email Address", 'required -> "required")</div>
-          <div class="row"><p>Wachtwoord</p></div>
+          <div class="row"><p id="label">Wachtwoord</p></div>
           <div class="row">@b4.password(form("password"), 'label -> "Password", 'placeholder -> "Password", 'required -> "required")</div>
           <div class="row">@b4.submit('class -> "btn btn-default") {Log in}</div>
         </div>
@@ -31,19 +30,15 @@
             <h1>Registreren</h1>
           </div>
           <div class="col-lg-12">
-            <div class="row col-lg-12">
-             <p>Maak hier een account aan.</p>
+            <div class="row">
+             <p id="pInfotext">Nog geen account? Maak hieronder een account aan!</p>
               </div>
-            <div class="row col-lg-12">
-
+            <div class="row col-lg-10 offset-lg-1">
               <a class="btn btn-primary" href="@routes.AccountController.register()" >Registreren</a>
             </div>
           </div>
         </div>
       </div>
-
-
       }
     </div>
-  </div>
 }
