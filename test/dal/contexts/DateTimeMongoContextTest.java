@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JUnit4.class)
 public class DateTimeMongoContextTest {
@@ -44,6 +46,46 @@ public class DateTimeMongoContextTest {
         List<DateTime> dates = dateContext.getDateTimeForTeacher("fakeTeacherID1");
 
         assertEquals(1, dates. size());
+    }
+
+    @Test
+    public void removeUser() {
+        dateContext.removeUser("fakeUser1");
+
+        List<DateTime> results = dateContext.getDateTimeForUser("fakeUser1");
+
+        assertEquals( 0, results.size());
+
+        List<DateTime> results2 = dateContext.getDateTimeForUser("fakeUser2");
+
+        assertEquals( 2, results2.size());
+    }
+
+    @Test
+    public void removeTeacher() {
+        dateContext.removeTeacher("fakeTeacherID1");
+
+        List<DateTime> results = dateContext.getDateTimeForTeacher("fakeTeacherID1");
+
+        assertEquals(0 , results.size());
+
+        List<DateTime> results2 = dateContext.getDateTimeForTeacher("fakeTeacherID2");
+
+        assertEquals(1 , results2.size());
+    }
+
+    @Test
+    public void removeUserError() {
+        boolean result = dateContext.removeUser("userThatIsNotInTheDB");
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void removeTeacherError() {
+        boolean result = dateContext.removeTeacher("userThatIsNotInTheDB");
+
+        assertTrue(result);
     }
 
 }

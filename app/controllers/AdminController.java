@@ -1,10 +1,14 @@
 package controllers;
 
+import dal.contexts.DateTimeMongoContext;
 import dal.contexts.UserMongoContext;
+import dal.repositories.DateTimeRepository;
 import dal.repositories.UserRepository;
+import models.storage.DateTime;
 import models.storage.Role;
 import models.storage.Secured;
 import models.storage.User;
+import models.util.DateConverter;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -15,6 +19,7 @@ import views.html.adminpanel.accountcreation;
 import views.html.shared.message;
 import views.html.adminpanel.manageaccount;
 import views.html.adminpanel.accountSelector;
+import views.html.adminpanel.teacherDeleteError;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -24,6 +29,7 @@ import java.util.Map;
 public class AdminController extends Controller{
 
     private UserRepository uRepo;
+    private DateTimeRepository dRepo;
     private Form<User> form;
     private Form<User> userForm;
     private Form<User> filledForm;
@@ -31,10 +37,36 @@ public class AdminController extends Controller{
     @Inject
     public AdminController(FormFactory formFactory){
         this.uRepo = new UserRepository(new UserMongoContext("User"));
+        this.dRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
         this.form = formFactory.form(User.class);
         this.userForm = formFactory.form(User.class);
         this.filledForm = formFactory.form(User.class);
 
+    }
+
+    public Result removeUser(String id){
+        if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
+            User userToRemove = uRepo.getUserByID(id);
+            if(userToRemove.getRole().equals(Role.DOCENT)) {
+                List<DateTime> dates = dRepo.getDateTimeForTeacher(userToRemove.getId());
+                if(!dates.isEmpty()) {
+                    // Teacher still has dates assigned to him, cancel the delete operation.
+                    DateConverter converter = new DateConverter();
+                    converter.convert(dates);
+                    return ok(teacherDeleteError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
+                            ,converter.convert(dates)));
+                } else {
+                    uRepo.removeUser(userToRemove); // Remove user from user table.
+                    dRepo.removeUser(id); // Remove user from possible trainee fields.
+                }
+            }
+
+            return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
+                        ,"Account succesvol verwijderd", "/admin"  ));
+
+
+        }
+        return notFound();
     }
 
     @Security.Authenticated(Secured.class)
@@ -52,8 +84,12 @@ public class AdminController extends Controller{
     public Result manageAccount(String email){
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
             userForm = form.fill(uRepo.getUser(email));
+
+            List<User> managers = uRepo.getAllManagers();
+            Map<String, String> managerMap = mapManager(managers);
+
             return ok(manageaccount.render("Manage Account",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap));
         }
         else{
             return notFound();
@@ -65,9 +101,12 @@ public class AdminController extends Controller{
 
         filledForm = form.bindFromRequest();
 
+        List<User> managers = uRepo.getAllManagers();
+        Map<String, String> managerMap = mapManager(managers);
+
         if(filledForm.hasErrors()){
             return (badRequest(manageaccount.render("Manage account",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm)));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap)));
         }
         User user = filledForm.get();
 
@@ -99,11 +138,7 @@ public class AdminController extends Controller{
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
             List<User> manager = uRepo.getAllManagers();
 
-            Map<String, String> managerInfo = new HashMap<>();
-
-            for(User m : manager){
-                managerInfo.put(m.getId(), m.getEmail());
-            }
+            Map<String, String> managerInfo = mapManager(manager);
             return ok(accountcreation.render("Account Creation",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, managerInfo));
         }
@@ -112,16 +147,22 @@ public class AdminController extends Controller{
         }
     }
 
+    private Map<String, String> mapManager(List<User> managers){
+
+        Map<String, String> managerMap = new HashMap<>();
+        for(User m : managers){
+            managerMap.put(m.getId(), m.getEmail());
+        }
+
+        return managerMap;
+    }
+
     @Security.Authenticated(Secured.class)
     public Result createUser(){
         Form<User> newFilledForm = form.bindFromRequest();
         User newUser = newFilledForm.get();
         String password = newFilledForm.field("password").value();
         String toValidate = newFilledForm.field("validation").value();
-
-        if(filledForm.field("ManagerCreation").value() != null){
-            newUser.setManager(filledForm.field("ManagerCreation").value());
-        }
 
         if(password.equals(toValidate)){
             if(uRepo.addUser(newUser, password)){
