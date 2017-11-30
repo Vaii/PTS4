@@ -19,7 +19,7 @@
             }
     </script>
 
-    <div class="container">
+    <div class="container" style="padding-top: 20px">
 
         @for((key, value) <- Users){
             <div class="row">
@@ -27,7 +27,7 @@
                 <h5>@key.getFirstName() @key.getLastName()</h5>
                 </div>
                 <div class="col-lg-3">
-                    <button onclick="toggle('@key.getId()')">Training info</button>
+                    <button class="btn btn-primary" onclick="toggle('@key.getId()')">Training info</button>
                 </div>
                 <div class="col-lg-12" id="@key.getId()" style="display: none">
                     <div class="row">
