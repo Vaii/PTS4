@@ -1,7 +1,7 @@
 
 .container {
     padding: 0px;
-    width: 60%;
+    width: 65%;
 }
 
 div.form-group {
@@ -167,4 +167,33 @@ div.form-control-label {
 {
     padding-left:0px;
     font-weight: bold;
+}
+
+#trainingMenu {
+    background-color: #e8effc;
+    width: 10em;
+    border-top: black thin inset;
+    border-right:  black thin inset;
+    border-bottom: black thin inset;
+}
+
+#trainingMenu #trainingContent {
+    color: black;
+    text-underline: none;
+    text-decoration: none;
+    list-style-type: none;
+    display: block;
+    font-size: 15px;
+    padding-bottom: 5px;
+    background-color: #e8effc;
+    visibility: hidden;
+}
+
+#trainingMenu #title {
+    color: black;
+    text-underline: none;
+    text-decoration: none;
+    display: block;
+    font-size: 20px;
+    padding-bottom: 5px;
 }

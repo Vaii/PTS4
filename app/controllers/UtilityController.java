@@ -1,9 +1,11 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import dal.contexts.TrainingMongoContext;
 import dal.contexts.UserMongoContext;
 import dal.repositories.TrainingRepository;
 import dal.repositories.UserRepository;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -26,5 +28,11 @@ public class UtilityController extends Controller {
         } else {
             return ok("code_nonexists");
         }
+    }
+
+    public Result getTrainingForCategory(String category) {
+        JsonNode node = Json.toJson(trainingRepo.getTrainingByCategory(category));
+
+        return ok(node);
     }
 }
