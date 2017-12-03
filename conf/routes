@@ -70,4 +70,5 @@ GET     /assets/*file                       controllers.Assets.at(path="/public"
 # Utility
 POST    /utility/emailCheck/:email                 controllers.UtilityController.checkEmail(email: String)
 POST    /utility/trainingcodecheck/:code           controllers.UtilityController.checkTraningCode(code: String)
-POST    /utility/gettrainings/:category             controllers.UtilityController.getTrainingForCategory(category: String)
+POST    /utility/gettrainings/:category            controllers.UtilityController.getTrainingForCategory(category: String)
+POST    /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)

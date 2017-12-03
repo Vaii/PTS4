@@ -25,6 +25,14 @@
                 });
             }
 
+            function getDates(training) {
+                $.post('/utility/getdates/' + training.id, function (data) {
+                    let dates;
+                    dates = data;
+                    setTrainingDates(dates, training);
+                });
+            }
+
             function toggleTrainingMenu(expanding) {
                 $("#trainingMenu").animate({
                     width: 'toggle'
@@ -42,7 +50,6 @@
             function addTrainingsToDiv(trainings) {
                 $('#trainingContent').empty();
                 $.each(trainings, function (index, element) {
-                    console.log(element);
                     $('#trainingContent').append(
                             $('<li>').append(
                                     $('<a>').attr('href', '#').attr('id', element).addClass("trainingLink").append(
@@ -56,6 +63,7 @@
             function setTrainingContent(training) {
                 $("#noTrainingContent").css('display', 'none');
                 console.log("setting training content");
+                getDates(training);
                 console.log(training);
                 $('#trainingContentName').text(training.name);
                 $('#trainingContentCode').text(training.trainingCode);
@@ -66,6 +74,15 @@
                 $('#trainingContentDuration').text(training.duration);
                 $('#trainingContentCategory').text(training.category);
                 $("#trainingContentDiv").css('display', 'block');
+            }
+
+            function setTrainingDates(dates, training) {
+                var container = $('#trainingContentDates');
+                $.each(dates, function (index, element) {
+                    console.log(element);
+                    container.append("<P>" + element.dateString + ", " +  element.location.city + "<br>" +
+                    (training.capacity - element.signUps) + "/" + + training.capacity + " plaatsen beschikbaar" + "</p>");
+                });
             }
     </script>
     <div class="container">
@@ -159,7 +176,7 @@
                                         <p>Datums: </p>
                                     </div>
                                     <div class="col-lg-8">
-                                        <p>Nog geen datums beschikbaar.</p>
+                                        <p id="trainingContentDates"></p>
                                     </div>
                                 </div>
                             </div>
