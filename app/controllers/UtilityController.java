@@ -1,11 +1,15 @@
 package controllers;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.databind.JsonNode;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.TrainingMongoContext;
 import dal.contexts.UserMongoContext;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
+=======
+import dal.contexts.UserMongoContext;
+>>>>>>> parent of 204d247... Added JQuery Checks
 import dal.repositories.UserRepository;
 import models.util.DateConverter;
 import models.view.ViewDate;
@@ -18,8 +22,11 @@ import java.util.List;
 public class UtilityController extends Controller {
 
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
+<<<<<<< HEAD
     private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+=======
+>>>>>>> parent of 204d247... Added JQuery Checks
 
     public Result checkEmail(String email) {
         if(userRepo.getUser(email) != null) {
@@ -28,6 +35,7 @@ public class UtilityController extends Controller {
             return ok("user_nonexists");
         }
     }
+<<<<<<< HEAD
 
     public Result checkTraningCode(String trainingCode) {
         if(trainingRepo.getTraining(trainingCode) != null) {
@@ -50,4 +58,6 @@ public class UtilityController extends Controller {
         JsonNode node = Json.toJson(dates);
         return ok(node);
     }
+=======
+>>>>>>> parent of 204d247... Added JQuery Checks
 }
