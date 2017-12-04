@@ -68,11 +68,7 @@ GET     /manager/employees                  controllers.ManagerController.employ
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)
 
 # Utility
-<<<<<<< HEAD
 POST    /utility/emailCheck/:email                 controllers.UtilityController.checkEmail(email: String)
 POST    /utility/trainingcodecheck/:code           controllers.UtilityController.checkTraningCode(code: String)
 POST    /utility/gettrainings/:category            controllers.UtilityController.getTrainingForCategory(category: String)
 POST    /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
-=======
-POST    /utility/emailCheck/:email                 controllers.UtilityController.checkEmail(email: String)
->>>>>>> parent of 204d247... Added JQuery Checks
