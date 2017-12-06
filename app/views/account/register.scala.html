@@ -4,39 +4,12 @@
 
     @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/smallPage.css")">
-    <script>
-            $( document ).ready(function () {
-                $('#email').on('input', function() {
-                    if($('#email').val() != "") {
-                        $.post('/utility/emailCheck/' + $('#email').val(), function(data) {
-                            if(data== "user_exists"){
-                                console.log("User already exists");
-                                disableControls(true);
-                            }else{
-                                console.log("User doesn't exists");
-                                disableControls(false);
-                            }
-                        });
-                    } else {
-                        disableControls(false);
-                    }
-                });
-                
-                function disableControls(disable) {
-                    $('.btn-default').prop("disabled",disable);
-                    if(disable) {
-                        $('#email_field').addClass('has-danger');
-                        $('#validation_error_0').css("display", "block");
-                    } else {
-                        $('#email_field').removeClass('has-danger');
-                        $('#validation_error_0').css("display", "none");
-                    }
-                }
-            });
-    </script>
+    <script src="@routes.Assets.at("javascripts/register.js")"></script>
 
     <div class="container">
+        <div class="row">
             <h1>Registreren</h1>
+        </div>
             @b4.form(routes.AccountController.registerAccount) {
                     <div class="row">@b4.email(form("email"), '_label -> "Email", 'placeholder -> "example@example.com")</div>
                     <div style="display: none; color:#d9534f" id="validation_error_0" class="form-control-feedback ">Email is al in gebruik</div>

@@ -48,9 +48,9 @@ public class DateConverter {
         return result;
     }
 
-    public List<ViewDate> getViewDates(String id){
+    public List<ViewDate> getViewDates(String trainingId){
         List<String> ids = new ArrayList<>();
-        ids = trainingRepo.getTraining(id).getDateIds();
+        ids = trainingRepo.getTraining(trainingId).getDateIds();
         return converts(ids);
     }
 }
