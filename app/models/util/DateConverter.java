@@ -50,5 +50,10 @@ public class DateConverter {
 
     public List<ViewDate> getViewDates(String trainingId){
         return convert(dateTimeRepo.getDateTimeForTraining(trainingId));
+
+    }
+
+    public List<ViewDate> getViewDatesFromUser(String userId){
+       return convert(dateTimeRepo.getDateTimeForUser(userId));
     }
 }
