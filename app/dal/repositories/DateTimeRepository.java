@@ -51,4 +51,14 @@ public class DateTimeRepository implements DateTimeContext {
     public boolean removeTeacher(String teacherId) {
         return context.removeTeacher(teacherId);
     }
+
+    @Override
+    public List<DateTime> getDateTimeForTraining(String trainingId) {
+        return context.getDateTimeForTraining(trainingId);
+    }
+
+    @Override
+    public List<DateTime> getDateTimeForLocation(String locationId) {
+        return context.getDateTimeForLocation(locationId);
+    }
 }

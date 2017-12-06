@@ -198,7 +198,7 @@ public class TrainingController extends Controller {
             List<ViewDate> viewDates = new ArrayList<>();
             viewDates =  converter.getViewDates(id);
             Collections.sort(viewDates);
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
+            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
     }
@@ -233,7 +233,7 @@ public class TrainingController extends Controller {
             viewDates = converter.getViewDates(id);
             Collections.sort(viewDates);
 
-            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
     }
@@ -437,7 +437,6 @@ public class TrainingController extends Controller {
             dateIDs.add(lastId);
             counter++;
         }
-
         return dateIDs;
     }
 

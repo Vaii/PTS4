@@ -32,12 +32,12 @@
                         @for(t <- trainings) {
                             @if(training != null) {
                                 @if(t.getId.equals(training.getId)) {
-                                    <li class="active" ><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                    <li class="active" ><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
                                 } else {
-                                    <li><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                    <li><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
                                 }
                             } else {
-                                <li><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                <li><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
                             }
                         }
                     } else {

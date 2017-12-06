@@ -13,4 +13,6 @@ public interface DateTimeContext {
     List<DateTime> getDateTimeForTeacher(String teacherId);
     boolean removeUser(String userId);
     boolean removeTeacher(String teacherId);
+    List<DateTime> getDateTimeForTraining(String trainingId);
+    List<DateTime> getDateTimeForLocation(String locationId);
 }
