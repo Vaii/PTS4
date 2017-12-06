@@ -42,8 +42,8 @@ public class TrainingRepository implements TrainingContext {
     }
 
     @Override
-    public List<Training> getTrainings(Formats.DateTime date) {
-        return context.getTrainings(date);
+    public List<Training> getTrainingsByDate(String dateId) {
+        return context.getTrainingsByDate(dateId);
     }
 
     @Override

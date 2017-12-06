@@ -1,7 +1,10 @@
 package controllers;
 
+import dal.contexts.DateTimeMongoContext;
 import dal.contexts.LocationMongoContext;
+import dal.repositories.DateTimeRepository;
 import dal.repositories.LocationRepository;
+import models.storage.DateTime;
 import models.storage.Location;
 import models.storage.Secured;
 import play.data.Form;
@@ -10,16 +13,19 @@ import play.mvc.Result;
 import views.html.location.*;
 import play.mvc.*;
 import javax.inject.Inject;
+import java.util.List;
 
 public class LocationController extends Controller {
 
     private final Form<Location> form;
     private LocationRepository locationRepo;
+    private DateTimeRepository dateTimeRepo;
 
     @Inject
     public LocationController(FormFactory formFactory){
         this.form = formFactory.form(Location.class);
         locationRepo = new LocationRepository(new LocationMongoContext("Location"));
+        dateTimeRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
     }
 
     //Loads the generic form for adding a location
@@ -69,6 +75,13 @@ public class LocationController extends Controller {
 
   @Security.Authenticated(Secured.class)
   public Result deleteLocation(String locationId){
+
+      List<DateTime> overlap = dateTimeRepo.getDateTimeForLocation(locationId);
+
+      if(!overlap.isEmpty()) {
+        return ok(locationError.render(overlap, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Alter Location Form"));
+      }
+
       if(locationRepo.removeLocation(locationId)){
           return redirect(routes.LocationController.locationOverview());
       }

@@ -14,9 +14,8 @@ $( document ).ready(function () {
         }
     });
 
-
     function disableControls(disable) {
-        $('.btn-default').prop("disabled",disable);
+        $('.btn-primary').prop("disabled",disable);
         if(disable) {
             $('#trainingCode_field').addClass('has-danger');
             $('#validation_error_0').css("display", "block");
@@ -25,5 +24,4 @@ $( document ).ready(function () {
             $('#validation_error_0').css("display", "none");
         }
     }
-
 });

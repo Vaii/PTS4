@@ -160,7 +160,8 @@ public class TrainingController extends Controller {
                     for(String dateID : dateIDs) {
                         dateRepo.removeDateTime(dateID);
                     }
-                    return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), date, overlapError, "/overview"));
+                    Training t = trainingRepo.getTrainingsByDate(overlapError.getId()).get(0);
+                    return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), date, overlapError, t, "/overview"));
                 }
             }
             trainingRepo.addTraining(training);
@@ -195,10 +196,10 @@ public class TrainingController extends Controller {
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         } else {
-            List<ViewDate> viewDates = new ArrayList<>();
+            List<ViewDate> viewDates;
             viewDates =  converter.getViewDates(id);
             Collections.sort(viewDates);
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
+            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
     }
@@ -233,7 +234,7 @@ public class TrainingController extends Controller {
             viewDates = converter.getViewDates(id);
             Collections.sort(viewDates);
 
-            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTraining(id),
+            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
         }
     }
@@ -267,14 +268,14 @@ public class TrainingController extends Controller {
             JsonNode locationJson = Json.toJson(locations);
             JsonNode teacherJson = Json.toJson(teachers);
 
-            Training t = trainingRepo.getTraining(id);
-            List<ViewDate> viewDates = new ArrayList<>();
-
+            Training t = trainingRepo.getTrainingById(id);
+            List<ViewDate> viewDates;
             viewDates = converter.getViewDates(id);
+
             Collections.sort(viewDates);
 
-            Form<Training> editForm = form.fill(trainingRepo.getTraining(id));
-            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), trainingRepo.getTraining(id),
+            Form<Training> editForm = form.fill(t);
+            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), t,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm, viewDates, locationJson, teacherJson));
         }
     }
@@ -331,6 +332,16 @@ public class TrainingController extends Controller {
             }
 
             List<String> initIDs = training.getDateIds();
+
+            for(String id : initIDs) {
+                DateTime dt = dateRepo.getDateTime(id);
+                DateTime overlapError= detectedOverlap(dt, OverlapType.TEACHER);
+                if(overlapError != null){
+                    Training t = trainingRepo.getTrainingsByDate(overlapError.getId()).get(0);
+                    return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, overlapError,t, "/overview"));
+                }
+            }
+
             editExistingDates(initIDs, requestDateIDs, dates, locationIDs, teacherIDs);
 
             if(dates.size() > requestDateIDs.size()) {
@@ -341,11 +352,12 @@ public class TrainingController extends Controller {
                 for(int i = beginIndex; i < dates.size(); i++) {
                     Date date = format.parse(dates.get(i));
                     DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
-
                     DateTime overlapError= detectedOverlap(dt, OverlapType.TEACHER);
                     if(overlapError != null){
-                        return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, overlapError, "/overview"));
+                        Training t = trainingRepo.getTrainingsByDate(overlapError.getId()).get(0);
+                        return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, overlapError,t, "/overview"));
                     }
+
                     dt.setTrainingID(training.getId());
 
                     String lastId = dateRepo.addDateTime(dt).toString();
@@ -437,7 +449,6 @@ public class TrainingController extends Controller {
             dateIDs.add(lastId);
             counter++;
         }
-
         return dateIDs;
     }
 

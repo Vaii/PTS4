@@ -13,7 +13,7 @@ public interface TrainingContext {
     boolean updateTraining(Training training);
     boolean removeTraining(Training training);
     Training getTraining(String trainingCode);
-    List<Training> getTrainings(Formats.DateTime date);
+    List<Training> getTrainingsByDate(String dateId);
     List<Training> getTrainings(Location location);
     List<Training> getAll();
     List<Training> getTrainingByCategory(String category);
