@@ -2,16 +2,24 @@
 @import models.storage.DateTime
 @(locations: List[DateTime], isLoggedIn: Boolean, User: User, Page: String)
     @shared.main(Page, isLoggedIn, User) {
-
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/locationoverview.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/errorpage.css")">
         <div class="container">
-            <p>Deze locatie word nog gebruikt op de volgende momenten:</p>
-
-            @for(date <- locations) {
-                <li>@date.getDateString</li>
-            }
-
-            <p>Om deze locatie te verwijderen moet je deze eerst loskoppelen van de bovenstaande momenten.</p>
-            <a class="btn btn-default" href="@routes.LocationController.locationOverview()"> Terug naar overzicht</a>
+            <div class="row">
+                <div class="row">
+                    <p>Deze locatie word nog gebruikt op de volgende datums:</p>
+                </div>
+                @for(date <- locations) {
+                    <div class="row col-lg-12">
+                        <li>@date.getDateString</li>
+                    </div>
+                }
+                <div class="row col-lg-12">
+                    <p>Om deze locatie te kunnen verwijderen moet deze eerst losgekoppeld worden van de bovenstaande datums.</p>
+                </div>
+                <div class="row col-lg-12">
+                    <a class="btn btn-primary" href="@routes.LocationController.locationOverview()"> Terug naar overzicht</a>
+                </div>
+            </div>
         </div>
     }
