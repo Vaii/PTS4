@@ -60,13 +60,14 @@ public class TrainingController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result signUpCourse(String id, String trainingID) {
+    public Result signUpCourse(String id) {
 
         if (id == null) {
             return notFound();
         } else {
             if (Secured.getUserInfo(ctx()).getRole() != Role.EXTERN) {
-                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id) , trainingRepo.getTraining(trainingID), tuitionFormForm));
+                DateTime dt = dateRepo.getDateTime(id);
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt , trainingRepo.getTraining(dt.getTrainingID()), tuitionFormForm));
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
                 DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
