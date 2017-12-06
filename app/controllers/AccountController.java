@@ -60,10 +60,7 @@ public class AccountController extends Controller {
                 session().clear();
                 session("email", username);
 
-                flash("url", request().getHeader("referer"));
-                String url = flash("url");
-
-                return redirect(url);
+                return redirect(routes.ApplicationController.index());
             }
             return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
         }
