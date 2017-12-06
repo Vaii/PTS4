@@ -36,16 +36,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="TEST" name="SBT: xml-apis:xml-apis:1.4.01:jar" level="project" />
-    <orderEntry type="module-library">
-      <library name="SBT: unmanaged-jars">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../lib/junit-jupiter-api-5.0.0.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../lib/opentest4j-1.0.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="SBT: com.google.code.gson:gson:2.2.4:jar" level="project" />
     <orderEntry type="library" name="SBT: com.adrianhurt:play-bootstrap_2.11:1.2-P26-B4:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:play-guice_2.11:2.6.3:jar" level="project" />

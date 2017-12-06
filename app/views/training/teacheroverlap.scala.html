@@ -1,7 +1,7 @@
 @import models.storage.Training
 @import models.storage.User
 @import models.storage.DateTime
-@(page: String, isLoggedIn: Boolean, User: User, newDate: DateTime, oldDate: DateTime, PageToRedirect: String)
+@(page: String, isLoggedIn: Boolean, User: User, newDate: DateTime, oldDate: DateTime,training: Training , PageToRedirect: String)
 
 @shared.main(page, isLoggedIn, User) {
 
@@ -14,7 +14,7 @@
     <h1>Oeps er ging iets mis..</h1>
 
     <p>Deze docent is al ingepland voor @oldDate.getDate. </p>
-    <p>Deze overlapt met een training op @newDate.getDate met een duur van @oldDate.getDuration dagen.</p>
+    <p>Deze overlapt met een @training.getName op @newDate.getDate met een duur van @oldDate.getDuration dagen.</p>
 
     <p>Zet alstulieft een andere docent in.</p>
 

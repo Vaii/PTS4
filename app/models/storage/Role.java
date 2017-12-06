@@ -115,5 +115,18 @@ public enum Role {
     TRAINERIII,
     EXTERN,
     MEDEWERKERKENNISCENTRUM,
-    DOCENT,
-}
+    DOCENT;
+
+
+    private final String value;
+
+    Role() {
+        this.value = this.name();
+    }
+
+    public String getValue() {
+        String role = value.toLowerCase();
+        return role.substring(0,1).toUpperCase() + role.substring(1);
+    }
+
+    }

@@ -49,8 +49,8 @@ public class TrainingMongoContext implements TrainingContext {
     }
 
     @Override
-    public List<Training> getTrainings(Formats.DateTime date) {
-        MongoCursor<Training> results = collection.find("{date:#}", date).as(Training.class);
+    public List<Training> getTrainingsByDate(String dateId) {
+        MongoCursor<Training> results = collection.find(" {dateIds: {$all: [#]}}", dateId).as(Training.class);
         List<Training> trainings = new ArrayList<>();
 
         while(results.hasNext()) {

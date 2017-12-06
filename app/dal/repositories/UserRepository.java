@@ -62,8 +62,8 @@ public class UserRepository implements UserContext {
     }
 
     @Override
-    public List<User> getUserByManager() {
-        return context.getUserByManager();
+    public List<User> getUserByManager(String id) {
+        return context.getUserByManager(id);
     }
 
 

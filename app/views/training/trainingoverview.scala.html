@@ -32,12 +32,12 @@
                         @for(t <- trainings) {
                             @if(training != null) {
                                 @if(t.getId.equals(training.getId)) {
-                                    <li class="active" ><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                    <li class="active" ><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
                                 } else {
-                                    <li><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                    <li><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
                                 }
                             } else {
-                                <li><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                <li><a href="@routes.TrainingController.trainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
                             }
                         }
                     } else {
@@ -48,7 +48,10 @@
             <div class="trainingtext col-lg-8" >
                 <div>
                     @if(training != null) {
-                        <h1>@training.getName()</h1>
+                        <div class="row">
+                            <h1>@training.getName()</h1>
+                        </div>
+
                         <h2>Beschrijving</h2>
                         @if(training.getDescription == null) {
                             <p> Geen beschrijving. </p>
@@ -98,7 +101,7 @@
                                         <p>Kosten:</p>
                                     </div>
                                     <div class="col-lg-8">
-                                        <p>€@training.getTuition euro per persoon.</p>
+                                        <p>€@training.getRoundedTuition per persoon.</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -117,20 +120,34 @@
                                         <p>@training.getCategory</p>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p>Datums: </p>
+                                @if(!viewDates.isEmpty){
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <p>Datums: </p>
+                                        </div>
+                                        <div class="col-lg-8">
+                                        @for(date <- viewDates) {
+                                            <p>@date.getDateString, <br> @(training.getCapacity - date.getSignUps) / @training.getCapacity plaatsen beschikbaar,
+                                                @if(training.getCapacity - date.getSignUps > 0){
+                                                    <a class=" btn btn-success btn-sm" href="@routes.TrainingController.signUpCourse(date.getDateId, training.getTrainingCode())">Inschrijven</a>
+                                                } else {inschrijven niet meer mogelijk.}</p>
+                                        }
+                                        </div>
                                     </div>
-                                    <div class="col-lg-8">
-                                    @for(date <- viewDates) {
-                                        <p>@date.getDateString <a href="@routes.TrainingController.signUpCourse(date.getDateId, training.getTrainingCode())">Inschrijven</a></p>
-                                    }
+                                } else {
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <p>Datums: </p>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <p>Nog geen datums beschikbaar.</p>
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                             } else {
-                        <h1>Selecteer een training</h1>
-                        <p>Links in het menu kunt u trainingen selecteren.</p>
+                        <h1>Selecteer een categorie</h1>
+                        <p id="selectText">Links in het menu kunt u een categorie selecteren.</p>
                     }
                 </div>
                 </div>

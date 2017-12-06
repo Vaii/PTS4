@@ -58,13 +58,15 @@ public class AdminController extends Controller{
                 } else {
                     uRepo.removeUser(userToRemove); // Remove user from user table.
                     dRepo.removeUser(id); // Remove user from possible trainee fields.
+                    return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
+                            ,"Account succesvol verwijderd", "/admin"  ));
                 }
-            }
-
-            return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
+            } else {
+                uRepo.removeUser(userToRemove); // Remove user from user table.
+                dRepo.removeUser(id); // Remove user from possible trainee fields.
+                return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
                         ,"Account succesvol verwijderd", "/admin"  ));
-
-
+            }
         }
         return notFound();
     }

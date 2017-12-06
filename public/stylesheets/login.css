@@ -1,0 +1,21 @@
+#register {
+    border-left: 1px solid dodgerblue;
+    padding-right: 0px;
+    padding-top:20px;
+    padding-left:50px;
+    padding-bottom:50px;
+}
+#login {
+    border-right: 1x solid dodgerblue;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 40px;
+    padding-bottom: 30px;
+}
+#pInfotext {
+    font-weight: normal;
+    font-style: italic;
+}
+#label {
+    margin-bottom: 2px;
+}

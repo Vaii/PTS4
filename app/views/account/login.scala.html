@@ -9,18 +9,16 @@
             <h1>Inloggen</h1>
             @b4.form(routes.AccountController.authentication()) {
                 @helper.CSRF.formField
-                <table>
                     @if(hasError) {
                         <div class="alert alert-danger">
                             Onjuist email of wachtwoord
                         </div>
                     }
-                    <tr><p>Email</p></tr>
-                    <tr>@b4.text(form("email"), 'label -> "Email", 'placeholder -> "Email Address", 'required -> "required")</tr>
-                    <tr><p>Password</p></tr>
-                    <tr>@b4.password(form("password"), 'label -> "Password", 'placeholder -> "Password", 'required -> "required")</tr>
-                    <tr>@b4.submit('class -> "btn btn-default") {Log in}</tr>
-                </table>
+                    <div class="row"><p>Email</p></div>
+                    <div class="row">@b4.text(form("email"), 'label -> "Email", 'placeholder -> "Email Address", 'required -> "required")</div>
+                    <div class="row"><p>Wachtwoord</p></div>
+                    <div class="row">@b4.password(form("password"), 'label -> "Password", 'placeholder -> "Password", 'required -> "required")</div>
+                    <div class="row">@b4.submit('class -> "btn btn-default") {Log in}</div>
             }
         </div>
     }

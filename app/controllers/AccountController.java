@@ -8,10 +8,7 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.*;
-import views.html.account.login;
-import views.html.account.profile;
-import views.html.account.register;
-import views.html.account.registerSuccess;
+import views.html.account.*;
 
 import javax.inject.Inject;
 
@@ -36,7 +33,14 @@ public class AccountController extends Controller {
     }
 
     public Result login(){
+        flash("url", request().getHeader("referer"));
         return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
+
+    }
+
+    public Result redirectlogin(){
+        flash("url", request().getHeader("referer"));
+        return ok(redirectlogin.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
     }
 
     public Result authentication(){
@@ -55,6 +59,7 @@ public class AccountController extends Controller {
             if(userRepo.login(username, password)){
                 session().clear();
                 session("email", username);
+
                 return redirect(routes.ApplicationController.index());
             }
             return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));

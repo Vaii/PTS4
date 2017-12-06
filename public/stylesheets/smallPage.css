@@ -29,3 +29,12 @@ h1 {
     overflow:hidden;
     text-overflow: ellipsis;
 }
+
+.role-box{
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+#role{
+    margin-bottom: 10px;
+}

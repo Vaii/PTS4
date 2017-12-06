@@ -80,6 +80,30 @@ public class DateTimeMongoContext implements DateTimeContext {
         return result.wasAcknowledged();
     }
 
+    @Override
+    public List<DateTime> getDateTimeForTraining(String trainingId) {
+        MongoCursor<DateTime> results = collection.find("{trainingId:#}", trainingId).as(DateTime.class);
+        List<DateTime> dateTimes = new ArrayList<>();
+
+        while(results.hasNext()) {
+            DateTime dateTime = results.next();
+            dateTimes.add(dateTime);
+        }
+        return dateTimes;
+    }
+
+    @Override
+    public List<DateTime> getDateTimeForLocation(String locationId) {
+        MongoCursor<DateTime> results = collection.find("{locationId:#}", locationId).as(DateTime.class);
+        List<DateTime> dateTimes = new ArrayList<>();
+
+        while(results.hasNext()) {
+            DateTime dateTime = results.next();
+            dateTimes.add(dateTime);
+        }
+        return dateTimes;
+    }
+
     public void removeAll() {
         collection.drop();
     }

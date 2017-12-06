@@ -67,12 +67,12 @@
                             @for(t <- trainings) {
                                 @if(training != null) {
                                     @if(t.getId.equals(training.getId)) {
-                                        <li class="active" ><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                        <li class="active" ><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getId())"> @t.getName</a></li>
                                     } else {
-                                        <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                        <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getId())"> @t.getName</a></li>
                                     }
                                 } else {
-                                    <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getTrainingCode())"> @t.getName</a></li>
+                                    <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getId())"> @t.getName</a></li>
                                 }
                             }
                         } else {
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="row col-lg-8 trainingtext">
-                    <div class="col-lg-12">
+                    <div class="row col-lg-12">
                         <h1>Beheren</h1>
                     </div>
                     @if(training != null) {
@@ -130,7 +130,7 @@
                                         </select>
                                     </div>
                                         <div class="col-lg-1">
-                                            <input class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId', this, '@training.getTrainingCode');">
+                                            <input id="btnDelete" class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId', this, '@training.getTrainingCode');">
                                         </div>
                                     </div>
 
@@ -139,8 +139,8 @@
 
                                 </div>
 
-                               <div class="row col-lg-12">
-                                    <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
+                               <div class="row">
+                                    <input class="btn btn-default" id="btnAddDate" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
                                </div>
                                 <div class="row col-lg-12">@b4.number(form("duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
                                 <div class="row col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
@@ -163,8 +163,8 @@
                                 }
                     </div>
                     } else {
-                        <div class="col-lg-12">
-                            <p>Selecteer een training</p>
+                        <div class="row col-lg-12">
+                            <p id="selectText">Selecteer een training</p>
                         </div>
                     }
 

@@ -11,7 +11,6 @@ import org.jongo.MongoCollection;
  */
 
 public final class DBConnector {
-    private static DB database;
     private Jongo jongo;
 
     public DBConnector() {
@@ -23,8 +22,7 @@ public final class DBConnector {
         MongoClient mongoClient = new MongoClient(uri);
 
         // Hardcoded database name
-        // TODO Make into variable
-        database = mongoClient.getDB("infosupport");
+        DB database = mongoClient.getDB("infosupport");
 
         jongo = new Jongo(database);
     }
