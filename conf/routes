@@ -73,3 +73,4 @@ POST    /utility/emailCheck/:email                 controllers.UtilityController
 POST    /utility/trainingcodecheck/:code           controllers.UtilityController.checkTraningCode(code: String)
 POST    /utility/gettrainings/:category            controllers.UtilityController.getTrainingForCategory(category: String)
 POST    /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
+POST    /utility/checksignup/:dateid/:userid       controllers.UtilityController.checkUserSignUp(dateid: String, userid: String)

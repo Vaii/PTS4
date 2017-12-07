@@ -21,30 +21,32 @@ public class DateConverter {
     private LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     private DateTimeRepository dateTimeRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
 
-    public ViewDate convert(DateTime dt) {
+    public ViewDate convert(DateTime dt, String userId) {
         User teacher = userRepo.getUserByID(dt.getTeacherID());
         Location location = locationRepo.getLocation(dt.getLocationID());
 
-        return new ViewDate(dt.getId(), dt.getDate(), location, teacher, dt.getTrainees().size());
+
+
+        return new ViewDate(dt.getId(), dt.getDate(), location, teacher, dt.getTrainees().size(), dt.getTrainees().contains(userId));
     }
 
-    public List<ViewDate> convert(List<DateTime> dates) {
+    public List<ViewDate> convert(List<DateTime> dates, String userId) {
         List<ViewDate> results = new ArrayList<>();
         for (DateTime date : dates) {
-            results.add(convert(date));
+            results.add(convert(date, userId));
         }
         return results;
     }
 
-    public List<ViewDate> converts (List<String> dateIds) {
+    public List<ViewDate> converts (List<String> dateIds, String userId) {
         List<ViewDate> result = new ArrayList<>();
         for (String id : dateIds) {
-            result.add(convert(dateTimeRepo.getDateTime(id)));
+            result.add(convert(dateTimeRepo.getDateTime(id), userId));
         }
         return result;
     }
 
-    public List<ViewDate> getViewDates(String trainingId){
-        return convert(dateTimeRepo.getDateTimeForTraining(trainingId));
+    public List<ViewDate> getViewDates(String trainingId, String userId){
+        return convert(dateTimeRepo.getDateTimeForTraining(trainingId), userId);
     }
 }

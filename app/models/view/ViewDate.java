@@ -18,12 +18,31 @@ public class ViewDate implements Comparable<ViewDate> {
      */
     private int signUps;
 
+    public boolean isCurrentUserSignedUp() {
+        return currentUserSignedUp;
+    }
+
+    public void setCurrentUserSignedUp(boolean currentUserSignedUp) {
+        this.currentUserSignedUp = currentUserSignedUp;
+    }
+
+    boolean currentUserSignedUp = false;
+
     public ViewDate(String dateId, Date date, Location location, User teacher, int signUps) {
         this.dateId = dateId;
         this.date = date;
         this.location = location;
         this.teacher = teacher;
         this.signUps = signUps;
+    }
+
+    public ViewDate(String dateId, Date date, Location location, User teacher, int signUps, boolean currentUserSignedUp) {
+        this.dateId = dateId;
+        this.date = date;
+        this.location = location;
+        this.teacher = teacher;
+        this.signUps = signUps;
+        this.currentUserSignedUp = currentUserSignedUp;
     }
 
     public Date getDate() {

@@ -198,7 +198,7 @@ public class TrainingController extends Controller {
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         } else {
             List<ViewDate> viewDates;
-            viewDates =  converter.getViewDates(id);
+            viewDates =  converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
             Collections.sort(viewDates);
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
@@ -232,7 +232,7 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-            viewDates = converter.getViewDates(id);
+            viewDates = converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
             Collections.sort(viewDates);
 
             return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
@@ -271,7 +271,7 @@ public class TrainingController extends Controller {
 
             Training t = trainingRepo.getTrainingById(id);
             List<ViewDate> viewDates;
-            viewDates = converter.getViewDates(id);
+            viewDates = converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
 
             Collections.sort(viewDates);
 

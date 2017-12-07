@@ -3,100 +3,111 @@
 @import models.storage.User
 @(categories: Map[String, Integer], trainings: List[Training], training: Training, page: String, isLoggedIn: Boolean, User: User, viewDates: List[ViewDate])
 
-    @shared.main(page, isLoggedIn, User) {
+@shared.main(page, isLoggedIn, User) {
 
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
-        <script src="@routes.ApplicationController.javascriptRoutes()" type="text/javascript"></script>
-        <script>
-                $(document).ready(function () {
-                    $('.categoryLink').on('click', function (e) {
-                        if ($('#trainingMenu').css('display') === 'block') {
-                            $("#trainingContent").css('visibility', 'hidden');
-                            toggleTrainingMenu(false);
-                        }
-                        getTrainings($(this).attr('id'));
-                        toggleTrainingMenu(true);
-                    });
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
+    <script src="@routes.ApplicationController.javascriptRoutes()" type="text/javascript"></script>
+    <script>
+            $(document).ready(function () {
+                $('.categoryLink').on('click', function (e) {
+                    if ($('#trainingMenu').css('display') === 'block') {
+                        $("#trainingContent").css('visibility', 'hidden');
+                        toggleTrainingMenu(false);
+                    }
+                    getTrainings($(this).attr('id'));
+                    toggleTrainingMenu(true);
                 });
-                function getTrainings(category) {
-                    $.post('/utility/gettrainings/' + category, function (data) {
-                        var trainings;
-                        trainings = data;
-                        addTrainingsToDiv(trainings);
-                    });
-                }
-                function getDates(training) {
-                    $("#loadingImage").show();
-                    $.post('/utility/getdates/' + training.id, function (data) {
-                        let dates;
-                        dates = data;
-                        setTrainingDates(dates, training);
-                    });
-                }
-                function toggleTrainingMenu(expanding) {
-                    $("#trainingMenu").animate({
-                        width: 'toggle'
-                    }, {
-                        complete: function () {
-                            if (expanding) {
-                                if ($('#trainingMenu').css('display') === 'block') {
-                                    $("#trainingContent").css('visibility', 'visible');
-                                }
+            });
+
+            function getTrainings(category) {
+                $.post('/utility/gettrainings/' + category, function (data) {
+                    var trainings;
+                    trainings = data;
+                    addTrainingsToDiv(trainings);
+                });
+            }
+
+            function getDates(training) {
+                $("#loadingImage").show();
+                $.post('/utility/getdates/' + training.id, function (data) {
+                    let dates;
+                    dates = data;
+                    setTrainingDates(dates, training);
+                });
+            }
+
+            function toggleTrainingMenu(expanding) {
+                $("#trainingMenu").animate({
+                    width: 'toggle'
+                }, {
+                    complete: function () {
+                        if (expanding) {
+                            if ($('#trainingMenu').css('display') === 'block') {
+                                $("#trainingContent").css('visibility', 'visible');
                             }
                         }
-                    });
-                }
-                function addTrainingsToDiv(trainings) {
-                    $('#trainingContent').empty();
-                    $.each(trainings, function (index, element) {
-                        $('#trainingContent').append(
-                                $('<li>').append(
-                                        $('<a>').attr('href', '#').attr('id', element).addClass("trainingLink").append(
-                                                $('<span>').attr('class', 'tab').append(element.name)
-                                        ).bind('click', function () {
-                                            setTrainingContent(element);
-                                        })));
-                    });
-                }
-                function setTrainingContent(training) {
-                    $("#noTrainingContent").css('display', 'none');
-                    deleteContentDates();
-                    getDates(training);
-                    console.log(training);
-                    $('#trainingContentName').text(training.name);
-                    $('#trainingContentCode').text(training.trainingCode);
-                    $('#trainingContentSummary').text(training.description);
-                    if(training.requiredMaterial === "") {
-                        $('#trainingContentMaterial').text("Geen benodigde materialen");
-                    }else {
-                        $('#trainingContentMaterial').text(training.requiredMaterial);
                     }
-                    $('#trainingContentCosts').text("€" + Number(training.tuition).toFixed(2) + " per persoon");
-                    $('#trainingContentDuration').text(training.duration + " dagen");
-                    $('#trainingContentCategory').text(training.category);
-                    $("#trainingContentDiv").css('display', 'block');
+                });
+            }
+
+            function addTrainingsToDiv(trainings) {
+                $('#trainingContent').empty();
+                $.each(trainings, function (index, element) {
+                    $('#trainingContent').append(
+                            $('<li>').append(
+                                    $('<a>').attr('href', '#').attr('id', element).addClass("trainingLink").append(
+                                            $('<span>').attr('class', 'tab').append(element.name)
+                                    ).bind('click', function () {
+                                        setTrainingContent(element);
+                                    })));
+                });
+            }
+
+            function setTrainingContent(training) {
+                $("#noTrainingContent").css('display', 'none');
+                deleteContentDates();
+                getDates(training);
+                console.log(training);
+                $('#trainingContentName').text(training.name);
+                $('#trainingContentCode').text(training.trainingCode);
+                $('#trainingContentSummary').text(training.description);
+                if (training.requiredMaterial === "") {
+                    $('#trainingContentMaterial').text("Geen benodigde materialen");
+                } else {
+                    $('#trainingContentMaterial').text(training.requiredMaterial);
                 }
-                function setTrainingDates(dates, training) {
-                    var container = $('#trainingContentDates');
-                    $("#loadingImage").hide();
-                    if(dates.length === 0) {
-                        container.append("<p> Geen datums beschikbaar <p>")
-                    } else {
-                        $.each(dates, function (index, element) {
-                            console.log(element);
-                            var newContainer = $("<div>", {id: 'date-' + element.dateId}).addClass("row col-lg-12").appendTo(container);
-                            $('<p>', {
-                               html: element.dateOnlyString + ',<br>'+ 'Starttijd: ' + element.tmeOnlyString
-                            }).addClass("col-lg-3").appendTo(newContainer);
+                $('#trainingContentCosts').text("€" + Number(training.tuition).toFixed(2) + " per persoon");
+                $('#trainingContentDuration').text(training.duration + " dagen");
+                $('#trainingContentCategory').text(training.category);
+                $("#trainingContentDiv").css('display', 'block');
+            }
 
-                            $('<p>', {
-                                html: element.location.city + ',<br>' + element.location.streetName + ' ' + element.location.streetNumber
-                            }).addClass("col-lg-3").appendTo(newContainer);
+            function setTrainingDates(dates, training) {
+                var container = $('#trainingContentDates');
+                $("#loadingImage").hide();
+                if (dates.length === 0) {
+                    container.append("<p> Geen datums beschikbaar <p>")
+                } else {
+                    $.each(dates, function (index, element) {
+                        console.log(element);
+                        var newContainer = $("<div>", {id: 'date-' + element.dateId}).addClass("row col-lg-12").appendTo(container);
+                        $('<p>', {
+                            html: element.dateOnlyString + ',<br>' + 'Starttijd: ' + element.tmeOnlyString
+                        }).addClass("col-lg-3").appendTo(newContainer);
 
-                            var buttonContainer = $("<div>", {id: 'date-button-' + element.dateId}).addClass("col-lg-6").appendTo(newContainer);
-                            if((training.capacity - element.signUps) === 0) {
+                        $('<p>', {
+                            html: element.location.city + ',<br>' + element.location.streetName + ' ' + element.location.streetNumber
+                        }).addClass("col-lg-3").appendTo(newContainer);
+
+                        var buttonContainer = $("<div>", {id: 'date-button-' + element.dateId}).addClass("col-lg-6").appendTo(newContainer);
+                        if (element.currentUserSignedUp) {
+                            $('<p>', {
+                                html: 'Je bent al ingeschreven op deze datum.' + '<br>' + (training.capacity - element.signUps) + "/" + +training.capacity + " plaatsen beschikbaar"
+                            }).appendTo(buttonContainer);
+                        } else {
+                            if ((training.capacity - element.signUps) === 0) {
                                 $('<p>', {
-                                    html: 'Inschrijven niet meer mogelijk.' + '<br>' +(training.capacity - element.signUps) + "/" + + training.capacity + " plaatsen beschikbaar"
+                                    html: 'Inschrijven niet meer mogelijk.' + '<br>' + (training.capacity - element.signUps) + "/" + +training.capacity + " plaatsen beschikbaar"
                                 }).appendTo(buttonContainer);
                             } else {
                                 $('<a>', {
@@ -105,114 +116,127 @@
                                     href: "/training/signup/" + element.dateId,
                                 }).addClass("btn btn-success btn-sm ").appendTo(buttonContainer);
                                 $('<p>', {
-                                    html: (training.capacity - element.signUps) + "/" + + training.capacity + " plaatsen beschikbaar"
+                                    html: (training.capacity - element.signUps) + "/" + +training.capacity + " plaatsen beschikbaar"
                                 }).appendTo(buttonContainer);
                             }
-                            $('<hr>',{}).appendTo(container);
-
-                        });
-                    }
-                }
-
-                function deleteContentDates() {
-                    $( "#trainingContentDates" ).empty();
-                }
-        </script>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 trainingmenu">
-                    <ul>
-                        <lh>Categorie</lh>
-                        @if(!categories.isEmpty) {
-                            @for((key, value) <- categories) {
-                                <li><a class="categoryLink" id="@key" href="#">@key (@value)</a></li>
-                            }
                         }
-                    </ul>
-                </div>
-                <div id="trainingMenu" style="display: none">
-                    <ul>
-                        <li id="title">Trainingen</li>
-                        <li id="trainingContent"></li>
-                    </ul>
-                </div>
-                <div class="trainingtext col-lg-8" >
-                    <div>
-                        <div id="trainingContentDiv" style="display: none">
-                            <div class="row">
-                                <h1 id="trainingContentName"></h1>
-                            </div>
+                        $('<hr>', {}).appendTo(container);
 
-                            <h2>Beschrijving</h2>
-                            <p id="trainingContentSummary"></p>
+                    });
+                }
+            }
 
-                            <h2>Informatie</h2>
-                            <div class="row">
+            function deleteContentDates() {
+                $("#trainingContentDates").empty();
+            }
 
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <p>Trainingcode:</p>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <p id="trainingContentCode"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <p>Benodigde materialen:</p>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <p id="trainingContentMaterial">l</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <p>Kosten:</p>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <p id="trainingContentCosts"></p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <p>Duur:</p>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <p id="trainingContentDuration"></p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <p>Categorie: </p>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <p id="trainingContentCategory"></p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h2>Inschrijven: </h2>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <p id="trainingContentDates"></p>
-                                            <img src="@routes.Assets.at("images/loading.gif")" id="loadingImage" style="display: none;" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            function checkSignUp(dateId) {
+                $.post('/utility/checksignup/' + dateId +'/@User.getId', function (data) {
+                    if (data === "user_signedup") {
+                        console.log("Signed up fr this date");
+                        return true;
+                    } else {
+                        console.log("Not signup for this date");
+                        return false;
+                    }
+                });
+            }
+    </script>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 trainingmenu">
+                <ul>
+                    <lh>Categorie</lh>
+                    @if(!categories.isEmpty) {
+                        @for((key, value) <- categories) {
+                            <li><a class="categoryLink" id="@key" href="#">@key (@value)</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div id="trainingMenu" style="display: none">
+                <ul>
+                    <li id="title">Trainingen</li>
+                    <li id="trainingContent"></li>
+                </ul>
+            </div>
+            <div class="trainingtext col-lg-8" >
+                <div>
+                    <div id="trainingContentDiv" style="display: none">
+                        <div class="row">
+                            <h1 id="trainingContentName"></h1>
                         </div>
-                        <div id="noTrainingContent">
-                            <h1>Selecteer een categorie</h1>
-                            <p id="selectText">Links in het menu kunt u een categorie selecteren.</p>
+
+                        <h2>Beschrijving</h2>
+                        <p id="trainingContentSummary"></p>
+
+                        <h2>Informatie</h2>
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Trainingcode:</p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p id="trainingContentCode"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Benodigde materialen:</p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p id="trainingContentMaterial">l</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Kosten:</p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p id="trainingContentCosts"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Duur:</p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p id="trainingContentDuration"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>Categorie: </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p id="trainingContentCategory"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h2>Inschrijven: </h2>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <p id="trainingContentDates"></p>
+                                        <img src="@routes.Assets.at("images/loading.gif")" id="loadingImage" style="display: none;" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    <div id="noTrainingContent">
+                        <h1>Selecteer een categorie</h1>
+                        <p id="selectText">Links in het menu kunt u een categorie selecteren.</p>
+                    </div>
                 </div>
+
             </div>
         </div>
-    }
+    </div>
+}

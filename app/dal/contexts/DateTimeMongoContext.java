@@ -104,6 +104,17 @@ public class DateTimeMongoContext implements DateTimeContext {
         return dateTimes;
     }
 
+    @Override
+    public boolean checkUserSignup(String userId, String dateId) {
+        DateTime result = collection.findOne("{_id:#, trainees: { $all: [#]}}", new ObjectId(dateId), userId).as(DateTime.class);
+
+        if(result != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void removeAll() {
         collection.drop();
     }

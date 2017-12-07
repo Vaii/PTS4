@@ -7,11 +7,14 @@ import dal.contexts.UserMongoContext;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
 import dal.repositories.UserRepository;
+import models.storage.Secured;
+import models.storage.User;
 import models.util.DateConverter;
 import models.view.ViewDate;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
 import java.util.List;
 
@@ -43,11 +46,23 @@ public class UtilityController extends Controller {
         return ok(node);
     }
 
+    @Security.Authenticated(Secured.class)
     public Result getDatesForTraining(String trainingId) {
+        User user = userRepo.getUser(Secured.getUser(ctx()));
         DateConverter converter = new DateConverter();
-        List<ViewDate> dates = converter.getViewDates(trainingId);
+        List<ViewDate> dates = converter.getViewDates(trainingId, user.getId());
 
         JsonNode node = Json.toJson(dates);
         return ok(node);
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result checkUserSignUp(String dateId, String userId) {
+        boolean result = dateRepo.checkUserSignup(userId, dateId);
+        if (result) {
+            return ok("user_signedup");
+        } else {
+            return ok("no_signup");
+        }
     }
 }

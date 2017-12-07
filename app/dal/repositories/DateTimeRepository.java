@@ -61,4 +61,9 @@ public class DateTimeRepository implements DateTimeContext {
     public List<DateTime> getDateTimeForLocation(String locationId) {
         return context.getDateTimeForLocation(locationId);
     }
+
+    @Override
+    public boolean checkUserSignup(String userId, String dateId) {
+        return context.checkUserSignup(userId, dateId);
+    }
 }
