@@ -85,8 +85,6 @@
                         $.each(dates, function (index, element) {
                             console.log(element);
                             var newContainer = $("<div>", {id: 'date-' + element.dateId}).addClass("row col-lg-12").appendTo(container);
-                            //newContainer.append(" <div class='col-lg-8'> <P>" + element.dateString + ", " +  element.location.city + "<br>" +
-                            //        (training.capacity - element.signUps) + "/" + + training.capacity + " plaatsen beschikbaar" + "</p> </div>");
                             $('<p>', {
                                html: element.dateOnlyString + ',<br>'+ 'Starttijd: ' + element.tmeOnlyString
                             }).addClass("col-lg-3").appendTo(newContainer);

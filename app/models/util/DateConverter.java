@@ -20,12 +20,10 @@ public class DateConverter {
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private LocationRepository locationRepo = new LocationRepository(new LocationMongoContext("Location"));
     private DateTimeRepository dateTimeRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
-    private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
 
     public ViewDate convert(DateTime dt) {
         User teacher = userRepo.getUserByID(dt.getTeacherID());
         Location location = locationRepo.getLocation(dt.getLocationID());
-
 
         return new ViewDate(dt.getId(), dt.getDate(), location, teacher, dt.getTrainees().size());
     }
@@ -35,7 +33,6 @@ public class DateConverter {
         for (DateTime date : dates) {
             results.add(convert(date));
         }
-
         return results;
     }
 
@@ -44,7 +41,6 @@ public class DateConverter {
         for (String id : dateIds) {
             result.add(convert(dateTimeRepo.getDateTime(id)));
         }
-
         return result;
     }
 

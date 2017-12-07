@@ -6,6 +6,7 @@ import models.storage.User;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ViewDate implements Comparable<ViewDate> {
     private String dateId;
@@ -38,7 +39,7 @@ public class ViewDate implements Comparable<ViewDate> {
     }
 
     public String getDateOnlyString() {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
         return df.format(date);
     }
 
