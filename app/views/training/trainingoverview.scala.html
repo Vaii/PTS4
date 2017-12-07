@@ -83,13 +83,35 @@
                         container.append("<p> Geen datums beschikbaar <p>")
                     } else {
                         $.each(dates, function (index, element) {
-                            container.append(" <div class='col-lg-12'> <P>" + element.dateString + ", " +  element.location.city + "<br>" +
-                                    (training.capacity - element.signUps) + "/" + + training.capacity + " plaatsen beschikbaar" + "</p> </div>");
-                            $('<a>',{
-                                text: 'Inschrijven',
-                                title: 'Inschrijven',
-                                href: "/training/signup/" + element.dateId,
-                            }).addClass("btn btn-success col-lg-4").appendTo(container);
+                            console.log(element);
+                            var newContainer = $("<div>", {id: 'date-' + element.dateId}).addClass("row col-lg-12").appendTo(container);
+                            //newContainer.append(" <div class='col-lg-8'> <P>" + element.dateString + ", " +  element.location.city + "<br>" +
+                            //        (training.capacity - element.signUps) + "/" + + training.capacity + " plaatsen beschikbaar" + "</p> </div>");
+                            $('<p>', {
+                               html: element.dateOnlyString + ',<br>'+ 'Starttijd: ' + element.tmeOnlyString
+                            }).addClass("col-lg-3").appendTo(newContainer);
+
+                            $('<p>', {
+                                html: element.location.city + ',<br>' + element.location.streetName + ' ' + element.location.streetNumber
+                            }).addClass("col-lg-3").appendTo(newContainer);
+
+                            var buttonContainer = $("<div>", {id: 'date-button-' + element.dateId}).addClass("col-lg-6").appendTo(newContainer);
+                            if((training.capacity - element.signUps) === 0) {
+                                $('<p>', {
+                                    html: 'Inschrijven niet meer mogelijk.' + '<br>' +(training.capacity - element.signUps) + "/" + + training.capacity + " plaatsen beschikbaar"
+                                }).appendTo(buttonContainer);
+                            } else {
+                                $('<a>', {
+                                    text: 'Inschrijven',
+                                    title: 'Inschrijven',
+                                    href: "/training/signup/" + element.dateId,
+                                }).addClass("btn btn-success btn-sm ").appendTo(buttonContainer);
+                                $('<p>', {
+                                    html: (training.capacity - element.signUps) + "/" + + training.capacity + " plaatsen beschikbaar"
+                                }).appendTo(buttonContainer);
+                            }
+                            $('<hr>',{}).appendTo(container);
+
                         });
                     }
                 }
@@ -112,7 +134,7 @@
                 </div>
                 <div id="trainingMenu" style="display: none">
                     <ul>
-                        <li id="title">Trainings</li>
+                        <li id="title">Trainingen</li>
                         <li id="trainingContent"></li>
                     </ul>
                 </div>
@@ -176,9 +198,9 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h2>Datums: </h2>
+                                            <h2>Inschrijven: </h2>
                                         </div>
-                                        <div class="col-lg-8">
+                                        <div class="col-lg-12">
                                             <p id="trainingContentDates"></p>
                                             <img src="@routes.Assets.at("images/loading.gif")" id="loadingImage" style="display: none;" />
                                         </div>

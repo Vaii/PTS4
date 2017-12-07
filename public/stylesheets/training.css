@@ -172,9 +172,9 @@ div.form-control-label {
 #trainingMenu {
     background-color: #e8effc;
     width: 10em;
-    border-top: black thin inset;
-    border-right:  black thin inset;
-    border-bottom: black thin inset;
+    border-top:  thick groove #DFEBF5;
+    border-right: thick groove #DFEBF5;
+    border-bottom: medium groove #DFEBF5;
 }
 
 #trainingMenu #trainingContent {
@@ -201,4 +201,8 @@ div.form-control-label {
 #loadingImage {
     width: 3em;
     height: 3em;
+}
+
+#trainingContentDates {
+    margin-top : 2em;
 }
