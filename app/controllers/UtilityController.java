@@ -57,7 +57,6 @@ public class UtilityController extends Controller {
         }
 
         JsonNode node = Json.toJson(dates);
-        System.out.println(node);
         return ok(node);
     }
 

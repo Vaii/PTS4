@@ -29,11 +29,9 @@
 
             function getDates(training) {
                 $("#loadingImage").show();
-                console.log(training);
-                $.post('/utility/getdates/' + training.id, function (data) {
+                $.get('/utility/getdates/' + training.id, function (data) {
                     var dates;
                     dates = data;
-                    console.log(data);
                     setTrainingDates(dates, training);
                 });
             }
