@@ -46,17 +46,21 @@ public class UtilityController extends Controller {
         return ok(node);
     }
 
-    @Security.Authenticated(Secured.class)
     public Result getDatesForTraining(String trainingId) {
-        User user = userRepo.getUser(Secured.getUser(ctx()));
+        User user = userRepo.getUser(ctx().session().get("email"));
         DateConverter converter = new DateConverter();
-        List<ViewDate> dates = converter.getViewDates(trainingId, user.getId());
+        List<ViewDate> dates;
+        if(user != null) {
+           dates = converter.getViewDates(trainingId, user.getId());
+        } else {
+            dates  = converter.getViewDates(trainingId, "");
+        }
 
         JsonNode node = Json.toJson(dates);
+        System.out.println(node);
         return ok(node);
     }
 
-    @Security.Authenticated(Secured.class)
     public Result checkUserSignUp(String dateId, String userId) {
         boolean result = dateRepo.checkUserSignup(userId, dateId);
         if (result) {

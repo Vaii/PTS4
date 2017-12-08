@@ -6,8 +6,8 @@
 @shared.main(page, isLoggedIn, User) {
 
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
-    <script src="@routes.ApplicationController.javascriptRoutes()" type="text/javascript"></script>
     <script>
+
             $(document).ready(function () {
                 $('.categoryLink').on('click', function (e) {
                     if ($('#trainingMenu').css('display') === 'block') {
@@ -29,9 +29,11 @@
 
             function getDates(training) {
                 $("#loadingImage").show();
+                console.log(training);
                 $.post('/utility/getdates/' + training.id, function (data) {
-                    let dates;
+                    var dates;
                     dates = data;
+                    console.log(data);
                     setTrainingDates(dates, training);
                 });
             }
@@ -59,7 +61,9 @@
                                             $('<span>').attr('class', 'tab').append(element.name)
                                     ).bind('click', function () {
                                         setTrainingContent(element);
-                                    })));
+                                    })
+                            )
+                    );
                 });
             }
 
@@ -86,7 +90,7 @@
                 var container = $('#trainingContentDates');
                 $("#loadingImage").hide();
                 if (dates.length === 0) {
-                    container.append("<p> Geen datums beschikbaar <p>")
+                    container.append("<p> Geen datums beschikbaar <p>");
                 } else {
                     $.each(dates, function (index, element) {
                         console.log(element);
@@ -121,25 +125,12 @@
                             }
                         }
                         $('<hr>', {}).appendTo(container);
-
                     });
                 }
             }
 
             function deleteContentDates() {
                 $("#trainingContentDates").empty();
-            }
-
-            function checkSignUp(dateId) {
-                $.post('/utility/checksignup/' + dateId +'/@User.getId', function (data) {
-                    if (data === "user_signedup") {
-                        console.log("Signed up fr this date");
-                        return true;
-                    } else {
-                        console.log("Not signup for this date");
-                        return false;
-                    }
-                });
             }
     </script>
     <div class="container">
