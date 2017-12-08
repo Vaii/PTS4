@@ -25,9 +25,13 @@ public class DateConverter {
         User teacher = userRepo.getUserByID(dt.getTeacherID());
         Location location = locationRepo.getLocation(dt.getLocationID());
 
-
-
         return new ViewDate(dt.getId(), dt.getDate(), location, teacher, dt.getTrainees().size(), dt.getTrainees().contains(userId));
+    }
+
+    public ViewDate convertNoTeacher(DateTime dt, String userId) {
+        Location location = locationRepo.getLocation(dt.getLocationID());
+
+        return new ViewDate(dt.getId(), dt.getDate(), location, null, dt.getTrainees().size(), dt.getTrainees().contains(userId));
     }
 
     public List<ViewDate> convert(List<DateTime> dates, String userId) {
@@ -46,7 +50,20 @@ public class DateConverter {
         return result;
     }
 
+    public List<ViewDate> convertsNoTeacher (List<DateTime> dateIds, String userId) {
+        List<ViewDate> result = new ArrayList<>();
+        for (DateTime date : dateIds) {
+            result.add(convertNoTeacher(date, userId));
+        }
+        return result;
+    }
+
+
     public List<ViewDate> getViewDates(String trainingId, String userId){
         return convert(dateTimeRepo.getDateTimeForTraining(trainingId), userId);
+    }
+
+    public List<ViewDate>  getViewDatesWithoutTeacher(String trainingId, String userId) {
+        return convertsNoTeacher(dateTimeRepo.getDateTimeForTraining(trainingId), userId);
     }
 }

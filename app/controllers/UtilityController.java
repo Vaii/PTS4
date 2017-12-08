@@ -54,9 +54,9 @@ public class UtilityController extends Controller {
         DateConverter converter = new DateConverter();
         List<ViewDate> dates;
         if(user != null) {
-           dates = converter.getViewDates(trainingId, user.getId());
+           dates = converter.getViewDatesWithoutTeacher(trainingId, user.getId());
         } else {
-            dates  = converter.getViewDates(trainingId, "");
+            dates  = converter.getViewDatesWithoutTeacher(trainingId, "");
         }
 
         JsonNode node = Json.toJson(dates);
