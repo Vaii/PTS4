@@ -7,22 +7,25 @@ import dal.contexts.UserMongoContext;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
 import dal.repositories.UserRepository;
-import models.storage.Secured;
 import models.storage.User;
 import models.util.DateConverter;
 import models.view.ViewDate;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
+import views.html.example.example;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UtilityController extends Controller {
 
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+
+    List<String> examples = new ArrayList<>();
 
     public Result checkEmail(String email) {
         if(userRepo.getUser(email) != null) {
@@ -67,5 +70,24 @@ public class UtilityController extends Controller {
         } else {
             return ok("no_signup");
         }
+    }
+
+    // Example stuff below.
+    public Result myPostAction() {
+        Map<String, String[]> params = request().body().asFormUrlEncoded();
+        for (Map.Entry<String, String[]> param : params.entrySet()) {
+            System.out.println(param.getKey() + " = " + param.getValue()[0]);
+            examples.add(param.getValue()[0]);
+            // Do other stuff here...
+        }
+
+        // Return the new complete list.
+        // Of course you could fetch data from a database or any other source.
+        JsonNode node = Json.toJson(examples);
+        return ok(node);
+    }
+
+    public Result myExampleView() {
+        return ok(example.render());
     }
 }
