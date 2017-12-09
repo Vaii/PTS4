@@ -232,7 +232,7 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-            viewDates = converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
+            viewDates = converter.getViewDatesFromUser(Secured.getUserInfo(ctx()).getId());
             Collections.sort(viewDates);
 
             return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),

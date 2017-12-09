@@ -58,7 +58,6 @@ public class DateConverter {
         return result;
     }
 
-
     public List<ViewDate> getViewDates(String trainingId, String userId){
         return convert(dateTimeRepo.getDateTimeForTraining(trainingId), userId);
     }
@@ -69,5 +68,9 @@ public class DateConverter {
         } else {
             return convertsNoTeacher(dateTimeRepo.getDateTimeForTraining(trainingId), userId);
         }
+    }
+
+    public List<ViewDate> getViewDatesFromUser(String userId){
+       return convert(dateTimeRepo.getDateTimeForUser(userId));
     }
 }
