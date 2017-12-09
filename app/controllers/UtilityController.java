@@ -1,12 +1,15 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import dal.contexts.CategoryContext;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.TrainingMongoContext;
 import dal.contexts.UserMongoContext;
+import dal.repositories.CategoryRepository;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
 import dal.repositories.UserRepository;
+import models.storage.Category;
 import models.util.DateConverter;
 import models.view.ViewDate;
 import play.libs.Json;
@@ -14,12 +17,14 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import java.util.List;
+import java.util.Map;
 
 public class UtilityController extends Controller {
 
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+    private CategoryRepository catRepo = new CategoryRepository(new CategoryContext("Category"));
 
     public Result checkEmail(String email) {
         if(userRepo.getUser(email) != null) {
@@ -49,5 +54,15 @@ public class UtilityController extends Controller {
 
         JsonNode node = Json.toJson(dates);
         return ok(node);
+    }
+
+    public Result addCategory(){
+        Category newCategory;
+        Map<String, String[]> params = request().body().asFormUrlEncoded();
+        for(Map.Entry<String, String[]> param : params.entrySet()){
+            newCategory = new Category(param.getValue()[0]);
+            catRepo.addCategory(newCategory);
+        }
+        return ok();
     }
 }

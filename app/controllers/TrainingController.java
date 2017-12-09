@@ -46,6 +46,7 @@ public class TrainingController extends Controller {
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
     private SharedRepository sharedRepo = new SharedRepository(new SharedMongoContext());
+    private CategoryRepository categoryRepo = new CategoryRepository(new CategoryContext("Category"));
 
     private FormFactory formFactory;
     private Form<Training> form;
@@ -111,11 +112,12 @@ public class TrainingController extends Controller {
     public Result addTraining() {
         List<Location> locations = locationRepo.getAll();
         List<User> teachers = userRepo.getAllTeachers();
+        List<Category> categories = categoryRepo.getAllCategories();
 
         JsonNode locationJson = Json.toJson(locations);
         JsonNode teacherJson = Json.toJson(teachers);
 
-        return ok(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), ADDTRAINING, locations, teachers, locationJson, teacherJson));
+        return ok(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), ADDTRAINING, locations, teachers, categories, locationJson, teacherJson));
     }
 
     @Security.Authenticated(Secured.class)
@@ -137,14 +139,14 @@ public class TrainingController extends Controller {
 
 
         if (form.hasErrors()) {
-            return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), ADDTRAINING, locationRepo.getAll(), userRepo.getAllTeachers(), locationJson, teacherJson));
+            return badRequest(addtraining.render(form, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), ADDTRAINING, locationRepo.getAll(), userRepo.getAllTeachers(), categoryRepo.getAllCategories(), locationJson, teacherJson));
         } else {
             Training training = form.bind(baseValues).get();
             Form<Training> form2 = form.bind(baseValues);
 
 
             if(trainingRepo.getTraining(training.getTrainingCode()) != null) {
-                return badRequest(addtraining.render(form2.withError(TRAININGCODE, "Trainingscode moet uniek zijn"), Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), ADDTRAINING, locationRepo.getAll(), userRepo.getAllTeachers(), locationJson, teacherJson));
+                return badRequest(addtraining.render(form2.withError(TRAININGCODE, "Trainingscode moet uniek zijn"), Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), ADDTRAINING, locationRepo.getAll(), userRepo.getAllTeachers(), categoryRepo.getAllCategories(), locationJson, teacherJson));
             }
 
             List<String> dateIDs = createDates(dates, locationIDs, teacherIDs, training.getDuration());
