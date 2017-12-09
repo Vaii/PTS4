@@ -28,10 +28,25 @@ public class DateConverter {
         return new ViewDate(dt.getId(), dt.getDate(), location, teacher, dt.getTrainees().size(), dt.getTrainees().contains(userId));
     }
 
+    public ViewDate convert(DateTime dt) {
+        User teacher = userRepo.getUserByID(dt.getTeacherID());
+        Location location = locationRepo.getLocation(dt.getLocationID());
+
+        return new ViewDate(dt.getId(), dt.getDate(), location, teacher, dt.getTrainees().size(), false);
+    }
+
     public ViewDate convertNoTeacher(DateTime dt, String userId) {
         Location location = locationRepo.getLocation(dt.getLocationID());
 
         return new ViewDate(dt.getId(), dt.getDate(), location, null, dt.getTrainees().size(), dt.getTrainees().contains(userId));
+    }
+
+    public List<ViewDate> convert(List<DateTime> dates) {
+        List<ViewDate> results = new ArrayList<>();
+        for (DateTime date : dates) {
+            results.add(convert(date));
+        }
+        return results;
     }
 
     public List<ViewDate> convert(List<DateTime> dates, String userId) {
