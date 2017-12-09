@@ -63,7 +63,11 @@ public class DateConverter {
         return convert(dateTimeRepo.getDateTimeForTraining(trainingId), userId);
     }
 
-    public List<ViewDate>  getViewDatesWithoutTeacher(String trainingId, String userId) {
-        return convertsNoTeacher(dateTimeRepo.getDateTimeForTraining(trainingId), userId);
+    public List<ViewDate>  getViewDatesWithoutTeacher(String trainingId, String userId, boolean futureOnly) {
+        if(futureOnly) {
+            return convertsNoTeacher(dateTimeRepo.getFutureDatesForTraining(trainingId), userId);
+        } else {
+            return convertsNoTeacher(dateTimeRepo.getDateTimeForTraining(trainingId), userId);
+        }
     }
 }

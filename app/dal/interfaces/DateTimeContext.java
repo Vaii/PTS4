@@ -16,4 +16,5 @@ public interface DateTimeContext {
     List<DateTime> getDateTimeForTraining(String trainingId);
     List<DateTime> getDateTimeForLocation(String locationId);
     boolean checkUserSignup(String userId, String dateId);
+    List<DateTime> getFutureDatesForTraining(String trainingId);
 }

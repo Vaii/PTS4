@@ -10,6 +10,7 @@ import org.jongo.MongoCursor;
 import org.jongo.Update;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DateTimeMongoContext implements DateTimeContext {
@@ -113,6 +114,18 @@ public class DateTimeMongoContext implements DateTimeContext {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<DateTime> getFutureDatesForTraining(String trainingId) {
+        MongoCursor<DateTime> results = collection.find("{date: { $gt:#}, trainingId:#}", new Date(),trainingId).as(DateTime.class);
+        List<DateTime> dateTimes = new ArrayList<>();
+
+        while(results.hasNext()) {
+            DateTime dateTime = results.next();
+            dateTimes.add(dateTime);
+        }
+        return dateTimes;
     }
 
     public void removeAll() {
