@@ -7,17 +7,20 @@ import dal.contexts.UserMongoContext;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
 import dal.repositories.UserRepository;
+import models.storage.DateTime;
 import models.storage.User;
 import models.util.DateConverter;
+import models.util.OverlapChecker;
 import models.view.ViewDate;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.example.example;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class UtilityController extends Controller {
 
@@ -70,6 +73,47 @@ public class UtilityController extends Controller {
         } else {
             return ok("no_signup");
         }
+    }
+
+    public Result checkTeacherOverlap() throws ParseException {
+        Date other = null;
+        int duration = 0;
+        String id = "";
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+
+        Map<String, String[]> params = request().body().asFormUrlEncoded();
+        for (Map.Entry<String, String[]> param : params.entrySet()) {
+            System.out.println(param.getKey() + " = " + param.getValue()[0]);
+            switch(param.getKey()) {
+                case "teacher":
+                    id = param.getValue()[0];
+                    break;
+                case "date":
+                    other = df.parse(param.getValue()[0]);
+                    break;
+                case "duration":
+                    duration = Integer.parseInt(param.getValue()[0]);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if(!id.equals("") && duration != 0 && other != null) {
+            System.out.println("Performing check");
+            OverlapChecker checker = new OverlapChecker();
+            DateTime error = checker.checkOverlapForTeacher(other, duration, id);
+
+            System.out.println("Done performing overlap check");
+            if(error != null) {
+                return ok("overlap_detected");
+            } else {
+                return ok("no_overlap");
+            }
+        } else {
+            return ok("no_check");
+        }
+
     }
 
     // Example stuff below.

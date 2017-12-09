@@ -4,6 +4,7 @@ import dal.contexts.DateTimeMongoContext;
 import dal.repositories.DateTimeRepository;
 import models.storage.DateTime;
 
+import java.util.Date;
 import java.util.List;
 
 public class OverlapChecker {
@@ -27,6 +28,23 @@ public class OverlapChecker {
         dateTimes = dateRepo.getDateTimeForTeacher(teacherId);
 
         DateTime errorDate = other.checkOverlap(dateTimes);
+
+        if(errorDate != null) {
+            return errorDate;
+        }
+
+        return null;
+    }
+
+    public DateTime checkOverlapForTeacher(Date other, int otherDate, String teacherId) {
+        List<DateTime> dateTimes;
+        dateTimes = dateRepo.getDateTimeForTeacher(teacherId);
+
+        DateTime errorDate = null;
+
+        for(DateTime dt : dateTimes) {
+           errorDate = dt.checkOverlap(other, otherDate);
+        }
 
         if(errorDate != null) {
             return errorDate;
