@@ -83,7 +83,6 @@ public class UtilityController extends Controller {
 
         Map<String, String[]> params = request().body().asFormUrlEncoded();
         for (Map.Entry<String, String[]> param : params.entrySet()) {
-            System.out.println(param.getKey() + " = " + param.getValue()[0]);
             switch(param.getKey()) {
                 case "teacher":
                     id = param.getValue()[0];
@@ -100,11 +99,9 @@ public class UtilityController extends Controller {
         }
 
         if(!id.equals("") && duration != 0 && other != null) {
-            System.out.println("Performing check");
             OverlapChecker checker = new OverlapChecker();
             DateTime error = checker.checkOverlapForTeacher(other, duration, id);
 
-            System.out.println("Done performing overlap check");
             if(error != null) {
                 return ok("overlap_detected");
             } else {
@@ -113,7 +110,6 @@ public class UtilityController extends Controller {
         } else {
             return ok("no_check");
         }
-
     }
 
     // Example stuff below.
