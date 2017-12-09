@@ -15,4 +15,6 @@ public interface DateTimeContext {
     boolean removeTeacher(String teacherId);
     List<DateTime> getDateTimeForTraining(String trainingId);
     List<DateTime> getDateTimeForLocation(String locationId);
+    boolean checkUserSignup(String userId, String dateId);
+    List<DateTime> getFutureDatesForTraining(String trainingId);
 }
