@@ -459,7 +459,7 @@ public class TrainingController extends Controller {
         List<ViewTraining> teacherTrainings = new ArrayList<>();
         for (DateTime d : teacherDates)
         {
-            ViewTraining vt = new ViewTraining(trainingRepo.getTrainingById(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),dateRepo.getDateTime(d.getId()));
+            ViewTraining vt = new ViewTraining(trainingRepo.getTrainingById(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),d);
             teacherTrainings.add(vt);
         }
 
@@ -469,6 +469,17 @@ public class TrainingController extends Controller {
 
 
         return ok(teachertrainingoverview.render(teacherTrainings, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateJson));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result teacherStudentOverview(String dateId) {
+        DateTime date = dateRepo.getDateTime(dateId);
+        ViewTraining training = new ViewTraining(trainingRepo.getTrainingById(date.getTrainingID()),locationRepo.getLocation(date.getLocationID()),date);
+        List<User> trainees = new ArrayList<>();
+        for (String t : training.getDate().getTrainees()){
+            trainees.add(userRepo.getUserByID(t));
+        }
+        return ok(teacherstudentoverview.render(training, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainees));
     }
 
     private void editExistingDates(List<String> initIDs, List<String> requestDateIDs, List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {

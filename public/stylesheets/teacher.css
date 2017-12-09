@@ -13,6 +13,9 @@
     color: #0275d8;
     padding-bottom: 50px;
 }
+.container h3 {
+    padding-top:12px;
+}
 .switch {
     position: relative;
     display: inline-block;

@@ -48,6 +48,7 @@ GET     /teachertrainingoverview            controllers.TrainingController.teach
 GET     /personalOverview                   controllers.TrainingController.personalOverview
 GET     /personalTrainingCategory/:category controllers.TrainingController.personalOverviewCategory(category: String)
 GET     /personalTrainingOverview/:id       controllers.TrainingController.personalTrainingOverview(category: String, id: String)
+GET     /teacherstudentoverview/:id         controllers.TrainingController.teacherStudentOverview(id: String)
 
 
 

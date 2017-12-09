@@ -16,10 +16,10 @@
     </head>
 
     <script>
-        passDates("@dates");
+            passDates("@dates");
     </script>
 
-    <div id="eventContent" title="Event Details" style="display:none;">
+    <div id="eventContent" title="Event Details" style="display: none;">
         Start: <span id="startTime"></span><br>
         End: <span id="endTime"></span><br><br>
         <p id="eventInfo"></p>
@@ -93,8 +93,13 @@
                             @training.getDate().getDateString() <p>
                         </div>
                         <div class="col-lg-2">
-                            <p>@training.getDate().getTrainees().size()</p>
+                        @if(training.getDate().getTrainees().isEmpty()) {
+                            <p>Geen inschrijvingen.</p>
+                        } else {
+                            <p>@(training.getDate().getTrainees().size() + "/" + training.getTraining().getCapacity()) <a href="@routes.TrainingController.teacherStudentOverview(training.getDate().getId())">inschrijvingen</a></p>
+                        }
                         </div>
+
                     </div>
                 }
             </div>
