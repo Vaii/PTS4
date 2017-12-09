@@ -10,6 +10,7 @@ import org.jongo.MongoCursor;
 import org.jongo.Update;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DateTimeMongoContext implements DateTimeContext {
@@ -95,6 +96,29 @@ public class DateTimeMongoContext implements DateTimeContext {
     @Override
     public List<DateTime> getDateTimeForLocation(String locationId) {
         MongoCursor<DateTime> results = collection.find("{locationId:#}", locationId).as(DateTime.class);
+        List<DateTime> dateTimes = new ArrayList<>();
+
+        while(results.hasNext()) {
+            DateTime dateTime = results.next();
+            dateTimes.add(dateTime);
+        }
+        return dateTimes;
+    }
+
+    @Override
+    public boolean checkUserSignup(String userId, String dateId) {
+        DateTime result = collection.findOne("{_id:#, trainees: { $all: [#]}}", new ObjectId(dateId), userId).as(DateTime.class);
+
+        if(result != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<DateTime> getFutureDatesForTraining(String trainingId) {
+        MongoCursor<DateTime> results = collection.find("{date: { $gt:#}, trainingId:#}", new Date(),trainingId).as(DateTime.class);
         List<DateTime> dateTimes = new ArrayList<>();
 
         while(results.hasNext()) {

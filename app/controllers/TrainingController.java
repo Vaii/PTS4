@@ -60,13 +60,14 @@ public class TrainingController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result signUpCourse(String id, String trainingID) {
+    public Result signUpCourse(String id) {
 
         if (id == null) {
             return notFound();
         } else {
             if (Secured.getUserInfo(ctx()).getRole() != Role.EXTERN) {
-                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id) , trainingRepo.getTraining(trainingID), tuitionFormForm));
+                DateTime dt = dateRepo.getDateTime(id);
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt , trainingRepo.getTraining(dt.getTrainingID()), tuitionFormForm));
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
                 DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
@@ -197,7 +198,7 @@ public class TrainingController extends Controller {
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
         } else {
             List<ViewDate> viewDates;
-            viewDates =  converter.getViewDates(id);
+            viewDates =  converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
             Collections.sort(viewDates);
             return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
@@ -231,7 +232,7 @@ public class TrainingController extends Controller {
             Training t = trainingRepo.getTraining(id);
 
             List<ViewDate> viewDates = new ArrayList<>();
-            viewDates = converter.getViewDates(id);
+            viewDates = converter.getViewDatesFromUser(Secured.getUserInfo(ctx()).getId());
             Collections.sort(viewDates);
 
             return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
@@ -270,7 +271,7 @@ public class TrainingController extends Controller {
 
             Training t = trainingRepo.getTrainingById(id);
             List<ViewDate> viewDates;
-            viewDates = converter.getViewDates(id);
+            viewDates = converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
 
             Collections.sort(viewDates);
 

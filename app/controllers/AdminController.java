@@ -52,9 +52,9 @@ public class AdminController extends Controller{
                 if(!dates.isEmpty()) {
                     // Teacher still has dates assigned to him, cancel the delete operation.
                     DateConverter converter = new DateConverter();
-                    converter.convert(dates);
+                    converter.convert(dates, Secured.getUserInfo(ctx()).getId());
                     return ok(teacherDeleteError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
-                            ,converter.convert(dates)));
+                            ,converter.convert(dates, Secured.getUserInfo(ctx()).getId())));
                 } else {
                     uRepo.removeUser(userToRemove); // Remove user from user table.
                     dRepo.removeUser(id); // Remove user from possible trainee fields.

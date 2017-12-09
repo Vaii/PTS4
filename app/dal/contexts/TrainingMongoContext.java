@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
-import play.data.format.Formats;
 
 import java.util.ArrayList;
 import java.util.List;
