@@ -41,10 +41,6 @@
                 var date = getDateInputValues();
                 var duration = $('#duration').val();
 
-                console.log(teacher);
-                console.log(date);
-                console.log(duration);
-
                 if (teacher !== "" && date !== "" && duration !== "" && checkInProgress !== true) {
                     $('#loadingDiv').show();
                     checkInProgress = true;
@@ -58,7 +54,6 @@
                             },
                             function (data) {
                                 checkInProgress = false;
-                                console.log(data);
                                 showOverlapResult(data);
                             },
                             "text"
@@ -84,7 +79,6 @@
 
             function showOverlapResult(result) {
                 $('#loadingDiv').hide();
-                console.log(result);
                 if (result.indexOf("overlap_detected") !== -1) {
                     disableControls(true, result)
                 } else {

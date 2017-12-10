@@ -82,9 +82,7 @@ public class UtilityController extends Controller {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
 
         Map<String, String[]> params = request().body().asFormUrlEncoded();
-        System.out.println(params.size());
         for (Map.Entry<String, String[]> param : params.entrySet()) {
-            System.out.println(param.getKey() + " = " + param.getValue()[0]);
             switch(param.getKey()) {
                 case "teacher[]":
                     teacherIds.addAll(Arrays.asList(param.getValue()));
