@@ -23,35 +23,38 @@
             teachJson = JSON.parse(unescapeHTML(teachJson));
 
             $(document).ready(function () {
-                $('#teacherId').on('change', function (e) {
+
+                $('#dynamicInput').on('change', '#dates', function (e) {
                     checkOverlap();
                 });
 
-                $('#dates').on('change', function (e) {
+                $('#dynamicInput').on('change', '#teacherId', function (e) {
                     checkOverlap();
                 });
             });
 
+
             var checkInProgress = false;
 
             function checkOverlap() {
-                var teacher = $('#teacherId option:selected').val();
-                var date = $('#dates').val();
+                var teacher = getTeacherInputValues();
+                var date = getDateInputValues();
                 var duration = $('#duration').val();
 
                 console.log(teacher);
                 console.log(date);
                 console.log(duration);
 
-                if(teacher !== "" && date !== "" && duration !== "" && checkInProgress !== true) {
+                if (teacher !== "" && date !== "" && duration !== "" && checkInProgress !== true) {
+                    $('#loadingDiv').show();
                     checkInProgress = true;
 
                     $.post(
                             "/utility/overlapcheck",
                             {
                                 "teacher": teacher,
-                                "date"   : date,
-                                "duration" : duration
+                                "date": date,
+                                "duration": duration
                             },
                             function (data) {
                                 checkInProgress = false;
@@ -63,22 +66,50 @@
                 }
             }
 
-            function showOverlapResult(result){
-                console.log(result)
-                if(result === "overlap_detected") {
-                    disableControls(true)
+            function getDateInputValues() {
+                var valueArray = $('.dateInput').map(function () {
+                    return this.value;
+                }).get();
+
+                return valueArray;
+            }
+
+            function getTeacherInputValues() {
+                var valueArray = $('.teacherInput').map(function () {
+                    return this.value;
+                }).get();
+
+                return valueArray;
+            }
+
+            function showOverlapResult(result) {
+                $('#loadingDiv').hide();
+                console.log(result);
+                if (result.indexOf("overlap_detected") !== -1) {
+                    disableControls(true, result)
                 } else {
-                    disableControls(false);
+                    disableControls(false, result);
                 }
             }
 
-            function disableControls(disable) {
-                $('.btn-default').prop("disabled",disable);
-                if(disable) {
-                    $('#dynamicInput').addClass('has-danger');
-                    $('#validation_error_1').css("display", "block");
+            function disableControls(disable, result) {
+                $('.btn-default').prop("disabled", disable);
+                $('.btn-primary').prop("disabled", disable);
+
+                if (disable) {
+                    if (result.indexOf("0") !== -1) {
+                        $('.row0').addClass('has-danger');
+                        $('#validation_error_1').css("display", "block");
+
+                    } else {
+                        $('.row' + result.substring(19, 20)).addClass('has-danger');
+                        $('#validation_error_1').css("display", "block");
+                    }
                 } else {
-                    $('#dynamicInput').removeClass('has-danger');
+                    $('.row0').removeClass('has-danger');
+                    $('#validation_error_1').css("display", "none");
+
+                    $('.row').removeClass('has-danger');
                     $('#validation_error_1').css("display", "none");
                 }
             }
@@ -90,23 +121,24 @@
 
     <div class="container">
         <div class="row col-lg-12">
-        <h1>Training toevoegen</h1>
-        <br />
+            <h1>Training toevoegen</h1>
+            <br />
         </div>
         @b4.form(routes.TrainingController.submit()) {
             @helper.CSRF.formField
             <div class="row"><div class="col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</div></div>
-            <div style="display: none; color:#d9534f" id="validation_error_0" class="form-control-feedback ">Code is al in gebruik</div>
+            <div style="display: none;
+                color: #d9534f" id="validation_error_0" class="form-control-feedback ">Code is al in gebruik</div>
             <div class="row"><div class="col-lg-12">@b4.text(form("name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</div></div>
             <div class="row"><div class="col-lg-12">@b4.text(form("description"), '_label -> "Beschrijving:", 'class -> "form-control-inline", 'placeholder -> "Voer beschrijving in")</div></div>
             <div class="row"><div class="col-lg-12">@b4.text(form("requiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline", 'placeholder -> "Voer materialen in")</div></div>
             <div class="form-group">
                 <div id="dynamicInput">
-                    <div class="row col-lg-12">
+                    <div class="row col-lg-12 row0">
                         <div class="col-lg-3">
                             <label class="form-control-label" for="dates[]">Datum:</label>
                             <input type="datetime-local" id="dates" name="dates[]" required="true"
-                            value="" class="form-control")>
+                            value="" class="form-control dateInput" )>
                         </div>
 
                         <div class="col-lg-4">
@@ -124,7 +156,7 @@
                             <div class="row" >
                                 <div class="col-lg-9">
                                     <label class="form-control-label" for="teacherId[]">Docent:</label>
-                                    <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control">
+                                    <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
                                         <option value="" class="blank" selected="true" disabled="disabled">
                                             Selecteer een docent</option>
                                         @for(teacher <- teachers) {
@@ -139,7 +171,10 @@
                 </div>
             </div>
             <div class="row"><div class="col-lg-12">
-                <div style="display: none; color:#d9534f" id="validation_error_1" class="form-control-feedback ">Docent is al ingepland, selecteer een andere docent.</div>
+                <div style="display: none;" id="loadingDiv">Beschikbaarheid docent controleren: <img id="loadingImage" alt="laden" src="@routes.Assets.at("images/loading.gif")"> </div>
+                <div style="display: none;
+                    color: #d9534f" id="validation_error_1" class="form-control-feedback ">
+                    Docent is al ingepland, selecteer een andere docent.</div>
                 <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
             </div></div>
             <br>
@@ -147,8 +182,8 @@
             <div class="row"><div class="col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div></div>
             <div class="row"><div class="col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div></div>
             <div class="row"><div class="col-lg-12">@b4.text(form("category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div></div>
-                            <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
-    </div>
+            <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
+            </div>
 }
 
 }

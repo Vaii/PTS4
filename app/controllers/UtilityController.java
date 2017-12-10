@@ -76,19 +76,21 @@ public class UtilityController extends Controller {
     }
 
     public Result checkTeacherOverlap() throws ParseException {
-        Date other = null;
+        List<String> dates = new ArrayList<>();
         int duration = 0;
-        String id = "";
+        List<String> teacherIds = new ArrayList<>();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
 
         Map<String, String[]> params = request().body().asFormUrlEncoded();
+        System.out.println(params.size());
         for (Map.Entry<String, String[]> param : params.entrySet()) {
+            System.out.println(param.getKey() + " = " + param.getValue()[0]);
             switch(param.getKey()) {
-                case "teacher":
-                    id = param.getValue()[0];
+                case "teacher[]":
+                    teacherIds.addAll(Arrays.asList(param.getValue()));
                     break;
-                case "date":
-                    other = df.parse(param.getValue()[0]);
+                case "date[]":
+                    dates.addAll(Arrays.asList(param.getValue()));
                     break;
                 case "duration":
                     duration = Integer.parseInt(param.getValue()[0]);
@@ -98,18 +100,32 @@ public class UtilityController extends Controller {
             }
         }
 
-        if(!id.equals("") && duration != 0 && other != null) {
-            OverlapChecker checker = new OverlapChecker();
-            DateTime error = checker.checkOverlapForTeacher(other, duration, id);
+        List<String> overlapErrorLines = new ArrayList<>();
 
-            if(error != null) {
-                return ok("overlap_detected");
-            } else {
-                return ok("no_overlap");
+        if(duration != 0 && dates.size() == teacherIds.size()) {
+            for (int i = 0; i < dates.size(); i++) {
+                if(dates.get(i).equals("")) return ok("no_check");
+                if(teacherIds.get(i).equals("")) return ok("no_check");
+
+                Date other = df.parse(dates.get(i));
+                String id = teacherIds.get(i);
+
+                OverlapChecker checker = new OverlapChecker();
+                DateTime error = checker.checkOverlapForTeacher(other, duration, id);
+
+                if (error != null) {
+                    overlapErrorLines.add("overlap_detected_" + i);
+                }
             }
         } else {
             return ok("no_check");
         }
+
+        if(overlapErrorLines.size() >= 1) {
+            JsonNode node = Json.toJson(overlapErrorLines);
+            return ok(node);
+        }
+        return ok("no_overlap");
     }
 
     // Example stuff below.
