@@ -40,7 +40,7 @@
 
                 </div>
 
-                <div class="row col-lg-12" id="listviewrow">
+                <div class="row col-lg-12" id="listviewrowTraining">
                     <div class="col-lg-3">
                         <p>@training.getTraining().getTrainingCode()</p>
                     </div>
@@ -72,13 +72,13 @@
                 @for(trainee <- trainees) {
                     <div class="row col-lg-12" id="listviewrow">
                         <div class="col-lg-4">
-                            <p>@trainee.getFirstName() @trainee.getLastName()</p>
+                            <p><i class="fa fa-user fa-fw" aria-hidden="true"></i>  @trainee.getFirstName() @trainee.getLastName()</p>
                         </div>
                         <div class="col-lg-4">
-                            <p>@trainee.getPhoneNumber()</p>
+                            <p><i class="fa fa-phone fa-fw" aria-hidden="true"></i>  @trainee.getPhoneNumber()</p>
                         </div>
                         <div class="col-lg-4 ">
-                            <p>@trainee.getEmail()</p>
+                            <p><i class="fa fa-envelope fa-fw" aria-hidden="true"></i> @trainee.getEmail()</p>
                         </div>
                     </div>
                 }
