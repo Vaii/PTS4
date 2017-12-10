@@ -3,6 +3,7 @@ package models.view;
 import models.storage.DateTime;
 import models.storage.Location;
 import models.storage.Training;
+import models.util.DateConverter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,6 +34,11 @@ public class ViewTraining implements Comparable<ViewTraining> {
 
         public DateTime getDate() {
                 return date;
+        }
+        public ViewDate getViewDate (){
+                DateConverter dateConverter = new DateConverter();
+                ViewDate viewDate = dateConverter.convert(date);
+                return viewDate;
         }
         @Override
         public int compareTo(ViewTraining o) {

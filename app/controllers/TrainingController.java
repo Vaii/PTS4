@@ -207,40 +207,14 @@ public class TrainingController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result personalOverview() {
-        return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()) ,new ArrayList<>(), null,
-                TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
-    }
-
-    @Security.Authenticated(Secured.class)
-    public Result personalOverviewCategory(String category) {
-        if(category == null) {
-            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()),new ArrayList<>(), null,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
-        } else {
-            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+        List<DateTime> trainingDates = dateRepo.getDateTimeForUser(Secured.getUserInfo(ctx()).getId());
+        List<ViewTraining> userTrainings = new ArrayList<>();
+        for (DateTime d : trainingDates){
+            ViewTraining training = new ViewTraining(trainingRepo.getTrainingById(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),d);
+            userTrainings.add(training);
         }
-
+        return ok(personaltrainingoverview.render(userTrainings, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
-
-    @Security.Authenticated(Secured.class)
-    public Result personalTrainingOverview(String category, String id) {
-        if (id == null) {
-            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), null,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
-        } else {
-            Training t = trainingRepo.getTraining(id);
-
-            List<ViewDate> viewDates = new ArrayList<>();
-            viewDates = converter.getViewDatesFromUser(Secured.getUserInfo(ctx()).getId());
-            Collections.sort(viewDates);
-
-            return ok(personaltrainingoverview.render(sharedRepo.getTrainingFrequencies(Secured.getUserInfo(ctx()).getId()), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
-        }
-    }
-
-
 
     @Security.Authenticated(Secured.class)
     public Result manage() {
