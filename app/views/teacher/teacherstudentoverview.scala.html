@@ -18,41 +18,76 @@
                     <h1>Inschrijvingen: @training.getTraining().getName()</h1>
                 </div>
                 <div class="col-lg-3">
-                    <h3>@(training.getDate().getTrainees().size() + "/" + training.getTraining().getCapacity()) inschrijvingen</h3>
+                    <h3>@(training.getDate().getTrainees().size() + "/" + training.getTraining().getCapacity())
+                        inschrijvingen</h3>
+                </div>
+            </div>
+
+            <div class="row col-lg-12" id="listDivTraining">
+                <div class="row col-lg-12" id="listDivTitle">
+                    <div class="col-lg-3">
+                        <label>Trainingscode</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Training</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Tijd/Datum</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Locatie</label>
+                    </div>
+
+                </div>
+
+                <div class="row col-lg-12" id="listviewrow">
+                    <div class="col-lg-3">
+                        <p>@training.getTraining().getTrainingCode()</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p>@training.getTraining().getName()</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p>@training.getDate().getDateString() </p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p>@training.getLocation().getStreetName() @training.getLocation().getStreetNumber()
+                            , @training.getLocation().getCity() </p>
+                    </div>
+
                 </div>
             </div>
             <div class="row col-lg-12" id="listDiv">
                 <div class="row col-lg-12" id="listDivTitle">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <label>Naam</label>
                     </div>
-                    <div class="col-lg-3">
-                        <label>Adres</label>
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <label>Telefoonnummer</label>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <label>E-mail adres</label>
                     </div>
                 </div>
-                @for(trainee <- trainees){
+                @for(trainee <- trainees) {
                     <div class="row col-lg-12" id="listviewrow">
-                        <div class="col-lg-3">
-                            <label>@trainee.getFirstName()  @trainee.getLastName()</label>
+                        <div class="col-lg-4">
+                            <p>@trainee.getFirstName() @trainee.getLastName()</p>
                         </div>
-                        <div class="col-lg-3">
-                            <label>-</label>
+                        <div class="col-lg-4">
+                            <p>@trainee.getPhoneNumber()</p>
                         </div>
-                        <div class="col-lg-3">
-                            <label>@trainee.getPhoneNumber()</label>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>@trainee.getEmail()</label>
+                        <div class="col-lg-4 ">
+                            <p>@trainee.getEmail()</p>
                         </div>
                     </div>
                 }
 
+            </div>
+            <div class="col-lg-2 offset-lg-5" id="backBtn">
+                <a class="btn btn-outline-primary" href="@routes.TrainingController.teacherTrainingOverview()">
+                    Terug naar Rooster</a></p>
+            </div>
         } else {
             <div class="row col-lg-12">
                 <p> Geen inschrijvingen gevonden.</p>

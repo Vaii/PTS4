@@ -7,148 +7,159 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
     <div class="container">
         <div>
-            @if(!categories.isEmpty) {
-                <div class="row">
-                <div class="col-lg-2 trainingmenu">
-                <ul>
-                    <lh>Categorie</lh>
-                    @if(!categories.isEmpty) {
-                        @for((key, value) <- categories) {
-                            @if(!trainings.isEmpty){
-                                @if(trainings.get(0).getCategory.equals(key)){
-                                    <li class="active"><a href="@routes.TrainingController.personalOverviewCategory(key)">@key (@value)</a></li>
-                                } else {
-                                    <li><a href="@routes.TrainingController.personalOverviewCategory(key)">@key (@value)</a></li>
-                                }
-                            } else{
-                                <li><a href="@routes.TrainingController.personalOverviewCategory(key)">@key (@value)</a></li>
-                            }
-                        }
-                    }
-                </ul>
-            </div>
-                <div class="col-lg-2 trainingmenu">
-                <ul>
-                    <lh>Training</lh>
-                    @if(!trainings.isEmpty()) {
-                        @for(t <- trainings) {
-                            @if(training != null) {
-                                @if(t.getId.equals(training.getId)) {
-                                    <li class="active" ><a href="@routes.TrainingController.personalTrainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
-                                } else {
-                                    <li><a href="@routes.TrainingController.personalTrainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
-                                }
-                            } else {
-                                <li><a href="@routes.TrainingController.personalTrainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
-                            }
-                        }
-                    } else {
-                        <li><p>Selecteer een categorie</p></li>
-                    }
-                </ul>
-            </div>
-                <div class="trainingtext col-lg-8" >
-                <div>
-                    @if(training != null) {
-                        <div class="row">
-                            <h1>@training.getName()</h1>
-                        </div>
-
-                        <h2>Beschrijving</h2>
-                        @if(training.getDescription == null) {
-                            <p> Geen beschrijving. </p>
-                        } else {
-                            <p> @training.getDescription()</p>
-                        }
-                        <h2>Informatie</h2>
-                        <div class="row">
-
-                            <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p>Trainingcode:</p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p>@training.getTrainingCode</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p>Benodigde materialen:</p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                    @if(!training.getRequiredMaterial().isEmpty()) {
-                                        <p>@training.getRequiredMaterial</p>
+        @if(!categories.isEmpty) {
+            <div class="row">
+                <div class="row col-lg-12">
+                    <div class="row col-lg-8 offset-lg-4 trainingtext trainingmenu">
+                        <h1> Mijn Trainingen</h1>
+                    </div>
+                    <div class="col-lg-2 trainingmenu">
+                        <ul>
+                            <lh>Categorie</lh>
+                            @if(!categories.isEmpty) {
+                                @for((key, value) <- categories) {
+                                    @if(!trainings.isEmpty) {
+                                        @if(trainings.get(0).getCategory.equals(key)) {
+                                            <li class="active"><a href="@routes.TrainingController.personalOverviewCategory(key)">@key
+                                                (@value)</a></li>
+                                        } else {
+                                            <li><a href="@routes.TrainingController.personalOverviewCategory(key)">@key
+                                                (@value)</a></li>
+                                        }
                                     } else {
-                                        <p>Geen</p>
+                                        <li><a href="@routes.TrainingController.personalOverviewCategory(key)">@key
+                                            (@value)</a></li>
                                     }
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p>Kosten:</p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p>€@training.getRoundedTuition</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p>Duur:</p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p>@training.getDuration().toInt dagen</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p>Categorie: </p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p>@training.getCategory</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p>Datum training: </p>
-                                        <p>Locatie: </p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                    @for(date <- viewDates) {
-                                        <p>@date.getDateString <a class="btn btn-outline-danger btn-sm" href="#">Uitschrijven</a></p>
-                                        <p>@date.getLocation.getStreetName @date.getLocation.getStreetNumber , @date.getLocation.getCity</p>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 trainingmenu">
+                        <ul>
+                            <lh>Training</lh>
+                            @if(!trainings.isEmpty()) {
+                                @for(t <- trainings) {
+                                    @if(training != null) {
+                                        @if(t.getId.equals(training.getId)) {
+                                            <li class="active" ><a href="@routes.TrainingController.personalTrainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
+                                        } else {
+                                            <li><a href="@routes.TrainingController.personalTrainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
+                                        }
+                                    } else {
+                                        <li><a href="@routes.TrainingController.personalTrainingOverview(t.getCategory(), t.getId())"> @t.getName</a></li>
                                     }
-                                    </div>
-                                </div>
-                            </div>
+                                }
                             } else {
-                        <h1>Selecteer een training</h1>
-                        <p>Links in het menu kunt u trainingen selecteren.</p>
-                    }
-                </div>
+                                <li><p>Selecteer een categorie</p></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="trainingtext col-lg-8" >
+                        <div>
+                            @if(training != null) {
+                                <div class="row">
+                                    <h1>@training.getName()</h1>
+                                </div>
+
+                                <h2>Beschrijving</h2>
+                                @if(training.getDescription == null) {
+                                    <p> Geen beschrijving. </p>
+                                } else {
+                                    <p> @training.getDescription()</p>
+                                }
+                                <h2>Informatie</h2>
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <p>Trainingcode:</p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <p>@training.getTrainingCode</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <p>Benodigde materialen:</p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                            @if(!training.getRequiredMaterial().isEmpty()) {
+                                                <p>@training.getRequiredMaterial</p>
+                                            } else {
+                                                <p>Geen</p>
+                                            }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <p>Kosten:</p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <p>€@training.getRoundedTuition</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <p>Duur:</p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <p>@training.getDuration().toInt dagen</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <p>Categorie: </p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <p>@training.getCategory</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <p>Datum training: </p>
+                                                <p>Locatie: </p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                            @for(date <- viewDates) {
+                                                <p>@date.getDateString <a class="btn btn-outline-danger btn-sm" href="#">Uitschrijven</a></p>
+                                                <p>@date.getLocation.getStreetName @date.getLocation.getStreetNumber
+                                                    , @date.getLocation.getCity</p>
+                                            }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    } else {
+                                <h1>Selecteer een training</h1>
+                                <p>Links in het menu kunt u trainingen selecteren.</p>
+                            }
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-                </div>
-            } else {
-                <div class="row">
-                    <div class="row col-lg-12">
-                        <div class="col-lg-4 offset-lg-4">
-                            <h1>Mijn trainingen</h1>
-                        </div>
+        } else {
+            <div class="row">
+                <div class="row col-lg-12">
+                    <div class="col-lg-4 offset-lg-4">
+                        <h1>Mijn trainingen</h1>
                     </div>
-                    <div class="row col-lg-12">
-
-                        <div class="col-lg-6 offset-lg-3">
-                            <p id="selectText">U heeft zich nog niet ingeschereven voor een training, klik <a href="@routes.TrainingController.overview()">hier</a> om u in te schrijven voor een training.</p>
-                        </div>
-                    </div>
-
                 </div>
-            }
+                <div class="row col-lg-12">
+
+                    <div class="col-lg-6 offset-lg-3">
+                        <p id="selectText">
+                            U heeft zich nog niet ingeschereven voor een training, klik <a href="@routes.TrainingController.overview()">
+                            hier</a> om u in te schrijven voor een training.</p>
+                    </div>
+                </div>
+
+            </div>
+        }
         </div>
     </div>
 }
