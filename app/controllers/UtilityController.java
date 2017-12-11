@@ -59,10 +59,9 @@ public class UtilityController extends Controller {
     public Result addCategory(){
         Category newCategory;
         Map<String, String[]> params = request().body().asFormUrlEncoded();
-        for(Map.Entry<String, String[]> param : params.entrySet()){
-            newCategory = new Category(param.getValue()[0]);
-            catRepo.addCategory(newCategory);
-        }
-        return ok();
+        String categoryStringValue = params.entrySet().iterator().next().getValue()[0];
+        newCategory = new Category(categoryStringValue);
+        catRepo.addCategory(newCategory);
+        return ok("KAPOT");
     }
 }

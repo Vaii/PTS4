@@ -23,7 +23,7 @@ public class Training  {
     private static final String M_TUITION = "tuition";
     private static final String M_CAPACITY = "capacity";
     private static final String M_DATEIDS = "dateIds";
-    private static final String M_CATEGORY = "category";
+    private static final String M_CATEGORYID = "categoryid";
     private static final String M_PREREQUISITES = "prerequisites";
 
     // Mongo DB ID.
@@ -44,7 +44,7 @@ public class Training  {
     private List<String> dateIds;
 
     @Constraints.Required
-    private String category;
+    private String categoryid;
 
     // MongoDB ID's of the trainings that are required to follow before this one.
     private List<String> prerequisites;
@@ -53,7 +53,7 @@ public class Training  {
         this.prerequisites = new ArrayList<>();
     }
 
-    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category) {
+    public Training(String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String categoryid) {
         this.trainingCode = trainingCode;
         this.name = name;
         this.description = description;
@@ -61,12 +61,11 @@ public class Training  {
         this.duration = duration;
         this.tuition = tuition;
         this.capacity = capacity;
-        this.category = category;
+        this.categoryid = categoryid;
         this.prerequisites = new ArrayList<>();
-        prepareForStorage();
     }
 
-    public Training(String id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String category, List<String> prerequisites) {
+    public Training(String id, String trainingCode, String name, String description, String requiredMaterial, Float duration, Float tuition, int capacity, String categoryid, List<String> prerequisites) {
         this._id = id;
         this.trainingCode = trainingCode;
         this.name = name;
@@ -75,9 +74,8 @@ public class Training  {
         this.duration = duration;
         this.tuition = tuition;
         this.capacity = capacity;
-        this.category = category;
+        this.categoryid = categoryid;
         this.prerequisites = prerequisites;
-        prepareForStorage();
     }
 
     @JsonCreator
@@ -89,7 +87,7 @@ public class Training  {
                     @JsonProperty(M_TUITION) float tuition,
                     @JsonProperty(M_CAPACITY) int capacity,
                     @JsonProperty(M_DATEIDS) List<String> dateIDS,
-                    @JsonProperty(M_CATEGORY) String category,
+                    @JsonProperty(M_CATEGORYID) String categoryid,
                     @JsonProperty(M_PREREQUISITES) List<String> prerequisites) {
         this.trainingCode = trainingCode;
         this.name = name;
@@ -99,9 +97,8 @@ public class Training  {
         this.tuition = tuition;
         this.capacity = capacity;
         this.dateIds = dateIDS;
-        this.category = category;
+        this.categoryid = categoryid;
         this.prerequisites = prerequisites;
-        prepareForStorage();
     }
 
     public String getId() {
@@ -212,22 +209,19 @@ public class Training  {
      * Get the category of the training.
      * @return The category of the training capitalised.
      */
-    @JsonProperty(M_CATEGORY)
+    @JsonProperty(M_CATEGORYID)
     public String getCategory() {
-        return StringUtils.capitalize(category);
+        return StringUtils.capitalize(categoryid);
     }
 
     public void setCategory(String category) {
-        this.category = category.toLowerCase();
+        this.categoryid = category.toLowerCase();
     }
 
     /**
      * Prepare the training for db storage.
      * Turn the training category to lowercase to prevent mix ups.
      */
-    private void prepareForStorage() {
-        category = category.toLowerCase();
-    }
 
     public static BigDecimal round(float d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Float.toString(d));

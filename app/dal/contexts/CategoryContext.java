@@ -33,7 +33,7 @@ public class CategoryContext implements dal.interfaces.CategoryContext {
 
     @Override
     public Boolean addCategory(Category category) {
-        WriteResult result = collection.insert(category);
+        WriteResult result = collection.save(category);
         return result.wasAcknowledged();
     }
 }
