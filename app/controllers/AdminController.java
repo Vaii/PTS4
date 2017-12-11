@@ -1,13 +1,12 @@
 package controllers;
 
+import dal.contexts.CategoryContext;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.UserMongoContext;
+import dal.repositories.CategoryRepository;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.UserRepository;
-import models.storage.DateTime;
-import models.storage.Role;
-import models.storage.Secured;
-import models.storage.User;
+import models.storage.*;
 import models.util.DateConverter;
 import play.data.Form;
 import play.data.FormFactory;
@@ -30,6 +29,7 @@ public class AdminController extends Controller{
 
     private UserRepository uRepo;
     private DateTimeRepository dRepo;
+    private CategoryRepository cRepo;
     private Form<User> form;
     private Form<User> userForm;
     private Form<User> filledForm;
@@ -38,6 +38,7 @@ public class AdminController extends Controller{
     public AdminController(FormFactory formFactory){
         this.uRepo = new UserRepository(new UserMongoContext("User"));
         this.dRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+        this.cRepo = new CategoryRepository(new CategoryContext("Category"));
         this.form = formFactory.form(User.class);
         this.userForm = formFactory.form(User.class);
         this.filledForm = formFactory.form(User.class);
@@ -89,10 +90,12 @@ public class AdminController extends Controller{
 
             List<User> managers = uRepo.getAllManagers();
             Map<String, String> managerMap = mapManager(managers);
+            List<Category> categories = cRepo.getAllCategories();
 
+            User user = uRepo.getUser(email);
 
             return ok(manageaccount.render("Manage Account",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap, categories, user));
         }
         else{
             return notFound();
@@ -106,10 +109,12 @@ public class AdminController extends Controller{
 
         List<User> managers = uRepo.getAllManagers();
         Map<String, String> managerMap = mapManager(managers);
+        List<Category> categories = cRepo.getAllCategories();
+        String email = filledForm.field("email").value();
 
         if(filledForm.hasErrors()){
             return (badRequest(manageaccount.render("Manage account",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap)));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap, categories, uRepo.getUser(email))));
         }
         User user = filledForm.get();
 
