@@ -31,6 +31,5 @@ public class CategoryMongoContextTest {
 
         List<Category> categories = categoryContext.getAllCategories();
 
-        assertEquals(, );
     }
 }

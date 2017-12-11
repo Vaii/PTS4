@@ -34,7 +34,7 @@ public class Category {
     public void set_id(String _id){this._id = _id;}
 
     @JsonProperty(M_CATEGORY)
-    public String getCategory(){return this.getCategory();}
+    public String getCategory(){return this.category;}
 
     public void setCategory(String category){this.category = category.toLowerCase();}
 

@@ -206,16 +206,16 @@ public class Training  {
     }
 
     /**
-     * Get the category of the training.
-     * @return The category of the training capitalised.
+     * Get the categoryid of the training.
+     * @return The categoryid of the training capitalised.
      */
     @JsonProperty(M_CATEGORYID)
     public String getCategory() {
-        return StringUtils.capitalize(categoryid);
+        return this.categoryid;
     }
 
-    public void setCategory(String category) {
-        this.categoryid = category.toLowerCase();
+    public void setCategory(String categoryid) {
+        this.categoryid = categoryid;
     }
 
     /**

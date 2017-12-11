@@ -62,6 +62,8 @@ public class UtilityController extends Controller {
         String categoryStringValue = params.entrySet().iterator().next().getValue()[0];
         newCategory = new Category(categoryStringValue);
         catRepo.addCategory(newCategory);
-        return ok("KAPOT");
+        List<Category>categories = catRepo.getAllCategories();
+        JsonNode node = Json.toJson(categories);
+        return ok(node);
     }
 }
