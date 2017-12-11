@@ -172,9 +172,6 @@ div.form-control-label {
 #trainingMenu {
     background-color: #e8effc;
     width: 10em;
-    border-top:  thick groove #DFEBF5;
-    border-right: thick groove #DFEBF5;
-    border-bottom: medium groove #DFEBF5;
 }
 
 #trainingMenu #trainingContent {
