@@ -1,0 +1,45 @@
+@import models.view.ViewDate
+@import models.storage.Training
+@import models.storage.User
+@()
+@shared.main("", false, null) {
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
+    <script>
+            $(document).ready(function () {
+                $('#postButton').on('click', function (e) {
+
+                    var myTextValue = $('#myInputField').val();
+                    $.post(
+                            "/utility/mypostaction",
+                            {
+                                "myValue": myTextValue,
+                            },
+                            function (data) {
+                                addNewContent(data);
+                            },
+                            "json"
+                    );
+                });
+            });
+
+            function addNewContent(data) {
+                var parentContainer = $("#myContentContainer");
+                parentContainer.empty();
+
+                $.each(data, function (index, element) {
+                    $('<p>', {
+                        html: element
+                    }).appendTo(parentContainer);
+                });
+            }
+    </script>
+    <div class="container">
+        <div>
+            <input type="text" id="myInputField">
+            <button id="postButton">Post!</button>
+        </div>
+
+        <div id="myContentContainer"></div>
+    </div>
+}

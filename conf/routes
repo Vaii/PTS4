@@ -40,7 +40,7 @@ GET     /managetraining                     controllers.TrainingController.manag
 GET     /managetrainingcategory/:category   controllers.TrainingController.manageCategory(category: String)
 GET     /managetraining/:id                 controllers.TrainingController.manageTraining(category: String, id: String)
 GET     /removetraining/:id                 controllers.TrainingController.removeTraining(category: String, id: String)
-GET     /training/signup/:id                controllers.TrainingController.signUpCourse(id: String, trainingID: String)
+GET     /training/signup/:id                controllers.TrainingController.signUpCourse(id: String)
 POST    /training/externalSignUp            controllers.TrainingController.signUpEmployee(id: String, trainingID: String)
 GET     /edit/:code                         controllers.TrainingController.edit(category: String, code: String)
 GET     /trainingCategory/:category         controllers.TrainingController.overviewCategory(category: String)
@@ -66,10 +66,20 @@ GET     /manager/employees                  controllers.ManagerController.employ
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)
+GET     /javascriptRoutes                   controllers.ApplicationController.javascriptRoutes
 
 # Utility
 POST    /utility/emailCheck/:email                 controllers.UtilityController.checkEmail(email: String)
 POST    /utility/trainingcodecheck/:code           controllers.UtilityController.checkTraningCode(code: String)
 POST    /utility/gettrainings/:category            controllers.UtilityController.getTrainingForCategory(category: String)
+
 POST    /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
 POST    /utility/addcategory                       controllers.UtilityController.addCategory
+
+GET     /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
+POST    /utility/checksignup/:dateid/:userid       controllers.UtilityController.checkUserSignUp(dateid: String, userid: String)
+
+#Example
+POST    /utility/mypostaction                      controllers.UtilityController.myPostAction()
+GET     /utility/example                           controllers.UtilityController.myExampleView()
+
