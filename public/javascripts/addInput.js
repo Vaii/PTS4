@@ -33,7 +33,8 @@ function deleteInput(className) {
 }
 
 function addInput(divName){
-    var numItems = $('#dynamicInput .row').length - 1;
+    console.log($('#dynamicInput .row').length);
+    var numItems = $('#dynamicInput .row').length;
     var newdiv = document.createElement('div');
     newdiv.className = "row col-lg-12 row" + numItems;
     newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"form-control-label\" for=\"dates[]\">Datum:</label>" +
@@ -47,19 +48,15 @@ function addInput(divName){
         "</select></div>" +
 
         // Teacher box
-        "<div class=\"col-lg-5\">\n" +
-        "<div class=\"row\" >\n" +
-        "<div class=\"col-lg-9\">" +
+        "<div class=\"col-lg-4\">" +
         "<label class=\"form-control-label\" for=\"teacherId[]\">Docent:</label>\n" +
         "<select id=\"teacherId\" name=\"teacherId[]\"  required=\"true\" class=\"form-control form-control teacherInput\">\n" +
         "<option value=\"\" class=\"blank\" selected=\"true\" disabled=\"disabled\">Selecteer een docent</option>\n" +
         tOptions +
         "</select>\n" +
         "</div>" +
-        "<div class=\"col-lg-3\">\n" +
+        "<div class=\"col-lg-1\">\n" +
         "<input class=\"btn btn-danger btn" + numItems + "\" type=\"button\" value=\"X\" onClick=\"deleteInput(this);\">\n" +
-        "</div>" +
-        "</div>" +
         "</div>";
 
     document.getElementById(divName).appendChild(newdiv);
@@ -70,7 +67,7 @@ function addInputEdit(divName){
     var newdiv = document.createElement('div');
     newdiv.className = "row col-lg-12 row" + numItems;
     newdiv.innerHTML = "<div class=\"col-lg-5\"><label class=\"form-control-label\" for=\"dates[]\">Datum:</label>" +
-        "<input type=\"datetime-local\" id=\"dates\" name=\"dates[]\" value=\"\" required=\"true\" class=\"form-control\"></div>" +
+        "<input type=\"datetime-local\" id=\"dates\" name=\"dates[]\" value=\"\" required=\"true\" class=\"form-control dateInput\"></div>" +
 
         // Location box
         "<div class=\"col-lg-3\"><label class=\"form-control-label\" for=\"locationId[]\">Locatie:</label>" +
@@ -82,7 +79,7 @@ function addInputEdit(divName){
         // Teacher box
         "<div class=\"col-lg-3\">\n" +
         "<label class=\"form-control-label\" for=\"teacherId[]\">Docent:</label>\n" +
-        "<select id=\"teacherId\" name=\"teacherId[]\"  required=\"true\" class=\"form-control form-control\">\n" +
+        "<select id=\"teacherId\" name=\"teacherId[]\"  required=\"true\" class=\"form-control form-control teacherInput\">\n" +
         "<option value=\"\" class=\"blank\" selected=\"true\" disabled=\"disabled\">Selecteer een docent</option>\n" +
         tOptions +
         "</select>\n" +

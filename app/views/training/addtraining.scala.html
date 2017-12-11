@@ -10,7 +10,7 @@
 @shared.main(Page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
     <script src="@routes.Assets.at("/javascripts/trainingCheck.js")"></script>
-    <script src="@routes.Assets.at("javascripts/overlapCheck.js")"></script>
+    <script src="@routes.Assets.at("javascripts/overlapCheckAdd.js")"></script>
     <script>
             function unescapeHTML(string) {
                 var elt = document.createElement("span");
@@ -58,39 +58,37 @@
                                 }
                             </select>
                         </div>
-
-                        <div class="col-lg-5">
-                            <div class="row" >
-                                <div class="col-lg-9">
-                                    <label class="form-control-label" for="teacherId[]">Docent:</label>
-                                    <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
-                                        <option value="" class="blank" selected="true" disabled="disabled">
-                                            Selecteer een docent</option>
-                                        @for(teacher <- teachers) {
-                                            <option value="@teacher.getId()" >@teacher.getFirstName</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="col-lg-4">
+                            <label class="form-control-label" for="teacherId[]">Docent:</label>
+                            <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
+                                <option value="" class="blank" selected="true" disabled="disabled">
+                                    Selecteer een docent</option>
+                                @for(teacher <- teachers) {
+                                    <option value="@teacher.getId()" >@teacher.getFirstName</option>
+                                }
+                            </select>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <div class="row"><div class="col-lg-12">
-                <div style="display: none;" id="loadingDiv">Beschikbaarheid docent controleren: <img id="loadingImage" alt="laden" src="@routes.Assets.at("images/loading.gif")"> </div>
-                <div style="display: none;
-                    color: #d9534f" id="validation_error_1" class="form-control-feedback ">
-                    Docent is al ingepland, selecteer een andere docent.</div>
-                <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
-            </div></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div style="display: none;" id="loadingDiv">
+                        Beschikbaarheid docent controleren: <img id="loadingImage" alt="laden" src="@routes.Assets.at("images/loading.gif")"> </div>
+                    <div style="display: none;
+                        color: #d9534f" id="validation_error_1" class="form-control-feedback ">
+                        Docent is al ingepland, selecteer een andere docent.</div>
+                    <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
+                </div>
+            </div>
             <br>
             <div class="row"><div class="col-lg-12">@b4.number(form("duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div></div>
             <div class="row"><div class="col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div></div>
             <div class="row"><div class="col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div></div>
             <div class="row"><div class="col-lg-12">@b4.text(form("category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div></div>
-            <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
-            </div>
+            <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div></div>
+        </div>
 }
 
 }

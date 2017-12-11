@@ -7,6 +7,10 @@ $(document).ready(function () {
     $('#dynamicInput').on('change', '#teacherId', function (e) {
         checkOverlap();
     });
+
+    $('#duration').on('change', function (e) {
+        checkOverlap();
+    })
 });
 
 
@@ -61,30 +65,27 @@ function showOverlapResult(result) {
     console.log(result);
     $('#loadingDiv').hide();
     if (result.indexOf("overlap_detected") !== -1) {
-        disableControls(true, result)
+        showError(true, result)
     } else {
-        disableControls(false, result);
+        showError(false, result);
     }
 }
 
-function disableControls(disable, result) {
+function showError(disable, result) {
     $('.btn-default').prop("disabled", disable);
     $('.btn-primary').prop("disabled", disable);
 
     if (disable) {
-        if (result.indexOf("0") !== -1) {
-            $('.row0').addClass('has-danger');
-            $('#validation_error_1').css("display", "block");
-
-        } else {
-            $('.row' + result.substring(19, 20)).addClass('has-danger');
-            $('#validation_error_1').css("display", "block");
-        }
-    } else {
-        $('.row0').removeClass('has-danger');
-        $('#validation_error_1').css("display", "none");
-
         $('.row').removeClass('has-danger');
+
+        $.each(JSON.parse(result), function( index, value ) {
+            $('.row' + value.substring(17, 18)).addClass('has-danger');
+        });
+        $('#validation_error_1').css("display", "block");
+
+    } else {
+        $('.row').removeClass('has-danger');
+
         $('#validation_error_1').css("display", "none");
     }
 }
