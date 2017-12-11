@@ -43,6 +43,21 @@
                     }
                     </select>
             </div>
+
+            <div class="form-control-inline row">
+                <label class="from-control-label" for="role">Rol</label>
+                <select id="skills" name="skills" class="form-control role-box">
+                @for(role <- Role.values()) {
+                    @if(form.get().getRole.equals(role)){
+                        <option selected="selected" value="@role.name()">@role.getValue</option>
+                    }else{
+                        <option value="@role.name()">@role.getValue</option>
+                    }
+
+                }
+                </select>
+            </div>
+
             <div class="row">@b4.submit('class -> "btn btn-default") { Wijzigen}</div>
         }
     </div>
