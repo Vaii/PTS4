@@ -55,3 +55,12 @@ h1 {
 #dates  {
     font-size: smaller;
 }
+
+.popup{
+    display: inline-block;
+    visibility: hidden;
+}
+
+.popup {
+    visibility: visible;
+}

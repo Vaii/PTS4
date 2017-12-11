@@ -1,12 +1,15 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import dal.contexts.CategoryContext;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.TrainingMongoContext;
 import dal.contexts.UserMongoContext;
+import dal.repositories.CategoryRepository;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
 import dal.repositories.UserRepository;
+import models.storage.Category;
 import models.storage.User;
 import models.util.DateConverter;
 import models.view.ViewDate;
@@ -24,6 +27,7 @@ public class UtilityController extends Controller {
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+    private CategoryRepository catRepo = new CategoryRepository(new CategoryContext("Category"));
 
     List<String> examples = new ArrayList<>();
 
@@ -63,6 +67,17 @@ public class UtilityController extends Controller {
         return ok(node);
     }
 
+    public Result addCategory(){
+        Category newCategory;
+        Map<String, String[]> params = request().body().asFormUrlEncoded();
+        String categoryStringValue = params.entrySet().iterator().next().getValue()[0];
+        newCategory = new Category(categoryStringValue);
+        catRepo.addCategory(newCategory);
+        List<Category>categories = catRepo.getAllCategories();
+        JsonNode node = Json.toJson(categories);
+        return ok(node);
+    }
+  
     public Result checkUserSignUp(String dateId, String userId) {
         boolean result = dateRepo.checkUserSignup(userId, dateId);
         if (result) {
