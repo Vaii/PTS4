@@ -210,9 +210,12 @@ public class TrainingController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result personalOverview() {
         List<DateTime> trainingDates = dateRepo.getDateTimeForUser(Secured.getUserInfo(ctx()).getId());
+
         List<ViewTraining> userTrainings = new ArrayList<>();
+        DateConverter converter = new DateConverter();
         for (DateTime d : trainingDates){
-            ViewTraining training = new ViewTraining(trainingRepo.getTrainingById(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),d);
+            Training t = trainingRepo.getTrainingById(d.getTrainingID());
+            ViewTraining training = new ViewTraining(t,converter.convert(d),categoryRepo.getCategoryById(t.getCategoryid()));
             userTrainings.add(training);
         }
         return ok(personaltrainingoverview.render(userTrainings, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
@@ -454,13 +457,12 @@ public class TrainingController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result teacherStudentOverview(String dateId) {
+        DateConverter converter = new DateConverter();
         DateTime date = dateRepo.getDateTime(dateId);
-        ViewTraining training = new ViewTraining(trainingRepo.getTrainingById(date.getTrainingID()),locationRepo.getLocation(date.getLocationID()),date);
-        List<User> trainees = new ArrayList<>();
-        for (String t : training.getDate().getTrainees()){
-            trainees.add(userRepo.getUserByID(t));
-        }
-        return ok(teacherstudentoverview.render(training, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainees));
+        Training train = trainingRepo.getTrainingById(date.getTrainingID());
+        ViewTraining training = new ViewTraining(train,converter.convert(date), categoryRepo.getCategoryById(train.getCategoryid()));
+
+        return ok(teacherstudentoverview.render(training, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),converter.convertWithTrainees(date).getTrainees()));
     }
 
     private void editExistingDates(List<String> initIDs, List<String> requestDateIDs, List<String> dates, List<String> locationIDs, List<String> teacherIDs) throws ParseException {
