@@ -96,7 +96,7 @@
                         @if(training.getDate().getTrainees().isEmpty()) {
                             <p>Geen inschrijvingen.</p>
                         } else {
-                            <p>@(training.getDate().getTrainees().size() + "/" + training.getTraining().getCapacity()) <a href="@routes.TrainingController.teacherStudentOverview(training.getDate().getId())">inschrijvingen</a></p>
+                            <p>@(training.getDate().getTrainees().size() + "/" + training.getTraining().getCapacity()) <a href="@routes.TrainingController.teacherStudentOverview(training.getDate().getDateId())">inschrijvingen</a></p>
                         }
 
                         </div>

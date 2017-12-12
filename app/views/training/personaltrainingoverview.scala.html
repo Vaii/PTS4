@@ -38,24 +38,24 @@
                                         <p>@training.getTraining().getTrainingCode()</p>
                                     </div>
                                     <div class="col-lg-2">
-                                        <p> <a href="@routes.TrainingController.trainingOverview(training.getTraining().getCategory(),training.getTraining().getId())">@training.getTraining().getName()</a></p>
+                                        <p> <a href="@routes.TrainingController.trainingOverview(training.getCategory().getCategory(),training.getTraining().getId())">@training.getTraining().getName()</a></p>
                                     </div>
 
                                     <div class="col-lg-2">
                                         <div class="row" id="listviewrowstreet">
-                                            <p>@training.getLocation().getRoom()</p>
+                                            <p>@training.getDate().getLocation().getRoom()</p>
                                         </div>
                                         <div class="row" id="listviewrowstreet">
-                                            <p>@training.getLocation().getStreetName() @training.getLocation().getStreetNumber()</p>
+                                            <p>@training.getDate().getLocation().getStreetName() @training.getDate().getLocation().getStreetNumber()</p>
                                         </div>
                                         <div class="row" id="listviewrowstreet">
                                             <p>
-                                            @training.getLocation().getCity() <p>
+                                            @training.getDate().getLocation().getCity() <p>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-2">
-                                        <p>@training.getViewDate().getTmeOnlyString uur, @training.getViewDate().getDateOnlyString() </p>
+                                        <p>@training.getDate().getTmeOnlyString uur, @training.getDate().getDateOnlyString() </p>
                                     </div>
                                     <div class="col-lg-2">
                                         <p>Onbekend</p>
