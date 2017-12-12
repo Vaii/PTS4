@@ -7,7 +7,8 @@
 @import models.view.ViewTraining
 @import models.storage.User
 @import models.storage.Location
-@(categories: Map[String, Integer], teachers:List[User], trainings: List[Training], locations: List[Location], training: ViewTraining, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
+@import models.storage.Category
+@(categories: Map[String, Integer], teachers:List[User], trainings: List[Training], locations: List[Location], allcategories: List[Category], training: ViewTraining, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
 
 @{ var myCounter : String = "1" }
 
@@ -134,10 +135,7 @@
                                             <input id="btnDelete" class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId', this, '@training.getTraining().getTrainingCode()');">
                                         </div>
                                     </div>
-
-
                                 }
-
                                 </div>
 
                                <div class="row">
@@ -146,7 +144,19 @@
                                 <div class="row col-lg-12">@b4.number(form("duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
                                 <div class="row col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
                                 <div class="row col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "f", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
-                                <div class="row col-lg-12">@b4.text(form("category"), '_label -> "Category:", 'class -> "", 'placeholder -> "Voer categorie in")</div>
+                                <div class="row col-lg-12">
+                                    <label class="form-control-label">Categorie:</label>
+                                    <select class="form-control form-control-inline categorycontainer" name="category">
+                                        @for(category<- allcategories){
+                                            @if(training.getCategory.get_id().equals(category.get_id())){
+                                                <option value="@category.get_id()" selected="true" name="category">@category.getCategory</option>
+                                            }else{
+                                                <option value="@category.get_id()" name="category">@category.getCategory</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="row col-lg-12">
