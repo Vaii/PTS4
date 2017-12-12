@@ -55,3 +55,8 @@ h1 {
 #dates  {
     font-size: smaller;
 }
+
+#loadingImage {
+    width: 1em;
+    height: 1em;
+}

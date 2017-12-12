@@ -74,6 +74,7 @@ POST    /utility/trainingcodecheck/:code           controllers.UtilityController
 POST    /utility/gettrainings/:category            controllers.UtilityController.getTrainingForCategory(category: String)
 GET     /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
 POST    /utility/checksignup/:dateid/:userid       controllers.UtilityController.checkUserSignUp(dateid: String, userid: String)
+POST    /utility/overlapcheck                      controllers.UtilityController.checkTeacherOverlap()
 
 #Example
 POST    /utility/mypostaction                      controllers.UtilityController.myPostAction()

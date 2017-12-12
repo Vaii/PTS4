@@ -12,6 +12,7 @@
 
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
+    <script src="@routes.Assets.at("javascripts/overlapCheckManage.js")"></script>
     <script>
             function unescapeHTML(string) {
                 var elt = document.createElement("span");
@@ -24,7 +25,6 @@
 
             var teachJson = "@teacherJson";
             teachJson = JSON.parse(unescapeHTML(teachJson));
-
     </script>
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
 
@@ -99,9 +99,9 @@
                                 @for(index <- 0 until viewDates.size){
                                     <div class="row col-lg-12 row@(index + 1)">
                                     <div class="col-lg-5">
-                                        <label class="control-label" for="dates[]">Datum:</label>
-                                        <input type="datetime-local" id="dates" name="dates[]" required="true" value="@viewDates(index).getEditableString" class="form-control">
-                                        <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" />
+                                        <label class="form-control-label" for="dates[]">Datum:</label>
+                                        <input type="datetime-local" id="dates" name="dates[]" required="true" value="@viewDates(index).getEditableString" class="form-control dateInput">
+                                        <input class="dateIds" type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" />
                                     </div>
 
                                     <div class="col-lg-3">
@@ -119,7 +119,7 @@
 
                                     <div class="col-lg-3">
                                         <label class="form-control-label" for="teacherID[]">Docent:</label>
-                                        <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control">
+                                        <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
                                            <option value="@viewDates(index).getTeacher.getId()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
                                             @for(teacher <- teachers) {
                                                 @if(teacher.getFirstName == viewDates(index).getTeacher.getFirstName) {
@@ -140,7 +140,13 @@
                                 </div>
 
                                <div class="row">
-                                    <input class="btn btn-default" id="btnAddDate" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
+                                   <div style="display: none;" id="loadingDiv">
+                                       Beschikbaarheid docent controleren: <img id="loadingImage" alt="laden" src="@routes.Assets.at("images/loading.gif")"> </div>
+                                   <div style="display: none;
+                                       color: #d9534f" id="validation_error_1" class="form-control-feedback ">
+                                       Docent is al ingepland, selecteer een andere docent of verplaats de datum.</div>
+
+                                   <input class="btn btn-default" id="btnAddDate" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
                                </div>
                                 <div class="row col-lg-12">@b4.number(form("duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
                                 <div class="row col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>

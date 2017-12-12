@@ -69,7 +69,6 @@
                 $("#noTrainingContent").css('display', 'none');
                 deleteContentDates();
                 getDates(training);
-                console.log(training);
                 $('#trainingContentName').text(training.name);
                 $('#trainingContentCode').text(training.trainingCode);
                 $('#trainingContentSummary').text(training.description);
@@ -91,7 +90,6 @@
                     container.append("<p> Geen datums beschikbaar <p>");
                 } else {
                     $.each(dates, function (index, element) {
-                        console.log(element);
                         var newContainer = $("<div>", {id: 'date-' + element.dateId}).addClass("row col-lg-12").appendTo(container);
                         $('<p>', {
                             html: element.dateOnlyString + ',<br>' + 'Starttijd: ' + element.tmeOnlyString
