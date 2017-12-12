@@ -85,7 +85,7 @@ public class TrainingMongoContext implements TrainingContext {
 
     @Override
     public List<Training> getTrainingByCategory(String category) {
-        MongoCursor<Training> results = collection.find("{category:#}", StringUtils.capitalize(category.toLowerCase())).as(Training.class);
+        MongoCursor<Training> results = collection.find("{categoryid:#}", StringUtils.capitalize(category.toLowerCase())).as(Training.class);
         List<Training> trainings = new ArrayList<>();
 
         while(results.hasNext()) {
