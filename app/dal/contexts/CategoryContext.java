@@ -3,6 +3,7 @@ package dal.contexts;
 import com.mongodb.WriteResult;
 import dal.DBConnector;
 import models.storage.Category;
+import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 
@@ -35,5 +36,10 @@ public class CategoryContext implements dal.interfaces.CategoryContext {
     public Boolean addCategory(Category category) {
         WriteResult result = collection.save(category);
         return result.wasAcknowledged();
+    }
+
+    @Override
+    public Category getCategoryById(String categoryId) {
+        return collection.findOne("{_id:#}", new ObjectId(categoryId)).as(Category.class);
     }
 }

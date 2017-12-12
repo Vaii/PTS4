@@ -15,7 +15,7 @@
                     @if(!categories.isEmpty) {
                         @for((key, value) <- categories) {
                             @if(!trainings.isEmpty){
-                                @if(trainings.get(0).getCategory.equals(key)){
+                                @if(trainings.get(0).getCategoryid.equals(key)){
                                     <li class="active"><a href="@routes.TrainingController.personalOverviewCategory(key)">@key (@value)</a></li>
                                 } else {
                                     <li><a href="@routes.TrainingController.personalOverviewCategory(key)">@key (@value)</a></li>
@@ -109,7 +109,7 @@
                                         <p>Categorie: </p>
                                     </div>
                                     <div class="col-lg-8">
-                                        <p>@training.getCategory</p>
+                                        <p>@training.getCategoryid</p>
                                     </div>
                                 </div>
                                 <div class="row">

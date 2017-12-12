@@ -27,12 +27,12 @@
                 });
             }
 
-            function getDates(training) {
+            function getDate(training) {
                 $("#loadingImage").show();
                 $.get('/utility/getdates/' + training.id, function (data) {
-                    var dates;
-                    dates = data;
-                    setTrainingDates(dates, training);
+                    var date;
+                    date = data;
+                    setTrainingDates(date, training);
                 });
             }
 
@@ -68,7 +68,7 @@
             function setTrainingContent(training) {
                 $("#noTrainingContent").css('display', 'none');
                 deleteContentDates();
-                getDates(training);
+                getDate(training);
                 console.log(training);
                 $('#trainingContentName').text(training.name);
                 $('#trainingContentCode').text(training.trainingCode);
@@ -84,13 +84,13 @@
                 $("#trainingContentDiv").css('display', 'block');
             }
 
-            function setTrainingDates(dates, training) {
+            function setTrainingDates(date, training) {
                 var container = $('#trainingContentDates');
                 $("#loadingImage").hide();
-                if (dates.length === 0) {
+                if (date.length === 0) {
                     container.append("<p> Geen datums beschikbaar <p>");
                 } else {
-                    $.each(dates, function (index, element) {
+                    $.each(date, function (index, element) {
                         console.log(element);
                         var newContainer = $("<div>", {id: 'date-' + element.dateId}).addClass("row col-lg-12").appendTo(container);
                         $('<p>', {

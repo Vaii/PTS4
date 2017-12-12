@@ -20,4 +20,8 @@ public class CategoryRepository {
     public Boolean addCategory(Category category){
         return context.addCategory(category);
     }
+
+    public Category getCategoryById(String categoryId) {
+        return context.getCategoryById(categoryId);
+    }
 }

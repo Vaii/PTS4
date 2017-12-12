@@ -459,9 +459,12 @@ public class TrainingController extends Controller {
     public Result teacherTrainingOverview() {
         List<DateTime> teacherDates = dateRepo.getDateTimeForTeacher(Secured.getUserInfo(ctx()).getId());
         List<ViewTraining> teacherTrainings = new ArrayList<>();
+        DateConverter converter = new DateConverter();
+
         for (DateTime d : teacherDates)
         {
-            ViewTraining vt = new ViewTraining(trainingRepo.getTrainingById(d.getTrainingID()),locationRepo.getLocation(d.getLocationID()),dateRepo.getDateTime(d.getId()));
+            Training t = trainingRepo.getTrainingById(d.getTrainingID());
+            ViewTraining vt = new ViewTraining(t, converter.convert(d), categoryRepo.getCategoryById(t.getCategoryid()));
             teacherTrainings.add(vt);
         }
 

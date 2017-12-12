@@ -46,7 +46,7 @@
                         @if(!categories.isEmpty) {
                             @for((key, value) <- categories) {
                                 @if(!trainings.isEmpty){
-                                    @if(trainings.get(0).getCategory.equals(key)){
+                                    @if(trainings.get(0).getCategoryid.equals(key)){
                                         <li class="active"><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
                                     } else {
                                         <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
@@ -87,7 +87,7 @@
                         <h1>Beheren</h1>
                     </div>
                     @if(training != null) {
-                        @b4.form(routes.TrainingController.edit(training.getCategory ,training.getTrainingCode())) {
+                        @b4.form(routes.TrainingController.edit(training.getCategoryid ,training.getTrainingCode())) {
                             @helper.CSRF.formField
                             <div class="row col-lg-12">
                                 <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
@@ -99,8 +99,8 @@
                                 @for(index <- 0 until viewDates.size){
                                     <div class="row col-lg-12 row@(index + 1)">
                                     <div class="col-lg-5">
-                                        <label class="control-label" for="dates[]">Datum:</label>
-                                        <input type="datetime-local" id="dates" name="dates[]" required="true" value="@viewDates(index).getEditableString" class="form-control">
+                                        <label class="control-label" for="date[]">Datum:</label>
+                                        <input type="datetime-local" id="date" name="date[]" required="true" value="@viewDates(index).getEditableString" class="form-control">
                                         <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" />
                                     </div>
 
@@ -150,14 +150,14 @@
 
                             <div class="row col-lg-12">
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.trainingOverview(training.getCategory(), training.getTrainingCode())" class="btn btn-primary">
+                                    <a href="@routes.TrainingController.trainingOverview(training.getCategoryid(), training.getTrainingCode())" class="btn btn-primary">
                                         Naar Training</a>
                                 </div>
                                 <div class="col-lg-4" id="editTrn">
                                     @b4.submit('class -> "btn btn-warning") { Wijzigen }
                                 </div>
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.removeTraining(training.getCategory() ,training.getTrainingCode())" class="btn btn-danger">
+                                    <a href="@routes.TrainingController.removeTraining(training.getCategoryid() ,training.getTrainingCode())" class="btn btn-danger">
                                         Verwijderen</a>
                                 </div>
                                 }
