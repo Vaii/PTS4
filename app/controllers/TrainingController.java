@@ -395,7 +395,7 @@ public class TrainingController extends Controller {
     private List<String> getDates(DynamicForm trainingData) {
         List<String> dates = new ArrayList<>();
         for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("dates[" + i + "]").value();
+            String d = trainingData.field("date[" + i + "]").value();
             if(d == null) {
                 break;
             }
