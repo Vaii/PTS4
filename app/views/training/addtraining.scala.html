@@ -5,7 +5,8 @@
 @import models.storage.User
 @import models.storage.Location
 @import models.storage.Training
-@(form: Form[Training], isLoggedIn: Boolean, User: User, Page: String, locations: List[Location], teachers: List[User], locationJson: JsonNode, teacherJson: JsonNode)
+@import models.storage.Category
+@(form: Form[Training], isLoggedIn: Boolean, User: User, Page: String, locations: List[Location], teachers: List[User], categories: List[Category], locationJson: JsonNode, teacherJson: JsonNode)
 
 @shared.main(Page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
@@ -25,7 +26,7 @@
     </script>
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
     <script src="@routes.Assets.at("/javascripts/trainingCheck.js")"></script>
-
+    <script src="@routes.Assets.at("/javascripts/categoryPopUp.js")"></script>
 
     <div class="container">
         <div class="row col-lg-12">
@@ -43,8 +44,8 @@
                 <div id="dynamicInput">
                     <div class="row col-lg-12">
                         <div class="col-lg-3">
-                            <label class="control-label" for="dates[]">Datum:</label>
-                            <input type="datetime-local" id="dates" name="dates[]" required="true"
+                            <label class="control-label" for="date[]">Datum:</label>
+                            <input type="datetime-local" id="date" name="date[]" required="true"
                             value="" class="form-control")>
                         </div>
 
@@ -77,16 +78,40 @@
 
                 </div>
             </div>
-            <div class="row"><div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-12">
                 <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
-            </div></div>
+            </div>
+            </div>
             <br>
             <div class="row"><div class="col-lg-12">@b4.number(form("duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div></div>
             <div class="row"><div class="col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div></div>
             <div class="row"><div class="col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div></div>
-            <div class="row"><div class="col-lg-12">@b4.text(form("category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div></div>
-                            <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
-    </div>
-}
+            <div class="row">
+                <div class="col-lg-12">
+                    <label class="form-control-label">Categorie:</label>
+                    <select class="form-control form-control-inline" id="categorycontainer" name="categoryid">
+                    @if(!categories.isEmpty){
+                        @for(category <- categories){
+                            <option value="@category.get_id()">@category.getCategory</option>
+                        }
+                    }else{
+                        <option>
+                            Er bestaan nog geen categorieën
+                        </option>
+                    }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <input type="text" id="newcategory" class="form-control-inline form-control">
+                    <input class="btn btn-primary" type="button" value="+" id="popupbutton">
+                </div>
+            </div>
+            <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
+            </div>
+        </div>
 
+}
 }

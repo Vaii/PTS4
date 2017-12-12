@@ -1,48 +1,39 @@
 package models.view;
 
-import models.storage.DateTime;
-import models.storage.Location;
+import models.storage.Category;
 import models.storage.Training;
 import models.util.DateConverter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 public class ViewTraining implements Comparable<ViewTraining> {
-        Training training;
-        Location location;
-        DateTime date;
+        private Training training;
+        private ViewDate date;
+        private Category category;
 
-        public ViewTraining(Training training, Location location, DateTime date) {
+        public ViewTraining(Training training, ViewDate date, Category category) {
                 this.training = training;
-                this.location = location;
                 this.date = date;
+                this.category = category;
         }
 
-        public ViewTraining(Training training, DateTime date){
-            this.training = training;
-            this.date = date;
+        public ViewTraining(Training training, Category category) {
+                this.training = training;
+                this.category = category;
         }
 
         public Training getTraining() {
                 return training;
         }
 
-        public Location getLocation() {
-                return location;
-        }
-
-        public DateTime getDate() {
+        public ViewDate getDate() {
                 return date;
         }
-        public ViewDate getViewDate (){
-                DateConverter dateConverter = new DateConverter();
-                ViewDate viewDate = dateConverter.convert(date);
-                return viewDate;
+
+        public Category getCategory() {
+                return category;
         }
         @Override
         public int compareTo(ViewTraining o) {
-                return this.date.getDate().compareTo(o.getDate().getDate());
+                return date.getDate().compareTo(o.getDate().getDate());
         }
 }
 

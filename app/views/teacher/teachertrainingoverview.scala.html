@@ -1,7 +1,7 @@
 @import models.view.ViewTraining
 @import models.storage.User
 @import com.fasterxml.jackson.databind.JsonNode
-@(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User, dates: JsonNode)
+@(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User, date: JsonNode)
 
 @shared.main(page, isLoggedIn, User) {
     <head>
@@ -16,7 +16,7 @@
     </head>
 
     <script>
-            passDates("@dates");
+        passDates("@date");
     </script>
 
     <div id="eventContent" title="Event Details" style="display: none;">
@@ -68,7 +68,7 @@
                 @for(training <- trainings) {
                     <div class="row col-lg-12" id="listviewrow">
                         <div class="col-lg-2">
-                            <p>@training.getTraining().getCategory()</p>
+                            <p>@training.getCategory().getCategory()</p>
                         </div>
                         <div class="col-lg-2">
                             <p>@training.getTraining().getName()</p>
@@ -78,14 +78,14 @@
                         </div>
                         <div class="col-lg-2">
                             <div class="row" id="listviewrowstreet">
-                                <p>@training.getLocation().getRoom()</p>
+                                <p>@training.getDate().getLocation().getRoom()</p>
                             </div>
                             <div class="row" id="listviewrowstreet">
-                                <p>@training.getLocation().getStreetName() @training.getLocation().getStreetNumber()</p>
+                                <p>@training.getDate().getLocation().getStreetName() @training.getDate().getLocation().getStreetNumber()</p>
                             </div>
                             <div class="row" id="listviewrowstreet">
                                 <p>
-                                @training.getLocation().getCity() <p>
+                                @training.getDate().getLocation().getCity() <p>
                             </div>
                         </div>
                         <div class="col-lg-2">
@@ -98,6 +98,7 @@
                         } else {
                             <p>@(training.getDate().getTrainees().size() + "/" + training.getTraining().getCapacity()) <a href="@routes.TrainingController.teacherStudentOverview(training.getDate().getId())">inschrijvingen</a></p>
                         }
+
                         </div>
 
                     </div>

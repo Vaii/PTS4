@@ -73,9 +73,14 @@ GET     /javascriptRoutes                   controllers.ApplicationController.ja
 POST    /utility/emailCheck/:email                 controllers.UtilityController.checkEmail(email: String)
 POST    /utility/trainingcodecheck/:code           controllers.UtilityController.checkTraningCode(code: String)
 POST    /utility/gettrainings/:category            controllers.UtilityController.getTrainingForCategory(category: String)
+
+POST    /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
+POST    /utility/addcategory                       controllers.UtilityController.addCategory
+
 GET     /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
 POST    /utility/checksignup/:dateid/:userid       controllers.UtilityController.checkUserSignUp(dateid: String, userid: String)
 
 #Example
 POST    /utility/mypostaction                      controllers.UtilityController.myPostAction()
 GET     /utility/example                           controllers.UtilityController.myExampleView()
+

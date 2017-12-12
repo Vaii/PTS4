@@ -58,10 +58,10 @@ public class SharedMongoContext implements SharedContext {
         }
 
         for(Training t : trainings) {
-            if(!results.containsKey(t.getCategory())) {
-                results.put(t.getCategory(), 1);
+            if(!results.containsKey(t.getCategoryid())) {
+                results.put(t.getCategoryid(), 1);
             } else {
-                results.put(t.getCategory(), results.get(t.getCategory())+ 1);
+                results.put(t.getCategoryid(), results.get(t.getCategoryid())+ 1);
             }
         }
 
