@@ -21,6 +21,7 @@ import views.html.adminpanel.accountSelector;
 import views.html.adminpanel.teacherDeleteError;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,11 +113,14 @@ public class AdminController extends Controller{
         List<Category> categories = cRepo.getAllCategories();
         String email = filledForm.field("email").value();
 
+        List<String> skills = getSkills(filledForm);
+
         if(filledForm.hasErrors()){
             return (badRequest(manageaccount.render("Manage account",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap, categories, uRepo.getUser(email))));
         }
         User user = filledForm.get();
+        user.setSkillIds(skills);
 
         if(uRepo.updateUser(user)){
             return ok(message.render("Edit Succes",
@@ -184,4 +188,18 @@ public class AdminController extends Controller{
 
         return null;
     }
+
+    private List<String> getSkills(Form<User> userForm) {
+        List<String> skills = new ArrayList<>();
+        for(int i = 0; i < 50; i++) {
+            String s = userForm.field("skills[" + i + "]").value();
+            if(s == null) {
+                break;
+            }
+            skills.add(s);
+        }
+
+        return skills;
+    }
+
 }
