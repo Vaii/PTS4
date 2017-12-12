@@ -179,7 +179,7 @@ public class TrainingController extends Controller {
     }
 
     public Result overview() {
-        return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies() ,new ArrayList<>(), null,
+        return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies() ,new ArrayList<>(), null,
                 TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
     }
 
@@ -223,15 +223,16 @@ public class TrainingController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result manage() {
-        return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
+        return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
     }
 
     public Result manageCategory(String category) {
         if (category == null) {
-            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null,
+            return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), new ArrayList<>(), locationRepo.getAll(), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
-            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null,
+            String categoryId = categoryRepo.getCategoryByName(category).get_id();
+            return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(categoryId), locationRepo.getAll(), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         }
     }
@@ -239,7 +240,7 @@ public class TrainingController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result manageTraining(String category, String id) {
         if (id == null) {
-            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null,
+            return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             List<Location> locations = locationRepo.getAll();
@@ -248,16 +249,16 @@ public class TrainingController extends Controller {
             JsonNode locationJson = Json.toJson(locations);
             JsonNode teacherJson = Json.toJson(teachers);
 
-
             Training t = trainingRepo.getTrainingById(id);
-            ViewTraining viewTraining = new ViewTraining(t,null,null);
+            Category cat = categoryRepo.getCategoryById(category);
+            ViewTraining viewTraining = new ViewTraining(t,null,cat);
             List<ViewDate> viewDates;
             viewDates = converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
 
             Collections.sort(viewDates);
 
             Form<Training> editForm = form.fill(viewTraining.getTraining());
-            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), viewTraining,
+            return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), viewTraining,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm, viewDates, locationJson, teacherJson));
         }
     }
@@ -360,7 +361,7 @@ public class TrainingController extends Controller {
         baseValues.put("duration", trainingData.get("duration"));
         baseValues.put("tuition", trainingData.get("tuition"));
         baseValues.put("capacity", trainingData.get("capacity"));
-        baseValues.put("category", trainingData.get("category"));
+        baseValues.put("categoryid", trainingData.get("categoryid"));
 
         return baseValues;
     }

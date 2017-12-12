@@ -4,6 +4,7 @@ import dal.interfaces.SharedContext;
 import dal.repositories.CategoryRepository;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
+import models.storage.Category;
 import models.storage.DateTime;
 import models.storage.Training;
 
@@ -50,21 +51,17 @@ public class SharedMongoContext implements SharedContext {
         return results;
     }
     @Override
-    public Map<String, Integer> getTrainingFrequencies(String id) {
+    public Map<String, Integer> getTrainingFrequencies() {
         Map<String, Integer> results = new TreeMap<>();
-        List<Training> trainings = new ArrayList<>();
-        List<DateTime> dates = dateRepo.getDateTimeForUser(id);
-
-        for (DateTime dt : dates) {
-            trainings.add(trainingRepo.getTrainingById(dt.getTrainingID()));
-        }
+        List<Training> trainings;
+        trainings = trainingRepo.getAll();
 
         for(Training t : trainings) {
-            String category = cRepo.getCategoryById(t.getCategoryid()).getCategory();
-            if(!results.containsKey(category)) {
-                results.put(category, 1);
+            String categoryName = cRepo.getCategoryById(t.getCategoryid()).getCategory();
+            if(!results.containsKey(categoryName)) {
+                results.put(categoryName, 1);
             } else {
-                results.put(category, results.get(category)+ 1);
+                results.put(categoryName, results.get(categoryName)+ 1);
             }
         }
 
