@@ -1,0 +1,98 @@
+@import models.view.ViewTraining
+@import models.storage.User
+@import models.storage.DateTime
+@(training: ViewTraining, page: String, isLoggedIn: Boolean, User: User, trainees: List[User])
+
+@shared.main(page, isLoggedIn, User) {
+    <head>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
+        <link rel="stylesheet" media="screen" href="http://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.css">
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.js"></script>
+    </head>
+    <div class="container">
+        <div class="row">
+        @if(training != null) {
+            <div class=" row col-lg-12">
+                <div class="col-lg-9">
+                    <h1>Inschrijvingen: @training.getTraining().getName()</h1>
+                </div>
+                <div class="col-lg-3">
+                    <h3>@(training.getDate().getTrainees().size() + "/" + training.getTraining().getCapacity())
+                        inschrijvingen</h3>
+                </div>
+            </div>
+
+            <div class="row col-lg-12" id="listDivTraining">
+                <div class="row col-lg-12" id="listDivTitle">
+                    <div class="col-lg-3">
+                        <label>Trainingscode</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Training</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Tijd/Datum</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <label>Locatie</label>
+                    </div>
+
+                </div>
+
+                <div class="row col-lg-12" id="listviewrowTraining">
+                    <div class="col-lg-3">
+                        <p>@training.getTraining().getTrainingCode()</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p>@training.getTraining().getName()</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p>@training.getDate().getDateString() </p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p>@training.getLocation().getStreetName() @training.getLocation().getStreetNumber()
+                            , @training.getLocation().getCity() </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row col-lg-12" id="listDiv">
+                <div class="row col-lg-12" id="listDivTitle">
+                    <div class="col-lg-4">
+                        <label>Naam</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Telefoonnummer</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>E-mail adres</label>
+                    </div>
+                </div>
+                @for(trainee <- trainees) {
+                    <div class="row col-lg-12" id="listviewrow">
+                        <div class="col-lg-4">
+                            <p><i class="fa fa-user fa-fw" aria-hidden="true"></i>  @trainee.getFirstName() @trainee.getLastName()</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <p><i class="fa fa-phone fa-fw" aria-hidden="true"></i>  @trainee.getPhoneNumber()</p>
+                        </div>
+                        <div class="col-lg-4 ">
+                            <p><i class="fa fa-envelope fa-fw" aria-hidden="true"></i> @trainee.getEmail()</p>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div class="col-lg-2 offset-lg-5" id="backBtn">
+                <a class="btn btn-outline-primary" href="@routes.TrainingController.teacherTrainingOverview()">
+                    Terug naar Rooster</a></p>
+            </div>
+        } else {
+            <div class="row col-lg-12">
+                <p> Geen inschrijvingen gevonden.</p>
+            </div>
+        }
+        </div>
+    </div>
+}

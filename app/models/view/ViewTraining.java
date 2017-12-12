@@ -2,6 +2,7 @@ package models.view;
 
 import models.storage.Category;
 import models.storage.Training;
+import models.util.DateConverter;
 
 public class ViewTraining implements Comparable<ViewTraining> {
         private Training training;
@@ -30,7 +31,6 @@ public class ViewTraining implements Comparable<ViewTraining> {
         public Category getCategory() {
                 return category;
         }
-
         @Override
         public int compareTo(ViewTraining o) {
                 return date.getDate().compareTo(o.getDate().getDate());
