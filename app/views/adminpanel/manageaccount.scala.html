@@ -48,7 +48,7 @@
 
             @if(user.getRole == Role.DOCENT) {
                 <div class="form-control-inline row" id="role">
-                    <label for="sel2">Vaardigheden (hold shift to select more than one):</label>
+                    <label for="sel2">Vaardigheden (Houd Ctrl in om meerdere te selecteren):</label>
                     <select multiple class="form-control role-box" name="skills[]" id="sel2">
 
                     @for(cat <- categories) {
@@ -63,13 +63,13 @@
                         }
                             <option value="@cat.get_id()">@cat.getCategory()</option>
 
-                        }
+                    }
                             </select>
                             </div>
-                    }
-            <div class="row">@b4.submit('class -> "btn btn-default") { Wijzigen}</div>
             }
+            <div class="row">@b4.submit('class -> "btn btn-default") { Wijzigen }</div>
+        }
 
     </div>
-        }
+}
 
