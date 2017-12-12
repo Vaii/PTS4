@@ -1,6 +1,7 @@
 package dal.contexts;
 
 import dal.interfaces.SharedContext;
+import dal.repositories.CategoryRepository;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
 import models.storage.DateTime;
@@ -15,6 +16,7 @@ public class SharedMongoContext implements SharedContext {
 
     private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+    private CategoryRepository cRepo = new CategoryRepository(new CategoryContext("Category"));
 
     @Override
     public List<Training> getTrainings(String userID) {
@@ -58,10 +60,11 @@ public class SharedMongoContext implements SharedContext {
         }
 
         for(Training t : trainings) {
-            if(!results.containsKey(t.getCategoryid())) {
-                results.put(t.getCategoryid(), 1);
+            String category = cRepo.getCategoryById(t.getCategoryid()).getCategory();
+            if(!results.containsKey(category)) {
+                results.put(category, 1);
             } else {
-                results.put(t.getCategoryid(), results.get(t.getCategoryid())+ 1);
+                results.put(category, results.get(category)+ 1);
             }
         }
 
