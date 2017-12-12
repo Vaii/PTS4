@@ -26,6 +26,7 @@ public class TuitionForm {
     private static final String M_EXTRACOSTS = "extraCosts";
     private static final String M_TOTALCOSTS = "totalCosts";
     private static final String M_CATEGORY = "category";
+    private static final String M_STATUS = "status";
 
     // Mongo DB ID.
     @MongoObjectId
@@ -56,6 +57,7 @@ public class TuitionForm {
     private double totalCosts;
     @play.data.validation.Constraints.Required
     private TuitionCategory category;
+    private Status status;
 
     @JsonCreator
     public TuitionForm(@JsonProperty(M_MANAGER) String manager,
@@ -69,7 +71,8 @@ public class TuitionForm {
                        @JsonProperty(M_ACCOMODATIONCOSTS) double accommodationCosts,
                        @JsonProperty(M_EXTRACOSTS) double extraCosts,
                        @JsonProperty(M_TOTALCOSTS) double totalCosts,
-                       @JsonProperty(M_CATEGORY) TuitionCategory category) {
+                       @JsonProperty(M_CATEGORY) TuitionCategory category,
+                       @JsonProperty(M_STATUS) Status status) {
         this.manager = manager;
         this.employee = employee;
         this.training = training;
@@ -82,10 +85,20 @@ public class TuitionForm {
         this.extraCosts = extraCosts;
         this.totalCosts = totalCosts;
         this.category = category;
+        this.status = status;
     }
 
     public TuitionForm() {
 
+    }
+
+    @JsonProperty(M_STATUS)
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String getId() {

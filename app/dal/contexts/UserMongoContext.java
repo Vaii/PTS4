@@ -37,15 +37,15 @@ public class UserMongoContext implements UserContext {
                                                     " lastName:#," +
                                                     " email:#," +
                                                     " role:#," +
-                                                    " company:#," +
-                                                    " salt:#," +
-                                                    " hashedPassword:#," +
-                                                    " phoneNumber:#," +
-                                                    " manager:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber(), user.getManager());
+                    " salt:#," +
+                    " hashedPassword:#," +
+                    " phoneNumber:#," +
+                    " manager:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber(), user.getManager());
             return result.wasAcknowledged();
         }
         else{
             user.setRole(Role.EXTERN);
+
             WriteResult result = collection.insert("{firstName:#," +
                     " lastName:#," +
                     " email:#," +

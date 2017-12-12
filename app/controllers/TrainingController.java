@@ -94,6 +94,7 @@ public class TrainingController extends Controller {
         } else {
             TuitionForm filledForm = filledTuitionForm.get();
             filledForm.setTotalCosts(filledForm.getStudyCosts() + filledForm.getAccommodationCosts() + filledForm.getExaminationFees() + filledForm.getTransportCosts() + filledForm.getExtraCosts());
+            filledForm.setStatus(Status.PENDING);
             tutRepo.addForm(filledForm);
 
             DateTime signUpDate = dateRepo.getDateTime(id);
