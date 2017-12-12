@@ -6,7 +6,7 @@
 @import models.storage.Training
 @import models.storage.User
 @import models.storage.Location
-@(categories: Map[String, Integer], teachers:List[User], trainings: List[Training], locations: List[Location], training: Training, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
+@(categories: Map[String, Integer], teachers:List[User], trainings: List[Training], locations: List[Location], training: ViewTraining, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
 
 @{ var myCounter : String = "1" }
 
@@ -67,12 +67,12 @@
                             @for(t <- trainings) {
                                 @if(training != null) {
                                     @if(t.getId.equals(training.getId)) {
-                                        <li class="active" ><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getId())"> @t.getName</a></li>
+                                        <li class="active" ><a href="@routes.TrainingController.manageTraining(t.getCategory().getCategory(), t.getId())"> @t.getName</a></li>
                                     } else {
-                                        <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getId())"> @t.getName</a></li>
+                                        <li><a href="@routes.TrainingController.manageTraining(t.getCategory().getCategory(), t.getId())"> @t.getName</a></li>
                                     }
                                 } else {
-                                    <li><a href="@routes.TrainingController.manageTraining(t.getCategory(), t.getId())"> @t.getName</a></li>
+                                    <li><a href="@routes.TrainingController.manageTraining(t.getCategory().getCategory(), t.getId())"> @t.getName</a></li>
                                 }
                             }
                         } else {
@@ -87,7 +87,7 @@
                         <h1>Beheren</h1>
                     </div>
                     @if(training != null) {
-                        @b4.form(routes.TrainingController.edit(training.getCategoryid ,training.getTrainingCode())) {
+                        @b4.form(routes.TrainingController.edit(training.getCategory().getCategoryid ,training.getCategory().getTrainingCode())) {
                             @helper.CSRF.formField
                             <div class="row col-lg-12">
                                 <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
@@ -150,14 +150,14 @@
 
                             <div class="row col-lg-12">
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.trainingOverview(training.getCategory(), training.getId())" class="btn btn-primary">
+                                    <a href="@routes.TrainingController.trainingOverview(training.getCategory().getCategory(), training.getTraining().getId())" class="btn btn-primary">
                                         Naar Training</a>
                                 </div>
                                 <div class="col-lg-4" id="editTrn">
                                     @b4.submit('class -> "btn btn-warning") { Wijzigen }
                                 </div>
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.removeTraining(training.getCategoryid() ,training.getTrainingCode())" class="btn btn-danger">
+                                    <a href="@routes.TrainingController.removeTraining(training.getCategory().getCategoryid() ,training.getCategory().getTrainingCode())" class="btn btn-danger">
                                         Verwijderen</a>
                                 </div>
                                 }

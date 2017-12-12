@@ -245,14 +245,16 @@ public class TrainingController extends Controller {
             JsonNode locationJson = Json.toJson(locations);
             JsonNode teacherJson = Json.toJson(teachers);
 
+
             Training t = trainingRepo.getTrainingById(id);
+            ViewTraining viewTraining = new ViewTraining(t,null,null);
             List<ViewDate> viewDates;
             viewDates = converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
 
             Collections.sort(viewDates);
 
-            Form<Training> editForm = form.fill(t);
-            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), t,
+            Form<Training> editForm = form.fill(viewTraining.getTraining());
+            return ok(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), viewTraining,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm, viewDates, locationJson, teacherJson));
         }
     }
