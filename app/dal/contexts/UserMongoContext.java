@@ -105,8 +105,10 @@ public class UserMongoContext implements UserContext {
                 " salt:#," +
                 " hashedPassword:#," +
                 " phoneNumber:#," +
-                " manager:#}" ,user.getFirstName(), user.getLastName(), user.getEmail(),
-                user.getRole(), user.getCompany(),dbSalt.get(0), hashedDbPassword.get(0), user.getPhoneNumber(), user.getManager());
+                " manager:#," +
+                        " skillIds:#}"
+                        ,user.getFirstName(), user.getLastName(), user.getEmail(),
+                user.getRole(), user.getCompany(),dbSalt.get(0), hashedDbPassword.get(0), user.getPhoneNumber(), user.getManager(), user.getSkillIds());
 
         return result.wasAcknowledged();
     }

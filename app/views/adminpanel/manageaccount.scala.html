@@ -56,13 +56,13 @@
                             @for(skill <- user.getSkillIds) {
 
                                 @if(skill == cat.get_id()) {
-                                <option selected="selected" value="@cat.get_id()">@cat.getCategory()</option>
+                                    <option selected="selected" value="@cat.get_id()">@cat.getCategory()</option>
                                 }
-                        }
-
-                            } else {
-                                    <option value="@cat.get_id()">@cat.getCategory()</option>
                             }
+
+                        }
+                            <option value="@cat.get_id()">@cat.getCategory()</option>
+
                         }
                             </select>
                             </div>
