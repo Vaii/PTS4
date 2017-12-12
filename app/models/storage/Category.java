@@ -17,7 +17,7 @@ public class Category {
 
     public Category(String id, String category){
         this._id = id;
-        this.category = category;
+        this.category = category.toLowerCase();
         prepareForStorage();
     }
 
@@ -39,6 +39,6 @@ public class Category {
     public void setCategory(String category){this.category = category.toLowerCase();}
 
     private void prepareForStorage() {
-        category = category.toLowerCase();
+        this.category = category.toLowerCase();
     }
 }

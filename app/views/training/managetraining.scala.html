@@ -146,14 +146,13 @@
                                 <div class="row col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "f", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
                                 <div class="row col-lg-12">
                                     <label class="form-control-label">Categorie:</label>
-                                    <select class="form-control form-control-inline categorycontainer" name="category">
+                                    <select class="form-control form-control-inline categorycontainer" id="categoryid" name="categoryid">
                                         @for(category<- allcategories){
                                             @if(training.getCategory.get_id().equals(category.get_id())){
-                                                <option value="@category.get_id()" selected="true" name="category">@category.getCategory</option>
+                                                <option value="@category.get_id()" selected="true">@category.getCategory</option>
                                             }else{
-                                                <option value="@category.get_id()" name="category">@category.getCategory</option>
+                                                <option value="@category.get_id()">@category.getCategory</option>
                                             }
-
                                         }
                                     </select>
                                 </div>

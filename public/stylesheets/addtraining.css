@@ -57,10 +57,9 @@ h1 {
 }
 
 .popup{
-    display: inline-block;
-    visibility: hidden;
+    display: none;
 }
 
-.popup {
-    visibility: visible;
+.newcategory{
+    margin-bottom: 10px;
 }

@@ -288,7 +288,7 @@ public class TrainingController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result edit(String category, String code) throws ParseException {
+    public Result edit(String categoryid, String code) throws ParseException {
         DynamicForm trainingData = formFactory.form().bindFromRequest();
 
         Map<String, String> baseValues = mapValuesFromRequest(trainingData);
@@ -299,7 +299,7 @@ public class TrainingController extends Controller {
 
         if (trainingData.hasErrors()) {
             flash("danger", "Wrong values");
-            return badRequest(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), categoryRepo.getAllCategories(), null,
+            return badRequest(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(categoryid), locationRepo.getAll(), categoryRepo.getAllCategories(), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             Training training = form.bind(baseValues).get();
