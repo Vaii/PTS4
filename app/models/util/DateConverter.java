@@ -35,6 +35,17 @@ public class DateConverter {
         return new ViewDate(dt.getId(), dt.getDate(), location, teacher, dt.getTrainees().size(), false);
     }
 
+    public ViewDate convertWithTrainees(DateTime dt) {
+        User teacher = userRepo.getUserByID(dt.getTeacherID());
+        Location location = locationRepo.getLocation(dt.getLocationID());
+        List<User> trainees = new ArrayList<>();
+        for (String trainee : dt.getTrainees()){
+           trainees.add(userRepo.getUserByID(trainee));
+        }
+
+        return new ViewDate(dt.getId(), dt.getDate(), location, teacher, dt.getTrainees().size(), trainees);
+    }
+
     public ViewDate convertNoTeacher(DateTime dt, String userId) {
         Location location = locationRepo.getLocation(dt.getLocationID());
 
