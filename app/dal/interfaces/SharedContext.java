@@ -35,5 +35,5 @@ public interface SharedContext {
      * @param userId the id of the teacher.
      * @return A list of categories and size.
      */
-    Map<String, Integer> getTrainingFrequencies(String userId);
+    Map<String, Integer> getTrainingFrequencies();
 }

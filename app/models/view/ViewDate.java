@@ -6,6 +6,7 @@ import models.storage.User;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class ViewDate implements Comparable<ViewDate> {
@@ -13,20 +14,18 @@ public class ViewDate implements Comparable<ViewDate> {
     private Date date;
     private Location location;
     private User teacher;
-    /*
-     * Amount of people that have signed up for this date.
-     */
     private int signUps;
+    private List<User> trainees;
+    private boolean currentUserSignedUp = false;
 
-    public boolean isCurrentUserSignedUp() {
-        return currentUserSignedUp;
+    public ViewDate(String dateId, Date date, Location location, User teacher, int signUps, List<User> traineesIds) {
+        this.dateId = dateId;
+        this.date = date;
+        this.location = location;
+        this.teacher = teacher;
+        this.signUps = signUps;
+        this.trainees = traineesIds;
     }
-
-    public void setCurrentUserSignedUp(boolean currentUserSignedUp) {
-        this.currentUserSignedUp = currentUserSignedUp;
-    }
-
-    boolean currentUserSignedUp = false;
 
     public ViewDate(String dateId, Date date, Location location, User teacher, int signUps) {
         this.dateId = dateId;
@@ -92,6 +91,22 @@ public class ViewDate implements Comparable<ViewDate> {
 
     public void setSignUps(int signUps) {
         this.signUps = signUps;
+    }
+
+    public List<User> getTrainees() {
+        return trainees;
+    }
+
+    public void setTrainees(List<User> trainees) {
+        this.trainees = trainees;
+    }
+
+    public boolean isCurrentUserSignedUp() {
+        return currentUserSignedUp;
+    }
+
+    public void setCurrentUserSignedUp(boolean currentUserSignedUp) {
+        this.currentUserSignedUp = currentUserSignedUp;
     }
 
     @Override

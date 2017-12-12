@@ -30,7 +30,7 @@ public class SharedRepository implements SharedContext {
     }
 
     @Override
-    public Map<String, Integer> getTrainingFrequencies(String userId) {
-        return context.getTrainingFrequencies(userId);
+    public Map<String, Integer> getTrainingFrequencies() {
+        return context.getTrainingFrequencies();
     }
 }
