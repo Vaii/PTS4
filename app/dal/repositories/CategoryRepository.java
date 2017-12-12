@@ -24,4 +24,8 @@ public class CategoryRepository {
     public Category getCategoryById(String categoryId) {
         return context.getCategoryById(categoryId);
     }
+
+    public Category getCategoryByName(String categoryName) {
+        return context.getCategoryByName(categoryName);
+    }
 }

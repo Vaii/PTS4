@@ -8,4 +8,5 @@ public interface CategoryContext {
     List<Category> getAllCategories();
     Boolean addCategory(Category category);
     Category getCategoryById(String categoryId);
+    Category getCategoryByName(String categoryName);
 }

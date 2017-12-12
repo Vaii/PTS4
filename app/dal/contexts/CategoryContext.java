@@ -42,4 +42,9 @@ public class CategoryContext implements dal.interfaces.CategoryContext {
     public Category getCategoryById(String categoryId) {
         return collection.findOne("{_id:#}", new ObjectId(categoryId)).as(Category.class);
     }
+
+    @Override
+    public Category getCategoryByName(String categoryName) {
+        return collection.findOne("{category:#}", categoryName).as(Category.class);
+    }
 }
