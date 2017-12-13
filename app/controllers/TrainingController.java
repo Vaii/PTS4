@@ -7,6 +7,7 @@ import dal.repositories.*;
 import models.storage.*;
 import models.util.DateConverter;
 import models.util.OverlapChecker;
+import models.util.Redirect;
 import models.view.ViewDate;
 import models.view.ViewTraining;
 import play.data.DynamicForm;
@@ -16,6 +17,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import play.mvc.With;
 import views.html.shared.message;
 import views.html.training.*;
 import views.html.teacher.*;
@@ -59,10 +61,9 @@ public class TrainingController extends Controller {
         this.form = formFactory.form(Training.class);
         this.tuitionFormForm = formFactory.form(TuitionForm.class);
     }
-
+    @With(Redirect.class)
     @Security.Authenticated(Secured.class)
     public Result signUpCourse(String id) {
-
         if (id == null) {
             return notFound();
         } else {
@@ -88,6 +89,7 @@ public class TrainingController extends Controller {
         }
     }
 
+    @With(Redirect.class)
     public Result signUpEmployee(String id) {
 
         Form<TuitionForm> filledTuitionForm = tuitionFormForm.bindFromRequest();
@@ -192,6 +194,7 @@ public class TrainingController extends Controller {
         }
     }
 
+    @With(Redirect.class)
     public Result overview() {
         return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies() ,new ArrayList<>(), null,
                 TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));

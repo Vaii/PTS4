@@ -4,6 +4,7 @@ import dal.contexts.UserMongoContext;
 import dal.repositories.UserRepository;
 import models.storage.Secured;
 import models.storage.User;
+import models.util.Redirect;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -33,13 +34,11 @@ public class AccountController extends Controller {
     }
 
     public Result login(){
-        flash("url", request().getHeader("referer"));
         return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
 
     }
 
     public Result redirectlogin(){
-        flash("url", request().getHeader("referer"));
         return ok(redirectlogin.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
     }
 
@@ -56,7 +55,13 @@ public class AccountController extends Controller {
         }
         else{
             if(login(username, password)) {
-                return redirect(routes.ApplicationController.index());
+                Http.Context ctx = ctx();
+                System.out.println("Login has: " + ctx.session().get("previousUrl"));
+                if(ctx.session().get("previousUrl") != null) {
+                    return redirect(ctx.session().get("previousUrl"));
+                } else {
+                    return redirect(routes.ApplicationController.index());
+                }
             }
             return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
         }
