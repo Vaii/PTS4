@@ -2,6 +2,7 @@ $(document).ready(function () {
     $('#popupbutton').on('click', function (e) {
         var category = $('#newcategory').val();
         if(category !==""){
+
             $.post(
                 "utility/addcategory", {
                     "category": category
@@ -21,7 +22,7 @@ $(document).ready(function () {
         }
     );
 
-    $('#newcategorybtn').on('click', function(e){
+    $('#newcategorybtn').on('click', function (e) {
         $('.popup').toggle(200);
         if($('#newcategorybtn').val() === 'Nieuwe Categorie'){
             $("#newcategorybtn").prop('value', 'Annuleren');
@@ -53,10 +54,10 @@ $(document).ready(function () {
 
 });
 
-function addNewContent(data){
-    var parentContainer =$('#categorycontainer');
+function addNewContent(data) {
+    var parentContainer = $('#categorycontainer');
     parentContainer.empty();
-    $.each(data, function (index, element){
+    $.each(data, function (index, element) {
 
         $('#categorycontainer')
             .append($("<option></option>")
@@ -66,8 +67,7 @@ function addNewContent(data){
     })
 }
 
-function addErrorMessage(){
-    $('#errormessage').text("Categorie is bestaat al");
+function showErrorMessage(data) {
     $('#newcategory').addClass('has-danger');
     $('.errordisplay').css("display", "block");
 }

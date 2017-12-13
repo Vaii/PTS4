@@ -38,7 +38,7 @@
                                         <p>@training.getTraining().getTrainingCode()</p>
                                     </div>
                                     <div class="col-lg-2">
-                                        <p> <a href="@routes.TrainingController.trainingOverview(training.getCategory().getCategory(),training.getTraining().getId())">@training.getTraining().getName()</a></p>
+                                        <p> <a href="@routes.TrainingController.overview()">@training.getTraining().getName()</a></p>
                                     </div>
 
                                     <div class="col-lg-2">
@@ -55,7 +55,7 @@
                                     </div>
 
                                     <div class="col-lg-2">
-                                        <p>@training.getDate().getTmeOnlyString uur, @training.getDate().getDateOnlyString() </p>
+                                        <p>@training.getDate().getDateOnlyString(), @training.getDate().getTmeOnlyString uur </p>
                                     </div>
                                     <div class="col-lg-2">
                                         <p>Onbekend</p>

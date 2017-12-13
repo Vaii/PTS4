@@ -5,6 +5,7 @@ import models.storage.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +34,7 @@ public class ViewDate implements Comparable<ViewDate> {
         this.location = location;
         this.teacher = teacher;
         this.signUps = signUps;
+        this.trainees = new ArrayList<>();
     }
 
     public ViewDate(String dateId, Date date, Location location, User teacher, int signUps, boolean currentUserSignedUp) {
@@ -41,6 +43,7 @@ public class ViewDate implements Comparable<ViewDate> {
         this.location = location;
         this.teacher = teacher;
         this.signUps = signUps;
+        this.trainees = new ArrayList<>();
         this.currentUserSignedUp = currentUserSignedUp;
     }
 
