@@ -55,11 +55,7 @@ public class AccountController extends Controller {
             return redirect(routes.AccountController.login());
         }
         else{
-
-            if(userRepo.login(username, password)){
-                session().clear();
-                session("email", username);
-
+            if(login(username, password)) {
                 return redirect(routes.ApplicationController.index());
             }
             return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
@@ -91,6 +87,9 @@ public class AccountController extends Controller {
         }
 
         if(userRepo.addUser(user, password)){
+            if(login(user.getEmail(), password)) {
+                return redirect(routes.ApplicationController.index());
+            }
             return ok(registerSuccess.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
 
@@ -106,6 +105,16 @@ public class AccountController extends Controller {
     public Result logout(){
         session().clear();
         return redirect(routes.ApplicationController.index());
+    }
+
+    private boolean login(String email, String password) {
+        if(userRepo.login(email, password)){
+            session().clear();
+            session("email", email);
+
+            return true;
+        }
+        return false;
     }
 
 }

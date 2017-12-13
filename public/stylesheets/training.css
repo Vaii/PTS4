@@ -160,7 +160,7 @@ input.btn.btn-default {
 a.btn.btn-danger {
     margin-top:0px;
 }
-div.form-control-label {
+.form-control-label {
     font-weight: bold;
 }
 #dynamicInput
@@ -172,9 +172,6 @@ div.form-control-label {
 #trainingMenu {
     background-color: #e8effc;
     width: 10em;
-    border-top: black thin inset;
-    border-right:  black thin inset;
-    border-bottom: black thin inset;
 }
 
 #trainingMenu #trainingContent {
@@ -196,4 +193,38 @@ div.form-control-label {
     display: block;
     font-size: 20px;
     padding-bottom: 5px;
+}
+
+#loadingImage {
+    width: 3em;
+    height: 3em;
+}
+
+#trainingContentDates {
+    margin-top : 2em;
+}
+.categorycontainer{
+    margin-bottom: 10px;
+}
+.popup{
+    display: none;
+}
+
+.newcategory{
+    margin-bottom: 10px;
+}
+#popupbutton{
+    margin-top:10px;
+}
+
+#newcategorybtn{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+#deletecategorybtn{
+    margin-top:35px;
+}
+.errordisplay{
+    display: none;
+    color: #b1000d;
 }

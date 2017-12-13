@@ -19,4 +19,5 @@ public interface TrainingContext {
     List<Training> getTrainingByCategory(String category);
     Map<String, Integer> getTrainingFrequencies();
     Training getTrainingById(String id);
+    boolean findTrainingByCategoryId(String categoryid);
 }

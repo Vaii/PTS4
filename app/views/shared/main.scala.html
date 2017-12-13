@@ -8,10 +8,7 @@
     <head>
         <title>@title</title>
 
-        <script
-        src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script src="@routes.Assets.at("javascripts/moment.min.js")"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -23,8 +20,8 @@
     </head>
 
     <script>
-            $("a[href='#top']").click(function() {
-                $("html, body").animate({ scrollTop: 0 }, "slow");
+            $("a[href='#top']").click(function () {
+                $("html, body").animate({scrollTop: 0}, "slow");
                 return false;
             });
     </script>
@@ -38,7 +35,6 @@
                 <a href="@routes.ApplicationController.index()"><img src="@routes.Assets.at("images/infosupportlogo.png")" class="logo" alt="logo"></a>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav mr-auto ml-auto">
-
                         @if(user != null) {
                             @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
                                 <li class="nav-item dropdown">
@@ -46,84 +42,83 @@
                                     <a class="nav-link dropdown-toggle" id="trainingDropdownMenu" href="">
                                         Training</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="@routes.TrainingController.addTraining()">Training Toevoegen</a>
-                                        <a class="dropdown-item" href="@routes.TrainingController.manage()">Training Beheren</a>
+                                        <a class="dropdown-item" href="@routes.TrainingController.addTraining()">
+                                            Training Toevoegen</a>
+                                        <a class="dropdown-item" href="@routes.TrainingController.manage()">
+                                            Training Beheren</a>
                                     </div>
                                 </li>
                             } else {
                                 <li class="nav-item">
-                                    <a class="nav-link" id="trainingDropdownMenu" href="@routes.TrainingController.overview()">Training</a>
+                                    <a class="nav-link" id="trainingDropdownMenu" href="@routes.TrainingController.overview()">
+                                        Training</a>
                                 </li>
                             }
                         } else {
                             <li class="nav-item">
-                                <a class="nav-link" id="trainingDropdownMenu" href="@routes.TrainingController.overview()">Training</a>
+                                <a class="nav-link" id="trainingDropdownMenu" href="@routes.TrainingController.overview()">
+                                    Training</a>
                             </li>
                         }
-
-                       <!-- <li class="nav-item dropdown">
-
-                            <a class="nav-link dropdown-toggle" id="trainingDropdownMenu" href="">
-                                Training</a>
-                            <div class="dropdown-menu">
-
-                            @*if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
-                                <a class="dropdown-item" href="@routes.TrainingController.addTraining()">Training Toevoegen</a>
-                                <a class="dropdown-item" href="@routes.TrainingController.manage()">Training Beheren</a>
-                            } *@
-                            </div>
-                        </li> -->
-
 
                         @if(isLoggedIn) {
                             @if(user.getRole.equals(Role.MEDEWERKERKENNISCENTRUM)) {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="locationDropdownMenu" href="">Locatie</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="@routes.LocationController.loadLocationForm()">Locatie Toevoegen</a>
-                                        <a class="dropdown-item" href="@routes.LocationController.locationOverview()">Locatie Beheren</a>
+                                        <a class="dropdown-item" href="@routes.LocationController.loadLocationForm()">
+                                            Locatie Toevoegen</a>
+                                        <a class="dropdown-item" href="@routes.LocationController.locationOverview()">
+                                            Locatie Beheren</a>
                                     </div>
                             <li class="nav-item">
                                 <a class="nav-link" href="@routes.AdminController.overview()" >Account beheer</a>
                             </li>
                             }
                         }
-                        @if(isLoggedIn){
-                            @if(user.getRole.equals(Role.BUSINESSUNITMANAGER)){
+                        @if(isLoggedIn) {
+                            @if(user.getRole.equals(Role.BUSINESSUNITMANAGER)) {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="managerDropdownMenu" href="">Manager</a>
                                     <div class="dropdown-menu">
-                                        <a href="@routes.ManagerController.employeeOverview()" class="dropdown-item">Mijn Medewerker</a>
+                                        <a href="@routes.ManagerController.employeeOverview()" class="dropdown-item">
+                                            Mijn Medewerker</a>
                                         <a href="#" class="dropdown-item">Studiekosten Formulier</a>
                                     </div>
                                 </li>
                             }
                         }
-                        <li class="nav-item">
-                            <a class="nav-link" href="@routes.ApplicationController.contact()" >Contact</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@routes.ApplicationController.contact()" >Contact</a>
+                    </li>
                     </ul>
                     <ul class="navbar-nav ml-1">
                         <li class="nav-item dropdown">
                         @if(isLoggedIn) {
 
-                            <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" ><em class="fa fa-user-circle fa-fw" aria-hidden="true"></em>Hi, <u>@user.getFirstName</u>!</a>
+                            <a class="nav-link dropdown-toggle" href="" id="loginDropdownMenu" ><em class="fa fa-user-circle fa-fw" aria-hidden="true"></em>
+                                Welkom, <u>@user.getFirstName</u>!</a>
 
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profiel</a>
-                                <a class="dropdown-item" href="@routes.TrainingController.personalOverview()"><i class="fa fa-table fa-fw" aria-hidden="true"></i> Mijn Trainingen</a>
-                                @if(user.getRole.equals(Role.DOCENT)){
-                                    <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> Rooster</a>
+                                <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i>
+                                    Profiel</a>
+                                <a class="dropdown-item" href="@routes.TrainingController.personalOverview()"><i class="fa fa-table fa-fw" aria-hidden="true"></i>
+                                    Mijn Trainingen</a>
+                                @if(user.getRole.equals(Role.DOCENT)) {
+                                    <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+                                        Rooster</a>
                                 }
-                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Uitloggen</a>
+                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
+                                    Uitloggen</a>
                             </div>
                         } else {
-                        <li class="nav-item">
-                            <a class="nav-link" href="@routes.AccountController.register()" >Registreren</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@routes.AccountController.login()" > <em class="fa fa-sign-in fa-fw" aria-hidden="true"></em>Inloggen</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@routes.AccountController.register()" >Registreren</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@routes.AccountController.login()" > <em class="fa fa-sign-in fa-fw" aria-hidden="true"></em>
+                                    Inloggen</a>
+                            </li>
                         }
                     </ul>
                 </div>
@@ -141,16 +136,16 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="footer-element">
-                        <p class="created">Info Support</p>
-                        <p class="created"> <a href="@routes.ApplicationController.contact()">Contact</a></p>
-                        <p class="created"> <a href="https://training.infosupport.com/over"> Over Info Support</a></p>
+                            <p class="created">Info Support</p>
+                            <p class="created"> <a href="@routes.ApplicationController.contact()">Contact</a></p>
+                            <p class="created"> <a href="https://training.infosupport.com/over"> Over Info Support</a></p>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="footer-element">
-                        <p class="created">Created by Hats Off</p>
-                        <p class="created">Fontys University of Applied Sciences</p>
-                        <p class="created">© 2017</p>
+                            <p class="created">Created by Hats Off</p>
+                            <p class="created">Fontys University of Applied Sciences</p>
+                            <p class="created">© 2017</p>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
-import play.data.format.Formats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +85,7 @@ public class TrainingMongoContext implements TrainingContext {
 
     @Override
     public List<Training> getTrainingByCategory(String category) {
-        MongoCursor<Training> results = collection.find("{category:#}", StringUtils.capitalize(category.toLowerCase())).as(Training.class);
+        MongoCursor<Training> results = collection.find("{categoryid:#}", StringUtils.capitalize(category.toLowerCase())).as(Training.class);
         List<Training> trainings = new ArrayList<>();
 
         while(results.hasNext()) {
@@ -103,10 +102,10 @@ public class TrainingMongoContext implements TrainingContext {
         trainings = getAll();
 
         for(Training t : trainings) {
-            if(!results.containsKey(t.getCategory())) {
-                results.put(t.getCategory(), 1);
+            if(!results.containsKey(t.getCategoryid())) {
+                results.put(t.getCategoryid(), 1);
             } else {
-                results.put(t.getCategory(), results.get(t.getCategory())+ 1);
+                results.put(t.getCategoryid(), results.get(t.getCategoryid())+ 1);
             }
         }
 
@@ -116,6 +115,15 @@ public class TrainingMongoContext implements TrainingContext {
     @Override
     public Training getTrainingById(String id) {
         return collection.findOne("{_id:#}", new ObjectId(id)).as(Training.class);
+    }
+
+    @Override
+    public boolean findTrainingByCategoryId(String categoryid) {
+        Training training = collection.findOne("{categoryid:#}", categoryid).as(Training.class);
+        if(training != null){
+            return true;
+        }
+        return false;
     }
 
     public void removeAll() {
