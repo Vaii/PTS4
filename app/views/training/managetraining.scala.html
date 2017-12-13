@@ -104,18 +104,18 @@
                                     <div class="row col-lg-12 row@(index + 1)">
                                     <div class="col-lg-5">
                                         <label class="form-control-label" for="date[]">Datum:</label>
-                                        <input type="datetime-local" id="dates" name="date[]" required="true" value="@viewDates(index).getEditableString" class="form-control dateInput">
-                                        <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" class="dateIds" />
+                                        <input type="datetime-local" id="dates" name="date[]" required="true" value="@viewDates.get(index).getEditableString" class="form-control dateInput">
+                                        <input type="hidden" name="dateIds[]" value="@viewDates.get(index).getDateId" class="dateIds" />
                                     </div>
 
                                     <div class="col-lg-3">
                                         <label class="form-control-label" for="locationId[]">Locatie:</label>
                                         <select id="locationId" name="locationId[]" required="true" class="form-control form-control">
-                                            <option value="@viewDates(index).getLocation.getId()" class="blank" selected="true">@viewDates(index).getLocation.getStreetName</option>
                                             @for(location <- locations) {
-                                                @if(location.getStreetName == viewDates(index).getLocation.getStreetName) {
+                                                @if(location.getStreetName == viewDates.get(index).getLocation.getStreetName && location.getRoom() == viewDates.get(index).getLocation.getStreetName) {
+                                                    <option value="@location.getId()" selected="true" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity() </option>
                                                 } else {
-                                                    <option value="@location.getId()" >@location.getStreetName</option>
+                                                    <option value="@location.getId()" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity()</option>
                                                 }
                                             }
                                         </select>
@@ -124,9 +124,9 @@
                                     <div class="col-lg-3">
                                         <label class="form-control-label" for="teacherID[]">Docent:</label>
                                         <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
-                                           <option value="@viewDates(index).getTeacher.getId()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
+                                           <option value="@viewDates.get(index).getTeacher.getId()" class="blank" selected="true">@viewDates.get(index).getTeacher.getFirstName</option>
                                             @for(teacher <- teachers) {
-                                                @if(teacher.getFirstName == viewDates(index).getTeacher.getFirstName) {
+                                                @if(teacher.getFirstName == viewDates.get(index).getTeacher.getFirstName) {
                                                 } else {
                                                 <option value="@teacher.getId()" >@teacher.getFirstName</option>
                                                 }
@@ -134,7 +134,7 @@
                                         </select>
                                     </div>
                                         <div class="col-lg-1">
-                                            <input id="btnDelete" class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId', this, '@training.getTraining().getTrainingCode()');">
+                                            <input id="btnDelete" class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates.get(index).getDateId', this, '@training.getTraining().getTrainingCode()');">
                                         </div>
                                     </div>
                                 }
@@ -164,15 +164,24 @@
                                         }
                                     </select>
                                 </div>
-                                <div class="row popup col-lg-12">
-                                    <label class="form-control-label">Nieuwe Categorie:</label>
-                                    <input type="text" class="form-control-inline form-control" id="newcategory">
-                                    <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
-                                    <input class="btn btn-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
-                                    <input class="btn btn-outline-danger" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
+                                <div class="popup">
+                                    <div class="row col-lg-12">
+                                        <label class="form-control-label">Nieuwe Categorie:</label>
+                                        <input type="text" class="form-control-inline form-control" id="newcategory">
+                                        <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
+                                        <div class="col-lg-9" id="addcategorycontainer">
+                                            <input class="btn btn-outline-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
+                                        </div>
+                                        <div class="col-lg-3" id="removecategorycontainer">
+                                            <input class="btn btn-outline-danger col-lg-12" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
+                                        </div>
+                                    </div>
+                                    <div class="row col-lg-12">
+
+                                    </div>
                                 </div>
                                 <div class="row col-lg-12">
-                                    <input class="btn btn-primary" type="button" value="Nieuwe Categorie" id="newcategorybtn">
+                                    <input class="btn btn-primary" type="button" value="Categorie Beheer" id="newcategorybtn">
                                 </div>
                             </div>
                             <div class="row col-lg-12">
