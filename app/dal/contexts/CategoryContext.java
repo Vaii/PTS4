@@ -53,5 +53,11 @@ public class CategoryContext implements dal.interfaces.CategoryContext {
         return collection.findOne("{category:#}", categoryName).as(Category.class);
     }
 
+    @Override
+    public Boolean removeCategory(Category category) {
+        WriteResult result = collection.remove(new ObjectId(category.get_id()));
+        return  result.wasAcknowledged();
+    }
+
 
 }

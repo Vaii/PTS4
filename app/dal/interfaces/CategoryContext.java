@@ -9,4 +9,5 @@ public interface CategoryContext {
     Boolean addCategory(Category category);
     Category getCategoryById(String categoryId);
     Category getCategoryByName(String categoryName);
+    Boolean removeCategory(Category category);
 }
