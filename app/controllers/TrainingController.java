@@ -32,9 +32,9 @@ import java.util.*;
  */
 public class TrainingController extends Controller {
 
-    private static final String LOCATION = "Location";
+    private static final String LOCATION = "locationId";
     private static final String ADDTRAINING = "Add training";
-    private static final String TEACHER = "Teacher";
+    private static final String TEACHER = "teacherId";
     private static final String TRAININGCODE = "trainingCode";
     private static final String TRAININGEN = "Trainingen";
     private static final String DATEFORMAT = "yyyy-MM-dd'T'hh:mm";
@@ -130,9 +130,9 @@ public class TrainingController extends Controller {
 
         Map<String, String> baseValues = mapValuesFromRequest(trainingData);
 
-        List<String> dates = getValues(trainingData, "Date");
-        List<String> locationIDs = getValues(trainingData, LOCATION);
-        List<String> teacherIDs = getValues(trainingData, TEACHER);
+        List<String> dates = getValuesFromRequest(trainingData, "Date");
+        List<String> locationIDs = getValuesFromRequest(trainingData, LOCATION);
+        List<String> teacherIDs = getValuesFromRequest(trainingData, TEACHER);
         ArrayList<DateTime> dateTimes = new ArrayList<>();
 
 
@@ -290,9 +290,9 @@ public class TrainingController extends Controller {
 
         Map<String, String> baseValues = mapValuesFromRequest(trainingData);
 
-        List<String> dates = getValues(trainingData, "Date");
-        List<String> locationIDs = getValues(trainingData, LOCATION);
-        List<String> teacherIDs = getValues(trainingData, TEACHER);
+        List<String> dates = getValuesFromRequest(trainingData, "date");
+        List<String> locationIDs = getValuesFromRequest(trainingData, LOCATION);
+        List<String> teacherIDs = getValuesFromRequest(trainingData, TEACHER);
 
         if (trainingData.hasErrors()) {
             return badRequest(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(categoryid), locationRepo.getAll(), categoryRepo.getAllCategories(), null,
@@ -303,7 +303,7 @@ public class TrainingController extends Controller {
             training.setDateIds(trainingRepo.getTraining(code).getDateIds());
 
             // Get dateIds that still exist after editing training
-            List<String> remainingDateIDs = getValues(trainingData, "DateIds");
+            List<String> remainingDateIDs = getValuesFromRequest(trainingData, "dateIds");
 
             // Original dateIds
             List<String> initIDs = training.getDateIds();
@@ -348,71 +348,21 @@ public class TrainingController extends Controller {
     }
 
     // Put data from request in lists
-    private List<String> getValues(DynamicForm trainingData, String type) {
-        switch(type) {
-            case "Date" :
-                return getDates(trainingData);
-            case LOCATION :
-                return getLocations(trainingData);
-            case TEACHER :
-                return getTeachers(trainingData);
-            case "DateIds" :
-                return getDateIds(trainingData);
-            default:
-                return new ArrayList<>();
-        }
+    private List<String> getValuesFromRequest(DynamicForm trainingData, String type) {
+        return getSpecificValues(trainingData, type);
     }
 
-    private List<String> getLocations(DynamicForm trainingData) {
-        List<String> locations = new ArrayList<>();
+    private List<String> getSpecificValues(DynamicForm trainingData, String type) {
+        List<String> values = new ArrayList<>();
         for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("locationId[" + i + "]").value();
+            String d = trainingData.field(type + "[" + i + "]").value();
             if(d == null) {
                 break;
             }
-            locations.add(d);
+            values.add(d);
         }
 
-        return locations;
-    }
-
-    private List<String> getDates(DynamicForm trainingData) {
-        List<String> dates = new ArrayList<>();
-        for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("date[" + i + "]").value();
-            if(d == null) {
-                break;
-            }
-            dates.add(d);
-        }
-
-        return dates;
-    }
-
-    private List<String> getTeachers(DynamicForm trainingData) {
-        List<String> teachers = new ArrayList<>();
-        for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("teacherId[" + i + "]").value();
-            if(d == null) {
-                break;
-            }
-            teachers.add(d);
-        }
-
-        return teachers;
-    }
-
-    private List<String> getDateIds(DynamicForm trainingData) {
-        List<String> dateIds = new ArrayList<>();
-        for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("dateIds[" + i + "]").value();
-            if(d == null) {
-                break;
-            }
-            dateIds.add(d);
-        }
-
-        return dateIds;
+        return values;
     }
 
     private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
