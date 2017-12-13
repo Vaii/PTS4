@@ -101,3 +101,6 @@ hs_err_pid*
 
 # Coverage reports
 reports/
+.idea/play2_project_settings.xml
+.idea/modules/pts4.iml
+.idea/modules/pts4-build.iml

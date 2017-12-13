@@ -21,16 +21,17 @@ var events = [];
 function getElements(start, end, timezone, callback) {
     events = [];
     $.each(dateJson, function (index, element) {
+        console.log(element);
         // Create date according to ISO 8601 standard.
         // See: https://en.wikipedia.org/wiki/ISO_8601
         var startDate = new Date(element.date.date);
         var endDate = new Date(element.date.date);
 
         // Add the duration to find the end date.
-        endDate.setDate(startDate.getDate() + parseInt(element.date.duration));
+        endDate.setDate(startDate.getDate() + parseInt(element.training.duration));
 
-        var location = element.location.city + ", " + element.location.streetName + ", " + element.location.streetNumber +
-            ", " + element.location.room;
+        var location = element.date.location.city + ", " + element.date.location.streetName + ", " + element.date.location.streetNumber +
+            ", " + element.date.location.room;
 
 
         // Set all event properties and push it to the calendar.
