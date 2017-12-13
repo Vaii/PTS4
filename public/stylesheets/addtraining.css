@@ -71,3 +71,10 @@ h1 {
     margin-top: 10px;
     margin-bottom: 15px;
 }
+#deletecategorybtn{
+    margin-top:35px;
+}
+.errordisplay{
+    display: none;
+    color: #b1000d;
+}

@@ -6,9 +6,14 @@ $(document).ready(function () {
                 "utility/addcategory", {
                     "category": category
                 },
-                function(data){
-                    addNewContent(data);
-                    },
+                function (data) {
+                    if (data === "Categorie Bestaat Al") {
+                        showErrorMessage(data)
+                    }
+                    else {
+                        addNewContent(data);
+                    }
+                },
                 "json"
             );
         }
@@ -30,4 +35,9 @@ function addNewContent(data){
                 .text(element.category)
             )
     })
+}
+
+function showErrorMessage(data){
+    $('#newcategory').addClass('has-danger');
+    $('.errordisplay').css("display", "block")
 }

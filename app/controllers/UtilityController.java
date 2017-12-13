@@ -70,12 +70,17 @@ public class UtilityController extends Controller {
 
     public Result addCategory(){
         Category newCategory;
+        JsonNode node;
         Map<String, String[]> params = request().body().asFormUrlEncoded();
         String categoryStringValue = params.entrySet().iterator().next().getValue()[0];
         newCategory = new Category(categoryStringValue);
-        catRepo.addCategory(newCategory);
-        List<Category>categories = catRepo.getAllCategories();
-        JsonNode node = Json.toJson(categories);
+        if(catRepo.addCategory(newCategory)){
+            List<Category>categories = catRepo.getAllCategories();
+            node = Json.toJson(categories);
+            return ok(node);
+        }
+        String errorMessage = "Categorie Bestaat Al";
+        node = Json.toJson(errorMessage);
         return ok(node);
     }
   
