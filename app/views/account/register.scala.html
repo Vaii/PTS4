@@ -19,6 +19,7 @@
                     <div class="row">@b4.text(form("company"), '_label -> "Bedrijf", 'placeholder -> "Software BV")</div>
                     <div class="row">@b4.password(form("password"), '_label -> "Wachtwoord", 'required -> "required")</div>
                     <div class="row">@b4.password(form("validation"), '_label -> "Wachtwoord (herhaling)", 'required -> "required")</div>
+                    <div style="display: none; color:#d9534f" id="validation_error_1" class="form-control-feedback ">Wachtwoorden komen niet overeen</div>
                     <div class="row">@b4.submit('class -> "btn btn-default") { Registeren}</div>
             }
         </div>
