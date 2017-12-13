@@ -10,6 +10,8 @@
 
 @shared.main(Page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
+    <script src="@routes.Assets.at("/javascripts/trainingCheck.js")"></script>
+    <script src="@routes.Assets.at("javascripts/overlapCheckAdd.js")"></script>
     <script>
             function unescapeHTML(string) {
                 var elt = document.createElement("span");
@@ -22,31 +24,30 @@
 
             var teachJson = "@teacherJson";
             teachJson = JSON.parse(unescapeHTML(teachJson));
-
     </script>
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
     <script src="@routes.Assets.at("/javascripts/trainingCheck.js")"></script>
     <script src="@routes.Assets.at("/javascripts/categoryPopUp.js")"></script>
-
     <div class="container">
         <div class="row col-lg-12">
-        <h1>Training toevoegen</h1>
-        <br />
+            <h1>Training toevoegen</h1>
+            <br />
         </div>
         @b4.form(routes.TrainingController.submit()) {
             @helper.CSRF.formField
             <div class="row"><div class="col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</div></div>
-            <div style="display: none; color:#d9534f" id="validation_error_0" class="form-control-feedback ">Code is al in gebruik</div>
+            <div style="display: none;
+                color: #d9534f" id="validation_error_0" class="form-control-feedback ">Code is al in gebruik</div>
             <div class="row"><div class="col-lg-12">@b4.text(form("name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</div></div>
             <div class="row"><div class="col-lg-12">@b4.text(form("description"), '_label -> "Beschrijving:", 'class -> "form-control-inline", 'placeholder -> "Voer beschrijving in")</div></div>
             <div class="row"><div class="col-lg-12">@b4.text(form("requiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "form-control-inline", 'placeholder -> "Voer materialen in")</div></div>
             <div class="form-group">
                 <div id="dynamicInput">
-                    <div class="row col-lg-12">
-                        <div class="col-lg-3">
+                    <div class="row col-lg-12 row0">
+                        <div class="col-lg-3">  
                             <label class="control-label" for="date[]">Datum:</label>
                             <input type="datetime-local" id="date" name="date[]" required="true"
-                            value="" class="form-control")>
+                            value="" class="form-control dateInput")>
                         </div>
 
                         <div class="col-lg-4">
@@ -59,20 +60,15 @@
                                 }
                             </select>
                         </div>
-
-                        <div class="col-lg-5">
-                            <div class="row" >
-                                <div class="col-lg-9">
-                                    <label class="form-control-label" for="teacherId[]">Docent:</label>
-                                    <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control">
-                                        <option value="" class="blank" selected="true" disabled="disabled">
-                                            Selecteer een docent</option>
-                                        @for(teacher <- teachers) {
-                                            <option value="@teacher.getId()" >@teacher.getFirstName</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="col-lg-4">
+                            <label class="form-control-label" for="teacherId[]">Docent:</label>
+                            <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
+                                <option value="" class="blank" selected="true" disabled="disabled">
+                                    Selecteer een docent</option>
+                                @for(teacher <- teachers) {
+                                    <option value="@teacher.getId()" >@teacher.getFirstName</option>
+                                }
+                            </select>
                         </div>
                     </div>
 
@@ -80,13 +76,27 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
+                    <div style="display: none;" id="loadingDiv">
+                        Beschikbaarheid docent controleren: <img id="loadingImage" alt="laden" src="@routes.Assets.at("images/loading.gif")"> </div>
+                    <div style="display: none;
+                        color: #d9534f" id="validation_error_1" class="form-control-feedback ">
+                        Docent is al ingepland, selecteer een andere docent of verplaats de datum.</div>
+                    <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
+                </div>
                 <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
             </div>
+
             </div>
             <br>
             <div class="row"><div class="col-lg-12">@b4.number(form("duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div></div>
             <div class="row"><div class="col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div></div>
             <div class="row"><div class="col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div></div>
+
+            <div class="row"><div class="col-lg-12">@b4.text(form("category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div></div>
+            <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div></div>
+        </div>
+}
+
             <div class="row">
                 <div class="col-lg-12">
                     <label class="form-control-label">Categorie:</label>
@@ -119,6 +129,4 @@
             <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
             </div>
         </div>
-
-}
 }
