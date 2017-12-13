@@ -164,15 +164,24 @@
                                         }
                                     </select>
                                 </div>
-                                <div class="row popup col-lg-12">
-                                    <label class="form-control-label">Nieuwe Categorie:</label>
-                                    <input type="text" class="form-control-inline form-control" id="newcategory">
-                                    <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
-                                    <input class="btn btn-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
-                                    <input class="btn btn-outline-danger" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
+                                <div class="popup">
+                                    <div class="row col-lg-12">
+                                        <label class="form-control-label">Nieuwe Categorie:</label>
+                                        <input type="text" class="form-control-inline form-control" id="newcategory">
+                                        <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
+                                        <div class="col-lg-9" id="addcategorycontainer">
+                                            <input class="btn btn-outline-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
+                                        </div>
+                                        <div class="col-lg-3" id="removecategorycontainer">
+                                            <input class="btn btn-outline-danger col-lg-12" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
+                                        </div>
+                                    </div>
+                                    <div class="row col-lg-12">
+
+                                    </div>
                                 </div>
                                 <div class="row col-lg-12">
-                                    <input class="btn btn-primary" type="button" value="Nieuwe Categorie" id="newcategorybtn">
+                                    <input class="btn btn-primary" type="button" value="Category Beheer" id="newcategorybtn">
                                 </div>
                             </div>
                             <div class="row col-lg-12">
