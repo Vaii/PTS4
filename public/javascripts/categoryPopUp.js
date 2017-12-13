@@ -24,13 +24,13 @@ $(document).ready(function () {
 
     $('#newcategorybtn').on('click', function (e) {
         $('.popup').toggle(200);
-        if($('#newcategorybtn').val() === 'Nieuwe Categorie'){
+        if($('#newcategorybtn').val() === 'Categorie Beheer'){
             $("#newcategorybtn").prop('value', 'Annuleren');
-            $("#newcategorybtn").prop('class', 'btn btn-outline-danger')
+            $("#newcategorybtn").prop('class', 'btn btn-danger')
         }
         else{
-            $("#newcategorybtn").prop('value', 'Nieuwe Categorie');
-            $("#newcategorybtn").prop('class', 'btn btn-outline-primary')
+            $("#newcategorybtn").prop('value', 'Categorie Beheer');
+            $("#newcategorybtn").prop('class', 'btn btn-primary')
         }
     })
 
@@ -67,21 +67,28 @@ function addNewContent(data) {
     })
 }
 
-function showErrorMessage(data) {
+function addErrorMessage() {
     $('#newcategory').addClass('has-danger');
+    $('#errormessage').text("Categorie bestaat al en is niet toegevoegd aan de lijst");
     $('.errordisplay').css("display", "block");
+    $('.errordisplay').css("display", "block");
+    $('.errordisplay').css("color", "red");
 }
 
 function addSuccesMessage(){
     $('#errormessage').text("Categorie is succesvol toegevoegd aan de lijst");
     $('.errordisplay').css("display", "block");
+    $('.errordisplay').css("color", "green");
 }
 
 function deleteErrorMessage(){
-    $('#errormessage').text("Categorie is niet verwijderd");
+    $('#newcategory').addClass('has-danger');
+    $('#errormessage').text("Deze categorie is in gebruik en kan niet verwijdert worden");
     $('.errordisplay').css("display", "block");
+    $('.errordisplay').css("color", "red");
 }
 function deleteSuccesMessage(){
     $('#errormessage').text("Categorie is succesvol verwijderd");
     $('.errordisplay').css("display", "block");
+    $('.errordisplay').css("color", "green");
 }
