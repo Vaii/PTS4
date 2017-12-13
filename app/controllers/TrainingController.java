@@ -32,9 +32,9 @@ import java.util.*;
  */
 public class TrainingController extends Controller {
 
-    private static final String LOCATION = "Location";
+    private static final String LOCATION = "locationId";
     private static final String ADDTRAINING = "Add training";
-    private static final String TEACHER = "Teacher";
+    private static final String TEACHER = "teacherId";
     private static final String TRAININGCODE = "trainingCode";
     private static final String TRAININGEN = "Trainingen";
     private static final String DATEFORMAT = "yyyy-MM-dd'T'hh:mm";
@@ -126,17 +126,14 @@ public class TrainingController extends Controller {
     public Result submit() throws ParseException { // submit new training
         DynamicForm trainingData = formFactory.form().bindFromRequest();
 
-        List<Location> locations = locationRepo.getAll();
-        List<User> teachers = userRepo.getAllTeachers();
-
-        JsonNode locationJson = Json.toJson(locations);
-        JsonNode teacherJson = Json.toJson(teachers);
+        JsonNode locationJson = Json.toJson(locationRepo.getAll()); // Json for filling dynamic form elements
+        JsonNode teacherJson = Json.toJson(userRepo.getAllTeachers());
 
         Map<String, String> baseValues = mapValuesFromRequest(trainingData);
 
-        List<String> dates = getValues(trainingData, "Date");
-        List<String> locationIDs = getValues(trainingData, LOCATION);
-        List<String> teacherIDs = getValues(trainingData, TEACHER);
+        List<String> dates = getValuesFromRequest(trainingData, "Date");
+        List<String> locationIDs = getValuesFromRequest(trainingData, LOCATION);
+        List<String> teacherIDs = getValuesFromRequest(trainingData, TEACHER);
         ArrayList<DateTime> dateTimes = new ArrayList<>();
 
 
@@ -289,64 +286,46 @@ public class TrainingController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result edit(String category, String code) throws ParseException {
+    public Result edit(String categoryid, String code) throws ParseException {
         DynamicForm trainingData = formFactory.form().bindFromRequest();
 
         Map<String, String> baseValues = mapValuesFromRequest(trainingData);
 
-        List<String> dates = getValues(trainingData, "Date");
-        List<String> locationIDs = getValues(trainingData, LOCATION);
-        List<String> teacherIDs = getValues(trainingData, TEACHER);
+        List<String> dates = getValuesFromRequest(trainingData, "date");
+        List<String> locationIDs = getValuesFromRequest(trainingData, LOCATION);
+        List<String> teacherIDs = getValuesFromRequest(trainingData, TEACHER);
 
         if (trainingData.hasErrors()) {
-            flash("danger", "Wrong values");
-            return badRequest(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), categoryRepo.getAllCategories(), null,
+            return badRequest(managetraining.render(trainingRepo.getTrainingFrequencies(), userRepo.getAllTeachers(), trainingRepo.getTrainingByCategory(categoryid), locationRepo.getAll(), categoryRepo.getAllCategories(), null,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             Training training = form.bind(baseValues).get();
             training.setId(trainingRepo.getTraining(code).getId());
             training.setDateIds(trainingRepo.getTraining(code).getDateIds());
 
-            List<String> requestDateIDs = new ArrayList<>();
-            for(int i = 0; i < 50; i++) {
-                String d = trainingData.field("dateIds[" + i + "]").value();
-                if(d == null) {
-                    break;
-                }
-                requestDateIDs.add(d);
-            }
+            // Get dateIds that still exist after editing training
+            List<String> remainingDateIDs = getValuesFromRequest(trainingData, "dateIds");
 
+            // Original dateIds
             List<String> initIDs = training.getDateIds();
 
             for(String id : initIDs) {
                 DateTime dt = dateRepo.getDateTime(id);
-                DateTime overlapError= detectedOverlap(dt, OverlapType.TEACHER);
+                DateTime overlapError = detectedOverlap(dt, OverlapType.TEACHER);
                 if(overlapError != null){
                     Training t = trainingRepo.getTrainingsByDate(overlapError.getId()).get(0);
                     return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, overlapError,t, "/overview"));
                 }
             }
 
-            editExistingDates(initIDs, requestDateIDs, dates, locationIDs, teacherIDs);
+            editExistingDates(initIDs, remainingDateIDs, dates, locationIDs, teacherIDs);
 
-            if(dates.size() > requestDateIDs.size()) {
-                int beginIndex = dates.size() - (dates.size() - requestDateIDs.size());
-                DateFormat format = new SimpleDateFormat(DATEFORMAT);
-                DateTimeFormatter f = DateTimeFormatter.ofPattern(DATEFORMAT);
-
-                for(int i = beginIndex; i < dates.size(); i++) {
-                    Date date = format.parse(dates.get(i));
-                    DateTime dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
-                    DateTime overlapError= detectedOverlap(dt, OverlapType.TEACHER);
-                    if(overlapError != null){
-                        Training t = trainingRepo.getTrainingsByDate(overlapError.getId()).get(0);
-                        return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, overlapError,t, "/overview"));
-                    }
-
-                    dt.setTrainingID(training.getId());
-
-                    String lastId = dateRepo.addDateTime(dt).toString();
-                    training.addDateID(lastId);
+            if(dates.size() > remainingDateIDs.size()) { // Some new date(s) are added
+                DateTime dt = null;
+                DateTime overlapError = null;
+                Training t = null;
+                if(!addNewDatesToTraining(training, dates, remainingDateIDs, locationIDs, teacherIDs, dt, overlapError, t)) {
+                    return badRequest(teacheroverlap.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, overlapError,t, "/overview"));
                 }
             }
             trainingRepo.updateTraining(training);
@@ -354,6 +333,7 @@ public class TrainingController extends Controller {
         }
     }
 
+    // Put data from request in map, which do not have multiple values
     private Map<String, String> mapValuesFromRequest(DynamicForm trainingData) {
         Map<String, String> baseValues = new HashMap<>();
         baseValues.put("trainingCode", trainingData.get("trainingCode"));
@@ -368,56 +348,22 @@ public class TrainingController extends Controller {
         return baseValues;
     }
 
-    private List<String> getValues(DynamicForm trainingData, String type) {
-        switch(type) {
-            case "Date" :
-                return getDates(trainingData);
-            case LOCATION :
-                return getLocations(trainingData);
-            case TEACHER :
-                return getTeachers(trainingData);
-            default:
-                return new ArrayList<>();
-        }
+    // Put data from request in lists
+    private List<String> getValuesFromRequest(DynamicForm trainingData, String type) {
+        return getSpecificValues(trainingData, type);
     }
 
-    private List<String> getLocations(DynamicForm trainingData) {
-        List<String> locations = new ArrayList<>();
+    private List<String> getSpecificValues(DynamicForm trainingData, String type) {
+        List<String> values = new ArrayList<>();
         for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("locationId[" + i + "]").value();
+            String d = trainingData.field(type + "[" + i + "]").value();
             if(d == null) {
                 break;
             }
-            locations.add(d);
+            values.add(d);
         }
 
-        return locations;
-    }
-
-    private List<String> getDates(DynamicForm trainingData) {
-        List<String> dates = new ArrayList<>();
-        for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("date[" + i + "]").value();
-            if(d == null) {
-                break;
-            }
-            dates.add(d);
-        }
-
-        return dates;
-    }
-
-    private List<String> getTeachers(DynamicForm trainingData) {
-        List<String> teachers = new ArrayList<>();
-        for(int i = 0; i < 50; i++) {
-            String d = trainingData.field("teacherId[" + i + "]").value();
-            if(d == null) {
-                break;
-            }
-            teachers.add(d);
-        }
-
-        return teachers;
+        return values;
     }
 
     private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
@@ -499,6 +445,30 @@ public class TrainingController extends Controller {
             overlapError = checker.checkOverlapForTeacher(signUpDate, signUpDate.getTeacherID());
         }
         return overlapError;
+    }
+
+    private boolean addNewDatesToTraining(Training training, List<String> dates, List<String> remainingDateIds, List<String> locationIDs, List<String> teacherIDs, DateTime dt, DateTime overlapError, Training t) throws ParseException {
+        int beginIndex = dates.size() - (dates.size() - remainingDateIds.size());
+        DateFormat format = new SimpleDateFormat(DATEFORMAT);
+        DateTimeFormatter f = DateTimeFormatter.ofPattern(DATEFORMAT);
+
+        for(int i = beginIndex; i < dates.size(); i++) {
+            Date date = format.parse(dates.get(i));
+            dt = new DateTime(date, locationIDs.get(i), teacherIDs.get(i), training.getDuration());
+            overlapError = detectedOverlap(dt, OverlapType.TEACHER);
+
+            if(overlapError != null){
+                t = trainingRepo.getTrainingsByDate(overlapError.getId()).get(0);
+                return false;
+            }
+
+            dt.setTrainingID(training.getId());
+
+            String lastId = dateRepo.addDateTime(dt).toString();
+            training.addDateID(lastId);
+        }
+
+        return true;
     }
 }
 

@@ -34,8 +34,13 @@ public class CategoryContext implements dal.interfaces.CategoryContext {
 
     @Override
     public Boolean addCategory(Category category) {
-        WriteResult result = collection.save(category);
-        return result.wasAcknowledged();
+        if(getCategoryByName(category.getCategory())!= null && !category.getCategory().isEmpty()){
+            return false;
+        }
+        else {
+            WriteResult result = collection.save(category);
+            return result.wasAcknowledged();
+        }
     }
 
     @Override
@@ -47,4 +52,6 @@ public class CategoryContext implements dal.interfaces.CategoryContext {
     public Category getCategoryByName(String categoryName) {
         return collection.findOne("{category:#}", categoryName).as(Category.class);
     }
+
+
 }

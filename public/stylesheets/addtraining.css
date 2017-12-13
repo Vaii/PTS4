@@ -56,11 +56,23 @@ h1 {
     font-size: smaller;
 }
 
-.popup{
-    display: inline-block;
-    visibility: hidden;
+#loadingImage {
+    width: 1em;
+    height: 1em;
 }
 
-.popup {
-    visibility: visible;
+.popup{
+    display: none;
+}
+
+.newcategory{
+    margin-bottom: 10px;
+}
+#popupbutton{
+    margin-top:10px;
+}
+
+#newcategorybtn{
+    margin-top: 10px;
+    margin-bottom: 15px;
 }

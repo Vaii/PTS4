@@ -68,8 +68,9 @@
             function setTrainingContent(training) {
                 $("#noTrainingContent").css('display', 'none');
                 deleteContentDates();
-                getDate(training);
-                console.log(training);
+
+                getDates(training);
+              
                 $('#trainingContentName').text(training.name);
                 $('#trainingContentCode').text(training.trainingCode);
                 $('#trainingContentSummary').text(training.description);
@@ -89,8 +90,8 @@
                 if (date.length === 0) {
                     container.append("<p> Geen datums beschikbaar <p>");
                 } else {
-                    $.each(date, function (index, element) {
-                        console.log(element);
+                    $.each(dates, function (index, element) {
+
                         var newContainer = $("<div>", {id: 'date-' + element.dateId}).addClass("row col-lg-12").appendTo(container);
                         $('<p>', {
                             html: element.dateOnlyString + ',<br>' + 'Starttijd: ' + element.tmeOnlyString

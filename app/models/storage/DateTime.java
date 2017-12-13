@@ -181,6 +181,30 @@ public class DateTime {
         return null;
     }
 
+    public DateTime checkOverlap(Date otherDate, int otherDuration ) {
+        Date convertedDatetime = this.date;
+        Date convertedDatetime2 = otherDate;
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(convertedDatetime);
+        c.add(Calendar.DATE, (int) duration);
+        Date myEndDate = c.getTime();
+
+        Calendar co = Calendar.getInstance();
+        co.setTime(convertedDatetime2);
+        co.add(Calendar.DATE, otherDuration);
+        Date otherEndDate = co.getTime();
+
+        if(convertedDatetime2.after(convertedDatetime) && convertedDatetime2.before(myEndDate) ||
+                otherEndDate.after(convertedDatetime) && otherEndDate.before(myEndDate) ||
+                convertedDatetime.after(convertedDatetime2) && convertedDatetime.before(otherEndDate) ||
+                this.date.equals(convertedDatetime2)) {
+            return new DateTime();
+        }
+
+        return null;
+    }
+
     public DateTime checkOverlap(List<DateTime> others) {
         for(DateTime other : others) {
             if(checkOverlap(other) != null) {
