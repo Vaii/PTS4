@@ -68,7 +68,10 @@ public class TrainingController extends Controller {
         } else {
             if (Secured.getUserInfo(ctx()).getRole() != Role.EXTERN) {
                 DateTime dt = dateRepo.getDateTime(id);
-                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt , trainingRepo.getTrainingById(dt.getTrainingID()), tuitionFormForm));
+                List<User> managers = userRepo.getAllManagers();
+                Map<String, String> managerMap = mapManager(managers);
+
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt , trainingRepo.getTrainingById(dt.getTrainingID()), tuitionFormForm, managerMap));
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
                 DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
@@ -89,8 +92,11 @@ public class TrainingController extends Controller {
 
         Form<TuitionForm> filledTuitionForm = tuitionFormForm.bindFromRequest();
 
+        List<User> managers = userRepo.getAllManagers();
+        Map<String, String> managerMap = mapManager(managers);
+
         if (filledTuitionForm.hasErrors()) {
-            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepo.getTrainingById(dateRepo.getDateTime(id).getTrainingID()), tuitionFormForm));
+            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepo.getTrainingById(dateRepo.getDateTime(id).getTrainingID()), tuitionFormForm, managerMap));
         } else {
             TuitionForm filledForm = filledTuitionForm.get();
             filledForm.setTotalCosts(filledForm.getStudyCosts() + filledForm.getAccommodationCosts() + filledForm.getExaminationFees() + filledForm.getTransportCosts() + filledForm.getExtraCosts());
@@ -108,6 +114,16 @@ public class TrainingController extends Controller {
             return ok(message.render("Inschrijving ingediend", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
                     "De aanvraag voor de training is succesvol ingedient", "/"));
         }
+    }
+
+    private Map<String, String> mapManager(List<User> managers){
+
+        Map<String, String> managerMap = new HashMap<>();
+        for(User m : managers){
+            managerMap.put(m.getId(), m.getEmail());
+        }
+
+        return managerMap;
     }
 
     @Security.Authenticated(Secured.class)
