@@ -8,7 +8,7 @@ package models.storage;
  * Declined: The manager has declined the request and the employee has not been added to the training.
  */
 public enum Status {
-    APPROVED,
+    GOEDGEKEURD,
     PENDING,
-    DECLINED
+    AFGEWEZEN
 }

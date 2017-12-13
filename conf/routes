@@ -41,7 +41,7 @@ GET     /managetrainingcategory/:category   controllers.TrainingController.manag
 GET     /managetraining/:id                 controllers.TrainingController.manageTraining(category: String, id: String)
 GET     /removetraining/:id                 controllers.TrainingController.removeTraining(category: String, id: String)
 GET     /training/signup/:id                controllers.TrainingController.signUpCourse(id: String)
-POST    /training/externalSignUp            controllers.TrainingController.signUpEmployee(id: String, trainingID: String)
+POST    /training/externalSignUp            controllers.TrainingController.signUpEmployee(id: String)
 GET     /edit/:code                         controllers.TrainingController.edit(categoryid: String, code: String)
 GET     /trainingCategory/:category         controllers.TrainingController.overviewCategory(category: String)
 GET     /teachertrainingoverview            controllers.TrainingController.teacherTrainingOverview

@@ -1,6 +1,8 @@
 @import models.view.ViewTraining
 @import models.storage.User
-@(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User)
+@import models.storage.Role
+@import models.storage.TuitionForm
+@(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User, forms: List[TuitionForm])
 
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
@@ -57,10 +59,16 @@
                                     <div class="col-lg-2">
                                         <p>@training.getDate().getDateOnlyString(), @training.getDate().getTmeOnlyString uur </p>
                                     </div>
+                                    @if(!User.getRole.equals(Role.EXTERN)){
+                                        <div class="col-lg-2">
+                                            <p>@for(tut <- forms){
+                                                @if(tut.getDateTimeID() == training.getDate().getDateId()){
+                                                    @tut.getStatus()
+                                                }
+                                            }</p>
 
-                                    <div class="col-lg-2">
-                                        <p>Onbekend</p>
-                                    </div>
+                                        </div>
+                                    }
                                     <div class="col-lg-2">
                                         <div class="col-lg-12">
                                             <p><a class="btn btn-outline-danger" href="#">Uitschrijven</a></p>

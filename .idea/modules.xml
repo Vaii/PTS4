@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/pts4.iml" filepath="$PROJECT_DIR$/pts4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitHub-pts4.iml" filepath="$PROJECT_DIR$/.idea/modules/GitHub-pts4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PTS4-pts4-build.iml" filepath="$PROJECT_DIR$/.idea/modules/PTS4-pts4-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pts4.iml" filepath="$PROJECT_DIR$/.idea/modules/pts4.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pts4-build.iml" filepath="$PROJECT_DIR$/.idea/modules/pts4-build.iml" />
     </modules>

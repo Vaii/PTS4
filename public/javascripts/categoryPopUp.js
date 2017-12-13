@@ -71,6 +71,7 @@ function addErrorMessage() {
     $('#newcategory').addClass('has-danger');
     $('#errormessage').text("Categorie bestaat al en is niet toegevoegd aan de lijst");
     $('.errordisplay').css("display", "block");
+    $('.errordisplay').css("display", "block");
     $('.errordisplay').css("color", "red");
 }
 
