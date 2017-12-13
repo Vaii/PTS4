@@ -10,4 +10,5 @@ public interface CategoryContext {
     Category getCategoryById(String categoryId);
     Category getCategoryByName(String categoryName);
     Boolean removeCategory(Category category);
+
 }

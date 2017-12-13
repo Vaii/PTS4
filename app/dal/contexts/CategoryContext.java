@@ -50,7 +50,7 @@ public class CategoryContext implements dal.interfaces.CategoryContext {
 
     @Override
     public Category getCategoryByName(String categoryName) {
-        return collection.findOne("{category:#}", categoryName).as(Category.class);
+        return collection.findOne("{category:#}", categoryName.toLowerCase()).as(Category.class);
     }
 
     @Override
@@ -59,5 +59,8 @@ public class CategoryContext implements dal.interfaces.CategoryContext {
         return  result.wasAcknowledged();
     }
 
+    public void removeAll() {
+        collection.drop();
+    }
 
 }
