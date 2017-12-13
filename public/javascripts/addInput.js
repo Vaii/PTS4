@@ -37,7 +37,7 @@ function addInput(divName){
     var numItems = $('#dynamicInput .row').length;
     var newdiv = document.createElement('div');
     newdiv.className = "row col-lg-12 row" + numItems;
-    newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"form-control-label\" for=\"dates[]\">Datum:</label>" +
+    newdiv.innerHTML = "<div class=\"col-lg-3\"><label class=\"form-control-label\" for=\"date[]\">Datum:</label>" +
         "<input type=\"datetime-local\" id=\"dates\" name=\"date[]\" value=\"\" required=\"true\" class=\"form-control dateInput\"></div>" +
 
         // Location box
@@ -66,7 +66,7 @@ function addInputEdit(divName){
     var numItems = $('#dynamicInput .row').length + 1;
     var newdiv = document.createElement('div');
     newdiv.className = "row col-lg-12 row" + numItems;
-    newdiv.innerHTML = "<div class=\"col-lg-5\"><label class=\"form-control-label\" for=\"dates[]\">Datum:</label>" +
+    newdiv.innerHTML = "<div class=\"col-lg-5\"><label class=\"form-control-label\" for=\"date[]\">Datum:</label>" +
         "<input type=\"datetime-local\" id=\"dates\" name=\"date[]\" value=\"\" required=\"true\" class=\"form-control dateInput\"></div>" +
 
         // Location box
