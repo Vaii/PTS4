@@ -27,12 +27,12 @@
                 });
             }
 
-            function getDates(training) {
+            function getDate(training) {
                 $("#loadingImage").show();
                 $.get('/utility/getdates/' + training.id, function (data) {
-                    var dates;
-                    dates = data;
-                    setTrainingDates(dates, training);
+                    var date;
+                    date = data;
+                    setTrainingDates(date, training);
                 });
             }
 
@@ -68,7 +68,9 @@
             function setTrainingContent(training) {
                 $("#noTrainingContent").css('display', 'none');
                 deleteContentDates();
+
                 getDates(training);
+              
                 $('#trainingContentName').text(training.name);
                 $('#trainingContentCode').text(training.trainingCode);
                 $('#trainingContentSummary').text(training.description);
@@ -79,17 +81,17 @@
                 }
                 $('#trainingContentCosts').text("€" + Number(training.tuition).toFixed(2) + " per persoon");
                 $('#trainingContentDuration').text(training.duration + " dagen");
-                $('#trainingContentCategory').text(training.category);
                 $("#trainingContentDiv").css('display', 'block');
             }
 
-            function setTrainingDates(dates, training) {
+            function setTrainingDates(date, training) {
                 var container = $('#trainingContentDates');
                 $("#loadingImage").hide();
-                if (dates.length === 0) {
+                if (date.length === 0) {
                     container.append("<p> Geen datums beschikbaar <p>");
                 } else {
                     $.each(dates, function (index, element) {
+
                         var newContainer = $("<div>", {id: 'date-' + element.dateId}).addClass("row col-lg-12").appendTo(container);
                         $('<p>', {
                             html: element.dateOnlyString + ',<br>' + 'Starttijd: ' + element.tmeOnlyString
@@ -141,9 +143,9 @@
                     }
                 </ul>
             </div>
-            <div id="trainingMenu" style="display: none">
+            <div id="trainingMenu" class="trainingmenu" style="display: none">
                 <ul>
-                    <li id="title">Trainingen</li>
+                    <lh id="title">Trainingen</lh>
                     <li id="trainingContent"></li>
                 </ul>
             </div>
@@ -195,14 +197,6 @@
                                     </div>
                                     <div class="col-lg-8">
                                         <p id="trainingContentDuration"></p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p>Categorie: </p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p id="trainingContentCategory"></p>
                                     </div>
                                 </div>
                                 <div class="row">

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+import java.util.List;
+
 public class User {
     // Mongo DB identifiers.
     private static final String M_FIRSTNAME = "firstName";
@@ -13,6 +15,7 @@ public class User {
     private static final String M_COMPANY = "company";
     private static final String M_PHONENUMBER = "phoneNumber";
     private static final String M_MANAGER = "manager";
+    private static final String M_SKILLIDS = "skillIds";
 
     // Mongo DB ID.
     @MongoObjectId
@@ -29,6 +32,8 @@ public class User {
     @play.data.validation.Constraints.Required
     private String phoneNumber;
     private String manager;
+
+    private List<String> skillIds;
     
     public User() {
     }
@@ -40,7 +45,8 @@ public class User {
                 @JsonProperty(M_ROLE) Role role,
                 @JsonProperty(M_COMPANY) String company,
                 @JsonProperty(M_PHONENUMBER) String phoneNumber,
-                @JsonProperty(M_MANAGER) String manager) {
+                @JsonProperty(M_MANAGER) String manager,
+                @JsonProperty(M_SKILLIDS) List<String> skillIds) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -48,6 +54,7 @@ public class User {
         this.company = company;
         this.phoneNumber = phoneNumber;
         this.manager = manager;
+        this.skillIds = skillIds;
     }
 
 
@@ -132,6 +139,16 @@ public class User {
         String Role = this.getRole().toString().toLowerCase();
         return Role.substring(0,1).toUpperCase() + Role.substring(1);
     }
+
+    @JsonProperty(M_SKILLIDS)
+    public List<String> getSkillIds() {
+        return skillIds;
+    }
+
+    public void setSkillIds(List<String> skillIds) {
+        this.skillIds = skillIds;
+    }
+
 
     public void setManager(String manager) {
         this.manager = manager;

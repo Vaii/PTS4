@@ -3,8 +3,10 @@
 @import views.html.helper._
 @import models.storage.Role
 @import models.storage.User
+@import models.storage.Category
 
-@(page: String, isLoggedIn: Boolean, User: User, form: Form[User], manager: Map[String, String])
+@import java.util
+@(page: String, isLoggedIn: Boolean, User: User, form: Form[User], manager: Map[String, String], categories: List[Category], user: User)
 
 
 @shared.main(page, isLoggedIn, User) {
@@ -43,7 +45,31 @@
                     }
                     </select>
             </div>
-            <div class="row">@b4.submit('class -> "btn btn-default") { Wijzigen}</div>
+
+            @if(user.getRole == Role.DOCENT) {
+                <div class="form-control-inline row" id="role">
+                    <label for="sel2">Vaardigheden (Houd Ctrl in om meerdere te selecteren):</label>
+                    <select multiple class="form-control role-box" name="skills[]" id="sel2">
+
+                    @for(cat <- categories) {
+                        @if(user.getSkillIds != null) {
+                            @for(skill <- user.getSkillIds) {
+
+                                @if(skill == cat.get_id()) {
+                                    <option selected="selected" value="@cat.get_id()">@cat.getCategory()</option>
+                                }
+                            }
+
+                        }
+                            <option value="@cat.get_id()">@cat.getCategory()</option>
+
+                    }
+                            </select>
+                            </div>
+            }
+            <div class="row">@b4.submit('class -> "btn btn-default") { Wijzigen }</div>
         }
+
     </div>
 }
+

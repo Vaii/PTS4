@@ -42,12 +42,13 @@ GET     /managetraining/:id                 controllers.TrainingController.manag
 GET     /removetraining/:id                 controllers.TrainingController.removeTraining(category: String, id: String)
 GET     /training/signup/:id                controllers.TrainingController.signUpCourse(id: String)
 POST    /training/externalSignUp            controllers.TrainingController.signUpEmployee(id: String, trainingID: String)
-GET     /edit/:code                         controllers.TrainingController.edit(category: String, code: String)
+GET     /edit/:code                         controllers.TrainingController.edit(categoryid: String, code: String)
 GET     /trainingCategory/:category         controllers.TrainingController.overviewCategory(category: String)
 GET     /teachertrainingoverview            controllers.TrainingController.teacherTrainingOverview
 GET     /personalOverview                   controllers.TrainingController.personalOverview
-GET     /personalTrainingCategory/:category controllers.TrainingController.personalOverviewCategory(category: String)
-GET     /personalTrainingOverview/:id       controllers.TrainingController.personalTrainingOverview(category: String, id: String)
+#GET     /personalTrainingCategory/:category controllers.TrainingController.personalOverviewCategory(category: String)
+#GET     /personalTrainingOverview/:id       controllers.TrainingController.personalTrainingOverview(category: String, id: String)
+GET     /teacherstudentoverview/:id         controllers.TrainingController.teacherStudentOverview(id: String)
 
 
 
@@ -72,6 +73,10 @@ GET     /javascriptRoutes                   controllers.ApplicationController.ja
 POST    /utility/emailCheck/:email                 controllers.UtilityController.checkEmail(email: String)
 POST    /utility/trainingcodecheck/:code           controllers.UtilityController.checkTraningCode(code: String)
 POST    /utility/gettrainings/:category            controllers.UtilityController.getTrainingForCategory(category: String)
+
+POST    /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
+POST    /utility/addcategory                       controllers.UtilityController.addCategory
+
 GET     /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
 POST    /utility/checksignup/:dateid/:userid       controllers.UtilityController.checkUserSignUp(dateid: String, userid: String)
 POST    /utility/overlapcheck                      controllers.UtilityController.checkTeacherOverlap()
@@ -79,3 +84,4 @@ POST    /utility/overlapcheck                      controllers.UtilityController
 #Example
 POST    /utility/mypostaction                      controllers.UtilityController.myPostAction()
 GET     /utility/example                           controllers.UtilityController.myExampleView()
+

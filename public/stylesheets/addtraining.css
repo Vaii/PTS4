@@ -60,3 +60,19 @@ h1 {
     width: 1em;
     height: 1em;
 }
+
+.popup{
+    display: none;
+}
+
+.newcategory{
+    margin-bottom: 10px;
+}
+#popupbutton{
+    margin-top:10px;
+}
+
+#newcategorybtn{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
