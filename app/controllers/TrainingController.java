@@ -445,7 +445,7 @@ public class TrainingController extends Controller {
         for (DateTime d : teacherDates)
         {
             Training t = trainingRepo.getTrainingById(d.getTrainingID());
-            ViewTraining vt = new ViewTraining(t, converter.convert(d), categoryRepo.getCategoryById(t.getCategoryid()));
+            ViewTraining vt = new ViewTraining(t, converter.convertWithTrainees(d), categoryRepo.getCategoryById(t.getCategoryid()));
             teacherTrainings.add(vt);
         }
 
