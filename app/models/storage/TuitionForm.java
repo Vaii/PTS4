@@ -2,6 +2,7 @@ package models.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.util.Date;
@@ -27,6 +28,8 @@ public class TuitionForm {
     private static final String M_TOTALCOSTS = "totalCosts";
     private static final String M_CATEGORY = "category";
     private static final String M_STATUS = "status";
+    private static final String M_EMPLOYEEID = "employeeID";
+    private static final String M_DATETIMEID = "dateTimeID";
 
     // Mongo DB ID.
     @MongoObjectId
@@ -58,6 +61,8 @@ public class TuitionForm {
     @play.data.validation.Constraints.Required
     private TuitionCategory category;
     private Status status;
+    private String employeeID;
+    private String dateTimeID;
 
     @JsonCreator
     public TuitionForm(@JsonProperty(M_MANAGER) String manager,
@@ -72,7 +77,9 @@ public class TuitionForm {
                        @JsonProperty(M_EXTRACOSTS) double extraCosts,
                        @JsonProperty(M_TOTALCOSTS) double totalCosts,
                        @JsonProperty(M_CATEGORY) TuitionCategory category,
-                       @JsonProperty(M_STATUS) Status status) {
+                       @JsonProperty(M_STATUS) Status status,
+                       @JsonProperty(M_DATETIMEID) String dateTimeID,
+                       @JsonProperty(M_EMPLOYEEID) String employeeID) {
         this.manager = manager;
         this.employee = employee;
         this.training = training;
@@ -86,10 +93,30 @@ public class TuitionForm {
         this.totalCosts = totalCosts;
         this.category = category;
         this.status = status;
+        this.dateTimeID = dateTimeID;
+        this.employeeID = employeeID;
     }
 
     public TuitionForm() {
 
+    }
+
+    @JsonProperty
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    @JsonProperty
+    public String getDateTimeID() {
+        return dateTimeID;
+    }
+
+    public void setDateTimeID(String dateTimeID) {
+        this.dateTimeID = dateTimeID;
     }
 
     @JsonProperty(M_STATUS)

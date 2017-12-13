@@ -68,7 +68,7 @@ public class TrainingController extends Controller {
         } else {
             if (Secured.getUserInfo(ctx()).getRole() != Role.EXTERN) {
                 DateTime dt = dateRepo.getDateTime(id);
-                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt , trainingRepo.getTraining(dt.getTrainingID()), tuitionFormForm));
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt , trainingRepo.getTrainingById(dt.getTrainingID()), tuitionFormForm));
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
                 DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
@@ -85,12 +85,12 @@ public class TrainingController extends Controller {
         }
     }
 
-    public Result signUpEmployee(String id, String trainingID) {
+    public Result signUpEmployee(String id) {
 
         Form<TuitionForm> filledTuitionForm = tuitionFormForm.bindFromRequest();
 
         if (filledTuitionForm.hasErrors()) {
-            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepo.getTrainingById(trainingID), tuitionFormForm));
+            return badRequest(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dateRepo.getDateTime(id), trainingRepo.getTrainingById(dateRepo.getDateTime(id).getTrainingID()), tuitionFormForm));
         } else {
             TuitionForm filledForm = filledTuitionForm.get();
             filledForm.setTotalCosts(filledForm.getStudyCosts() + filledForm.getAccommodationCosts() + filledForm.getExaminationFees() + filledForm.getTransportCosts() + filledForm.getExtraCosts());
@@ -211,12 +211,18 @@ public class TrainingController extends Controller {
 
         List<ViewTraining> userTrainings = new ArrayList<>();
         DateConverter converter = new DateConverter();
+        List<TuitionForm> forms = new ArrayList<>();
+
+        if(!Secured.getUserInfo(ctx()).getRole().equals(Role.EXTERN)){
+            forms.addAll(tutRepo.getForms(Secured.getUserInfo(ctx()).getId()));
+        }
+
         for (DateTime d : trainingDates){
             Training t = trainingRepo.getTrainingById(d.getTrainingID());
             ViewTraining training = new ViewTraining(t,converter.convert(d),categoryRepo.getCategoryById(t.getCategoryid()));
             userTrainings.add(training);
         }
-        return ok(personaltrainingoverview.render(userTrainings, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+        return ok(personaltrainingoverview.render(userTrainings, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), forms));
     }
 
     @Security.Authenticated(Secured.class)
