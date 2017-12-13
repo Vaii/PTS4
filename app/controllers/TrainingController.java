@@ -131,7 +131,7 @@ public class TrainingController extends Controller {
 
         Map<String, String> baseValues = mapValuesFromRequest(trainingData);
 
-        List<String> dates = getValuesFromRequest(trainingData, "Date");
+        List<String> dates = getValuesFromRequest(trainingData, "date");
         List<String> locationIDs = getValuesFromRequest(trainingData, LOCATION);
         List<String> teacherIDs = getValuesFromRequest(trainingData, TEACHER);
         ArrayList<DateTime> dateTimes = new ArrayList<>();
