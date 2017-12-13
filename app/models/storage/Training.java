@@ -210,11 +210,11 @@ public class Training  {
      * @return The categoryid of the training capitalised.
      */
     @JsonProperty(M_CATEGORYID)
-    public String getCategory() {
+    public String getCategoryid() {
         return this.categoryid;
     }
 
-    public void setCategory(String categoryid) {
+    public void setCategoryid(String categoryid) {
         this.categoryid = categoryid;
     }
 

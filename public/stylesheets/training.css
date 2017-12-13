@@ -160,7 +160,7 @@ input.btn.btn-default {
 a.btn.btn-danger {
     margin-top:0px;
 }
-div.form-control-label {
+.form-control-label {
     font-weight: bold;
 }
 #dynamicInput
@@ -172,9 +172,6 @@ div.form-control-label {
 #trainingMenu {
     background-color: #e8effc;
     width: 10em;
-    border-top:  thick groove #DFEBF5;
-    border-right: thick groove #DFEBF5;
-    border-bottom: medium groove #DFEBF5;
 }
 
 #trainingMenu #trainingContent {
@@ -206,3 +203,7 @@ div.form-control-label {
 #trainingContentDates {
     margin-top : 2em;
 }
+.categorycontainer{
+    margin-bottom: 10px;
+}
+
