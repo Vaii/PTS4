@@ -89,8 +89,7 @@
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            <p>
-                            @training.getDate().getDateString() <p>
+                            <p>@training.getDate().getDateOnlyString(), @training.getDate.getTmeOnlyString() uur <p>
                         </div>
                         <div class="col-lg-2">
                         @if(training.getDate().getTrainees().isEmpty()) {
