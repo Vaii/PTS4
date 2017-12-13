@@ -13,6 +13,10 @@ $(document).ready(function () {
             );
         }
     );
+
+    $('#newcategorybtn').on('click', function(e){
+        $('.popup').toggle(200);
+    })
 });
 
 function addNewContent(data){

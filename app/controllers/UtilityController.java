@@ -48,7 +48,8 @@ public class UtilityController extends Controller {
     }
 
     public Result getTrainingForCategory(String category) {
-        JsonNode node = Json.toJson(trainingRepo.getTrainingByCategory(category));
+        Category cat = catRepo.getCategoryByName(category);
+        JsonNode node = Json.toJson(trainingRepo.getTrainingByCategory(cat.get_id()));
 
         return ok(node);
     }
