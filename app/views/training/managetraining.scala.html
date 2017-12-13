@@ -112,7 +112,7 @@
                                         <label class="form-control-label" for="locationId[]">Locatie:</label>
                                         <select id="locationId" name="locationId[]" required="true" class="form-control form-control">
                                             @for(location <- locations) {
-                                                @if(location.getStreetName == viewDates.get(index).getLocation.getStreetName && location.getRoom() == viewDates.get(index).getLocation.getStreetName) {
+                                                @if(location.getStreetName == viewDates.get(index).getLocation.getStreetName && location.getRoom() == viewDates.get(index).getLocation.getRoom) {
                                                     <option value="@location.getId()" selected="true" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity() </option>
                                                 } else {
                                                     <option value="@location.getId()" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity()</option>

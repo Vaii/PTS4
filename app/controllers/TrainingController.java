@@ -253,7 +253,7 @@ public class TrainingController extends Controller {
             List<ViewDate> viewDates;
             viewDates = converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
 
-            Collections.sort(viewDates);
+            //Collections.sort(viewDates); this is buggy when editing locations in managetraining
 
             Form<Training> editForm = form.fill(viewTraining.getTraining());
             return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), categories, viewTraining,
