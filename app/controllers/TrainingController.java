@@ -462,7 +462,7 @@ public class TrainingController extends Controller {
         DateConverter converter = new DateConverter();
         DateTime date = dateRepo.getDateTime(dateId);
         Training train = trainingRepo.getTrainingById(date.getTrainingID());
-        ViewTraining training = new ViewTraining(train,converter.convert(date), categoryRepo.getCategoryById(train.getCategoryid()));
+        ViewTraining training = new ViewTraining(train,converter.convertWithTrainees(date), categoryRepo.getCategoryById(train.getCategoryid()));
 
         return ok(teacherstudentoverview.render(training, "Trainingen", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),converter.convertWithTrainees(date).getTrainees()));
     }
