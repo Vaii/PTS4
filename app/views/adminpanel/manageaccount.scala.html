@@ -33,17 +33,17 @@
             <div class="row">@b4.text(form("company"), '_label -> "Bedrijf", 'placeholder -> "Software BV", 'value -> "InfoSupport")</div>
 
             <div class="form-control-inline row" id="role">
-                    <label class="from-control-label" for="role">Rol</label>
-                    <select id="role" name="role" class="form-control role-box">
-                    @for(role <- Role.values()) {
-                        @if(form.get().getRole.equals(role)){
-                            <option selected="selected" value="@role.name()">@role.getValue</option>
-                        }else{
-                            <option value="@role.name()">@role.getValue</option>
-                        }
-
+                <label class="from-control-label" for="role">Rol</label>
+                <select id="role" name="role" class="form-control role-box">
+                @for(role <- Role.values()) {
+                    @if(form.get().getRole.equals(role)) {
+                        <option selected="selected" value="@role.name()">@role.getValue</option>
+                    } else {
+                        <option value="@role.name()">@role.getValue</option>
                     }
-                    </select>
+
+                }
+                </select>
             </div>
 
             @if(user.getRole == Role.DOCENT) {
@@ -53,19 +53,18 @@
 
                     @for(cat <- categories) {
                         @if(user.getSkillIds != null) {
-                            @for(skill <- user.getSkillIds) {
-
-                                @if(skill == cat.get_id()) {
-                                    <option selected="selected" value="@cat.get_id()">@cat.getCategory()</option>
-                                }
+                            @if(user.getSkillIds.contains(cat.get_id())) {
+                                <option selected="selected" value="@cat.get_id()">@cat.getCategory()</option>
+                            } else {
+                                <option value="@cat.get_id()">@cat.getCategory()</option>
                             }
-
-                        }
+                        } else {
                             <option value="@cat.get_id()">@cat.getCategory()</option>
+                        }
 
                     }
-                            </select>
-                            </div>
+                    </select>
+                </div>
             }
             <div class="row">@b4.submit('class -> "btn btn-default") { Wijzigen }</div>
         }
