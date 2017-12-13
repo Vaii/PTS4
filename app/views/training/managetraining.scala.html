@@ -104,8 +104,8 @@
                                     <div class="row col-lg-12 row@(index + 1)">
                                     <div class="col-lg-5">
                                         <label class="form-control-label" for="date[]">Datum:</label>
-                                        <input type="datetime-local" id="dates" name="date[]" required="true" value="@viewDates(index).getEditableString" class="form-control dateInput">
-                                        <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" class="dateIds" />
+                                        <input type="datetime-local" id="dates" name="date[]" required="true" value="@viewDates.get(index).getEditableString" class="form-control dateInput">
+                                        <input type="hidden" name="dateIds[]" value="@viewDates.get(index).getDateId" class="dateIds" />
                                     </div>
 
                                     <div class="col-lg-3">
@@ -124,9 +124,9 @@
                                     <div class="col-lg-3">
                                         <label class="form-control-label" for="teacherID[]">Docent:</label>
                                         <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
-                                           <option value="@viewDates(index).getTeacher.getId()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
+                                           <option value="@viewDates.get(index).getTeacher.getId()" class="blank" selected="true">@viewDates.get(index).getTeacher.getFirstName</option>
                                             @for(teacher <- teachers) {
-                                                @if(teacher.getFirstName == viewDates(index).getTeacher.getFirstName) {
+                                                @if(teacher.getFirstName == viewDates.get(index).getTeacher.getFirstName) {
                                                 } else {
                                                 <option value="@teacher.getId()" >@teacher.getFirstName</option>
                                                 }
@@ -134,7 +134,7 @@
                                         </select>
                                     </div>
                                         <div class="col-lg-1">
-                                            <input id="btnDelete" class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId', this, '@training.getTraining().getTrainingCode()');">
+                                            <input id="btnDelete" class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates.get(index).getDateId', this, '@training.getTraining().getTrainingCode()');">
                                         </div>
                                     </div>
                                 }
