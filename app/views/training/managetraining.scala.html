@@ -15,6 +15,8 @@
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
     <script src="@routes.Assets.at("javascripts/overlapCheckManage.js")"></script>
+    <script src="@routes.Assets.at("/javascripts/fullcalendar.js")"></script>
+
     <script>
             function unescapeHTML(string) {
                 var elt = document.createElement("span");
@@ -101,9 +103,9 @@
                                 @for(index <- 0 until viewDates.size){
                                     <div class="row col-lg-12 row@(index + 1)">
                                     <div class="col-lg-5">
-                                        <label class="control-label" for="date[]">Datum:</label>
-                                        <input type="datetime-local" id="date" name="date[]" required="true" value="@viewDates(index).getEditableString" class="form-control">
-                                        <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" />
+                                        <label class="form-control-label" for="date[]">Datum:</label>
+                                        <input type="datetime-local" id="dates" name="date[]" required="true" value="@viewDates(index).getEditableString" class="form-control dateInput">
+                                        <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" class="dateIds" />
                                     </div>
 
                                     <div class="col-lg-3">

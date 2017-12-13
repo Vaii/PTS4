@@ -148,7 +148,7 @@ public class TrainingController extends Controller {
                 return badRequest(addtraining.render(form2.withError(TRAININGCODE, "Trainingscode moet uniek zijn"), Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), ADDTRAINING, locationRepo.getAll(), userRepo.getAllTeachers(), categoryRepo.getAllCategories(), locationJson, teacherJson));
             }
 
-            List<String> dateIDs = createDates(dates, locationIDs, teacherIDs, training.getDuration());
+            List<String> dateIDs = createDateTimes(dates, locationIDs, teacherIDs, training.getDuration());
             training.setDateIds(dateIDs);
 
             DateTime overlapError;
@@ -333,7 +333,7 @@ public class TrainingController extends Controller {
         }
     }
 
-    // Put data from request in map, which do not have multiple values
+    // Put data from request in map, which do NOT have multiple values
     private Map<String, String> mapValuesFromRequest(DynamicForm trainingData) {
         Map<String, String> baseValues = new HashMap<>();
         baseValues.put("trainingCode", trainingData.get("trainingCode"));
@@ -348,7 +348,7 @@ public class TrainingController extends Controller {
         return baseValues;
     }
 
-    // Put data from request in lists
+    // Put data from request in lists, which have multiple values, for instance dates, teachers etc.
     private List<String> getValuesFromRequest(DynamicForm trainingData, String type) {
         return getSpecificValues(trainingData, type);
     }
@@ -366,7 +366,7 @@ public class TrainingController extends Controller {
         return values;
     }
 
-    private List<String> createDates(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
+    private List<String> createDateTimes(List<String> dates, List<String> locationIDs, List<String> teacherIDs, float duration) throws ParseException {
         List<String> dateIDs = new ArrayList<>();
         String lastId ;
         DateFormat format = new SimpleDateFormat(DATEFORMAT);
