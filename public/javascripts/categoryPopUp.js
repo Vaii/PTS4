@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#popupbutton').on('click', function (e) {
-        var category = $('#newcategory').val();
+            var category = $('#newcategory').val();
 
             $.post(
                 "utility/addcategory", {
@@ -19,15 +19,15 @@ $(document).ready(function () {
         }
     );
 
-    $('#newcategorybtn').on('click', function(e){
+    $('#newcategorybtn').on('click', function (e) {
         $('.popup').toggle(200);
     })
 });
 
-function addNewContent(data){
-    var parentContainer =$('#categorycontainer');
+function addNewContent(data) {
+    var parentContainer = $('#categorycontainer');
     parentContainer.empty();
-    $.each(data, function (index, element){
+    $.each(data, function (index, element) {
 
         $('#categorycontainer')
             .append($("<option></option>")
@@ -37,7 +37,7 @@ function addNewContent(data){
     })
 }
 
-function showErrorMessage(data){
+function showErrorMessage(data) {
     $('#newcategory').addClass('has-danger');
     $('.errordisplay').css("display", "block")
 }
