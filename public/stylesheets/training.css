@@ -222,9 +222,15 @@ a.btn.btn-danger {
     margin-bottom: 15px;
 }
 #deletecategorybtn{
-    margin-top:35px;
+    margin-top:10px;
 }
 .errordisplay{
     display: none;
     color: #b1000d;
+}
+#addcategorycontainer{
+    padding-left: 0 ;
+}
+#removecategorycontainer{
+    padding-right: 0;
 }
