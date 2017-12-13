@@ -117,6 +117,15 @@ public class TrainingMongoContext implements TrainingContext {
         return collection.findOne("{_id:#}", new ObjectId(id)).as(Training.class);
     }
 
+    @Override
+    public boolean findTrainingByCategoryId(String categoryid) {
+        Training training = collection.findOne("{categoryid:#}", categoryid).as(Training.class);
+        if(training != null){
+            return true;
+        }
+        return false;
+    }
+
     public void removeAll() {
         collection.drop();
     }

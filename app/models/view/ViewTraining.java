@@ -2,7 +2,6 @@ package models.view;
 
 import models.storage.Category;
 import models.storage.Training;
-import models.util.DateConverter;
 
 public class ViewTraining implements Comparable<ViewTraining> {
         private Training training;

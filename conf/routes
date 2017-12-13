@@ -76,6 +76,9 @@ POST    /utility/gettrainings/:category            controllers.UtilityController
 
 POST    /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
 POST    /utility/addcategory                       controllers.UtilityController.addCategory
+POST    /utility/deletecategory                    controllers.UtilityController.deleteCategory
+POST    /managetraining/utility/addcategory        controllers.UtilityController.addCategory
+POST    /managetraining/utility/deletecategory        controllers.UtilityController.deleteCategory
 
 GET     /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
 POST    /utility/checksignup/:dateid/:userid       controllers.UtilityController.checkUserSignUp(dateid: String, userid: String)

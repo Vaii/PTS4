@@ -28,4 +28,6 @@ public class CategoryRepository {
     public Category getCategoryByName(String categoryName) {
         return context.getCategoryByName(categoryName);
     }
+
+    public Boolean removeCategory(Category category){return context.removeCategory(category);}
 }

@@ -25,14 +25,17 @@
 
             <div class="row col-lg-12" id="listDivTraining">
                 <div class="row col-lg-12" id="listDivTitle">
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <label>Trainingscode</label>
                     </div>
                     <div class="col-lg-3">
                         <label>Training</label>
                     </div>
-                    <div class="col-lg-3">
-                        <label>Tijd/Datum</label>
+                    <div class="col-lg-2">
+                        <label>Datum</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label>Starttijd</label>
                     </div>
                     <div class="col-lg-3">
                         <label>Locatie</label>
@@ -41,14 +44,17 @@
                 </div>
 
                 <div class="row col-lg-12" id="listviewrowTraining">
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <p>@training.getTraining().getTrainingCode()</p>
                     </div>
                     <div class="col-lg-3">
                         <p>@training.getTraining().getName()</p>
                     </div>
-                    <div class="col-lg-3">
-                        <p>@training.getDate().getDateString() </p>
+                    <div class="col-lg-2">
+                        <p>@training.getDate().getDateOnlyString()</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p>@training.getDate.getTmeOnlyString() uur</p>
                     </div>
                     <div class="col-lg-3">
                         <p>@training.getDate().getLocation().getStreetName() @training.getDate().getLocation().getStreetNumber()
@@ -78,7 +84,7 @@
                             <p><i class="fa fa-phone fa-fw" aria-hidden="true"></i>  @trainee.getPhoneNumber()</p>
                         </div>
                         <div class="col-lg-4 ">
-                            <p><i class="fa fa-envelope fa-fw" aria-hidden="true"></i> @trainee.getEmail()</p>
+                            <p><i class="fa fa-envelope fa-fw" aria-hidden="true"></i><a href="mailto:@trainee.getEmail()"> @trainee.getEmail()</a></p>
                         </div>
                     </div>
                 }

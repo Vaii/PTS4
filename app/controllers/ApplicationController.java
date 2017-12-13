@@ -31,7 +31,8 @@ public class ApplicationController extends Controller {
     public Result javascriptRoutes() {
         return ok(
                 JavaScriptReverseRouter.create("jsRoutes",
-                        routes.javascript.TrainingController.signUpCourse()
+                        routes.javascript.TrainingController.signUpCourse(),
+                        routes.javascript.UtilityController.addCategory()
                 )
         ).as("text/javascript");
     }

@@ -70,4 +70,9 @@ public class TrainingRepository implements TrainingContext {
     public Training getTrainingById(String id) {
         return context.getTrainingById(id);
     }
+
+    @Override
+    public boolean findTrainingByCategoryId(String categoryid) {
+        return context.findTrainingByCategoryId(categoryid);
+    }
 }
