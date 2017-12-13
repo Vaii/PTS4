@@ -8,7 +8,7 @@ var tOptions = "";
 for (var i = 0; i < locJson.length; i++) {
     var loc = locJson[i];
 
-    var opt = "<option value=\"" + loc.id + "\">" + loc.streetName + "</option>\n";
+    var opt = "<option value=\"" + loc.id + "\"> "+ loc.room + " " + loc.streetName + " " + loc.streetNumber + " " + loc.city +"</option>\n";
 
     lOptions += opt;
 }

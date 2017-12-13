@@ -111,11 +111,11 @@
                                     <div class="col-lg-3">
                                         <label class="form-control-label" for="locationId[]">Locatie:</label>
                                         <select id="locationId" name="locationId[]" required="true" class="form-control form-control">
-                                            <option value="@viewDates(index).getLocation.getId()" class="blank" selected="true">@viewDates(index).getLocation.getStreetName</option>
                                             @for(location <- locations) {
-                                                @if(location.getStreetName == viewDates(index).getLocation.getStreetName) {
+                                                @if(location.getStreetName == viewDates.get(index).getLocation.getStreetName && location.getRoom() == viewDates.get(index).getLocation.getStreetName) {
+                                                    <option value="@location.getId()" selected="true" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity() </option>
                                                 } else {
-                                                    <option value="@location.getId()" >@location.getStreetName</option>
+                                                    <option value="@location.getId()" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity()</option>
                                                 }
                                             }
                                         </select>
