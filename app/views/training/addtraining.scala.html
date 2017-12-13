@@ -12,6 +12,7 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/addtraining.css")">
     <script src="@routes.Assets.at("/javascripts/trainingCheck.js")"></script>
     <script src="@routes.Assets.at("javascripts/overlapCheckAdd.js")"></script>
+    <script src="@routes.Assets.at("/javascripts/fullcalendar.js")"></script>
     <script>
             function unescapeHTML(string) {
                 var elt = document.createElement("span");
@@ -47,7 +48,7 @@
                         <div class="col-lg-3">  
                             <label class="form-control-label" for="date[]">Datum:</label>
                             <input type="datetime-local" id="date" name="date[]" required="true"
-                            value="" class="form-control dateInput")>
+                            value="" class="form-control dateInput" min="@(new Date().format("yyyy-MM-dd'T'hh:mm"))">
                         </div>
 
                         <div class="col-lg-4">
@@ -83,19 +84,15 @@
                         Docent is al ingepland, selecteer een andere docent of verplaats de datum.</div>
                     <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
                 </div>
-                <input class="btn btn-default" type="button" value="Nog een datum toevoegen" onClick="addInput('dynamicInput');">
             </div>
 
-            </div>
+
             <br>
             <div class="row"><div class="col-lg-12">@b4.number(form("duration"), '_label -> "Duur(in dagen):", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div></div>
             <div class="row"><div class="col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "form-control-inline", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div></div>
             <div class="row"><div class="col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "form-control-inline", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div></div>
 
             <div class="row"><div class="col-lg-12">@b4.text(form("category"), '_label -> "Categorie:", 'class -> "form-control-inline", 'placeholder -> "Voer categorie in(bv. java)")</div></div>
-            <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div></div>
-        </div>
-}
 
             <div class="row">
                 <div class="col-lg-12">
@@ -128,5 +125,6 @@
             </div>
             <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
             </div>
-        </div>
+    </div>
+}
 }
