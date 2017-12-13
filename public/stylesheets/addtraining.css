@@ -56,6 +56,11 @@ h1 {
     font-size: smaller;
 }
 
+#loadingImage {
+    width: 1em;
+    height: 1em;
+}
+
 .popup{
     display: none;
 }
