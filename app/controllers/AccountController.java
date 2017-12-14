@@ -55,7 +55,6 @@ public class AccountController extends Controller {
         }
         else{
             if(login(username, password, ctx().session().get("previousUrl"))) {
-                System.out.println("Login has: " + ctx().session().get("previousUrl"));
                 if(ctx().session().get("previousUrl") != null) {
                     return redirect(ctx().session().get("previousUrl"));
                 } else {
@@ -92,7 +91,11 @@ public class AccountController extends Controller {
 
         if(userRepo.addUser(user, password)){
             if(login(user.getEmail(), password, ctx().session().get("previousUrl"))) {
-                return redirect(routes.ApplicationController.index());
+                if(ctx().session().get("previousUrl") != null) {
+                    return redirect(ctx().session().get("previousUrl"));
+                } else {
+                    return redirect(routes.ApplicationController.index());
+                }
             }
             return ok(registerSuccess.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
         }
