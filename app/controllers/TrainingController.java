@@ -90,6 +90,7 @@ public class TrainingController extends Controller {
     }
 
     @With(Redirect.class)
+    @Security.Authenticated(Secured.class)
     public Result signUpEmployee(String id) {
 
         Form<TuitionForm> filledTuitionForm = tuitionFormForm.bindFromRequest();
