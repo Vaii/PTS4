@@ -51,7 +51,7 @@ public class LocationController extends Controller {
 
     }
 
-    // method to get the results from the html form and redirect the user to the next page
+    // method to get the results from the html form and Redirect the user to the next page
     @Security.Authenticated(Secured.class)
     public Result createLocation(){
     Form<Location> boundForm = form.bindFromRequest();
