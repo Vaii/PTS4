@@ -54,14 +54,7 @@ public class AccountController extends Controller {
             return redirect(routes.AccountController.login());
         }
         else{
-            if(login(username, password, ctx().session().get("previousUrl"))) {
-                if(ctx().session().get("previousUrl") != null) {
-                    return redirect(ctx().session().get("previousUrl"));
-                } else {
-                    return redirect(routes.ApplicationController.index());
-                }
-            }
-            return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
+            return login(username, password, ctx().session().get("previousUrl"));
         }
     }
 
@@ -90,14 +83,7 @@ public class AccountController extends Controller {
         }
 
         if(userRepo.addUser(user, password)){
-            if(login(user.getEmail(), password, ctx().session().get("previousUrl"))) {
-                if(ctx().session().get("previousUrl") != null) {
-                    return redirect(ctx().session().get("previousUrl"));
-                } else {
-                    return redirect(routes.ApplicationController.index());
-                }
-            }
-            return ok(registerSuccess.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            return login(user.getEmail(), password, ctx().session().get("previousUrl"));
         }
 
         return badRequest(register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
@@ -114,15 +100,18 @@ public class AccountController extends Controller {
         return redirect(routes.ApplicationController.index());
     }
 
-    private boolean login(String email, String password, String previousUrl) {
+    private Result login(String email, String password, String previousUrl) {
         if(userRepo.login(email, password)){
             session().clear();
-            session("previousUrl", previousUrl);
+            if(previousUrl != null) {
+                session("previousUrl", previousUrl);
+            } else {
+                session("previousUrl", "/");
+            }
             session("email", email);
 
-            return true;
+            return redirect(session().get("previousUrl"));
         }
-        return false;
+        return badRequest(login.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
     }
-
 }
