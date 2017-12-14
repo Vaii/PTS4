@@ -54,11 +54,10 @@ public class AccountController extends Controller {
             return redirect(routes.AccountController.login());
         }
         else{
-            if(login(username, password)) {
-                Http.Context ctx = ctx();
-                System.out.println("Login has: " + ctx.session().get("previousUrl"));
-                if(ctx.session().get("previousUrl") != null) {
-                    return redirect(ctx.session().get("previousUrl"));
+            if(login(username, password, ctx().session().get("previousUrl"))) {
+                System.out.println("Login has: " + ctx().session().get("previousUrl"));
+                if(ctx().session().get("previousUrl") != null) {
+                    return redirect(ctx().session().get("previousUrl"));
                 } else {
                     return redirect(routes.ApplicationController.index());
                 }
@@ -92,7 +91,7 @@ public class AccountController extends Controller {
         }
 
         if(userRepo.addUser(user, password)){
-            if(login(user.getEmail(), password)) {
+            if(login(user.getEmail(), password, ctx().session().get("previousUrl"))) {
                 return redirect(routes.ApplicationController.index());
             }
             return ok(registerSuccess.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
@@ -112,9 +111,10 @@ public class AccountController extends Controller {
         return redirect(routes.ApplicationController.index());
     }
 
-    private boolean login(String email, String password) {
+    private boolean login(String email, String password, String previousUrl) {
         if(userRepo.login(email, password)){
             session().clear();
+            session("previousUrl", previousUrl);
             session("email", email);
 
             return true;
