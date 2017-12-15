@@ -21,11 +21,7 @@ public class ApplicationController extends Controller {
         return ok(index.render("Info Support Knowledgecentre", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
-    @Inject
-    MailerClient mailerClient;
     public Result contact() {
-        MailService mailer = new MailService(mailerClient);
-        mailer.sendEmail();
         return ok(contact.render("Contact", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
