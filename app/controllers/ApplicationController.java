@@ -1,7 +1,10 @@
 package controllers;
 
+import com.google.inject.Inject;
 import models.storage.Secured;
+import models.util.MailService;
 import models.util.Redirect;
+import play.api.libs.mailer.MailerClient;
 import play.mvc.*;
 import play.routing.JavaScriptReverseRouter;
 import views.html.shared.message;
@@ -18,7 +21,11 @@ public class ApplicationController extends Controller {
         return ok(index.render("Info Support Knowledgecentre", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
+    @Inject
+    MailerClient mailerClient;
     public Result contact() {
+        MailService mailer = new MailService(mailerClient);
+        mailer.sendEmail();
         return ok(contact.render("Contact", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
 
