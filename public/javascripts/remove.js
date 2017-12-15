@@ -10,7 +10,7 @@ $(document).ready(function () {
             title: "Verwijderen?",
             text: "Een verwijderde account kan niet teruggehaald worden!",
             icon: "warning",
-            buttons: true,
+            buttons: ["Annuleren", "Verwijderen"],
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
