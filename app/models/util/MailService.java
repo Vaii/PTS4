@@ -1,10 +1,13 @@
 package models.util;
 
 import models.storage.DateTime;
+import models.storage.Location;
 import models.storage.User;
 import play.libs.mailer.Email;
 import play.libs.mailer.MailerClient;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 
 public class MailService {
@@ -14,9 +17,18 @@ public class MailService {
         this.mailerClient = mailerClient;
     }
 
-    public void sendSignUpConfirmation(User user, String trainingName, DateTime dt, String location, String materials) {
-        String cid = "1234";
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    public void sendSignUpConfirmation(User user, String trainingName, DateTime dt, Location location, String materials) {
+        String date = dt.getDateString().substring(5);
+        String time =dt.getDateString().substring(0,5);
+        String locationString = location.getStreetName() + " " + location.getStreetNumber() + " " + location.getCity();
+        String buildingString = location.getRoom();
+        String materialsString;
+        if(materials.equals("")) {
+            materialsString = "-";
+        } else {
+            materialsString = materials;
+        }
+
         Email email = new Email()
                 .setSubject("Inschrijving Training")
                 .setFrom("pts4.demo@gmail.com")
@@ -242,6 +254,7 @@ public class MailService {
                         "                  \n" +
                         "                    <div align=\"center\" class=\"img-container center  autowidth  fullwidth\" style=\"padding-right: 0px;  padding-left: 0px;\">\n" +
                         "<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px;\" align=\"center\"><![endif]-->\n" +
+                        "  <img class=\"center  autowidth  fullwidth\" align=\"center\" border=\"0\" src=\"https://inspire.infosupport.com/wp-content/uploads/2015/12/Info-Support-30cm-300DPI-PNG.png\" alt=\"Image\" title=\"Image\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 500px\" width=\"500\">\n" +
                         "<!--[if mso]></td></tr></table><![endif]-->\n" +
                         "</div>\n" +
                         "\n" +
@@ -249,7 +262,117 @@ public class MailService {
                         "                  \n" +
                         "                    <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\"><![endif]-->\n" +
                         "<div style=\"color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\">\t\n" +
-                        "\t<div style=\"font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;\"><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Beste "  + user.getFirstName() + ",</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">&#160;<br></p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Bedankt voor het inschrijven, hieronder vindt u alle informatie nog een keer op een rijtje:</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">&#160;<br></p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Naam :&#160; &#160;" + trainingName + "</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Datum:&#160; &#160;" + dt.getDateString().substring(6) + "</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Starttijd: &#160;" +  dt.getDateString().substring(0, 5)+ "</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Locatie:&#160; &#160;" +location+ "</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Benodigde materialen:"+ materials+ "</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">&#160;<br></p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Wij wensen u veel succes.</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">&#160;<br></p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Voor contact informatie en eventuele vragen of opemerkingen kunt u hier terecht.</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\"><br data-mce-bogus=\"1\"></p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Vriedenlijke groeten,</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Het Info Support team</p></div>\t\n" +
+                        "\t<div style=\"font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;\"><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Beste "+ user.getFirstName() +",</p></div>\t\n" +
+                        "</div>\n" +
+                        "<!--[if mso]></td></tr></table><![endif]-->\n" +
+                        "\n" +
+                        "                  \n" +
+                        "                  \n" +
+                        "                    <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\"><![endif]-->\n" +
+                        "<div style=\"color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\">\t\n" +
+                        "\t<div style=\"font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;\"><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Bedankt voor u inschrijving, hieronder vindt u alle informatie nogmaals op een rijtje.</p></div>\t\n" +
+                        "</div>\n" +
+                        "<!--[if mso]></td></tr></table><![endif]-->\n" +
+                        "\n" +
+                        "                  \n" +
+                        "                  \n" +
+                        "                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"divider\" style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+                        "    <tbody>\n" +
+                        "        <tr style=\"vertical-align: top\">\n" +
+                        "            <td class=\"divider_inner\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top;padding-right: 10px;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;min-width: 100%;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+                        "                <table class=\"divider_content\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+                        "                    <tbody>\n" +
+                        "                        <tr style=\"vertical-align: top\">\n" +
+                        "                            <td style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+                        "                                <span></span>\n" +
+                        "                            </td>\n" +
+                        "                        </tr>\n" +
+                        "                    </tbody>\n" +
+                        "                </table>\n" +
+                        "            </td>\n" +
+                        "        </tr>\n" +
+                        "    </tbody>\n" +
+                        "</table>\n" +
+                        "                  \n" +
+                        "              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+                        "              </div>\n" +
+                        "            </div>\n" +
+                        "          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->\n" +
+                        "        </div>\n" +
+                        "      </div>\n" +
+                        "    </div>    <div style=\"background-color:transparent;\">\n" +
+                        "      <div style=\"Margin: 0 auto;min-width: 320px;max-width: 500px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;\" class=\"block-grid two-up \">\n" +
+                        "        <div style=\"border-collapse: collapse;display: table;width: 100%;background-color:transparent;\">\n" +
+                        "          <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"background-color:transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width: 500px;\"><tr class=\"layout-full-width\" style=\"background-color:transparent;\"><![endif]-->\n" +
+                        "\n" +
+                        "              <!--[if (mso)|(IE)]><td align=\"center\" width=\"250\" style=\" width:250px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+                        "            <div class=\"col num6\" style=\"max-width: 320px;min-width: 250px;display: table-cell;vertical-align: top;\">\n" +
+                        "              <div style=\"background-color: transparent; width: 100% !important;\">\n" +
+                        "              <!--[if (!mso)&(!IE)]><!--><div style=\"border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\"><!--<![endif]-->\n" +
+                        "\n" +
+                        "                  \n" +
+                        "                    <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\"><![endif]-->\n" +
+                        "<div style=\"color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\">\t\n" +
+                        "\t<div style=\"font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;\"><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Training:</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Datum:</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Starttijd:</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Locatie:</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Gebouw:&#160;</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Benodigde materialen:</p></div>\t\n" +
+                        "</div>\n" +
+                        "<!--[if mso]></td></tr></table><![endif]-->\n" +
+                        "\n" +
+                        "                  \n" +
+                        "              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+                        "              </div>\n" +
+                        "            </div>\n" +
+                        "              <!--[if (mso)|(IE)]></td><td align=\"center\" width=\"250\" style=\" width:250px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+                        "            <div class=\"col num6\" style=\"max-width: 320px;min-width: 250px;display: table-cell;vertical-align: top;\">\n" +
+                        "              <div style=\"background-color: transparent; width: 100% !important;\">\n" +
+                        "              <!--[if (!mso)&(!IE)]><!--><div style=\"border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\"><!--<![endif]-->\n" +
+                        "\n" +
+                        "                  \n" +
+                        "                    <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\"><![endif]-->\n" +
+                        "<div style=\"color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\">\t\n" +
+                        "\t<div style=\"font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;\"><p style=\"margin: 0;font-size: 12px;line-height: 14px\"><span style=\"font-size: 14px; line-height: 16px;\">"+ trainingName +"</span></p><p style=\"margin: 0;font-size: 12px;line-height: 14px\"><span style=\"font-size: 14px; line-height: 16px;\">"+date+"</span></p><p style=\"margin: 0;font-size: 12px;line-height: 14px\"><span style=\"font-size: 14px; line-height: 16px;\">"+time+"</span></p><p style=\"margin: 0;font-size: 12px;line-height: 14px\"><span style=\"font-size: 14px; line-height: 16px;\">"+locationString+"</span></p><p style=\"margin: 0;font-size: 12px;line-height: 14px\"><span style=\"font-size: 14px; line-height: 16px;\">"+buildingString+"</span></p><p style=\"margin: 0;font-size: 12px;line-height: 14px\"><span style=\"font-size: 14px; line-height: 16px;\">"+materialsString+"</span></p></div>\t\n" +
+                        "</div>\n" +
+                        "<!--[if mso]></td></tr></table><![endif]-->\n" +
+                        "\n" +
+                        "                  \n" +
+                        "              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+                        "              </div>\n" +
+                        "            </div>\n" +
+                        "          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->\n" +
+                        "        </div>\n" +
+                        "      </div>\n" +
+                        "    </div>    <div style=\"background-color:transparent;\">\n" +
+                        "      <div style=\"Margin: 0 auto;min-width: 320px;max-width: 500px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;\" class=\"block-grid \">\n" +
+                        "        <div style=\"border-collapse: collapse;display: table;width: 100%;background-color:transparent;\">\n" +
+                        "          <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"background-color:transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width: 500px;\"><tr class=\"layout-full-width\" style=\"background-color:transparent;\"><![endif]-->\n" +
+                        "\n" +
+                        "              <!--[if (mso)|(IE)]><td align=\"center\" width=\"500\" style=\" width:500px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+                        "            <div class=\"col num12\" style=\"min-width: 320px;max-width: 500px;display: table-cell;vertical-align: top;\">\n" +
+                        "              <div style=\"background-color: transparent; width: 100% !important;\">\n" +
+                        "              <!--[if (!mso)&(!IE)]><!--><div style=\"border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\"><!--<![endif]-->\n" +
+                        "\n" +
+                        "                  \n" +
+                        "                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"divider\" style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+                        "    <tbody>\n" +
+                        "        <tr style=\"vertical-align: top\">\n" +
+                        "            <td class=\"divider_inner\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top;padding-right: 10px;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;min-width: 100%;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+                        "                <table class=\"divider_content\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+                        "                    <tbody>\n" +
+                        "                        <tr style=\"vertical-align: top\">\n" +
+                        "                            <td style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+                        "                                <span></span>\n" +
+                        "                            </td>\n" +
+                        "                        </tr>\n" +
+                        "                    </tbody>\n" +
+                        "                </table>\n" +
+                        "            </td>\n" +
+                        "        </tr>\n" +
+                        "    </tbody>\n" +
+                        "</table>\n" +
+                        "                  \n" +
+                        "                  \n" +
+                        "                    <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\"><![endif]-->\n" +
+                        "<div style=\"color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\">\t\n" +
+                        "\t<div style=\"font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;\"><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Wij wensen u veel succes. Heeft u vragen of opmerkingen dan kunt u hier terecht.</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\"><br data-mce-bogus=\"1\"></p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Vriendelijke groeten,</p><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Uw Info Support team</p></div>\t\n" +
                         "</div>\n" +
                         "<!--[if mso]></td></tr></table><![endif]-->\n" +
                         "\n" +

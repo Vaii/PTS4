@@ -88,11 +88,9 @@ public class TrainingController extends Controller {
                 }
 
                 Training training = trainingRepo.getTrainingById(signUpDate.getTrainingID());
-                Location loc = locationRepo.getLocation(signUpDate.getLocationID());
+                Location loc = locationRepo.getLocation(signUpDate.getLocationID());;
 
-                String location = loc.getStreetName() + " " + loc.getStreetNumber() + " " + loc.getCity();
-
-                mailer.sendSignUpConfirmation(Secured.getUserInfo(ctx()), training.getName(), signUpDate, location, training.getRequiredMaterial());
+                mailer.sendSignUpConfirmation(Secured.getUserInfo(ctx()), training.getName(), signUpDate, loc, training.getRequiredMaterial());
 
                 signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signUpDate);
