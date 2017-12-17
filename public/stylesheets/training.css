@@ -251,5 +251,5 @@ a.btn.btn-danger {
 
 .trainingContent li {
     display: none;
-    opacity: 0;
+    /*opacity: 0;*/
 }

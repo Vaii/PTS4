@@ -2,7 +2,7 @@ $(document).ready(function () {
     $('.categoryLink').on('click', function (e) {
         if ($('#trainingMenu').css('display') === 'block') {
             $("#trainingContent").css('visibility', 'hidden');
-            fadeOutTrainingContent();
+            //fadeOutTrainingContent();
             toggleTrainingMenu(false);
         }
         setActiveLink($(this));
@@ -149,16 +149,25 @@ function fadeInTrainingContent() {
 
 function fadeOutTrainingContent() {
     $('#trainingContent > li').each(function () {
-        //sleep(100);
         $(this).delay(400).fadeOut(300);
     });
 }
 
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds){
-            break;
-        }
+function setPredeterminedTraining(category, training) {
+    if ($('#trainingMenu').css('display') === 'block') {
+        $("#trainingContent").css('visibility', 'hidden');
+        fadeOutTrainingContent();
+        toggleTrainingMenu(false);
     }
+
+    getTrainings(category);
+    toggleTrainingMenu(true);
+
+    setTrainingContent(training);
+}
+
+function unescapeHTML(string) {
+    var elt = document.createElement("span");
+    elt.innerHTML = string;
+    return elt.innerText;
 }
