@@ -271,10 +271,15 @@ public class TrainingController extends Controller {
             List<User> teachers = userRepo.getAllTeachers();
             List<Category> categories = categoryRepo.getAllCategories();
 
+            Training t = trainingRepo.getTrainingById(id);
+            String categoryId = t.getCategoryid();
+
+            List<User> skilledTeachers = userRepo.getSkilledTeachers(categoryId);
+
             JsonNode locationJson = Json.toJson(locations);
             JsonNode teacherJson = Json.toJson(teachers);
 
-            Training t = trainingRepo.getTrainingById(id);
+
             Category cat = categoryRepo.getCategoryById(category);
             ViewTraining viewTraining = new ViewTraining(t,null,cat);
             List<ViewDate> viewDates;
@@ -283,7 +288,7 @@ public class TrainingController extends Controller {
             //Collections.sort(viewDates); this is buggy when editing locations in managetraining
 
             Form<Training> editForm = form.fill(viewTraining.getTraining());
-            return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), categories, viewTraining,
+            return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getSkilledTeachers(categoryId),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), categories, viewTraining,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm, viewDates, locationJson, teacherJson));
         }
     }
@@ -496,5 +501,6 @@ public class TrainingController extends Controller {
 
         return true;
     }
+
 }
 

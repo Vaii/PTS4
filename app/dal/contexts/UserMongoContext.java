@@ -37,6 +37,7 @@ public class UserMongoContext implements UserContext {
                                                     " lastName:#," +
                                                     " email:#," +
                                                     " role:#," +
+                    " company:#," +
                     " salt:#," +
                     " hashedPassword:#," +
                     " phoneNumber:#," +
@@ -128,6 +129,18 @@ public class UserMongoContext implements UserContext {
     @Override
     public List<User> getAllTeachers() {
         MongoCursor<User> results = collection.find("{role:#}", Role.DOCENT).as(User.class);
+        List<User> teachers = new ArrayList<>();
+
+        while (results.hasNext()) {
+            User teacher = results.next();
+            teachers.add(teacher);
+        }
+        return teachers;
+    }
+
+    @Override
+    public List<User> getSkilledTeachers(String skillId) {
+        MongoCursor<User> results = collection.find("{skillIds:#}", skillId).as(User.class);
         List<User> teachers = new ArrayList<>();
 
         while (results.hasNext()) {
