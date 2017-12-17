@@ -248,3 +248,8 @@ a.btn.btn-danger {
     border-radius: 5px;
     text-underline: none;
 }
+
+.trainingContent li {
+    display: none;
+    opacity: 0;
+}
