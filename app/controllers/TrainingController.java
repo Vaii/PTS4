@@ -268,16 +268,14 @@ public class TrainingController extends Controller {
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             List<Location> locations = locationRepo.getAll();
-            List<User> teachers = userRepo.getAllTeachers();
             List<Category> categories = categoryRepo.getAllCategories();
-
             Training t = trainingRepo.getTrainingById(id);
-            String categoryId = t.getCategoryid();
 
+            String categoryId = t.getCategoryid();
             List<User> skilledTeachers = userRepo.getSkilledTeachers(categoryId);
 
             JsonNode locationJson = Json.toJson(locations);
-            JsonNode teacherJson = Json.toJson(teachers);
+            JsonNode teacherJson = Json.toJson(skilledTeachers);
 
 
             Category cat = categoryRepo.getCategoryById(category);
