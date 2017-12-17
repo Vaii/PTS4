@@ -44,6 +44,10 @@ function toggleTrainingMenu(expanding) {
 }
 
 function addTrainingsToDiv(trainings) {
+    var firstTim = false;
+    if($('#trainingContent').children().length < 1) {
+        firstTim = true;
+    }
     $('#trainingContent').empty();
     $.each(trainings, function (index, element) {
         $('#trainingContent').append(
@@ -56,6 +60,9 @@ function addTrainingsToDiv(trainings) {
             )
         );
     });
+    if(firstTim) {
+        fadeInTrainingContent();
+    }
 }
 
 function setTrainingContent(training) {
@@ -142,13 +149,14 @@ function setActiveTraining(training) {
 }
 
 function fadeInTrainingContent() {
+    console.log("Fading in");
     $('#trainingContent').find('> li').each(function (index) {
         $(this).delay(100*index).animate({opacity: '1.0'});
     });
 }
 
 function fadeOutTrainingContent() {
-    $('#trainingContent > li').each(function () {
+    $('#trainingContent').find('> li').each(function () {
         $(this).delay(400).fadeOut(300);
     });
 }
