@@ -234,3 +234,17 @@ a.btn.btn-danger {
 #removecategorycontainer{
     padding-right: 0;
 }
+
+.categoryLink.active {
+    background-color: #0078c9;
+    color: white;
+    border-radius: 5px;
+    text-underline: none;
+}
+
+.trainingLink.active {
+    background-color: #0078c9;
+    color: white;
+    border-radius: 5px;
+    text-underline: none;
+}

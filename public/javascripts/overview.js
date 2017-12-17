@@ -4,6 +4,7 @@ $(document).ready(function () {
             $("#trainingContent").css('visibility', 'hidden');
             toggleTrainingMenu(false);
         }
+        setActiveLink($(this));
         getTrainings($(this).attr('id'));
         toggleTrainingMenu(true);
     });
@@ -45,7 +46,7 @@ function addTrainingsToDiv(trainings) {
     $.each(trainings, function (index, element) {
         $('#trainingContent').append(
             $('<li>').append(
-                $('<a>').attr('href', '#').attr('id', element).addClass("trainingLink").append(
+                $('<a>').attr('href', '#').attr('id', element).addClass("trainingLink").addClass(element.name).append(
                     $('<span>').attr('class', 'tab').append(element.name)
                 ).bind('click', function () {
                     setTrainingContent(element);
@@ -56,6 +57,7 @@ function addTrainingsToDiv(trainings) {
 }
 
 function setTrainingContent(training) {
+    setActiveTraining(training);
     $("#noTrainingContent").css('display', 'none');
     deleteContentDates();
     getDate(training);
@@ -118,4 +120,22 @@ function setTrainingDates(date, training) {
 
 function deleteContentDates() {
     $("#trainingContentDates").empty();
+}
+
+function setActiveLink(newLink) {
+    $('.categoryLink').each(function () {
+        $(this).removeClass("active");
+    });
+
+    newLink.addClass("active");
+}
+
+function setActiveTraining(training) {
+    $('.trainingLink').each(function () {
+        $(this).removeClass("active");
+        if($(this).hasClass(training.name)) {
+            $(this).addClass("active");
+        }
+    });
+
 }
