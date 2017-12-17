@@ -198,30 +198,21 @@ public class TrainingController extends Controller {
     @With(Redirect.class)
     public Result overview() {
         return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies() ,new ArrayList<>(), null,
-                TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+                TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, ""));
     }
 
-    public Result overviewCategory(String category) {
-        if(category == null) {
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(),new ArrayList<>(), null,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
-        } else {
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), null,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
-        }
-
-    }
-
-    public Result trainingOverview(String category, String id) {
+    public Result trainingOverview(String id) {
         if (id == null) {
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), null,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(), new ArrayList<>(), null,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, ""));
         } else {
-            List<ViewDate> viewDates;
-            viewDates =  converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
-            Collections.sort(viewDates);
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
+
+            Training t = trainingRepo.getTrainingById(id);
+            Category cat = categoryRepo.getCategoryById(t.getCategoryid());
+            JsonNode node = Json.toJson(t);
+
+            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(), new ArrayList<>(),node ,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, cat.getCategory()));
         }
     }
 

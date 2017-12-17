@@ -1,12 +1,25 @@
 @import models.view.ViewDate
 @import models.storage.Training
 @import models.storage.User
-@(categories: Map[String, Integer], trainings: List[Training], training: Training, page: String, isLoggedIn: Boolean, User: User, viewDates: List[ViewDate])
+@import com.fasterxml.jackson.databind.JsonNode
+@(categories: Map[String, Integer], trainings: List[Training], training: JsonNode, page: String, isLoggedIn: Boolean, User: User, viewDates: List[ViewDate], category: String)
 
 @shared.main(page, isLoggedIn, User) {
 
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
-    <script src="@routes.Assets.at("javascripts/overview.js")">
+    <script src="@routes.Assets.at("javascripts/overview.js")"></script>
+    <script>
+            $(document).ready(function () {
+                var training = "@training";
+                if (training !== "") {
+                    training = JSON.parse(unescapeHTML(training));
+                    console.log(training);
+                    if (training !== undefined) {
+                        var category = "@category";
+                        setPredeterminedTraining(category, training);
+                    }
+                }
+            });
     </script>
     <div class="container">
         <div class="row">
