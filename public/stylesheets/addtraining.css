@@ -72,6 +72,10 @@ h1 {
     margin-top:10px;
 }
 
+#helpbtn{
+    margin-top: 10px;
+}
+
 #newcategorybtn{
     margin-top: 10px;
     margin-bottom: 15px;
@@ -82,4 +86,11 @@ h1 {
 .errordisplay{
     display: none;
     color: #b1000d;
+}
+.helpdisplay{
+    display:inline-block;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
 }
