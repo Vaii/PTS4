@@ -126,6 +126,10 @@ public class DateTime {
         trainees.add(id);
     }
 
+    public void removeTrainee(String id){
+        trainees.remove(id);
+    }
+
     @JsonProperty(M_TRAINING)
     public String getTrainingID() {
         return trainingID;

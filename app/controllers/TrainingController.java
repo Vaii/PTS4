@@ -61,6 +61,7 @@ public class TrainingController extends Controller {
         this.form = formFactory.form(Training.class);
         this.tuitionFormForm = formFactory.form(TuitionForm.class);
     }
+
     @With(Redirect.class)
     @Security.Authenticated(Secured.class)
     public Result signUpCourse(String id) {
@@ -72,13 +73,13 @@ public class TrainingController extends Controller {
                 List<User> managers = userRepo.getAllManagers();
                 Map<String, String> managerMap = mapManager(managers);
 
-                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt , trainingRepo.getTrainingById(dt.getTrainingID()), tuitionFormForm, managerMap));
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, trainingRepo.getTrainingById(dt.getTrainingID()), tuitionFormForm, managerMap));
             } else {
                 DateTime signUpDate = dateRepo.getDateTime(id);
                 DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
 
-                if(overlapError != null) {
-                    return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
+                if (overlapError != null) {
+                    return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), trainingRepo.getTrainingById(signUpDate.getTrainingID()), trainingRepo.getTrainingById(overlapError.getTrainingID()), signUpDate, overlapError, "/overview"));
                 }
 
                 signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
@@ -88,6 +89,22 @@ public class TrainingController extends Controller {
             }
         }
     }
+
+    @With(Redirect.class)
+    @Security.Authenticated(Secured.class)
+    public Result signOutCourse(String id) {
+        if (id == null) {
+            return notFound();
+        } else {
+            DateTime signOutDate = dateRepo.getDateTime(id);
+            signOutDate.removeTrainee(Secured.getUserInfo(ctx()).getId());
+            dateRepo.updateDateTime(signOutDate);
+            return ok(message.render("Succesvol uitgeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+                    "U bent succesvol uitgeschreven voor de de training", "/"));
+        }
+    }
+
+
 
     @With(Redirect.class)
     @Security.Authenticated(Secured.class)
