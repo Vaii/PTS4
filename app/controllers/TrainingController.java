@@ -98,19 +98,20 @@ public class TrainingController extends Controller {
         if (id == null) {
             return notFound();
         } else {
+
             Date date = new Date();
             DateTime signOutDate = dateRepo.getDateTime(id);
             Calendar c = Calendar.getInstance();
             c.setTime(date);
             c.add(Calendar.DATE,7);
-            if(c.getTime().compareTo(signOutDate.getDate())<0){
+            int days = c.getTime().compareTo(signOutDate.getDate());
+            if(days<0){
                 signOutDate.removeTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signOutDate);
                 return ok(message.render("Succesvol uitgeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
                         "U bent succesvol uitgeschreven voor de de training", "/"));
             } else {
-                return ok(message.render("De training is binnen 7 dagen.", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                        "Om u te kunnen uitschrijven kunt u contact opnemen met infosupport@info.nl", "/"));
+                return ok(singOutError.render("Uitschrijven mislukt",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),signOutDate,days));
 
             }
 

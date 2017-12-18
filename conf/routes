@@ -51,7 +51,6 @@ GET     /personalOverview                   controllers.TrainingController.perso
 GET     /teacherstudentoverview/:id         controllers.TrainingController.teacherStudentOverview(id: String)
 
 
-
 # Admin Panel
 GET     /admin                              controllers.AdminController.overview
 GET     /admin/creation                     controllers.AdminController.creationPage
