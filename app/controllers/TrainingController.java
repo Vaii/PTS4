@@ -18,6 +18,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
+import sun.util.calendar.LocalGregorianCalendar;
 import views.html.shared.message;
 import views.html.training.*;
 import views.html.teacher.*;
@@ -26,6 +27,7 @@ import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -96,11 +98,23 @@ public class TrainingController extends Controller {
         if (id == null) {
             return notFound();
         } else {
+            Date date = new Date();
             DateTime signOutDate = dateRepo.getDateTime(id);
-            signOutDate.removeTrainee(Secured.getUserInfo(ctx()).getId());
-            dateRepo.updateDateTime(signOutDate);
-            return ok(message.render("Succesvol uitgeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                    "U bent succesvol uitgeschreven voor de de training", "/"));
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            c.add(Calendar.DATE,7);
+            if(c.getTime().compareTo(signOutDate.getDate())<0){
+                signOutDate.removeTrainee(Secured.getUserInfo(ctx()).getId());
+                dateRepo.updateDateTime(signOutDate);
+                return ok(message.render("Succesvol uitgeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+                        "U bent succesvol uitgeschreven voor de de training", "/"));
+            } else {
+                return ok(message.render("De training is binnen 7 dagen.", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+                        "Om u te kunnen uitschrijven kunt u contact opnemen met infosupport@info.nl", "/"));
+
+            }
+
+
         }
     }
 
