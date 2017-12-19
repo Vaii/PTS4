@@ -80,33 +80,33 @@ function addNewContent(data) {
 }
 
 function addErrorMessage() {
-    $('.popup').addClass('has-danger');
+    $('.outline').addClass('has-danger');
     $('#errormessage').text("Categorie bestaat al en is niet toegevoegd aan de lijst");
     $('.errordisplay').css("display", "block");
     $('.errordisplay').css("color", "#d9534f");
 }
 
 function addSuccesMessage(){
-    $('.popup').addClass('has-success');
+    $('.outline').addClass('has-success');
     $('#errormessage').text("Categorie is succesvol toegevoegd aan de lijst");
     $('.errordisplay').css("display", "block");
     $('.errordisplay').css("color", "#5cb85c");
 }
 
 function deleteErrorMessage(){
-    $('.popup').addClass('has-danger');
+    $('.outline').addClass('has-danger');
     $('#errormessage').text("Deze categorie is in gebruik en kan niet verwijdert worden");
     $('.errordisplay').css("display", "block");
     $('.errordisplay').css("color", "#d9534f");
 }
 function deleteSuccesMessage(){
-    $('.popup').addClass('has-success');
+    $('.outline').addClass('has-success');
     $('#errormessage').text("Categorie is succesvol verwijderd");
     $('.errordisplay').css("display", "block");
     $('.errordisplay').css("color", "#5cb85c");
 }
 function emptyTextBox(){
-    $('.popup').addClass('has-danger');
+    $('.outline').addClass('has-danger');
     $('#errormessage').text("Voer alstublieft een categorie in");
     $('.errordisplay').css("display", "block");
     $('.errordisplay').css("color", "#d9534f");
