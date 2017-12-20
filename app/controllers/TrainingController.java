@@ -87,7 +87,7 @@ public class TrainingController extends Controller {
                 signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signUpDate);
                 return ok(message.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                        "U bent succesvol ingeschreven voor de de training", "/"));
+                        "U bent succesvol ingeschreven voor de de training", "/personalOverview"));
             }
         }
     }
