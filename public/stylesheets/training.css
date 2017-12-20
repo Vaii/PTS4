@@ -213,7 +213,7 @@ a.btn.btn-danger {
 .newcategory{
     margin-bottom: 10px;
 }
-#popupbutton{
+#newcategorybtn{
     margin-top:10px;
 }
 #newcategory {
@@ -221,7 +221,7 @@ a.btn.btn-danger {
     height: 40px;
 }
 
-#newcategorybtn{
+#popupbutton{
     margin-top: 10px;
     margin-bottom: 15px;
 }

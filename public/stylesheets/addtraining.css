@@ -69,7 +69,7 @@ h1 {
 .newcategory{
     margin-bottom: 10px;
 }
-#popupbutton{
+#newcategorybtn{
     margin-top:10px;
 }
 
@@ -89,7 +89,7 @@ h1 {
     height: 40px;
 }
 
-#newcategorybtn{
+#popupbutton{
     margin-top: 10px;
     margin-bottom: 15px;
 }
