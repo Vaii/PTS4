@@ -68,7 +68,6 @@ function addTrainingsToDiv(trainings) {
 function setTrainingContent(training) {
     setActiveTraining(training);
     $("#noTrainingContent").css('display', 'none');
-    deleteContentDates();
     getDate(training);
     console.log(training);
     $('#trainingContentName').text(training.name);
@@ -87,6 +86,7 @@ function setTrainingContent(training) {
 function setTrainingDates(date, training) {
     var container = $('#trainingContentDates');
     $("#loadingImage").hide();
+    deleteContentDates();
     if (date.length === 0) {
         container.append("<p> Geen datums beschikbaar <p>");
     } else {
