@@ -8,9 +8,11 @@
 @import models.storage.User
 @import models.storage.Location
 @import models.storage.Category
-@(categories: Map[String, Integer], teachers:List[User], trainings: List[Training], locations: List[Location], allcategories: List[Category], training: ViewTraining, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates : List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
+@(categories: Map[String, Integer], teachers: List[User], trainings: List[Training], locations: List[Location], allcategories: List[Category], training: ViewTraining, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates: List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
 
-@{ var myCounter : String = "1" }
+@{
+    var myCounter: String = "1"
+}
 
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
@@ -33,8 +35,7 @@
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
     <script src="@routes.Assets.at("/javascripts/categoryPopUp.js")"></script>
     <script>
-            function removeDate(id, obj, tCode)
-            {
+            function removeDate(id, obj, tCode) {
                 deleteInput(obj);
                 $.ajax({
                     type: 'POST',
@@ -42,57 +43,58 @@
                 });
             }
     </script>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 trainingmenu">
-                    <ul>
-                        <lh>Categorie</lh>
-                        @if(!categories.isEmpty) {
-                            @for((key, value) <- categories) {
-                                @if(!trainings.isEmpty){
-                                    @if(trainings.get(0).getCategoryid.equals(key)){
-                                        <li class="active"><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
-                                    } else {
-                                        <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
-                                    }
-                                } else{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 trainingmenu">
+                <ul>
+                    <lh>Categorie</lh>
+                    @if(!categories.isEmpty) {
+                        @for((key, value) <- categories) {
+                            @if(!trainings.isEmpty) {
+                                @if(trainings.get(0).getCategoryid.equals(key)) {
+                                    <li class="active"><a href="@routes.TrainingController.manageCategory(key)">@key
+                                        (@value)</a></li>
+                                } else {
                                     <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
                                 }
+                            } else {
+                                <li><a href="@routes.TrainingController.manageCategory(key)">@key (@value)</a></li>
                             }
                         }
-                    </ul>
-                </div>
-                <div class="col-lg-2 trainingmenu">
-                    <ul>
-                        <lh>Training</lh>
-                        <li id="newTrn"><a href="@routes.TrainingController.addTraining()">
-                            Nieuwe Training Toevoegen</a> </li>
-                        @if(!trainings.isEmpty) {
-                            @for(t <- trainings) {
-                                @if(training != null) {
-                                    @if(t.getId.equals(training.getTraining().getId())) {
-                                        <li class="active" ><a href="@routes.TrainingController.manageTraining(t.getCategoryid(), t.getId())"> @t.getName</a></li>
-                                    } else {
-                                        <li><a href="@routes.TrainingController.manageTraining(t.getCategoryid(), t.getId())"> @t.getName</a></li>
-                                    }
+                    }
+                </ul>
+            </div>
+            <div class="col-lg-2 trainingmenu">
+                <ul>
+                    <lh>Training</lh>
+                    <li id="newTrn"><a href="@routes.TrainingController.addTraining()">
+                        Nieuwe Training Toevoegen</a> </li>
+                    @if(!trainings.isEmpty) {
+                        @for(t <- trainings) {
+                            @if(training != null) {
+                                @if(t.getId.equals(training.getTraining().getId())) {
+                                    <li class="active" ><a href="@routes.TrainingController.manageTraining(t.getCategoryid(), t.getId())"> @t.getName</a></li>
                                 } else {
                                     <li><a href="@routes.TrainingController.manageTraining(t.getCategoryid(), t.getId())"> @t.getName</a></li>
                                 }
+                            } else {
+                                <li><a href="@routes.TrainingController.manageTraining(t.getCategoryid(), t.getId())"> @t.getName</a></li>
                             }
-                        } else {
-                            <li><p>Geen beschikbare trainingen.</p></li>
                         }
+                    } else {
+                        <li><p>Geen beschikbare trainingen.</p></li>
+                    }
 
-                    </ul>
-                </div>
+                </ul>
+            </div>
 
-                <div class="row col-lg-8 trainingtext">
-                    <div>
+            <div class="row col-lg-8 trainingtext">
+                <div>
                     <div class="row col-lg-12">
                         <h1>Beheren</h1>
                     </div>
                     @if(training != null) {
-                        @b4.form(routes.TrainingController.edit(training.getCategory().getName() ,training.getTraining().getTrainingCode())) {
+                        @b4.form(routes.TrainingController.edit(training.getCategory().getName(), training.getTraining().getTrainingCode())) {
                             @helper.CSRF.formField
                             <div class="row col-lg-12">
                                 <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
@@ -101,17 +103,17 @@
                                 <div class="row col-lg-12">@b4.text(form("requiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
 
                                 <div id="dynamicInput" class="row col-lg-12">
-                                @for(index <- 0 until viewDates.size){
+                                @for(index <- 0 until viewDates.size) {
                                     <div class="row col-lg-12 row@(index + 1)">
-                                    <div class="col-lg-5">
-                                        <label class="form-control-label" for="date[]">Datum:</label>
-                                        <input type="datetime-local" id="dates" name="date[]" required="true" value="@viewDates.get(index).getEditableString" class="form-control dateInput">
-                                        <input type="hidden" name="dateIds[]" value="@viewDates.get(index).getDateId" class="dateIds" />
-                                    </div>
+                                        <div class="col-lg-5">
+                                            <label class="form-control-label" for="date[]">Datum:</label>
+                                            <input type="datetime-local" id="dates" name="date[]" required="true" value="@viewDates.get(index).getEditableString" class="form-control dateInput">
+                                            <input type="hidden" name="dateIds[]" value="@viewDates.get(index).getDateId" class="dateIds" />
+                                        </div>
 
-                                    <div class="col-lg-3">
-                                        <label class="form-control-label" for="locationId[]">Locatie:</label>
-                                        <select id="locationId" name="locationId[]" required="true" class="form-control form-control">
+                                        <div class="col-lg-3">
+                                            <label class="form-control-label" for="locationId[]">Locatie:</label>
+                                            <select id="locationId" name="locationId[]" required="true" class="form-control form-control">
                                             @for(location <- locations) {
                                                 @if(location.getStreetName == viewDates.get(index).getLocation.getStreetName && location.getRoom() == viewDates.get(index).getLocation.getRoom) {
                                                     <option value="@location.getId()" selected="true" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity() </option>
@@ -119,21 +121,21 @@
                                                     <option value="@location.getId()" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity()</option>
                                                 }
                                             }
-                                        </select>
-                                    </div>
+                                            </select>
+                                        </div>
 
-                                    <div class="col-lg-3">
-                                        <label class="form-control-label" for="teacherID[]">Docent:</label>
-                                        <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
-                                           <option value="@viewDates.get(index).getTeacher.getId()" class="blank" selected="true">@viewDates.get(index).getTeacher.getFirstName</option>
-                                            @for(teacher <- teachers) {
-                                                @if(teacher.getFirstName == viewDates.get(index).getTeacher.getFirstName) {
-                                                } else {
-                                                <option value="@teacher.getId()" >@teacher.getFirstName</option>
+                                        <div class="col-lg-3">
+                                            <label class="form-control-label" for="teacherID[]">Docent:</label>
+                                            <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
+                                                <option value="@viewDates.get(index).getTeacher.getId()" class="blank" selected="true">@viewDates.get(index).getTeacher.getFirstName</option>
+                                                @for(teacher <- teachers) {
+                                                    @if(teacher.getFirstName == viewDates.get(index).getTeacher.getFirstName) {
+                                                    } else {
+                                                        <option value="@teacher.getId()" >@teacher.getFirstName</option>
+                                                    }
                                                 }
-                                            }
-                                        </select>
-                                    </div>
+                                            </select>
+                                        </div>
                                         <div class="col-lg-1">
                                             <input id="btnDelete" class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates.get(index).getDateId', this, '@training.getTraining().getTrainingCode()');">
                                         </div>
@@ -141,28 +143,28 @@
                                 }
                                 </div>
 
-                               <div class="row">
-                                   <div style="display: none;" id="loadingDiv">
-                                       Beschikbaarheid docent controleren: <img id="loadingImage" alt="laden" src="@routes.Assets.at("images/loading.gif")"> </div>
-                                   <div style="display: none;
-                                       color: #d9534f" id="validation_error_1" class="form-control-feedback ">
-                                       Docent is al ingepland, selecteer een andere docent of verplaats de datum.</div>
+                                <div class="row">
+                                    <div style="display: none;" id="loadingDiv">
+                                        Beschikbaarheid docent controleren: <img id="loadingImage" alt="laden" src="@routes.Assets.at("images/loading.gif")"> </div>
+                                    <div style="display: none;
+                                        color: #d9534f" id="validation_error_1" class="form-control-feedback ">
+                                        Docent is al ingepland, selecteer een andere docent of verplaats de datum.</div>
 
-                                   <input class="btn btn-default" id="btnAddDate" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
-                               </div>
+                                    <input class="btn btn-default" id="btnAddDate" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
+                                </div>
                                 <div class="row col-lg-12">@b4.number(form("duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
                                 <div class="row col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
                                 <div class="row col-lg-12">@b4.number(form("capacity"), '_label -> "Capaciteit:", 'class -> "f", 'placeholder -> "Voer capaciteit in(bv. 20 personen)")</div>
                                 <div class="row col-lg-12">
                                     <label class="form-control-label">Categorie:</label>
                                     <select class="form-control form-control-inline categorycontainer" id="categorycontainer" name="categoryid">
-                                        @for(category<- allcategories){
-                                            @if(training.getCategory.get_id().equals(category.get_id())){
-                                                <option value="@category.get_id()" selected="true">@category.getName()</option>
-                                            }else{
-                                                <option value="@category.get_id()">@category.getName()</option>
-                                            }
+                                    @for(category <- allcategories) {
+                                        @if(training.getCategory.get_id().equals(category.get_id())) {
+                                            <option value="@category.get_id()" selected="true">@category.getName()</option>
+                                        } else {
+                                            <option value="@category.get_id()">@category.getName()</option>
                                         }
+                                    }
                                     </select>
                                 </div>
                                 <div class="popup col-lg-12">
@@ -170,19 +172,17 @@
                                         <label class="form-control-label">Nieuwe Categorie:</label>
                                         <div class="row col-lg-12 outline">
                                             <input type="text" class="form-control-inline form-control" id="newcategory">
+                                            <input data-toggle="tooltip" title="Voer de naam van de categorie in die u wil verwijderen/toevoegen" data-placement="bottom"
+                                            class="btn btn-outline-info" type="button" value="?" id="helpbtn">
                                         </div>
                                         <div class="row col-lg-12">
                                             <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
                                         </div>
-                                        <div class="col-lg-6" id="addcategorycontainer">
+                                        <div class="col-lg-7" id="addcategorycontainer">
                                             <input class="btn btn-outline-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
                                         </div>
                                         <div class="col-lg-5" id="removecategorycontainer">
                                             <input class="btn btn-outline-danger col-lg-12" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
-                                        </div>
-                                        <div class="col-lg-1">
-                                            <input data-toggle="tooltip" title="Voer de naam van de categorie in die u wil verwijderen/toevoegen" data-placement="bottom"
-                                            class="btn btn-outline-info" type="button" value="?" id="helpbtn">
                                         </div>
                                     </div>
                                 </div>
@@ -196,10 +196,10 @@
                                         Naar Training</a>
                                 </div>
                                 <div class="col-lg-4" id="editTrn">
-                                    @b4.submit('class -> "btn btn-warning") { Wijzigen }
+                                @b4.submit('class -> "btn btn-warning") { Wijzigen }
                                 </div>
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.removeTraining(training.getCategory().getName() ,training.getTraining().getTrainingCode())" class="btn btn-danger">
+                                    <a href="@routes.TrainingController.removeTraining(training.getCategory().getName(), training.getTraining().getTrainingCode())" class="btn btn-danger">
                                         Verwijderen</a>
                                 </div>
                                 }
@@ -209,10 +209,10 @@
                             <p id="selectText">Selecteer een training</p>
                         </div>
                     }
-                    </div>
                 </div>
             </div>
         </div>
-    }
+    </div>
+}
 
 
