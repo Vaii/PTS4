@@ -39,8 +39,18 @@ public class UserRepository implements UserContext {
     }
 
     @Override
+    public long getTotalAmountUsers() {
+        return context.getTotalAmountUsers();
+    }
+
+    @Override
     public List<User> getAll() {
         return context.getAll();
+    }
+
+    @Override
+    public List<User> getSpecificUsers(long offset, long recLimit) {
+        return context.getSpecificUsers(offset, recLimit);
     }
 
     @Override

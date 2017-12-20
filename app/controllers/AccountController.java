@@ -68,6 +68,7 @@ public class AccountController extends Controller {
         String password = filledForm.field("password").value();
         String validation = filledForm.field("validation").value();
         String company = filledForm.field("Company").value();
+        String email = filledForm.field("email").value();
 
         if(!password.equals(validation)) {
             return badRequest(register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("validation", "Wachtwoorden komen niet overeen")));
@@ -76,6 +77,11 @@ public class AccountController extends Controller {
         String companycheck = company.replaceAll("\\s+", "").toLowerCase();
         if(companycheck.equals("infosupport")){
             return badRequest( register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("Company", "Info Support medewerkers krijgen een account, neem contact op met een administrator")));
+        }
+        
+        String emailcheck = email.toLowerCase();
+        if( emailcheck.contains("infosupport")){
+            return badRequest( register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm.withError("email", "Info Support medewerkers krijgen een account, neem contact op met een administrator")));
         }
 
         if(filledForm.hasErrors()){

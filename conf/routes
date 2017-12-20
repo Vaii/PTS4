@@ -57,7 +57,7 @@ GET     /admin/creation                     controllers.AdminController.creation
 POST    /admin/creation/account             controllers.AdminController.createUser
 GET     /admin/manageaccount                controllers.AdminController.manageAccount(email: String)
 POST    /admin/editAccount                  controllers.AdminController.editUser
-GET     /admin/accountSelection             controllers.AdminController.accountSelector
+GET     /admin/accountSelection             controllers.AdminController.accountSelector(page: Long)
 GET     /admin/removeUser                   controllers.AdminController.removeUser(id: String)
 
 #Manager Panel

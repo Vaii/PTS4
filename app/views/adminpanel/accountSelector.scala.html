@@ -1,7 +1,7 @@
 @import models.storage.User
 @import org.apache.commons.lang3.text.WordUtils
 
-@(page: String, isLoggedIn: Boolean, User: User, Users: List[User])
+@(page: String, isLoggedIn: Boolean, User: User, Users: List[User], pageIndex: Long, lastPage: Long, nextPage: Long, maxPage: Long)
 
 @shared.main(page, isLoggedIn, User) {
     <head>
@@ -39,5 +39,16 @@
                 </div>
             </div>
                 }
+
+        @if(pageIndex > 0) {
+            <a href="@routes.AdminController.accountSelector(lastPage)" class="btn btn-primary previous">Vorige</a>
+        }
+
+        <div class="pageNumber">Pagina @(pageIndex + 1) van de @maxPage</div>
+
+        @if((pageIndex + 1) != maxPage) {
+            <a href="@routes.AdminController.accountSelector(nextPage)" class="btn btn-primary next">Volgende</a>
+        }
+
         </div>
 }

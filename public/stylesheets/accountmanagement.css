@@ -10,3 +10,18 @@ h1{
 .account{
 
 }
+
+.previous {
+    float: left;
+}
+
+.next {
+    float: right;
+    margin-right: 10%;
+}
+
+.pageNumber {
+    width: 20%;
+    margin: 0 auto;
+    font-size: 13px;
+}
