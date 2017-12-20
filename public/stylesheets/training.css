@@ -245,6 +245,11 @@ a.btn.btn-danger {
     margin-left: 10px;
 }
 
+#catrow{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 .categoryLink.active {
     background-color: #0078c9;
     color: white;
@@ -269,4 +274,7 @@ a.btn.btn-danger {
 }
 .outline{
     padding: 0;
+}
+#errormessage{
+    font-weight: bold;
 }

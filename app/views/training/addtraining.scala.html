@@ -45,7 +45,7 @@
             <div class="form-group">
                 <div id="dynamicInput">
                     <div class="row col-lg-12 row0">
-                        <div class="col-lg-3">  
+                        <div class="col-lg-3">
                             <label class="form-control-label" for="date[]">Datum:</label>
                             <input type="datetime-local" id="dates" name="date[]" required="true"
                             value="" class="form-control dateInput" min="@(new Date().format("yyyy-MM-dd'T'hh:mm"))">
@@ -57,7 +57,7 @@
                                 <option value="" class="blank" selected="true" disabled="disabled">
                                     Selecteer een locatie</option>
                                 @for(location <- locations) {
-                                    <option value="@location.getId()" >@location.getRoom() @location.getStreetName() @location.getStreetNumber()  @location.getCity()</option>
+                                    <option value="@location.getId()" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity()</option>
                                 }
                             </select>
                         </div>
@@ -93,11 +93,11 @@
                 <div class="col-lg-12">
                     <label class="form-control-label">Categorie:</label>
                     <select class="form-control form-control-inline newcategory" id="categorycontainer" name="categoryid">
-                    @if(!categories.isEmpty){
-                        @for(category <- categories){
+                    @if(!categories.isEmpty) {
+                        @for(category <- categories) {
                             <option value="@category.get_id()">@category.getName()</option>
                         }
-                    }else{
+                    } else {
                         <option>
                             Er bestaan nog geen categorieën
                         </option>
@@ -108,13 +108,25 @@
             <div class="row popup">
                 <div class="col-lg-12">
                     <div class="outline">
-                        <label class="form-control-label">Nieuwe Categorie:</label>
-                        <input type="text" class="form-control-inline form-control" id="newcategory" placeholder="Categorie Naam">
-                        <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
-                        <input class="btn btn-outline-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
-                        <input class="btn btn-outline-danger" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
-                        <input data-toggle="tooltip" title="Voer de naam van de categorie in die u wil verwijderen/toevoegen" data-placement="bottom"
-                        class="btn btn-outline-info" type="button" value="Help" id="helpbtn">
+
+                            <label class="form-control-label">Nieuwe Categorie:</label>
+                        <div class="row col-lg-12">
+                            <input type="text" class="form-control-inline form-control" id="newcategory" placeholder="Categorie Naam">
+                            <input data-toggle="tooltip" title="Voer de naam van de categorie in die u wil verwijderen/toevoegen" data-placement="bottom"
+                            class="btn btn-outline-info" type="button" value="?" id="helpbtn">
+                        </div>
+                        <div class="row col-lg-12">
+                            <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <input class="btn btn-outline-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
+
+                            </div>
+                            <div class="col-lg-7">
+                                <input class="btn btn-outline-danger" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -125,6 +137,6 @@
             </div>
             <div class="row"><div class="col-lg-12"> @b4.submit('class -> "btn btn-primary") { Toevoegen }</div>
             </div>
-    </div>
+        </div>
 }
 }
