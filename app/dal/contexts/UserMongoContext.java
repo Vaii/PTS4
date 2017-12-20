@@ -93,6 +93,24 @@ public class UserMongoContext implements UserContext {
     }
 
     @Override
+    public long getTotalAmountUsers() {
+        return collection.count();
+    }
+
+    @Override
+    public List<User> getSpecificUsers(long offset, long recLimit) {
+        MongoCursor<User> results = collection.find().skip((int)offset).limit((int)recLimit).as(User.class);
+        List<User> users = new ArrayList<>();
+
+        while (results.hasNext()) {
+            User user = results.next();
+            users.add(user);
+        }
+        return users;
+
+    }
+
+    @Override
     public boolean updateUser(User user) {
 
         List<String> hashedDbPassword = collection.distinct("hashedPassword").query("{_id:#}", new ObjectId(user.getId())).as(String.class);
