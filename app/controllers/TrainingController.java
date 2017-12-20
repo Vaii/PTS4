@@ -22,6 +22,7 @@ import sun.util.calendar.LocalGregorianCalendar;
 import views.html.shared.message;
 import views.html.training.*;
 import views.html.teacher.*;
+import views.html.notification.signupConfirmation;
 
 import javax.inject.Inject;
 import java.text.DateFormat;
@@ -86,8 +87,7 @@ public class TrainingController extends Controller {
 
                 signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signUpDate);
-                return ok(message.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                        "U bent succesvol ingeschreven voor de de training", "/personalOverview"));
+                return ok(signupConfirmation.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
             }
         }
     }
@@ -107,8 +107,7 @@ public class TrainingController extends Controller {
             if(days<0){
                 signOutDate.removeTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signOutDate);
-                return ok(message.render("Succesvol uitgeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                        "U bent succesvol uitgeschreven voor de de training", "/personalOverview"));
+                return ok(signupConfirmation.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
             } else {
                 return ok(singOutError.render("Uitschrijven mislukt",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),signOutDate,days));
             }

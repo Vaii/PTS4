@@ -1,0 +1,30 @@
+@import models.storage.User
+@(title: String, isLoggedIn: Boolean, User: User)
+
+@shared.main(title, isLoggedIn, User) {
+    <!--
+        Use this page for single message pages that require a Redirect.
+        The parameter 'Message' is what is shown on the page.
+        The parameter 'URL' is where you want to go after the message.
+        The URL parameter follows the routes files convention. I.E:
+        "/Contact" will Redirect to the Contact view.
+        "/account/register" will Redirect to the Register view
+
+    -->
+    <head>
+        <title>@title</title>
+
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/message.css")">
+        <link rel="shortcut icon" type="image/ico" href="@routes.Assets.at("images/favicon.ico")">
+    </head>
+
+    <div class="container">
+
+        <h1>Succes</h1>
+        <p>Je bent aangemeld voor de training. <br>
+        Je ontvangt spoedig een mail met daarin de gegevens, wij wensen je alvast veel succes. </p>
+
+        <p>Klik<a href="@routes.TrainingController.personalOverview()"> hier</a>  om naar jouw persoonlijk trainingoverzicht te gaan.</p>
+    </div>
+}
