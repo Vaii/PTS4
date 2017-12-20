@@ -95,7 +95,7 @@
                     <select class="form-control form-control-inline newcategory" id="categorycontainer" name="categoryid">
                     @if(!categories.isEmpty){
                         @for(category <- categories){
-                            <option value="@category.get_id()">@category.getCategory</option>
+                            <option value="@category.get_id()">@category.getName()</option>
                         }
                     }else{
                         <option>
@@ -107,8 +107,8 @@
             </div>
             <div class="row popup">
                 <div class="col-lg-12">
-                    <label class="form-control-label">Nieuwe Categorie:</label>
                     <div class="outline">
+                        <label class="form-control-label">Nieuwe Categorie:</label>
                         <input type="text" class="form-control-inline form-control" id="newcategory" placeholder="Categorie Naam">
                         <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
                         <input class="btn btn-outline-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">

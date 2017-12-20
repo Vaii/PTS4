@@ -1,6 +1,5 @@
 @import models.storage.User
-@import models.view.ViewDate
-@(title: String, isLoggedIn: Boolean, User: User, DateTimes :List[ViewDate])
+@(title: String, isLoggedIn: Boolean, User: User)
 
 @shared.main(title, isLoggedIn, User) {
     <!--
@@ -22,15 +21,10 @@
 
     <div class="container">
 
-        <h1>Docent kan niet worden verwijderd</h1>
+        <h1>Succes</h1>
+        <p>Je bent aangemeld voor de training. <br>
+        Je ontvangt spoedig een mail met daarin de gegevens, wij wensen je alvast veel succes. </p>
 
-        <p>Deze docent kan niet worden verwijderd want deze is ingepland op de volgende datums:<p>
-        @for(date <- DateTimes) {
-            <p>@date.getDateString</p>
-        }
-
-        <p>Vervang deze docent eerst door een ander om deze te kunnen verwijderen.</p>
-
-        <a class="btn btn-link" href="@routes.AdminController.accountSelector(0)"> Terug naar account beheer</a>
+        <p>Klik<a href="@routes.TrainingController.personalOverview()"> hier</a>  om naar jouw persoonlijk trainingoverzicht te gaan.</p>
     </div>
 }

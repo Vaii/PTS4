@@ -114,7 +114,12 @@ public class DateTime {
     }
 
     public String getDateString() {
-        DateFormat df = new SimpleDateFormat("hh:mm dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.ENGLISH);
+        return df.format(this.date);
+    }
+
+    public String getDateOnlyString() {
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         return df.format(this.date);
     }
 
@@ -124,6 +129,10 @@ public class DateTime {
 
     public void addTrainee(String id){
         trainees.add(id);
+    }
+
+    public void removeTrainee(String id){
+        trainees.remove(id);
     }
 
     @JsonProperty(M_TRAINING)
@@ -151,6 +160,11 @@ public class DateTime {
      * @return true if there is a overlap between the 2 durations.
      */
     public DateTime checkOverlap(DateTime other ) {
+
+        if(!Objects.equals(this.teacherID, other.teacherID)) {
+            return null;
+        }
+
         Date convertedDatetime = this.date;
         Date convertedDatetime2 = other.getDate();
 

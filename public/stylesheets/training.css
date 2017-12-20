@@ -223,6 +223,7 @@ a.btn.btn-danger {
 }
 #deletecategorybtn{
     margin-top:10px;
+    max-width: 190px;
 }
 .errordisplay{
     display: none;
@@ -234,6 +235,7 @@ a.btn.btn-danger {
 #removecategorycontainer{
     padding-right: 0;
 }
+
 #helpbtn{
     margin-top: 10px;
 }

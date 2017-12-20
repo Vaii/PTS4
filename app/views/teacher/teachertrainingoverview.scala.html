@@ -68,7 +68,7 @@
                 @for(training <- trainings) {
                     <div class="row col-lg-12" id="listviewrow">
                         <div class="col-lg-2">
-                            <p>@training.getCategory().getCategory()</p>
+                            <p>@training.getCategory().getName()</p>
                         </div>
                         <div class="col-lg-2">
                             <p><a href="@routes.TrainingController.trainingOverview(training.getTraining().getId())">@training.getTraining().getName()</a></p>

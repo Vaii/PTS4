@@ -10,3 +10,20 @@ h1{
 .account{
 
 }
+
+.previous {
+
+}
+
+.next {
+
+}
+
+.pageNumber {
+    font-size: 13px;
+    margin-top: 4px;
+}
+.pageNr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

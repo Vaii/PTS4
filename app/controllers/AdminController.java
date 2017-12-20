@@ -132,12 +132,20 @@ public class AdminController extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
-    public Result accountSelector(){
-        List<User> allUsers = uRepo.getAll();
+    public Result accountSelector(long pageIndex){
+        long recLimit = 10;
+        long totalNumber = uRepo.getTotalAmountUsers();
+
+        long offset = recLimit * pageIndex;
+
+        long maxPage = (long) Math.ceil((double) totalNumber / (double)recLimit);
+
+      //  List<User> allUsers = uRepo.getAll();
+        List<User> specificUsers = uRepo.getSpecificUsers(offset, recLimit);
 
         if(Secured.getUserInfo(ctx()).getRole().equals(Role.MEDEWERKERKENNISCENTRUM)){
             return ok(accountSelector.render("Select Account",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), allUsers));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), specificUsers, pageIndex, pageIndex - 1, pageIndex + 1, maxPage));
         }
         else{
             return notFound();

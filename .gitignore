@@ -104,3 +104,4 @@ reports/
 .idea/play2_project_settings.xml
 .idea/modules/pts4.iml
 .idea/modules/pts4-build.iml
+*.xml___jb_tmp___

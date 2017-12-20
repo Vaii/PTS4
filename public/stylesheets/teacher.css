@@ -84,6 +84,9 @@ input:checked + .slider:before {
 label {
     font-weight: bold;
 }
+#singoutBtn {
+    margin-top: 12px;
+}
 
 #listviewrowstreet {
     margin:0px;

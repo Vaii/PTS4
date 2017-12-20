@@ -10,7 +10,9 @@ public interface UserContext {
     User getUser(String firstName, String lastName);
     User getUser(String emailadress);
     User getUserByID(String id);
+    long getTotalAmountUsers();
     List<User> getAll();
+    List<User> getSpecificUsers(long offset, long recLimit);
     boolean updateUser(User user);
     boolean login(String email, String password);
     List<User>getAllTeachers();

@@ -54,12 +54,12 @@
                     @for(cat <- categories) {
                         @if(user.getSkillIds != null) {
                             @if(user.getSkillIds.contains(cat.get_id())) {
-                                <option selected="selected" value="@cat.get_id()">@cat.getCategory()</option>
+                                <option selected="selected" value="@cat.get_id()">@cat.getName()</option>
                             } else {
-                                <option value="@cat.get_id()">@cat.getCategory()</option>
+                                <option value="@cat.get_id()">@cat.getName()</option>
                             }
                         } else {
-                            <option value="@cat.get_id()">@cat.getCategory()</option>
+                            <option value="@cat.get_id()">@cat.getName</option>
                         }
 
                     }
