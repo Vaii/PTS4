@@ -63,6 +63,9 @@ GET     /admin/removeUser                   controllers.AdminController.removeUs
 #Manager Panel
 
 GET     /manager/employees                  controllers.ManagerController.employeeOverview
+GET     /manager/forms                      controllers.ManagerController.formOverview
+GET     /manager/forms/:id                  controllers.ManagerController.inspectForm(id : String)
+POST    /manager/approve                    controllers.ManagerController.approveForm
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)
@@ -77,7 +80,7 @@ POST    /utility/getdates/:trainingid              controllers.UtilityController
 POST    /utility/addcategory                       controllers.UtilityController.addCategory
 POST    /utility/deletecategory                    controllers.UtilityController.deleteCategory
 POST    /managetraining/utility/addcategory        controllers.UtilityController.addCategory
-POST    /managetraining/utility/deletecategory        controllers.UtilityController.deleteCategory
+POST    /managetraining/utility/deletecategory     controllers.UtilityController.deleteCategory
 
 GET     /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
 POST    /utility/checksignup/:dateid/:userid       controllers.UtilityController.checkUserSignUp(dateid: String, userid: String)

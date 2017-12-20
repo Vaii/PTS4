@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -132,6 +134,10 @@ public class TuitionForm {
         return _id;
     }
 
+    public void setId(String _id) {
+        this._id = _id;
+    }
+
     @JsonProperty(M_MANAGER)
     public String getManager() {
         return manager;
@@ -160,8 +166,12 @@ public class TuitionForm {
     }
 
     @JsonProperty(M_COMPANYJOINDATE)
-    public Date getCompanyJoinDate() {
+    public Date getCompanyJoinDate(){
         return companyJoinDate;
+    }
+    public String getCompanyJoinDateString() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(this.companyJoinDate);
     }
 
     public void setCompanyJoinDate(Date companyJoinDate) {

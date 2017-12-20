@@ -1,0 +1,68 @@
+@import b4.vertical.fieldConstructor
+@import play.data.Form
+@import views.html.helper._
+@import models.storage.TuitionCategory
+@import models.storage.Status
+@import models.storage.User
+@import models.storage.Training
+@import models.storage.DateTime
+@import models.view.ViewTuition
+@import models.storage.TuitionForm
+@(page: String, isLoggedIn: Boolean, User: User, data : ViewTuition, form: Form[TuitionForm], manager: Map[String, String])
+
+        @shared.main(page, isLoggedIn, User) {
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
+
+            <div class="container">
+                <div class="col-lg-12">
+                    <h1>Accorderen aanvraag</h1>
+                </div>
+                    @b4.form(routes.ManagerController.approveForm()) {
+                @helper.CSRF.formField
+            <div class="col-lg-12">@b4.hidden(form("id"), '_label -> "id", 'value -> data.getFormId())</div>
+            <div class="col-lg-12">@b4.hidden(form("employeeID"), '_label -> "employeeID", 'value -> data.getEmployee().getId())</div>
+            <div class="col-lg-12">@b4.hidden(form("dateTimeID"), '_label -> "dateTimeID", 'value -> data.getDateTime().getId())</div>
+            <div class="col-lg-12">@b4.select(form("manager"), options(manager), '_label -> "Manager", '_default -> "Selecteer een manager", 'value -> User.getId(), 'readonly -> "true")</div>
+            <div class="col-lg-12">@b4.text(form("Training"), '_label -> "Training Code", 'class -> "", 'value -> data.getTraining.getTrainingCode, 'readonly -> "true")</div>
+            <div class="col-lg-12">@b4.text(form("Employee"), '_label -> "Email medewerker", 'class -> "", 'value -> data.getEmployee().getEmail(), 'readonly -> "true")</div>
+            <div class="col-lg-12">@b4.date(form("CompanyJoinDate"), '_label -> "Datum in dienst", 'class -> "", 'value -> data.getForm().getCompanyJoinDateString(), 'readonly -> "true")</div>
+            <div class="col-lg-12">@b4.text(form("ReasonForCourse"), '_label -> "Reden voor training", 'class -> "", 'value -> data.getForm.getReasonForCourse(), 'readonly -> "true")</div>
+            <div class="col-lg-12">@b4.number(form("StudyCosts"), '_label -> "Prijs", 'class -> "", 'value -> data.getForm().getStudyCosts(), 'readonly -> "true")</div>
+            <div class="col-lg-12">@b4.number(form("ExaminationFees"), '_label -> "Examen kosten", 'class -> "", 'value -> data.getForm().getExaminationFees(), 'readonly -> "true")</div>
+            <div class="col-lg-12">@b4.number(form("TransportCosts"), '_label -> "Reiskosten", 'class -> "", 'value -> data.getForm().getTransportCosts(), 'readonly -> "true")</div>
+            <div class="col-lg-12">@b4.number(form("AccommodationCosts"), '_label -> "Accomodatie kosten", 'class -> "", 'value -> data.getForm().getAccommodationCosts(), 'readonly -> "true")</div>
+            <div class="col-lg-12">@b4.number(form("ExtraCosts"), '_label -> "Extra Kosten", 'class -> "", 'value -> data.getForm().getTotalCosts(), 'readonly -> "true")</div>
+            <div class="form-group" id="Category_field">
+                <div class="col-lg-12">
+                    <label class="from-control-label" for="category">Categorie</label>
+                    <select id="category" name="category" class="form-control category-box" readonly="True">
+                    @for(cat <- TuitionCategory.values()) {
+                        @if(cat.getValue == data.getForm.getCategory.getValue){
+                            <option value="@cat.name()" selected>@cat.getValue</option>
+                        }else{
+                            <option value="@cat.name()">@cat.getValue</option>
+                        }
+                    }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" id="Status_field">
+                <div class="col-lg-12">
+                    <label class="from-control-label" for="Status">Status</label>
+                    <select id="Status" name="Status" class="form-control category-box">
+                    @for(stat <- Status.values()) {
+                        @if(stat.name() == data.getForm.getStatus.name()){
+                            <option value="@stat.name()" selected>@stat.getValue</option>
+                        }else{
+                            <option value="@stat.name()">@stat.getValue</option>
+                        }
+                    }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-12">@b4.submit('class -> "btn btn-primary") { Bevestig}</div>
+            <br/>
+        }
+    </div>
+}

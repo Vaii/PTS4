@@ -1,0 +1,18 @@
+@import models.storage.User
+@import models.view.ViewTraining
+@import models.view.ViewTuition
+@import models.storage.Status
+@(page: String, isLoggedIn: Boolean, User: User, viewTuitions: List[ViewTuition])
+
+@shared.main(page, isLoggedIn, User) {
+<div class="container">
+
+    @for(view <- viewTuitions){
+        <p>Medewerker: @view.getEmployee().getFirstName() Datum: @view.getDateTime().getDateString() Status: @view.getForm().getStatus().getValue
+
+            @if(view.getForm.getStatus() == Status.IN_BEHANDELING){
+                <a href="@routes.ManagerController.inspectForm(view.getFormId())" class="btn btn-outline-danger">Accorderen</a></p>
+            }
+    }
+</div>
+}

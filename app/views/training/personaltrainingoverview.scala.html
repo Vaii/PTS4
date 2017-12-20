@@ -63,7 +63,7 @@
                                         <div class="col-lg-2">
                                             <p>@for(tut <- forms){
                                                 @if(tut.getDateTimeID() == training.getDate().getDateId()){
-                                                    @tut.getStatus()
+                                                    @tut.getStatus().getValue()
                                                 }
                                             }</p>
 
