@@ -67,6 +67,8 @@ public class UtilityController extends Controller {
             dates  = converter.getViewDatesWithoutTeacher(trainingId, "", true);
         }
 
+        Collections.sort(dates);
+
         JsonNode node = Json.toJson(dates);
         return ok(node);
     }
