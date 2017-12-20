@@ -12,16 +12,18 @@ h1{
 }
 
 .previous {
-    float: left;
+
 }
 
 .next {
-    float: right;
-    margin-right: 10%;
+
 }
 
 .pageNumber {
-    width: 20%;
-    margin: 0 auto;
     font-size: 13px;
+    margin-top: 4px;
+}
+.pageNr {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

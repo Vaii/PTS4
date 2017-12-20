@@ -8,14 +8,15 @@
         <!--Sweet alert, more information: https://sweetalert.js.org/guides/  -->
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="@routes.Assets.at("javascripts/remove.js")"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/accountmanagement.css")">
     </head>
     <div class="container">
-
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/accountmanagement.css")">
+        <div class="row">
+            <div class="row col-lg-12">
         <div class="row offset-lg-4">
             <h1>Account Beheren</h1>
-        </div>
-        <div class="row">
+        </div></div>
+        <div class="row col-lg-12">
             <div class="col-lg-4">
                 <h6>Klik op het gewenste Email addres om een account te wijzigen.</h6>
             </div>
@@ -27,7 +28,7 @@
             </div>
         </div>
         @for( x <- Users) {
-            <div class="row account">
+            <div class="row account col-lg-12">
                 <div class="col-lg-4">
                     <a href="@routes.AdminController.manageAccount(x.getEmail())"> @x.getEmail()</a>
                 </div>
@@ -39,16 +40,26 @@
                 </div>
             </div>
                 }
+            <div class="row col-lg-12 pageNr">
+            <div class="row col-lg-6 offset-lg-3 ">
+                <div class="col-lg-4">
+                @if(pageIndex > 0) {
+                    <a href="@routes.AdminController.accountSelector(lastPage)" class="btn btn-outline-primary btn-sm previous">Vorige pagina</a>
+                }
+                </div>
+                <div class="col-lg-4">
+                <div class="pageNumber">Pagina @(pageIndex + 1) van de @maxPage</div>
+                </div>
+                <div class="col-lg-4">
+                @if((pageIndex + 1) != maxPage) {
+                    <a href="@routes.AdminController.accountSelector(nextPage)" class="btn btn-outline-primary btn-sm next">Volgende pagina</a>
+                }
+                </div>
+            </div>
 
-        @if(pageIndex > 0) {
-            <a href="@routes.AdminController.accountSelector(lastPage)" class="btn btn-primary previous">Vorige</a>
-        }
 
-        <div class="pageNumber">Pagina @(pageIndex + 1) van de @maxPage</div>
-
-        @if((pageIndex + 1) != maxPage) {
-            <a href="@routes.AdminController.accountSelector(nextPage)" class="btn btn-primary next">Volgende</a>
-        }
+            </div>
 
         </div>
+    </div>
 }
