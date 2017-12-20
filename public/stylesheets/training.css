@@ -223,6 +223,7 @@ a.btn.btn-danger {
 }
 #deletecategorybtn{
     margin-top:10px;
+    max-width: 190px;
 }
 .errordisplay{
     display: none;
