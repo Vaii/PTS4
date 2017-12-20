@@ -74,7 +74,7 @@ function addNewContent(data) {
         $('#categorycontainer')
             .append($("<option></option>")
                 .attr("value", element._id)
-                .text(element.category)
+                .text(element.name)
             )
     })
 }

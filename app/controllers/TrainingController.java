@@ -6,10 +6,12 @@ import dal.contexts.*;
 import dal.repositories.*;
 import models.storage.*;
 import models.util.DateConverter;
+import models.util.MailService;
 import models.util.OverlapChecker;
 import models.util.Redirect;
 import models.view.ViewDate;
 import models.view.ViewTraining;
+import play.api.libs.mailer.MailerClient;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -18,14 +20,17 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
+import sun.util.calendar.LocalGregorianCalendar;
 import views.html.shared.message;
 import views.html.training.*;
 import views.html.teacher.*;
+import views.html.notification.signupConfirmation;
 
 import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -61,6 +66,9 @@ public class TrainingController extends Controller {
         this.form = formFactory.form(Training.class);
         this.tuitionFormForm = formFactory.form(TuitionForm.class);
     }
+
+
+    @com.google.inject.Inject MailerClient mailerClient;
     @With(Redirect.class)
     @Security.Authenticated(Secured.class)
     public Result signUpCourse(String id) {
@@ -72,22 +80,52 @@ public class TrainingController extends Controller {
                 List<User> managers = userRepo.getAllManagers();
                 Map<String, String> managerMap = mapManager(managers);
 
-                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt , trainingRepo.getTrainingById(dt.getTrainingID()), tuitionFormForm, managerMap));
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, trainingRepo.getTrainingById(dt.getTrainingID()), tuitionFormForm, managerMap));
             } else {
+                MailService mailer = new MailService(mailerClient);
+
                 DateTime signUpDate = dateRepo.getDateTime(id);
                 DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
 
-                if(overlapError != null) {
-                    return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
+                if (overlapError != null) {
+                    return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), trainingRepo.getTrainingById(signUpDate.getTrainingID()), trainingRepo.getTrainingById(overlapError.getTrainingID()), signUpDate, overlapError, "/overview"));
                 }
+
+                Training training = trainingRepo.getTrainingById(signUpDate.getTrainingID());
+                Location loc = locationRepo.getLocation(signUpDate.getLocationID());;
+
+                mailer.sendSignUpConfirmation(Secured.getUserInfo(ctx()), training.getName(), signUpDate, loc, training.getRequiredMaterial());
 
                 signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signUpDate);
-                return ok(message.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                        "U bent succesvol ingeschreven voor de de training", "/"));
+                return ok(signupConfirmation.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
             }
         }
     }
+
+    @With(Redirect.class)
+    @Security.Authenticated(Secured.class)
+    public Result signOutCourse(String id) {
+        if (id == null) {
+            return notFound();
+        } else {
+            Date date = new Date();
+            DateTime signOutDate = dateRepo.getDateTime(id);
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            c.add(Calendar.DATE,7);
+            int days = c.getTime().compareTo(signOutDate.getDate());
+            if(days<0){
+                signOutDate.removeTrainee(Secured.getUserInfo(ctx()).getId());
+                dateRepo.updateDateTime(signOutDate);
+                return ok(signupConfirmation.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            } else {
+                return ok(singOutError.render("Uitschrijven mislukt",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),signOutDate,days));
+            }
+        }
+    }
+
+
 
     @With(Redirect.class)
     @Security.Authenticated(Secured.class)
@@ -212,7 +250,7 @@ public class TrainingController extends Controller {
             JsonNode node = Json.toJson(t);
 
             return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(), new ArrayList<>(),node ,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, cat.getCategory()));
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, cat.getName()));
         }
     }
 

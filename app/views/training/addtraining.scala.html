@@ -95,7 +95,7 @@
                     <select class="form-control form-control-inline newcategory" id="categorycontainer" name="categoryid">
                     @if(!categories.isEmpty){
                         @for(category <- categories){
-                            <option value="@category.get_id()">@category.getCategory</option>
+                            <option value="@category.get_id()">@category.getName()</option>
                         }
                     }else{
                         <option>

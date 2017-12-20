@@ -34,11 +34,18 @@ public class Category {
     public void set_id(String _id){this._id = _id;}
 
     @JsonProperty(M_CATEGORY)
-    public String getCategory(){return this.category;}
+    public String getCategory(){
+        return this.category;
+    }
 
-    public void setCategory(String category){this.category = category.toLowerCase();}
+    public String getName(){
+        String category = this.category;
+        return category.substring(0,1).toUpperCase() + category.substring(1);
+    }
+
+    public void setCategory(String category){this.category = category;}
 
     private void prepareForStorage() {
-        this.category = category.toLowerCase();
+        this.category = this.category.toLowerCase();
     }
 }

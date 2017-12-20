@@ -87,6 +87,7 @@ function setTrainingContent(training) {
 function setTrainingDates(date, training) {
     var container = $('#trainingContentDates');
     $("#loadingImage").hide();
+    deleteContentDates();
     if (date.length === 0) {
         container.append("<p> Geen datums beschikbaar <p>");
     } else {

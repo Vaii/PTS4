@@ -1,0 +1,27 @@
+@import models.storage.Training
+@import models.storage.User
+@import models.storage.DateTime
+@(page: String, isLoggedIn: Boolean, User: User, date: DateTime, daysUntil: Int)
+
+@shared.main(page, isLoggedIn, User) {
+    <head>
+        <title>@page</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/smallPage.css")">
+        <link rel="shortcut icon" type="image/ico" href="@routes.Assets.at("images/favicon.ico")">
+    </head>
+
+    <div class="container">
+        <div class="row col-lg-12">
+        <div class="row">
+            <h1>Oeps er ging iets mis..</h1>
+        </div>
+        <div class="row col-lg-12">
+            <p>De training waarvoor u zich wilt uitschrijven is op @date.getDateOnlyString() .</p>
+            <p>Om uit te kunnen schrijven voor een training die binnen 7 dagen gegeven zal worden, dient u contact op te nemen met: <a href="#">info@@infosupport.nl</a></p>
+        </div>
+        <div class="row col-lg-12">
+            <p>Klik <a href="@routes.TrainingController.personalOverview"> hier</a>  om terug te gaan.</p>
+        </div>
+        </div>
+    </div>
+}
