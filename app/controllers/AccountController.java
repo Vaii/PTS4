@@ -34,7 +34,7 @@ public class AccountController extends Controller {
     }
 
     public Result login(){
-        return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
+        return ok(redirectlogin.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
 
     }
 

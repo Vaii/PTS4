@@ -143,7 +143,7 @@ public class TrainingController extends Controller {
             signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
             dateRepo.updateDateTime(signUpDate);
             return ok(message.render("Inschrijving ingediend", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                    "De aanvraag voor de training is succesvol ingedient", "/"));
+                    "De aanvraag voor de training is succesvol ingedient", "/personalOverview"));
         }
     }
 
@@ -321,7 +321,7 @@ public class TrainingController extends Controller {
             }
 
             sharedRepo.removeTraining(t.getTrainingCode());
-            return ok(removetraining.render(t, TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            return ok(message.render(TRAININGEN,Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Training " + t.getName() + " is verwijderd", "/managetraining"));
         }
     }
 
