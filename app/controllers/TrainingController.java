@@ -109,7 +109,7 @@ public class TrainingController extends Controller {
                 signOutDate.removeTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signOutDate);
                 return ok(message.render("Succesvol uitgeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                        "U bent succesvol uitgeschreven voor de de training", "/"));
+                        "U bent succesvol uitgeschreven voor de de training", "/personalOverview"));
             } else {
                 return ok(singOutError.render("Uitschrijven mislukt",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),signOutDate,days));
 
