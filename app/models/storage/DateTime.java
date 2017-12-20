@@ -118,12 +118,21 @@ public class DateTime {
         return df.format(this.date);
     }
 
+    public String getDateOnlyString() {
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        return df.format(this.date);
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
 
     public void addTrainee(String id){
         trainees.add(id);
+    }
+
+    public void removeTrainee(String id){
+        trainees.remove(id);
     }
 
     @JsonProperty(M_TRAINING)
@@ -176,6 +185,30 @@ public class DateTime {
                 convertedDatetime.after(convertedDatetime2) && convertedDatetime.before(otherEndDate) ||
                 this.date.equals(convertedDatetime2)) {
             return other;
+        }
+
+        return null;
+    }
+
+    public DateTime checkOverlap(Date otherDate, int otherDuration ) {
+        Date convertedDatetime = this.date;
+        Date convertedDatetime2 = otherDate;
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(convertedDatetime);
+        c.add(Calendar.DATE, (int) duration);
+        Date myEndDate = c.getTime();
+
+        Calendar co = Calendar.getInstance();
+        co.setTime(convertedDatetime2);
+        co.add(Calendar.DATE, otherDuration);
+        Date otherEndDate = co.getTime();
+
+        if(convertedDatetime2.after(convertedDatetime) && convertedDatetime2.before(myEndDate) ||
+                otherEndDate.after(convertedDatetime) && otherEndDate.before(myEndDate) ||
+                convertedDatetime.after(convertedDatetime2) && convertedDatetime.before(otherEndDate) ||
+                this.date.equals(convertedDatetime2)) {
+            return new DateTime();
         }
 
         return null;

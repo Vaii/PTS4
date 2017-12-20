@@ -37,15 +37,16 @@ public class UserMongoContext implements UserContext {
                                                     " lastName:#," +
                                                     " email:#," +
                                                     " role:#," +
-                                                    " company:#," +
-                                                    " salt:#," +
-                                                    " hashedPassword:#," +
-                                                    " phoneNumber:#," +
-                                                    " manager:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber(), user.getManager());
+                    " company:#," +
+                    " salt:#," +
+                    " hashedPassword:#," +
+                    " phoneNumber:#," +
+                    " manager:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber(), user.getManager());
             return result.wasAcknowledged();
         }
         else{
             user.setRole(Role.EXTERN);
+
             WriteResult result = collection.insert("{firstName:#," +
                     " lastName:#," +
                     " email:#," +
@@ -105,8 +106,10 @@ public class UserMongoContext implements UserContext {
                 " salt:#," +
                 " hashedPassword:#," +
                 " phoneNumber:#," +
-                " manager:#}" ,user.getFirstName(), user.getLastName(), user.getEmail(),
-                user.getRole(), user.getCompany(),dbSalt.get(0), hashedDbPassword.get(0), user.getPhoneNumber(), user.getManager());
+                " manager:#," +
+                        " skillIds:#}"
+                        ,user.getFirstName(), user.getLastName(), user.getEmail(),
+                user.getRole(), user.getCompany(),dbSalt.get(0), hashedDbPassword.get(0), user.getPhoneNumber(), user.getManager(), user.getSkillIds());
 
         return result.wasAcknowledged();
     }
@@ -126,6 +129,18 @@ public class UserMongoContext implements UserContext {
     @Override
     public List<User> getAllTeachers() {
         MongoCursor<User> results = collection.find("{role:#}", Role.DOCENT).as(User.class);
+        List<User> teachers = new ArrayList<>();
+
+        while (results.hasNext()) {
+            User teacher = results.next();
+            teachers.add(teacher);
+        }
+        return teachers;
+    }
+
+    @Override
+    public List<User> getSkilledTeachers(String skillId) {
+        MongoCursor<User> results = collection.find("{skillIds:#}", skillId).as(User.class);
         List<User> teachers = new ArrayList<>();
 
         while (results.hasNext()) {

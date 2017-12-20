@@ -222,9 +222,44 @@ a.btn.btn-danger {
     margin-bottom: 15px;
 }
 #deletecategorybtn{
-    margin-top:35px;
+    margin-top:10px;
 }
 .errordisplay{
     display: none;
     color: #b1000d;
+}
+#addcategorycontainer{
+    padding-left: 0 ;
+}
+#removecategorycontainer{
+    padding-right: 0;
+}
+#helpbtn{
+    margin-top: 10px;
+}
+
+.categoryLink.active {
+    background-color: #0078c9;
+    color: white;
+    border-radius: 5px;
+    text-underline: none;
+}
+
+.trainingLink.active {
+    background-color: #0078c9;
+    color: white;
+    border-radius: 5px;
+    text-underline: none;
+}
+
+.trainingContent li {
+    /*display: none;*/
+    /*opacity: 0;*/
+}
+
+.outlinecontainer{
+    padding: 0;
+}
+.outline{
+    padding: 0;
 }

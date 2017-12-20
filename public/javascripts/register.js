@@ -15,6 +15,14 @@ $( document ).ready(function () {
         }
     });
 
+    $('#password').on('input', function() {
+        comparePasswords();
+    });
+
+    $('#validation').on('input', function() {
+        comparePasswords();
+    });
+
     function disableControls(disable) {
         $('.btn-default').prop("disabled",disable);
         if(disable) {
@@ -26,3 +34,27 @@ $( document ).ready(function () {
         }
     }
 });
+
+function showPassWordError(disable) {
+    $('.btn-default').prop("disabled",disable);
+    if(disable) {
+        $('#validation_field').addClass('has-danger');
+        $('#validation_error_1').css("display", "block");
+    } else {
+        $('#validation_field').removeClass('has-danger');
+        $('#validation_error_1').css("display", "none");
+    }
+}
+
+function comparePasswords() {
+    var passInput = $("#password").val();
+    var passVal = $("#validation").val();
+
+    if(passInput !== "" && passVal !== "") {
+        if(passInput === passVal) {
+            showPassWordError(false);
+        } else {
+            showPassWordError(true);
+        }
+    }
+}

@@ -14,6 +14,9 @@
 
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/training.css")">
+    <script src="@routes.Assets.at("javascripts/overlapCheckManage.js")"></script>
+    <script src="@routes.Assets.at("/javascripts/fullcalendar.js")"></script>
+
     <script>
             function unescapeHTML(string) {
                 var elt = document.createElement("span");
@@ -26,7 +29,6 @@
 
             var teachJson = "@teacherJson";
             teachJson = JSON.parse(unescapeHTML(teachJson));
-
     </script>
     <script src="@routes.Assets.at("/javascripts/addInput.js")"></script>
     <script src="@routes.Assets.at("/javascripts/categoryPopUp.js")"></script>
@@ -85,6 +87,7 @@
                 </div>
 
                 <div class="row col-lg-8 trainingtext">
+                    <div>
                     <div class="row col-lg-12">
                         <h1>Beheren</h1>
                     </div>
@@ -94,26 +97,26 @@
                             <div class="row col-lg-12">
                                 <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
                                 <div class="row col-lg-12">@b4.text(form("name"), '_label -> "Naam:", 'class -> "", 'placeholder -> "Voer naam in")</div>
-                                <div class="row col-lg-12">@b4.text(form("description"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
+                                <div class="row col-lg-12">@b4.textarea(form("description"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
                                 <div class="row col-lg-12">@b4.text(form("requiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
 
                                 <div id="dynamicInput" class="row col-lg-12">
                                 @for(index <- 0 until viewDates.size){
                                     <div class="row col-lg-12 row@(index + 1)">
                                     <div class="col-lg-5">
-                                        <label class="control-label" for="date[]">Datum:</label>
-                                        <input type="datetime-local" id="date" name="date[]" required="true" value="@viewDates(index).getEditableString" class="form-control">
-                                        <input type="hidden" name="dateIds[]" value="@viewDates(index).getDateId" />
+                                        <label class="form-control-label" for="date[]">Datum:</label>
+                                        <input type="datetime-local" id="dates" name="date[]" required="true" value="@viewDates.get(index).getEditableString" class="form-control dateInput">
+                                        <input type="hidden" name="dateIds[]" value="@viewDates.get(index).getDateId" class="dateIds" />
                                     </div>
 
                                     <div class="col-lg-3">
                                         <label class="form-control-label" for="locationId[]">Locatie:</label>
                                         <select id="locationId" name="locationId[]" required="true" class="form-control form-control">
-                                            <option value="@viewDates(index).getLocation.getId()" class="blank" selected="true">@viewDates(index).getLocation.getStreetName</option>
                                             @for(location <- locations) {
-                                                @if(location.getStreetName == viewDates(index).getLocation.getStreetName) {
+                                                @if(location.getStreetName == viewDates.get(index).getLocation.getStreetName && location.getRoom() == viewDates.get(index).getLocation.getRoom) {
+                                                    <option value="@location.getId()" selected="true" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity() </option>
                                                 } else {
-                                                    <option value="@location.getId()" >@location.getStreetName</option>
+                                                    <option value="@location.getId()" >@location.getRoom() @location.getStreetName() @location.getStreetNumber() @location.getCity()</option>
                                                 }
                                             }
                                         </select>
@@ -121,10 +124,10 @@
 
                                     <div class="col-lg-3">
                                         <label class="form-control-label" for="teacherID[]">Docent:</label>
-                                        <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control">
-                                           <option value="@viewDates(index).getTeacher.getId()" class="blank" selected="true">@viewDates(index).getTeacher.getFirstName</option>
+                                        <select id="teacherId" name="teacherId[]" required="true" class="form-control form-control teacherInput">
+                                           <option value="@viewDates.get(index).getTeacher.getId()" class="blank" selected="true">@viewDates.get(index).getTeacher.getFirstName</option>
                                             @for(teacher <- teachers) {
-                                                @if(teacher.getFirstName == viewDates(index).getTeacher.getFirstName) {
+                                                @if(teacher.getFirstName == viewDates.get(index).getTeacher.getFirstName) {
                                                 } else {
                                                 <option value="@teacher.getId()" >@teacher.getFirstName</option>
                                                 }
@@ -132,14 +135,20 @@
                                         </select>
                                     </div>
                                         <div class="col-lg-1">
-                                            <input id="btnDelete" class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates(index).getDateId', this, '@training.getTraining().getTrainingCode()');">
+                                            <input id="btnDelete" class="btn btn-danger btn@(index + 1)" type="button" value="X" onClick="removeDate('@viewDates.get(index).getDateId', this, '@training.getTraining().getTrainingCode()');">
                                         </div>
                                     </div>
                                 }
                                 </div>
 
                                <div class="row">
-                                    <input class="btn btn-default" id="btnAddDate" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
+                                   <div style="display: none;" id="loadingDiv">
+                                       Beschikbaarheid docent controleren: <img id="loadingImage" alt="laden" src="@routes.Assets.at("images/loading.gif")"> </div>
+                                   <div style="display: none;
+                                       color: #d9534f" id="validation_error_1" class="form-control-feedback ">
+                                       Docent is al ingepland, selecteer een andere docent of verplaats de datum.</div>
+
+                                   <input class="btn btn-default" id="btnAddDate" type="button" value="Nog een datum toevoegen" onClick="addInputEdit('dynamicInput');">
                                </div>
                                 <div class="row col-lg-12">@b4.number(form("duration"), '_label -> "Duur:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer duur in(bv. 2 dagen)")</div>
                                 <div class="row col-lg-12">@b4.number(form("tuition"), '_label -> "Kosten:", 'class -> "", 'step -> "0.01", 'placeholder -> "Voer kosten in")</div>
@@ -156,20 +165,34 @@
                                         }
                                     </select>
                                 </div>
-                                <div class="row popup col-lg-12">
-                                    <label class="form-control-label">Nieuwe Categorie:</label>
-                                    <input type="text" class="form-control-inline form-control" id="newcategory">
-                                    <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
-                                    <input class="btn btn-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
-                                    <input class="btn btn-outline-danger" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
+                                <div class="popup col-lg-12">
+                                    <div class="row col-lg-12 outlinecontainer">
+                                        <label class="form-control-label">Nieuwe Categorie:</label>
+                                        <div class="row col-lg-12 outline">
+                                            <input type="text" class="form-control-inline form-control" id="newcategory">
+                                        </div>
+                                        <div class="row col-lg-12">
+                                            <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
+                                        </div>
+                                        <div class="col-lg-4" id="addcategorycontainer">
+                                            <input class="btn btn-outline-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
+                                        </div>
+                                        <div class="col-lg-4" id="removecategorycontainer">
+                                            <input class="btn btn-outline-danger col-lg-12" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
+                                        </div>
+                                    <div class="col-lg-4">
+                                        <input data-toggle="tooltip" title="Voer de naam van de categorie in die u wil verwijderen/toevoegen" data-placement="bottom"
+                                        class="btn btn-outline-info" type="button" value="Help" id="helpbtn">
+                                    </div>
+                                    </div>
                                 </div>
                                 <div class="row col-lg-12">
-                                    <input class="btn btn-primary" type="button" value="Nieuwe Categorie" id="newcategorybtn">
+                                    <input class="btn btn-primary" type="button" value="Categorie Beheer" id="newcategorybtn">
                                 </div>
                             </div>
                             <div class="row col-lg-12">
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.trainingOverview(training.getCategory().getCategory(), training.getTraining().getId())" class="btn btn-primary">
+                                    <a href="@routes.TrainingController.trainingOverview(training.getTraining().getId())" class="btn btn-primary">
                                         Naar Training</a>
                                 </div>
                                 <div class="col-lg-4" id="editTrn">
@@ -186,7 +209,7 @@
                             <p id="selectText">Selecteer een training</p>
                         </div>
                     }
-
+                    </div>
                 </div>
             </div>
         </div>

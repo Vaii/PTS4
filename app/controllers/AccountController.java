@@ -4,6 +4,7 @@ import dal.contexts.UserMongoContext;
 import dal.repositories.UserRepository;
 import models.storage.Secured;
 import models.storage.User;
+import models.util.Redirect;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
@@ -33,13 +34,11 @@ public class AccountController extends Controller {
     }
 
     public Result login(){
-        flash("url", request().getHeader("referer"));
-        return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
+        return ok(redirectlogin.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
 
     }
 
     public Result redirectlogin(){
-        flash("url", request().getHeader("referer"));
         return ok(redirectlogin.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, false));
     }
 
@@ -55,10 +54,7 @@ public class AccountController extends Controller {
             return redirect(routes.AccountController.login());
         }
         else{
-            if(login(username, password)) {
-                return redirect(routes.ApplicationController.index());
-            }
-            return ok(login.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
+            return login(username, password, ctx().session().get("previousUrl"));
         }
     }
 
@@ -87,10 +83,7 @@ public class AccountController extends Controller {
         }
 
         if(userRepo.addUser(user, password)){
-            if(login(user.getEmail(), password)) {
-                return redirect(routes.ApplicationController.index());
-            }
-            return ok(registerSuccess.render(LOGIN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            return login(user.getEmail(), password, ctx().session().get("previousUrl"));
         }
 
         return badRequest(register.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form));
@@ -107,14 +100,18 @@ public class AccountController extends Controller {
         return redirect(routes.ApplicationController.index());
     }
 
-    private boolean login(String email, String password) {
+    private Result login(String email, String password, String previousUrl) {
         if(userRepo.login(email, password)){
             session().clear();
+            if(previousUrl != null) {
+                session("previousUrl", previousUrl);
+            } else {
+                session("previousUrl", "/");
+            }
             session("email", email);
 
-            return true;
+            return redirect(session().get("previousUrl"));
         }
-        return false;
+        return badRequest(login.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
     }
-
 }

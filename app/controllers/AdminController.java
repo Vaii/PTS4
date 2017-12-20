@@ -1,13 +1,12 @@
 package controllers;
 
+import dal.contexts.CategoryContext;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.UserMongoContext;
+import dal.repositories.CategoryRepository;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.UserRepository;
-import models.storage.DateTime;
-import models.storage.Role;
-import models.storage.Secured;
-import models.storage.User;
+import models.storage.*;
 import models.util.DateConverter;
 import play.data.Form;
 import play.data.FormFactory;
@@ -22,6 +21,7 @@ import views.html.adminpanel.accountSelector;
 import views.html.adminpanel.teacherDeleteError;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +30,7 @@ public class AdminController extends Controller{
 
     private UserRepository uRepo;
     private DateTimeRepository dRepo;
+    private CategoryRepository cRepo;
     private Form<User> form;
     private Form<User> userForm;
     private Form<User> filledForm;
@@ -38,6 +39,7 @@ public class AdminController extends Controller{
     public AdminController(FormFactory formFactory){
         this.uRepo = new UserRepository(new UserMongoContext("User"));
         this.dRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
+        this.cRepo = new CategoryRepository(new CategoryContext("Category"));
         this.form = formFactory.form(User.class);
         this.userForm = formFactory.form(User.class);
         this.filledForm = formFactory.form(User.class);
@@ -65,7 +67,7 @@ public class AdminController extends Controller{
                 uRepo.removeUser(userToRemove); // Remove user from user table.
                 dRepo.removeUser(id); // Remove user from possible trainee fields.
                 return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
-                        ,"Account succesvol verwijderd", "/admin"  ));
+                        ,"Account succesvol verwijderd", "/admin/accountSelection"  ));
             }
         }
         return notFound();
@@ -89,9 +91,12 @@ public class AdminController extends Controller{
 
             List<User> managers = uRepo.getAllManagers();
             Map<String, String> managerMap = mapManager(managers);
+            List<Category> categories = cRepo.getAllCategories();
+
+            User user = uRepo.getUser(email);
 
             return ok(manageaccount.render("Manage Account",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap, categories, user));
         }
         else{
             return notFound();
@@ -105,12 +110,17 @@ public class AdminController extends Controller{
 
         List<User> managers = uRepo.getAllManagers();
         Map<String, String> managerMap = mapManager(managers);
+        List<Category> categories = cRepo.getAllCategories();
+        String email = filledForm.field("email").value();
+
+        List<String> skills = getSkills(filledForm);
 
         if(filledForm.hasErrors()){
             return (badRequest(manageaccount.render("Manage account",
-                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap)));
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap, categories, uRepo.getUser(email))));
         }
         User user = filledForm.get();
+        user.setSkillIds(skills);
 
         if(uRepo.updateUser(user)){
             return ok(message.render("Edit Succes",
@@ -178,4 +188,18 @@ public class AdminController extends Controller{
 
         return null;
     }
+
+    private List<String> getSkills(Form<User> userForm) {
+        List<String> skills = new ArrayList<>();
+        for(int i = 0; i < 50; i++) {
+            String s = userForm.field("skills[" + i + "]").value();
+            if(s == null) {
+                break;
+            }
+            skills.add(s);
+        }
+
+        return skills;
+    }
+
 }

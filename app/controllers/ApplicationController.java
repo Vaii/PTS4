@@ -1,6 +1,7 @@
 package controllers;
 
 import models.storage.Secured;
+import models.util.Redirect;
 import play.mvc.*;
 import play.routing.JavaScriptReverseRouter;
 import views.html.shared.message;
@@ -12,6 +13,7 @@ public class ApplicationController extends Controller {
      /* When routers are not used,
         just navigate to the action in the URL, then it will become highlighted */
 
+     @With(Redirect.class)
     public Result index() {
         return ok(index.render("Info Support Knowledgecentre", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
