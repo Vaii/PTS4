@@ -35,7 +35,7 @@ POST    /location/submit_form               controllers.LocationController.submi
 GET     /addtraining                        controllers.TrainingController.addTraining
 POST    /submit                             controllers.TrainingController.submit
 GET     /overview                           controllers.TrainingController.overview
-GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(category: String, id: String)
+GET     /trainingOverview/:id               controllers.TrainingController.trainingOverview(id: String)
 GET     /managetraining                     controllers.TrainingController.manage
 GET     /managetrainingcategory/:category   controllers.TrainingController.manageCategory(category: String)
 GET     /managetraining/:id                 controllers.TrainingController.manageTraining(category: String, id: String)
@@ -43,7 +43,6 @@ GET     /removetraining/:id                 controllers.TrainingController.remov
 GET     /training/signup/:id                controllers.TrainingController.signUpCourse(id: String)
 POST    /training/externalSignUp            controllers.TrainingController.signUpEmployee(id: String)
 GET     /edit/:code                         controllers.TrainingController.edit(categoryid: String, code: String)
-GET     /trainingCategory/:category         controllers.TrainingController.overviewCategory(category: String)
 GET     /teachertrainingoverview            controllers.TrainingController.teacherTrainingOverview
 GET     /personalOverview                   controllers.TrainingController.personalOverview
 #GET     /personalTrainingCategory/:category controllers.TrainingController.personalOverviewCategory(category: String)

@@ -164,20 +164,25 @@
                                         }
                                     </select>
                                 </div>
-                                <div class="popup">
-                                    <div class="row col-lg-12">
+                                <div class="popup col-lg-12">
+                                    <div class="row col-lg-12 outlinecontainer">
                                         <label class="form-control-label">Nieuwe Categorie:</label>
-                                        <input type="text" class="form-control-inline form-control" id="newcategory">
-                                        <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
-                                        <div class="col-lg-9" id="addcategorycontainer">
+                                        <div class="row col-lg-12 outline">
+                                            <input type="text" class="form-control-inline form-control" id="newcategory">
+                                        </div>
+                                        <div class="row col-lg-12">
+                                            <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
+                                        </div>
+                                        <div class="col-lg-4" id="addcategorycontainer">
                                             <input class="btn btn-outline-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
                                         </div>
-                                        <div class="col-lg-3" id="removecategorycontainer">
+                                        <div class="col-lg-4" id="removecategorycontainer">
                                             <input class="btn btn-outline-danger col-lg-12" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
                                         </div>
+                                    <div class="col-lg-4">
+                                        <input data-toggle="tooltip" title="Voer de naam van de categorie in die u wil verwijderen/toevoegen" data-placement="bottom"
+                                        class="btn btn-outline-info" type="button" value="Help" id="helpbtn">
                                     </div>
-                                    <div class="row col-lg-12">
-
                                     </div>
                                 </div>
                                 <div class="row col-lg-12">
@@ -186,7 +191,7 @@
                             </div>
                             <div class="row col-lg-12">
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.trainingOverview(training.getCategory().getCategory(), training.getTraining().getId())" class="btn btn-primary">
+                                    <a href="@routes.TrainingController.trainingOverview(training.getTraining().getId())" class="btn btn-primary">
                                         Naar Training</a>
                                 </div>
                                 <div class="col-lg-4" id="editTrn">
