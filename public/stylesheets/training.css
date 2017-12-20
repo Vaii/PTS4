@@ -216,6 +216,10 @@ a.btn.btn-danger {
 #popupbutton{
     margin-top:10px;
 }
+#newcategory {
+    width: 92%;
+    height: 40px;
+}
 
 #newcategorybtn{
     margin-top: 10px;
@@ -238,7 +242,7 @@ a.btn.btn-danger {
 }
 
 #helpbtn{
-    margin-top: 10px;
+    margin-left: 10px;
 }
 
 .categoryLink.active {
