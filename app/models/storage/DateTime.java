@@ -160,6 +160,11 @@ public class DateTime {
      * @return true if there is a overlap between the 2 durations.
      */
     public DateTime checkOverlap(DateTime other ) {
+
+        if(!Objects.equals(this.teacherID, other.teacherID)) {
+            return null;
+        }
+
         Date convertedDatetime = this.date;
         Date convertedDatetime2 = other.getDate();
 

@@ -195,6 +195,9 @@ public class UtilityController extends Controller {
                     overlapErrorLines.add("overlap_detected_" + i);
                 }
             }
+
+            checkOverlapNewDates(overlapErrorLines,dates, duration[0], teacherIds);
+
         } else {
             for(int i = 0; i < dateIds.size(); i++) {
                 updateDateTime(dateIds.get(i), df.parse(dates.get(i)));
@@ -211,6 +214,27 @@ public class UtilityController extends Controller {
         DateTime dt = dateRepo.getDateTime(dateId);
         dt.setDate(newDate);
         dateRepo.updateDateTime(dt);
+    }
+
+    private void checkOverlapNewDates(List<String> overlapErrorLines, List<String> dates, int duration, List<String> teacherIds) throws ParseException {
+        List<DateTime> dateTimes = new ArrayList<>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+
+        for(int i = 0; i < dates.size(); i++) {
+            DateTime dt = new DateTime(df.parse(dates.get(i)), "", teacherIds.get(i), duration);
+            dateTimes.add(dt);
+        }
+
+        for(int j = 0; j < dateTimes.size(); j++) {
+            for(int k = 0; k < dateTimes.size(); k++) {
+                if( j != k) {
+                    DateTime error = dateTimes.get(j).checkOverlap(dateTimes.get(k));
+                    if(error != null) {
+                        overlapErrorLines.add("overlap_detected_" + j);
+                    }
+                }
+            }
+        }
     }
 
     // Example stuff below.
