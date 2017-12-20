@@ -68,6 +68,7 @@ function addTrainingsToDiv(trainings) {
 function setTrainingContent(training) {
     setActiveTraining(training);
     $("#noTrainingContent").css('display', 'none');
+    deleteContentDates();
     getDate(training);
     console.log(training);
     $('#trainingContentName').text(training.name);
