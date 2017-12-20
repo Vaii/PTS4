@@ -57,6 +57,9 @@ public class UserRepository implements UserContext {
     public List<User> getAllTeachers() { return context.getAllTeachers(); }
 
     @Override
+    public List<User> getSkilledTeachers(String catId) { return context.getSkilledTeachers(catId); }
+
+    @Override
     public List<User> getAllManagers() {
         return context.getAllManagers();
     }

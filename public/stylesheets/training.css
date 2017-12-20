@@ -223,6 +223,7 @@ a.btn.btn-danger {
 }
 #deletecategorybtn{
     margin-top:10px;
+    max-width: 190px;
 }
 .errordisplay{
     display: none;
@@ -233,4 +234,34 @@ a.btn.btn-danger {
 }
 #removecategorycontainer{
     padding-right: 0;
+}
+
+#helpbtn{
+    margin-top: 10px;
+}
+
+.categoryLink.active {
+    background-color: #0078c9;
+    color: white;
+    border-radius: 5px;
+    text-underline: none;
+}
+
+.trainingLink.active {
+    background-color: #0078c9;
+    color: white;
+    border-radius: 5px;
+    text-underline: none;
+}
+
+.trainingContent li {
+    /*display: none;*/
+    /*opacity: 0;*/
+}
+
+.outlinecontainer{
+    padding: 0;
+}
+.outline{
+    padding: 0;
 }

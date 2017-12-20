@@ -20,14 +20,17 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
+import sun.util.calendar.LocalGregorianCalendar;
 import views.html.shared.message;
 import views.html.training.*;
 import views.html.teacher.*;
+import views.html.notification.signupConfirmation;
 
 import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -64,6 +67,7 @@ public class TrainingController extends Controller {
         this.tuitionFormForm = formFactory.form(TuitionForm.class);
     }
 
+
     @com.google.inject.Inject MailerClient mailerClient;
     @With(Redirect.class)
     @Security.Authenticated(Secured.class)
@@ -76,15 +80,15 @@ public class TrainingController extends Controller {
                 List<User> managers = userRepo.getAllManagers();
                 Map<String, String> managerMap = mapManager(managers);
 
-                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt , trainingRepo.getTrainingById(dt.getTrainingID()), tuitionFormForm, managerMap));
+                return ok(signUpCourseEmployee.render("Training inschrijven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), dt, trainingRepo.getTrainingById(dt.getTrainingID()), tuitionFormForm, managerMap));
             } else {
                 MailService mailer = new MailService(mailerClient);
 
                 DateTime signUpDate = dateRepo.getDateTime(id);
                 DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
 
-                if(overlapError != null) {
-                    return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
+                if (overlapError != null) {
+                    return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), trainingRepo.getTrainingById(signUpDate.getTrainingID()), trainingRepo.getTrainingById(overlapError.getTrainingID()), signUpDate, overlapError, "/overview"));
                 }
 
                 Training training = trainingRepo.getTrainingById(signUpDate.getTrainingID());
@@ -94,11 +98,34 @@ public class TrainingController extends Controller {
 
                 signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signUpDate);
-                return ok(message.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
-                        "U bent succesvol ingeschreven voor de de training", "/"));
+                return ok(signupConfirmation.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
             }
         }
     }
+
+    @With(Redirect.class)
+    @Security.Authenticated(Secured.class)
+    public Result signOutCourse(String id) {
+        if (id == null) {
+            return notFound();
+        } else {
+            Date date = new Date();
+            DateTime signOutDate = dateRepo.getDateTime(id);
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            c.add(Calendar.DATE,7);
+            int days = c.getTime().compareTo(signOutDate.getDate());
+            if(days<0){
+                signOutDate.removeTrainee(Secured.getUserInfo(ctx()).getId());
+                dateRepo.updateDateTime(signOutDate);
+                return ok(signupConfirmation.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+            } else {
+                return ok(singOutError.render("Uitschrijven mislukt",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),signOutDate,days));
+            }
+        }
+    }
+
+
 
     @With(Redirect.class)
     @Security.Authenticated(Secured.class)
@@ -209,30 +236,21 @@ public class TrainingController extends Controller {
     @With(Redirect.class)
     public Result overview() {
         return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies() ,new ArrayList<>(), null,
-                TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+                TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, ""));
     }
 
-    public Result overviewCategory(String category) {
-        if(category == null) {
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(),new ArrayList<>(), null,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
-        } else {
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), null,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
-        }
-
-    }
-
-    public Result trainingOverview(String category, String id) {
+    public Result trainingOverview(String id) {
         if (id == null) {
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), null,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null));
+            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(), new ArrayList<>(), null,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, ""));
         } else {
-            List<ViewDate> viewDates;
-            viewDates =  converter.getViewDates(id, Secured.getUserInfo(ctx()).getId());
-            Collections.sort(viewDates);
-            return ok(trainingoverview.render(trainingRepo.getTrainingFrequencies(), trainingRepo.getTrainingByCategory(category), trainingRepo.getTrainingById(id),
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), viewDates));
+
+            Training t = trainingRepo.getTrainingById(id);
+            Category cat = categoryRepo.getCategoryById(t.getCategoryid());
+            JsonNode node = Json.toJson(t);
+
+            return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(), new ArrayList<>(),node ,
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, cat.getName()));
         }
     }
 
@@ -279,13 +297,16 @@ public class TrainingController extends Controller {
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form, null, null, null));
         } else {
             List<Location> locations = locationRepo.getAll();
-            List<User> teachers = userRepo.getAllTeachers();
             List<Category> categories = categoryRepo.getAllCategories();
+            Training t = trainingRepo.getTrainingById(id);
+
+            String categoryId = t.getCategoryid();
+            List<User> skilledTeachers = userRepo.getSkilledTeachers(categoryId);
 
             JsonNode locationJson = Json.toJson(locations);
-            JsonNode teacherJson = Json.toJson(teachers);
+            JsonNode teacherJson = Json.toJson(skilledTeachers);
 
-            Training t = trainingRepo.getTrainingById(id);
+
             Category cat = categoryRepo.getCategoryById(category);
             ViewTraining viewTraining = new ViewTraining(t,null,cat);
             List<ViewDate> viewDates;
@@ -294,7 +315,7 @@ public class TrainingController extends Controller {
             //Collections.sort(viewDates); this is buggy when editing locations in managetraining
 
             Form<Training> editForm = form.fill(viewTraining.getTraining());
-            return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getAllTeachers(),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), categories, viewTraining,
+            return ok(managetraining.render(sharedRepo.getTrainingFrequencies(), userRepo.getSkilledTeachers(categoryId),trainingRepo.getTrainingByCategory(category), locationRepo.getAll(), categories, viewTraining,
                     TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), editForm, viewDates, locationJson, teacherJson));
         }
     }
@@ -507,5 +528,6 @@ public class TrainingController extends Controller {
 
         return true;
     }
+
 }
 

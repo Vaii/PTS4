@@ -91,7 +91,7 @@
                         <h1>Beheren</h1>
                     </div>
                     @if(training != null) {
-                        @b4.form(routes.TrainingController.edit(training.getCategory().getCategory() ,training.getTraining().getTrainingCode())) {
+                        @b4.form(routes.TrainingController.edit(training.getCategory().getName() ,training.getTraining().getTrainingCode())) {
                             @helper.CSRF.formField
                             <div class="row col-lg-12">
                                 <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
@@ -157,27 +157,32 @@
                                     <select class="form-control form-control-inline categorycontainer" id="categorycontainer" name="categoryid">
                                         @for(category<- allcategories){
                                             @if(training.getCategory.get_id().equals(category.get_id())){
-                                                <option value="@category.get_id()" selected="true">@category.getCategory</option>
+                                                <option value="@category.get_id()" selected="true">@category.getName()</option>
                                             }else{
-                                                <option value="@category.get_id()">@category.getCategory</option>
+                                                <option value="@category.get_id()">@category.getName()</option>
                                             }
                                         }
                                     </select>
                                 </div>
-                                <div class="popup">
-                                    <div class="row col-lg-12">
+                                <div class="popup col-lg-12">
+                                    <div class="row col-lg-12 outlinecontainer">
                                         <label class="form-control-label">Nieuwe Categorie:</label>
-                                        <input type="text" class="form-control-inline form-control" id="newcategory">
-                                        <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
-                                        <div class="col-lg-9" id="addcategorycontainer">
+                                        <div class="row col-lg-12 outline">
+                                            <input type="text" class="form-control-inline form-control" id="newcategory">
+                                        </div>
+                                        <div class="row col-lg-12">
+                                            <div class="errordisplay"><p id="errormessage">Categorie bestaat al</p></div>
+                                        </div>
+                                        <div class="col-lg-6" id="addcategorycontainer">
                                             <input class="btn btn-outline-success" type="button" value="Nieuwe Categorie Toevoegen" id="popupbutton">
                                         </div>
-                                        <div class="col-lg-3" id="removecategorycontainer">
+                                        <div class="col-lg-5" id="removecategorycontainer">
                                             <input class="btn btn-outline-danger col-lg-12" type="button" value="Categorie Verwijderen" id="deletecategorybtn">
                                         </div>
-                                    </div>
-                                    <div class="row col-lg-12">
-
+                                        <div class="col-lg-1">
+                                            <input data-toggle="tooltip" title="Voer de naam van de categorie in die u wil verwijderen/toevoegen" data-placement="bottom"
+                                            class="btn btn-outline-info" type="button" value="?" id="helpbtn">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row col-lg-12">
@@ -186,14 +191,14 @@
                             </div>
                             <div class="row col-lg-12">
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.trainingOverview(training.getCategory().getCategory(), training.getTraining().getId())" class="btn btn-primary">
+                                    <a href="@routes.TrainingController.trainingOverview(training.getTraining().getId())" class="btn btn-primary">
                                         Naar Training</a>
                                 </div>
                                 <div class="col-lg-4" id="editTrn">
                                     @b4.submit('class -> "btn btn-warning") { Wijzigen }
                                 </div>
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.removeTraining(training.getCategory().getCategory() ,training.getTraining().getTrainingCode())" class="btn btn-danger">
+                                    <a href="@routes.TrainingController.removeTraining(training.getCategory().getName() ,training.getTraining().getTrainingCode())" class="btn btn-danger">
                                         Verwijderen</a>
                                 </div>
                                 }

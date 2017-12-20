@@ -2,8 +2,10 @@ $(document).ready(function () {
     $('.categoryLink').on('click', function (e) {
         if ($('#trainingMenu').css('display') === 'block') {
             $("#trainingContent").css('visibility', 'hidden');
+            //fadeOutTrainingContent();
             toggleTrainingMenu(false);
         }
+        setActiveLink($(this));
         getTrainings($(this).attr('id'));
         toggleTrainingMenu(true);
     });
@@ -34,6 +36,7 @@ function toggleTrainingMenu(expanding) {
             if (expanding) {
                 if ($('#trainingMenu').css('display') === 'block') {
                     $("#trainingContent").css('visibility', 'visible');
+                    fadeInTrainingContent();
                 }
             }
         }
@@ -41,11 +44,15 @@ function toggleTrainingMenu(expanding) {
 }
 
 function addTrainingsToDiv(trainings) {
+    var firstTim = false;
+    if($('#trainingContent').children().length < 1) {
+        firstTim = true;
+    }
     $('#trainingContent').empty();
     $.each(trainings, function (index, element) {
         $('#trainingContent').append(
-            $('<li>').append(
-                $('<a>').attr('href', '#').attr('id', element).addClass("trainingLink").append(
+            $('<li>').css("opacity", "0").append(
+                $('<a>').attr('href', '#').attr('id', element).addClass("trainingLink").addClass(element.name).append(
                     $('<span>').attr('class', 'tab').append(element.name)
                 ).bind('click', function () {
                     setTrainingContent(element);
@@ -53,9 +60,13 @@ function addTrainingsToDiv(trainings) {
             )
         );
     });
+    if(firstTim) {
+        fadeInTrainingContent();
+    }
 }
 
 function setTrainingContent(training) {
+    setActiveTraining(training);
     $("#noTrainingContent").css('display', 'none');
     deleteContentDates();
     getDate(training);
@@ -76,6 +87,7 @@ function setTrainingContent(training) {
 function setTrainingDates(date, training) {
     var container = $('#trainingContentDates');
     $("#loadingImage").hide();
+    deleteContentDates();
     if (date.length === 0) {
         container.append("<p> Geen datums beschikbaar <p>");
     } else {
@@ -118,4 +130,53 @@ function setTrainingDates(date, training) {
 
 function deleteContentDates() {
     $("#trainingContentDates").empty();
+}
+
+function setActiveLink(newLink) {
+    $('.categoryLink').each(function () {
+        $(this).removeClass("active");
+    });
+
+    newLink.addClass("active");
+}
+
+function setActiveTraining(training) {
+    $('.trainingLink').each(function () {
+        $(this).removeClass("active");
+        if($(this).hasClass(training.name)) {
+            $(this).addClass("active");
+        }
+    });
+}
+
+function fadeInTrainingContent() {
+    console.log("Fading in");
+    $('#trainingContent').find('> li').each(function (index) {
+        $(this).delay(100*index).animate({opacity: '1.0'});
+    });
+}
+
+function fadeOutTrainingContent() {
+    $('#trainingContent').find('> li').each(function () {
+        $(this).delay(400).fadeOut(300);
+    });
+}
+
+function setPredeterminedTraining(category, training) {
+    if ($('#trainingMenu').css('display') === 'block') {
+        $("#trainingContent").css('visibility', 'hidden');
+        fadeOutTrainingContent();
+        toggleTrainingMenu(false);
+    }
+
+    getTrainings(category);
+    toggleTrainingMenu(true);
+
+    setTrainingContent(training);
+}
+
+function unescapeHTML(string) {
+    var elt = document.createElement("span");
+    elt.innerHTML = string;
+    return elt.innerText;
 }
