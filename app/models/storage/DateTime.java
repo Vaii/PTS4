@@ -118,12 +118,21 @@ public class DateTime {
         return df.format(this.date);
     }
 
+    public String getDateOnlyString() {
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        return df.format(this.date);
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
 
     public void addTrainee(String id){
         trainees.add(id);
+    }
+
+    public void removeTrainee(String id){
+        trainees.remove(id);
     }
 
     @JsonProperty(M_TRAINING)

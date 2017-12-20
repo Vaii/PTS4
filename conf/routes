@@ -41,6 +41,7 @@ GET     /managetrainingcategory/:category   controllers.TrainingController.manag
 GET     /managetraining/:id                 controllers.TrainingController.manageTraining(category: String, id: String)
 GET     /removetraining/:id                 controllers.TrainingController.removeTraining(category: String, id: String)
 GET     /training/signup/:id                controllers.TrainingController.signUpCourse(id: String)
+GET     /training/signout/:id               controllers.TrainingController.signOutCourse(id: String)
 POST    /training/externalSignUp            controllers.TrainingController.signUpEmployee(id: String)
 GET     /edit/:code                         controllers.TrainingController.edit(categoryid: String, code: String)
 GET     /teachertrainingoverview            controllers.TrainingController.teacherTrainingOverview
@@ -48,7 +49,6 @@ GET     /personalOverview                   controllers.TrainingController.perso
 #GET     /personalTrainingCategory/:category controllers.TrainingController.personalOverviewCategory(category: String)
 #GET     /personalTrainingOverview/:id       controllers.TrainingController.personalTrainingOverview(category: String, id: String)
 GET     /teacherstudentoverview/:id         controllers.TrainingController.teacherStudentOverview(id: String)
-
 
 
 # Admin Panel
