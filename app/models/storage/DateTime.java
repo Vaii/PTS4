@@ -118,6 +118,11 @@ public class DateTime {
         return df.format(this.date);
     }
 
+    public String getDateOnlyString() {
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        return df.format(this.date);
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }

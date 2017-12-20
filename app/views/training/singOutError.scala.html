@@ -16,16 +16,7 @@
             <h1>Oeps er ging iets mis..</h1>
         </div>
         <div class="row col-lg-12">
-            <p>De training waarvoor u zich wilt uitschrijven is op @date.getDateString(), dit is binnen @if(daysUntil != null){
-                @daysUntil
-            } else {
-                7
-            }
-                @if(daysUntil < 2){
-                dag.</p>
-            } else {
-                dagen.</p>
-        }
+            <p>De training waarvoor u zich wilt uitschrijven is op @date.getDateOnlyString() .</p>
             <p>Om uit te kunnen schrijven voor een training die binnen 7 dagen gegeven zal worden, dient u contact op te nemen met: <a href="#">info@@infosupport.nl</a></p>
         </div>
         <div class="row col-lg-12">

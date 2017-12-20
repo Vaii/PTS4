@@ -98,7 +98,6 @@ public class TrainingController extends Controller {
         if (id == null) {
             return notFound();
         } else {
-
             Date date = new Date();
             DateTime signOutDate = dateRepo.getDateTime(id);
             Calendar c = Calendar.getInstance();
@@ -112,10 +111,7 @@ public class TrainingController extends Controller {
                         "U bent succesvol uitgeschreven voor de de training", "/personalOverview"));
             } else {
                 return ok(singOutError.render("Uitschrijven mislukt",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),signOutDate,days));
-
             }
-
-
         }
     }
 

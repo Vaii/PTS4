@@ -27,12 +27,18 @@
                                 <div class="col-lg-2">
                                     <label>Locatie</label>
                                 </div>
+                                @if(!User.getRole.equals(Role.EXTERN)){
                                 <div class="col-lg-2">
                                     <label>Datum</label>
                                 </div>
                                 <div class="col-lg-2">
                                     <label>Status</label>
                                 </div>
+                                } else {
+                                    <div class="col-lg-3">
+                                        <label>Datum</label>
+                                    </div>
+                                }
                             </div>
                             @for(training <- trainings) {
                                 <div class="row col-lg-12" id="listviewrow">
@@ -55,8 +61,11 @@
                                             @training.getDate().getLocation().getCity() <p>
                                         </div>
                                     </div>
-
-                                    <div class="col-lg-2">
+                                    @if(User.getRole.equals(Role.EXTERN)){
+                                        <div class="col-lg-3">
+                                    } else {
+                                        <div class="col-lg-2">
+                                    }
                                         <p>@training.getDate().getDateOnlyString(), @training.getDate().getTmeOnlyString uur </p>
                                     </div>
                                     @if(!User.getRole.equals(Role.EXTERN)){
@@ -66,12 +75,11 @@
                                                     @tut.getStatus()
                                                 }
                                             }</p>
-
                                         </div>
                                     }
                                     <div class="col-lg-2">
                                         <div class="col-lg-12">
-                                            <p><a class="btn btn-outline-danger" href="@routes.TrainingController.signOutCourse(training.getDate().getDateId())">Uitschrijven</a></p>
+                                            <p><a class="btn btn-outline-danger" id="singoutBtn" href="@routes.TrainingController.signOutCourse(training.getDate().getDateId())">Uitschrijven</a></p>
                                         </div>
                                     </div>
                                 </div>
