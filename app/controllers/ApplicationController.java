@@ -1,7 +1,10 @@
 package controllers;
 
+import com.google.inject.Inject;
 import models.storage.Secured;
+import models.util.MailService;
 import models.util.Redirect;
+import play.api.libs.mailer.MailerClient;
 import play.mvc.*;
 import play.routing.JavaScriptReverseRouter;
 import views.html.shared.message;
