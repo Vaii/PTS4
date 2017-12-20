@@ -20,7 +20,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
-import sun.util.calendar.LocalGregorianCalendar;
 import views.html.shared.message;
 import views.html.training.*;
 import views.html.teacher.*;
@@ -67,8 +66,8 @@ public class TrainingController extends Controller {
         this.tuitionFormForm = formFactory.form(TuitionForm.class);
     }
 
-
-    @com.google.inject.Inject MailerClient mailerClient;
+    @com.google.inject.Inject
+    MailerClient mailerClient;
     @With(Redirect.class)
     @Security.Authenticated(Secured.class)
     public Result signUpCourse(String id) {
@@ -118,7 +117,7 @@ public class TrainingController extends Controller {
             if(days<0){
                 signOutDate.removeTrainee(Secured.getUserInfo(ctx()).getId());
                 dateRepo.updateDateTime(signOutDate);
-                return ok(signupConfirmation.render("Succesvol Ingeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
+                return ok(message.render("Succesvol uitgeschreven", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), "Je bent uitgeschreven voor de training", "/"));
             } else {
                 return ok(singOutError.render("Uitschrijven mislukt",Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),signOutDate,days));
             }

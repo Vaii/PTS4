@@ -33,6 +33,4 @@ public class DataGenerator {
             trainingRepo.removeTraining(t);
         }
     }
-
-
 }
