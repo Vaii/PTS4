@@ -91,7 +91,7 @@
                         <h1>Beheren</h1>
                     </div>
                     @if(training != null) {
-                        @b4.form(routes.TrainingController.edit(training.getCategory().getCategory() ,training.getTraining().getTrainingCode())) {
+                        @b4.form(routes.TrainingController.edit(training.getCategory().getName() ,training.getTraining().getTrainingCode())) {
                             @helper.CSRF.formField
                             <div class="row col-lg-12">
                                 <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
@@ -157,9 +157,9 @@
                                     <select class="form-control form-control-inline categorycontainer" id="categorycontainer" name="categoryid">
                                         @for(category<- allcategories){
                                             @if(training.getCategory.get_id().equals(category.get_id())){
-                                                <option value="@category.get_id()" selected="true">@category.getCategory</option>
+                                                <option value="@category.get_id()" selected="true">@category.getName()</option>
                                             }else{
-                                                <option value="@category.get_id()">@category.getCategory</option>
+                                                <option value="@category.get_id()">@category.getName()</option>
                                             }
                                         }
                                     </select>
@@ -198,7 +198,7 @@
                                     @b4.submit('class -> "btn btn-warning") { Wijzigen }
                                 </div>
                                 <div class="col-lg-4">
-                                    <a href="@routes.TrainingController.removeTraining(training.getCategory().getCategory() ,training.getTraining().getTrainingCode())" class="btn btn-danger">
+                                    <a href="@routes.TrainingController.removeTraining(training.getCategory().getName() ,training.getTraining().getTrainingCode())" class="btn btn-danger">
                                         Verwijderen</a>
                                 </div>
                                 }

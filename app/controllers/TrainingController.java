@@ -239,7 +239,7 @@ public class TrainingController extends Controller {
             JsonNode node = Json.toJson(t);
 
             return ok(trainingoverview.render(sharedRepo.getTrainingFrequencies(), new ArrayList<>(),node ,
-                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, cat.getCategory()));
+                    TRAININGEN, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), null, cat.getName()));
         }
     }
 

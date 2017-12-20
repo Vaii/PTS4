@@ -77,7 +77,7 @@ public class UtilityController extends Controller {
         Category newCategory;
         JsonNode node;
         Map<String, String[]> params = request().body().asFormUrlEncoded();
-        String categoryStringValue = params.entrySet().iterator().next().getValue()[0];
+        String categoryStringValue = params.entrySet().iterator().next().getValue()[0].toLowerCase();
         newCategory = new Category(categoryStringValue);
         if(catRepo.addCategory(newCategory)){
             List<Category>categories = catRepo.getAllCategories();

@@ -35,13 +35,17 @@ public class Category {
 
     @JsonProperty(M_CATEGORY)
     public String getCategory(){
+        return this.category;
+    }
+
+    public String getName(){
         String category = this.category;
         return category.substring(0,1).toUpperCase() + category.substring(1);
     }
 
-    public void setCategory(String category){this.category = category.toLowerCase();}
+    public void setCategory(String category){this.category = category;}
 
     private void prepareForStorage() {
-        this.category = category.toLowerCase();
+        this.category = this.category.toLowerCase();
     }
 }
