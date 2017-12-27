@@ -4,7 +4,61 @@
     @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
     <div class="container">
-        <p>Deze pagina is nog niet voltooid.</p>
-        <p>Excuses voor het ongemak.</p>
+        <div class="row col-lg-12">
+            <h1>Profiel</h1>
+        </div>
+        <div class="row col-lg-12">
+            <div class="col-lg-4">
+                <label>Voornaam:</label>
+            </div>
+            <div class="col-lg-8">
+                <p>@User.getFirstName</p>
+            </div>
+        </div>
+        <div class="row col-lg-12">
+            <div class="col-lg-4">
+                <label>Achternaam:</label>
+            </div>
+            <div class="col-lg-8">
+                <p>@User.getLastName</p>
+            </div>
+        </div>
+        <div class="row col-lg-12">
+            <div class="col-lg-4">
+                <label>Bedrijf:</label>
+            </div>
+            <div class="col-lg-8">
+                <p>@User.getCompany</p>
+            </div>
+        </div>
+
+        <div class="row col-lg-12">
+            <div class="col-lg-4">
+                <label>Telefoonnummer:</label>
+            </div>
+            <div class="col-lg-8">
+                <p>@User.getPhoneNumber</p>
+            </div>
+        </div>
+
+        <div class="row col-lg-12">
+            <div class="col-lg-4">
+                <label>E-mail:</label>
+            </div>
+            <div class="col-lg-8">
+                <p>@User.getEmail</p>
+            </div>
+        </div>
+        <div class="row col-lg-12">
+            <div class="col-lg-4">
+                <a href="@routes.TrainingController.personalOverview()" class="btn btn-outline-primary">Mijn trainingen</a>
+            </div>
+            <div class="col-lg-4">
+                <a href="#" class="btn btn-outline-warning">Gegevens wijzigen</a>
+            </div>
+            <div class="col-lg-4">
+                <a href="@routes.AccountController.logout()" class="btn btn-outline-danger">Uitloggen</a>
+            </div>
+        </div>
     </div>
     }

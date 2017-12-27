@@ -12,6 +12,7 @@ import play.mvc.*;
 import views.html.account.*;
 
 import javax.inject.Inject;
+import java.text.ParseException;
 
 public class AccountController extends Controller {
 
@@ -120,4 +121,10 @@ public class AccountController extends Controller {
         }
         return badRequest(login.render(REGISTER, Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form2, true));
     }
-}
+
+    @Security.Authenticated(Secured.class)
+    public Result edit() throws ParseException {
+        DynamicForm userData = formFactory.form().bindFromRequest();
+
+
+    }
