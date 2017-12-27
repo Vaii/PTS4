@@ -270,7 +270,7 @@ public class MailService {
                         "                  \n" +
                         "                    <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\"><![endif]-->\n" +
                         "<div style=\"color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;\">\t\n" +
-                        "\t<div style=\"font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;\"><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Bedankt voor u inschrijving, hieronder vindt u alle informatie nogmaals op een rijtje.</p></div>\t\n" +
+                        "\t<div style=\"font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;\"><p style=\"margin: 0;font-size: 14px;line-height: 17px\">Bedankt voor uw inschrijving, hieronder vindt u alle informatie nogmaals op een rijtje.</p></div>\t\n" +
                         "</div>\n" +
                         "<!--[if mso]></td></tr></table><![endif]-->\n" +
                         "\n" +
