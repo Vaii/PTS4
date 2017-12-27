@@ -8,11 +8,13 @@ import dal.repositories.DateTimeRepository;
 import dal.repositories.UserRepository;
 import models.storage.*;
 import models.util.DateConverter;
+import models.util.Redirect;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import play.mvc.With;
 import views.html.adminpanel.overview;
 import views.html.adminpanel.accountcreation;
 import views.html.shared.message;
@@ -61,13 +63,13 @@ public class AdminController extends Controller{
                     uRepo.removeUser(userToRemove); // Remove user from user table.
                     dRepo.removeUser(id); // Remove user from possible trainee fields.
                     return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
-                            ,"Account succesvol verwijderd", "/admin"  ));
+                            ,"Account succesvol verwijderd", session().get("previousUrl")));
                 }
             } else {
                 uRepo.removeUser(userToRemove); // Remove user from user table.
                 dRepo.removeUser(id); // Remove user from possible trainee fields.
                 return ok(message.render("Admin", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())
-                        ,"Account succesvol verwijderd", "/admin/accountSelection"  ));
+                        ,"Account succesvol verwijderd", session().get("previousUrl")));
             }
         }
         return notFound();
@@ -131,6 +133,7 @@ public class AdminController extends Controller{
         return notFound();
     }
 
+    @With(Redirect.class)
     @Security.Authenticated(Secured.class)
     public Result accountSelector(long pageIndex){
         long recLimit = 10;
