@@ -10,9 +10,13 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.*;
 import views.html.account.*;
+import views.html.shared.message;
 
 import javax.inject.Inject;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AccountController extends Controller {
 
@@ -123,8 +127,42 @@ public class AccountController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result edit() throws ParseException {
-        DynamicForm userData = formFactory.form().bindFromRequest();
-
-
+    public Result editProfile() {
+        return ok(editprofile.render("Profile", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),form));
     }
+
+    @Security.Authenticated(Secured.class)
+    public Result edit() {
+        form = form.bindFromRequest();
+
+        List<User> managers = userRepo.getAllManagers();
+        Map<String, String> managerMap = mapManager(managers);
+        //List<Category> categories = cRepo.getAllCategories();
+        String email = form.field("email").value();
+
+       // List<String> skills = getSkills(filledForm);
+
+        if(form.hasErrors()){
+            return (badRequest(editprofile.render("Edit account",
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), form)));
+        }
+        User user = form.get();
+        //user.setSkillIds(skills);
+
+        if(userRepo.updateUser(user)){
+            return ok(message.render("Edit Succes",
+                    Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
+                    "Het account is gewijzigd", "/account/profile"));
+        }
+
+        return notFound();
+    }
+
+    private Map<String, String> mapManager(List<User> managers){
+        Map<String, String> managerMap = new HashMap<>();
+        for(User m : managers){
+            managerMap.put(m.getId(), m.getEmail());
+        }
+        return managerMap;
+    }
+}

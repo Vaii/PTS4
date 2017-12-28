@@ -1,5 +1,6 @@
 @import models.storage.User
-@(page: String, isLoggedIn: Boolean, User: User)
+@import b4.vertical.fieldConstructor
+@(page: String, isLoggedIn: Boolean, User: User, form: Form[User])
 
 @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
@@ -8,23 +9,28 @@
             <h1>Profiel wijzigen</h1>
         </div>
         <div class="row col-lg-12">
-        @b4.form(routes.TrainingController.edit(training.getCategory().getName(), training.getTraining().getTrainingCode())) {
-            @helper.CSRF.formField
-                <div class="row col-lg-12">@b4.text(form("firstName"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
-                <div class="row col-lg-12">@b4.text(form("lastName"), '_label -> "Naam:", 'class -> "", 'placeholder -> "Voer naam in")</div>
-                <div class="row col-lg-12">@b4.textarea(form("company"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
-                <div class="row col-lg-12">@b4.text(form("phoneNumber"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
-                <div class="row col-lg-12">@b4.text(form("phoneNumber"), '_label -> "Benodigde materialen:", 'class -> "disabled", 'placeholder -> "Voer materialen in")</div>
-                }
-        <div class="row col-lg-12">
-            <div class="col-lg-4">
-                <a href="@routes.TrainingController.personalOverview()" class="btn btn-outline-success">Opslaan</a>
-            </div>
-
+            @b4.form(routes.AccountController.edit()) {
+                @helper.CSRF.formField
+                <div class="row col-lg-12">
+                    <div class="row col-lg-12">@b4.hidden(form("id"), '_label -> "id", 'value -> User.getId)</div>
+                    <div class="row col-lg-12">@b4.text(form("firstName"), '_label -> "Voornaam:", 'class -> "", 'placeholder -> User.getFirstName, 'value -> User.getFirstName)</div>
+                    <div class="row col-lg-12">@b4.text(form("lastName"), '_label -> "Achternaam:", 'class -> "", 'placeholder -> User.getLastName, 'value -> User.getLastName)</div>
+                    <div class="row col-lg-12">@b4.email(form("email"), '_label -> "Email:", 'class -> "", 'placeholder -> User.getEmail, 'value -> User.getEmail)</div>
+                    <div class="row col-lg-12">@b4.number(form("phoneNumber"), '_label -> "Telefoonnummer:", 'class -> "", 'placeholder -> User.getPhoneNumber, 'value -> User.getPhoneNumber)</div>
+                    <div class="row col-lg-12">@b4.text(form("company"), '_label -> "Bedrijf:", 'class -> "", 'placeholder -> User.getCompany, 'value -> User.getCompany)</div>
+                    <div class="row col-lg-12">@b4.hidden(form("role"), '_label -> "Role:", 'value -> User.getId)</div>
+                   <!-- <div class="row col-lg-12">b4.text(form("manager"), '_label -> "Manager:", 'class -> "disabled", 'placeholder -> User.getManager)</div>
+                    <div class="row col-lg-12">b4.text(form("skillIds"), '_label -> "SkillIds:", 'class -> "disabled", 'placeholder -> User.getSkillIds)</div>-->
+                    <div class="row col-lg-12">
+                        <div class="col-lg-4">
+                        @b4.submit('class -> "btn btn-outline-warning") { Wijzigen }
+                        </div>
+                        }
             <div class="col-lg-4 offset-lg-4">
                 <a href="@routes.AccountController.profile()" class="btn btn-outline-danger">Annuleren</a>
             </div>
         </div>
-    </div>
+        </div>
+        </div>
     </div>
 }

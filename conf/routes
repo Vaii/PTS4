@@ -16,6 +16,8 @@ POST  /training/delete/:id/:code            controllers.TrainingController.remov
 
 GET     /account/login                      controllers.AccountController.login
 POST    /account/redirectlogin              controllers.AccountController.authentication
+GET     /account/edit                       controllers.AccountController.edit
+GET     /account/editprofile                controllers.AccountController.editProfile
 GET     /account/profile                    controllers.AccountController.profile
 GET     /account/logout                     controllers.AccountController.logout
 GET     /account/redirectlogin              controllers.AccountController.redirectlogin
