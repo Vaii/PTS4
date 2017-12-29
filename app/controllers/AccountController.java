@@ -128,7 +128,8 @@ public class AccountController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result editProfile() {
-        return ok(editprofile.render("Profile", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),form));
+        Form<User> filledForm = form.fill(Secured.getUserInfo(ctx()));
+        return ok(editprofile.render("Profile", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),filledForm));
     }
 
     @Security.Authenticated(Secured.class)

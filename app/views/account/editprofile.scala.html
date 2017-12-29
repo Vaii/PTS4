@@ -8,17 +8,25 @@
         <div class="row col-lg-12">
             <h1>Profiel wijzigen</h1>
         </div>
+
+        @if(form.hasGlobalErrors) {
+            <p class="error">
+            @for(error <- form.globalErrors) {
+                <p>@error.format(messages())</p>
+            }
+            </p>
+        }
         <div class="row col-lg-12">
             @b4.form(routes.AccountController.edit()) {
                 @helper.CSRF.formField
                 <div class="row col-lg-12">
-                    <div class="row col-lg-12">@b4.hidden(form("id"), '_label -> "id", 'value -> User.getId)</div>
-                    <div class="row col-lg-12">@b4.text(form("firstName"), '_label -> "Voornaam:", 'class -> "", 'placeholder -> User.getFirstName, 'value -> User.getFirstName)</div>
-                    <div class="row col-lg-12">@b4.text(form("lastName"), '_label -> "Achternaam:", 'class -> "", 'placeholder -> User.getLastName, 'value -> User.getLastName)</div>
-                    <div class="row col-lg-12">@b4.email(form("email"), '_label -> "Email:", 'class -> "", 'placeholder -> User.getEmail, 'value -> User.getEmail)</div>
-                    <div class="row col-lg-12">@b4.number(form("phoneNumber"), '_label -> "Telefoonnummer:", 'class -> "", 'placeholder -> User.getPhoneNumber, 'value -> User.getPhoneNumber)</div>
-                    <div class="row col-lg-12">@b4.text(form("company"), '_label -> "Bedrijf:", 'class -> "", 'placeholder -> User.getCompany, 'value -> User.getCompany)</div>
-                    <div class="row col-lg-12">@b4.hidden(form("role"), '_label -> "Role:", 'value -> User.getId)</div>
+                    <div class="row col-lg-12">@b4.hidden(form("id"), '_label -> "id")</div>
+                    <div class="row col-lg-12">@b4.text(form("firstName"), '_label -> "Voornaam:", 'class -> "", 'placeholder -> User.getFirstName)</div>
+                    <div class="row col-lg-12">@b4.text(form("lastName"), '_label -> "Achternaam:", 'class -> "", 'placeholder -> User.getLastName)</div>
+                    <div class="row col-lg-12">@b4.email(form("email"), '_label -> "Email:", 'class -> "", 'placeholder -> User.getEmail)</div>
+                    <div class="row col-lg-12">@b4.number(form("phoneNumber"), '_label -> "Telefoonnummer:", 'class -> "", 'placeholder -> User.getPhoneNumber)</div>
+                    <div class="row col-lg-12">@b4.text(form("company"), '_label -> "Bedrijf:", 'class -> "", 'placeholder -> User.getCompany)</div>
+                    <div class="row col-lg-12">@b4.hidden(form("role"), '_label -> "Role:")</div>
                    <!-- <div class="row col-lg-12">b4.text(form("manager"), '_label -> "Manager:", 'class -> "disabled", 'placeholder -> User.getManager)</div>
                     <div class="row col-lg-12">b4.text(form("skillIds"), '_label -> "SkillIds:", 'class -> "disabled", 'placeholder -> User.getSkillIds)</div>-->
                     <div class="row col-lg-12">
