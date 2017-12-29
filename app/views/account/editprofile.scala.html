@@ -27,8 +27,8 @@
                     <div class="row col-lg-12">@b4.number(form("phoneNumber"), '_label -> "Telefoonnummer:", 'class -> "", 'placeholder -> User.getPhoneNumber)</div>
                     <div class="row col-lg-12">@b4.text(form("company"), '_label -> "Bedrijf:", 'class -> "", 'placeholder -> User.getCompany)</div>
                     <div class="row col-lg-12">@b4.hidden(form("role"), '_label -> "Role:")</div>
-                   <!-- <div class="row col-lg-12">b4.text(form("manager"), '_label -> "Manager:", 'class -> "disabled", 'placeholder -> User.getManager)</div>
-                    <div class="row col-lg-12">b4.text(form("skillIds"), '_label -> "SkillIds:", 'class -> "disabled", 'placeholder -> User.getSkillIds)</div>-->
+                    <div class="row col-lg-12">@b4.hidden(form("manager"), '_label -> "Manager:", 'class -> "disabled", 'placeholder -> User.getManager)</div>
+                    <div class="row col-lg-12">@b4.hidden(form("skillIds"), '_label -> "SkillIds:", 'class -> "disabled", 'placeholder -> User.getSkillIds)</div>
                     <div class="row col-lg-12">
                         <div class="col-lg-4">
                         @b4.submit('class -> "btn btn-outline-warning") { Wijzigen }
