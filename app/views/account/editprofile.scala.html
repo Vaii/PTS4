@@ -1,0 +1,44 @@
+@import models.storage.User
+@import b4.vertical.fieldConstructor
+@(page: String, isLoggedIn: Boolean, User: User, form: Form[User])
+
+@shared.main(page, isLoggedIn, User) {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/stylesheets/smallPage.css")">
+    <div class="container">
+        <div class="row col-lg-12">
+            <h1>Profiel wijzigen</h1>
+        </div>
+
+        @if(form.hasGlobalErrors) {
+            <p class="error">
+            @for(error <- form.globalErrors) {
+                <p>@error.format(messages())</p>
+            }
+            </p>
+        }
+        <div class="row col-lg-12">
+            @b4.form(routes.AccountController.edit()) {
+                @helper.CSRF.formField
+                <div class="row col-lg-12">
+                    <div class="row col-lg-12">@b4.hidden(form("id"), '_label -> "id")</div>
+                    <div class="row col-lg-12">@b4.text(form("firstName"), '_label -> "Voornaam:", 'class -> "", 'placeholder -> User.getFirstName)</div>
+                    <div class="row col-lg-12">@b4.text(form("lastName"), '_label -> "Achternaam:", 'class -> "", 'placeholder -> User.getLastName)</div>
+                    <div class="row col-lg-12">@b4.email(form("email"), '_label -> "Email:", 'class -> "", 'placeholder -> User.getEmail)</div>
+                    <div class="row col-lg-12">@b4.number(form("phoneNumber"), '_label -> "Telefoonnummer:", 'class -> "", 'placeholder -> User.getPhoneNumber)</div>
+                    <div class="row col-lg-12">@b4.text(form("company"), '_label -> "Bedrijf:", 'class -> "", 'placeholder -> User.getCompany)</div>
+                    <div class="row col-lg-12">@b4.hidden(form("role"), '_label -> "Role:")</div>
+                    <div class="row col-lg-12">@b4.hidden(form("manager"), '_label -> "Manager:", 'class -> "disabled", 'placeholder -> User.getManager)</div>
+                    <div class="row col-lg-12">@b4.hidden(form("skillIds"), '_label -> "SkillIds:", 'class -> "disabled", 'placeholder -> User.getSkillIds)</div>
+                    <div class="row col-lg-12">
+                        <div class="col-lg-4">
+                        @b4.submit('class -> "btn btn-outline-warning") { Wijzigen }
+                        </div>
+                        }
+            <div class="col-lg-4 offset-lg-4">
+                <a href="@routes.AccountController.profile()" class="btn btn-outline-danger">Annuleren</a>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
+}

@@ -8,7 +8,7 @@
 @import models.storage.User
 @import models.storage.Location
 @import models.storage.Category
-@(categories: Map[String, Integer], teachers: List[User], trainings: List[Training], locations: List[Location], allcategories: List[Category], training: ViewTraining, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates: List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode)
+@(categories: Map[String, Integer], teachers: List[User], trainings: List[Training], locations: List[Location], allcategories: List[Category], training: ViewTraining, page: String, isLoggedIn: Boolean, User: User, form: Form[Training], viewDates: List[ViewDate], locationJson: JsonNode, teacherJson: JsonNode, cat: Category)
 
 @{
     var myCounter: String = "1"
@@ -51,7 +51,7 @@
                     @if(!categories.isEmpty) {
                         @for((key, value) <- categories) {
                             @if(!trainings.isEmpty) {
-                                @if(trainings.get(0).getCategoryid.equals(key)) {
+                                @if(key.equals(cat.getCategory)) {
                                     <li class="active"><a href="@routes.TrainingController.manageCategory(key)">@key
                                         (@value)</a></li>
                                 } else {
