@@ -139,17 +139,9 @@ public class TrainingController extends Controller {
         } else {
             TuitionForm filledForm = filledTuitionForm.get();
             filledForm.setTotalCosts(filledForm.getStudyCosts() + filledForm.getAccommodationCosts() + filledForm.getExaminationFees() + filledForm.getTransportCosts() + filledForm.getExtraCosts());
-            filledForm.setStatus(Status.PENDING);
+            filledForm.setStatus(Status.IN_BEHANDELING);
             tutRepo.addForm(filledForm);
 
-            DateTime signUpDate = dateRepo.getDateTime(id);
-            DateTime overlapError = detectedOverlap(signUpDate, OverlapType.STUDENT);
-            if(overlapError != null) {
-                return ok(signupError.render("Error", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),trainingRepo.getTrainingById(signUpDate.getTrainingID())  ,trainingRepo.getTrainingById(overlapError.getTrainingID()),signUpDate, overlapError ,"/overview") );
-            }
-
-            signUpDate.addTrainee(Secured.getUserInfo(ctx()).getId());
-            dateRepo.updateDateTime(signUpDate);
             return ok(message.render("Inschrijving ingediend", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
                     "De aanvraag voor de training is succesvol ingedient", "/personalOverview"));
         }

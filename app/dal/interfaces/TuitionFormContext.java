@@ -10,4 +10,5 @@ public interface TuitionFormContext {
     boolean removeForm(TuitionForm form);
     List<TuitionForm> getForm(String managerID);
     List<TuitionForm> getForms(String employeeID);
+    TuitionForm getSpecific(String tuitionID);
 }

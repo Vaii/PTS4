@@ -28,7 +28,25 @@ public class TuitionFormMongoContext implements TuitionFormContext {
 
     @Override
     public boolean updateForm(TuitionForm form) {
-        WriteResult result = collection.save(form);
+        WriteResult result = collection.update("{_id:#}", new ObjectId(form.getId())).with("{manager:#," +
+                        " employee:#," +
+                        " training:#," +
+                        " companyJoinDate:#," +
+                        " reasonForCourse:#," +
+                        " studyCosts:#," +
+                        " examinationFees:#," +
+                        " transportCosts:#," +
+                        " accommodationCosts:#," +
+                        " extraCosts:#," +
+                        " totalCosts:#," +
+                        " category:#," +
+                        " status:#," +
+                        " dateTimeID:#," +
+                        " employeeID:#}", form.getManager(),
+        form.getEmployee(), form.getTraining(), form.getCompanyJoinDate(), form.getReasonForCourse(), form.getStudyCosts(),
+        form.getExaminationFees(), form.getTransportCosts(), form.getAccommodationCosts(), form.getExtraCosts(), form.getTotalCosts(),
+        form.getCategory(), form.getStatus(), form.getDateTimeID(), form.getEmployeeID());
+
         return result.wasAcknowledged();
     }
 
@@ -60,5 +78,11 @@ public class TuitionFormMongoContext implements TuitionFormContext {
             forms.add(form);
         }
         return forms;
+    }
+
+    @Override
+    public TuitionForm getSpecific(String tuitionID) {
+
+        return collection.findOne("{_id:#}", new ObjectId(tuitionID)).as(TuitionForm.class);
     }
 }
