@@ -37,4 +37,11 @@ public class TuitionFormRepository implements TuitionFormContext {
     public List<TuitionForm> getForms(String employeeID) {
         return context.getForms(employeeID);
     }
+
+    @Override
+    public TuitionForm getSpecific(String tuitionID) {
+        return context.getSpecific(tuitionID);
+    }
+
+
 }
