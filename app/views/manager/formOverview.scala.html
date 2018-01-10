@@ -5,14 +5,49 @@
 @(page: String, isLoggedIn: Boolean, User: User, viewTuitions: List[ViewTuition])
 
 @shared.main(page, isLoggedIn, User) {
-<div class="container">
+    <head>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
+    </head>
+    <div class="container">
+        <div class="row">
+            <h1>Studiekostenkosten Formulier Overzicht</h1>
+        </div>
+        <div class="col-lg-12" id="listDiv">
+            <div class="row col-lg-12" id="listDivTitle">
+                <div class="col-lg-4">
+                    <label>Medewerker</label>
+                </div>
+                <div class="col-lg-4">
+                    <label>Datum</label>
+                </div>
+                <div class="col-lg-4">
+                    <label>Status</label>
+                </div>
+            </div>
+            @for(view <- viewTuitions) {
+                <div class="row col-lg-12" id =listviewrow>
+                    <div class="col-lg-4">
+                        <p>@view.getEmployee().getFirstName()</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <p> @view.getDateTime().getDateOnlyString(), @view.getDateTime().getTmeOnlyString() uur</p>
+                    </div>
+                    <div class=" row col-lg-4">
+                        <div class="col-lg-6">
+                            <p>@view.getForm().getStatus().getValue </p>
 
-    @for(view <- viewTuitions){
-        <p>Medewerker: @view.getEmployee().getFirstName() Datum: @view.getDateTime().getDateString() Status: @view.getForm().getStatus().getValue
 
-            @if(view.getForm.getStatus() == Status.IN_BEHANDELING){
-                <a href="@routes.ManagerController.inspectForm(view.getFormId())" class="btn btn-outline-danger">Accorderen</a></p>
+                        </div>
+                       <div class="col-lg-6">
+                       @if(view.getForm.getStatus() == Status.IN_BEHANDELING) {
+                           <a href="@routes.ManagerController.inspectForm(view.getFormId())" class="btn btn-outline-primary btn-sm">Accorderen</a>
+                       }
+                       </div>
+                    </div>
+
+
+                </div>
             }
-    }
-</div>
+        </div>
+    </div>
 }
