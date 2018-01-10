@@ -29,7 +29,6 @@ import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -52,7 +51,7 @@ public class TrainingController extends Controller {
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
     private SharedRepository sharedRepo = new SharedRepository(new SharedMongoContext());
-    private CategoryRepository categoryRepo = new CategoryRepository(new CategoryContext("Category"));
+    private CategoryRepository categoryRepo = new CategoryRepository(new CategoryMongoContext("Category"));
 
     private FormFactory formFactory;
     private Form<Training> form;

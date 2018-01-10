@@ -1,17 +1,15 @@
 package controllers;
 
-import dal.contexts.CategoryContext;
+import dal.contexts.CategoryMongoContext;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.TrainingMongoContext;
 import dal.contexts.UserMongoContext;
-import dal.interfaces.DateTimeContext;
 import dal.repositories.CategoryRepository;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
 import dal.repositories.UserRepository;
 import models.storage.*;
 import models.util.DateConverter;
-import models.view.ViewDate;
 import models.view.ViewTraining;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -34,7 +32,7 @@ public class ManagerController extends Controller {
         this.uRepo = new UserRepository(new UserMongoContext("User"));
         this.dtRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
         this.tRepo = new TrainingRepository(new TrainingMongoContext("Training"));
-        this.cRepo = new CategoryRepository(new CategoryContext("Category"));
+        this.cRepo = new CategoryRepository(new CategoryMongoContext("Category"));
     }
 
     @Security.Authenticated(Secured.class)

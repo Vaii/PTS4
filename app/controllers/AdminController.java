@@ -1,6 +1,6 @@
 package controllers;
 
-import dal.contexts.CategoryContext;
+import dal.contexts.CategoryMongoContext;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.UserMongoContext;
 import dal.repositories.CategoryRepository;
@@ -41,7 +41,7 @@ public class AdminController extends Controller{
     public AdminController(FormFactory formFactory){
         this.uRepo = new UserRepository(new UserMongoContext("User"));
         this.dRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
-        this.cRepo = new CategoryRepository(new CategoryContext("Category"));
+        this.cRepo = new CategoryRepository(new CategoryMongoContext("Category"));
         this.form = formFactory.form(User.class);
         this.userForm = formFactory.form(User.class);
         this.filledForm = formFactory.form(User.class);

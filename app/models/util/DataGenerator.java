@@ -1,9 +1,8 @@
 package models.util;
 
-import dal.contexts.CategoryContext;
+import dal.contexts.CategoryMongoContext;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.TrainingMongoContext;
-import dal.contexts.UserMongoContext;
 import dal.repositories.CategoryRepository;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;
@@ -14,7 +13,7 @@ import java.util.List;
 
 public class DataGenerator {
     static TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
-    CategoryRepository catRepo = new CategoryRepository(new CategoryContext("Category"));
+    CategoryRepository catRepo = new CategoryRepository(new CategoryMongoContext("Category"));
     DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
 
     public static void main(String[] args) {

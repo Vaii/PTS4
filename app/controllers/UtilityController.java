@@ -1,7 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import dal.contexts.CategoryContext;
+import dal.contexts.CategoryMongoContext;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.TrainingMongoContext;
 import dal.contexts.UserMongoContext;
@@ -30,7 +30,7 @@ public class UtilityController extends Controller {
     private UserRepository userRepo = new UserRepository(new UserMongoContext("User"));
     private TrainingRepository trainingRepo = new TrainingRepository(new TrainingMongoContext("Training"));
     private DateTimeRepository dateRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
-    private CategoryRepository catRepo = new CategoryRepository(new CategoryContext("Category"));
+    private CategoryRepository catRepo = new CategoryRepository(new CategoryMongoContext("Category"));
 
     List<String> examples = new ArrayList<>();
 

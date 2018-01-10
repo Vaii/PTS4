@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CategoryContext implements dal.interfaces.CategoryContext {
+public class CategoryMongoContext implements dal.interfaces.CategoryContext {
     private DBConnector connector;
     private MongoCollection collection;
 
-    public CategoryContext(String coll){
+    public CategoryMongoContext(String coll){
         connector = new DBConnector();
         collection = connector.getCollection(coll);
     }
