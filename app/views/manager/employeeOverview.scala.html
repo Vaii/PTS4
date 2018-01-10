@@ -30,6 +30,9 @@
                     <button class="btn btn-primary" onclick="toggle('@key.getId()')">Training info</button>
                 </div>
                 <div class="col-lg-12" id="@key.getId()" style="display: none">
+                @if(value.length.equals(0)){
+                    <p>Deze medewerker heeft zich nog voor geen training ingeschreven</p>
+                } else{
                     <div class="row">
                         <div class="col-lg-6">
                             <h5>Naam Training</h5>
@@ -38,19 +41,20 @@
                             <h5>Datum :</h5>
                         </div>
                     </div>
-                    <!--TODO check loop-->
+                        <!--TODO check loop-->
                     @for(a <- value){
                         <div class="row">
                             <div class="col-lg-6">
-                                @a.getTraining().getName()
+                            @a.getTraining().getName()
                             </div>
                             <div class="col-lg-6">
-                                @a.getDate().getDateString()
+                            @a.getDate().getDateString()
                             </div>
                         </div>
                     }
+                }
                 </div>
-        </div>
+            </div>
             <hr>
         }
 

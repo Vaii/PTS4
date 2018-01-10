@@ -56,11 +56,12 @@ public class ManagerController extends Controller {
 
             List<User> employee = uRepo.getUserByManager(Secured.getUserInfo(ctx()).getId());
             Map<User, List<ViewTraining>> userAndTraining = new HashMap<>();
-            List<ViewTraining> viewTrainings = new ArrayList<>();
+
             DateConverter converter = new DateConverter();
 
             for (User e : employee){
                 List<DateTime> signUps = dtRepo.getDateTimeForUser(e.getId());
+                List<ViewTraining> viewTrainings = new ArrayList<>();
 
                 for(DateTime dt : signUps) {
                     Training t = tRepo.getTrainingById(dt.getTrainingID());
@@ -124,7 +125,7 @@ public class ManagerController extends Controller {
             tutRepo.updateForm(handledForm);
         }
 
-        return notFound();
+        return redirect(routes.ManagerController.formOverview());
     }
 
     private Map<String, String> mapManager(List<User> managers){
