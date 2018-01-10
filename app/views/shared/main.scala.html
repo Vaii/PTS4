@@ -100,15 +100,15 @@
                                 Welkom, <u>@user.getFirstName</u>!</a>
 
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="@routes.AccountController.profile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i>
+                                <a class="dropdown-item" href="@routes.AccountController.profile()"><em class="fa fa-user fa-fw" aria-hidden="true"></em>
                                     Profiel</a>
-                                <a class="dropdown-item" href="@routes.TrainingController.personalOverview()"><i class="fa fa-table fa-fw" aria-hidden="true"></i>
+                                <a class="dropdown-item" href="@routes.TrainingController.personalOverview()"><em class="fa fa-table fa-fw" aria-hidden="true"></em>
                                     Mijn Trainingen</a>
                                 @if(user.getRole.equals(Role.DOCENT)) {
-                                    <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+                                    <a class="dropdown-item" href="@routes.TrainingController.teacherTrainingOverview()"><em class="fa fa-calendar fa-fw" aria-hidden="true"></em>
                                         Rooster</a>
                                 }
-                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
+                                <a class="dropdown-item" href="@routes.AccountController.logout()"> <em class="fa fa-sign-out fa-fw" aria-hidden="true"></em>
                                     Uitloggen</a>
                             </div>
                         } else {
