@@ -8,8 +8,8 @@
         <option value="java.lang._" />
         <option value="play.mvc._" />
         <option value="_root_.play.twirl.api.Txt" />
-        <option value="play.api.data.Field" />
         <option value="play.data._" />
+        <option value="play.api.data.Field" />
         <option value="play.api.templates.PlayMagic._" />
         <option value="_root_.play.twirl.api.JavaScript" />
         <option value="play.core.j.PlayMagicForJava._" />
