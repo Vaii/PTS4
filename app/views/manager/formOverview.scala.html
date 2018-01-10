@@ -10,7 +10,7 @@
     </head>
     <div class="container">
         <div class="row">
-            <h1>Studiekostenkosten Formulier Overzicht</h1>
+            <h1>Studiekosten Formulier Overzicht</h1>
         </div>
         <div class="col-lg-12" id="listDiv">
             <div class="row col-lg-12" id="listDivTitle">
@@ -30,21 +30,21 @@
                         <p>@view.getEmployee().getFirstName()</p>
                     </div>
                     <div class="col-lg-4">
-                        <p> @view.getDateTime().getDateOnlyString(), @view.getDateTime().getTmeOnlyString() uur</p>
+                        <p> @view.getDateTime().getDateOnlyString(),
+                        @view.getDateTime().getTmeOnlyString() uur</p>
                     </div>
                     <div class=" row col-lg-4">
                         <div class="col-lg-6">
                             <p>@view.getForm().getStatus().getValue </p>
 
-
                         </div>
-                       <div class="col-lg-6">
-                       @if(view.getForm.getStatus() == Status.IN_BEHANDELING) {
-                           <a href="@routes.ManagerController.inspectForm(view.getFormId())" class="btn btn-outline-primary btn-sm">Accorderen</a>
-                       }
-                       </div>
+                        <div class="col-lg-6">
+                        @if(view.getForm.getStatus() == Status.IN_BEHANDELING) {
+                            <a href="@routes.ManagerController.inspectForm(view.getFormId())" class="btn btn-outline-primary btn-sm">
+                                Accorderen</a>
+                        }
+                        </div>
                     </div>
-
 
                 </div>
             }

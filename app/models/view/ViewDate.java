@@ -60,7 +60,7 @@ public class ViewDate implements Comparable<ViewDate> {
     }
 
     public String getDateOnlyString() {
-        DateFormat df = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
         return df.format(date);
     }
 
