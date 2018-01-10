@@ -79,11 +79,12 @@ POST    /utility/getdates/:trainingid              controllers.UtilityController
 POST    /utility/addcategory                       controllers.UtilityController.addCategory
 POST    /utility/deletecategory                    controllers.UtilityController.deleteCategory
 POST    /managetraining/utility/addcategory        controllers.UtilityController.addCategory
-POST    /managetraining/utility/deletecategory        controllers.UtilityController.deleteCategory
+POST    /managetraining/utility/deletecategory     controllers.UtilityController.deleteCategory
 
 GET     /utility/getdates/:trainingid              controllers.UtilityController.getDatesForTraining(trainingid: String)
 POST    /utility/checksignup/:dateid/:userid       controllers.UtilityController.checkUserSignUp(dateid: String, userid: String)
 POST    /utility/overlapcheck                      controllers.UtilityController.checkTeacherOverlap()
+POST     /utility/checkemailexist/:userId/:email    controllers.UtilityController.checkEmailExists(userId: String, email: String)
 
 #Example
 POST    /utility/mypostaction                      controllers.UtilityController.myPostAction()

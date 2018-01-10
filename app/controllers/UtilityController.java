@@ -42,6 +42,22 @@ public class UtilityController extends Controller {
         }
     }
 
+    public Result checkEmailExists(String userId, String email) {
+        User user = userRepo.getUser(email);
+
+        // Check if we already have a user.
+        if(user != null) {
+            // If the id is the same there is no issue.
+            if(user.getId().equals(userId)) {
+                return ok("user_nonexists");
+            }
+            // There already is an account with this email.
+            return ok("user_exists");
+        }
+
+        return ok("user_nonexists");
+    }
+
     public Result checkTraningCode(String trainingCode) {
         if(trainingRepo.getTraining(trainingCode) != null) {
             return ok("code_exists");

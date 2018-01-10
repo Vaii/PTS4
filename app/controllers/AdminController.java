@@ -107,7 +107,6 @@ public class AdminController extends Controller{
 
     @Security.Authenticated(Secured.class)
     public Result editUser(){
-
         filledForm = form.bindFromRequest();
 
         List<User> managers = uRepo.getAllManagers();
@@ -121,6 +120,7 @@ public class AdminController extends Controller{
             return (badRequest(manageaccount.render("Manage account",
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), userForm, managerMap, categories, uRepo.getUser(email))));
         }
+
         User user = filledForm.get();
         user.setSkillIds(skills);
 
@@ -129,7 +129,6 @@ public class AdminController extends Controller{
                     Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()),
                     "Het account is gewijzigd", "/admin"));
         }
-
         return notFound();
     }
 
@@ -212,5 +211,4 @@ public class AdminController extends Controller{
 
         return skills;
     }
-
 }
