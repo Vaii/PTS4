@@ -31,7 +31,7 @@ public class ManagerController extends Controller {
     private UserRepository uRepo = new UserRepository(new UserMongoContext("User"));
     private DateTimeRepository dtRepo = new DateTimeRepository(new DateTimeMongoContext("DateTime"));
     private TrainingRepository tRepo = new TrainingRepository(new TrainingMongoContext("Training"));
-    private CategoryRepository cRepo = new CategoryRepository(new CategoryContext("Category"));
+    private CategoryRepository cRepo = new CategoryRepository(new CategoryMongoContext("Category"));
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
 
     private FormFactory formFactory;
