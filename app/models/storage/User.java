@@ -68,6 +68,15 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public User(String firstName, String lastName, String email,
+                 String company, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.company = company;
+        this.phoneNumber = phoneNumber;
+    }
+
     @JsonProperty(M_PHONENUMBER)
     public String getPhoneNumber() {
         return phoneNumber;

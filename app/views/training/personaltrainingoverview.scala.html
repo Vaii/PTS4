@@ -5,7 +5,12 @@
 @(trainings: List[ViewTraining], page: String, isLoggedIn: Boolean, User: User, forms: List[TuitionForm])
 
 @shared.main(page, isLoggedIn, User) {
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
+    @if(trainings.isEmpty){
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/smallPage.css")">
+    } else {
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/teacher.css")">
+    }
+
     <div class="container">
         <div>
             @if(!trainings.isEmpty()) {
@@ -91,7 +96,7 @@
             } else {
                 <div class="row">
                     <div class="row col-lg-12">
-                        <div class="col-lg-4 offset-lg-4">
+                        <div class="col-lg-6 offset-lg-3">
                             <h1>Mijn trainingen</h1>
                         </div>
                     </div>

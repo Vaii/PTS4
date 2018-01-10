@@ -13,6 +13,7 @@ h1 {
 }
 .container {
     width: 40%;
+    padding-bottom: 20px;
 }
 
 .form-group{

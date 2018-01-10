@@ -213,17 +213,22 @@ a.btn.btn-danger {
 .newcategory{
     margin-bottom: 10px;
 }
-#popupbutton{
+#newcategorybtn{
     margin-top:10px;
 }
+#newcategory {
+    width: 92%;
+    height: 40px;
+}
 
-#newcategorybtn{
+#popupbutton{
     margin-top: 10px;
     margin-bottom: 15px;
 }
 #deletecategorybtn{
     margin-top:10px;
     max-width: 190px;
+    float: right;
 }
 .errordisplay{
     display: none;
@@ -237,7 +242,12 @@ a.btn.btn-danger {
 }
 
 #helpbtn{
-    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#catrow{
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .categoryLink.active {
@@ -264,4 +274,7 @@ a.btn.btn-danger {
 }
 .outline{
     padding: 0;
+}
+#errormessage{
+    font-weight: bold;
 }

@@ -5,17 +5,25 @@
     @shared.main(page, isLoggedIn, User) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/smallPage.css")">
     <script src="@routes.Assets.at("javascripts/register.js")"></script>
+    <script src="@routes.Assets.at("javascripts/phoneNumberCheck.js")"></script>
 
     <div class="container">
         <div class="row">
             <h1>Registreren</h1>
         </div>
             @b4.form(routes.AccountController.registerAccount) {
-                    <div class="row">@b4.email(form("email"), '_label -> "Email", 'placeholder -> "example@example.com")</div>
-                    <div style="display: none; color:#d9534f" id="validation_error_0" class="form-control-feedback ">Email is al in gebruik</div>
+                    <div class="row">@b4.email(form("email"), '_label -> "E-mailadres", 'placeholder -> "example@example.com")</div>
+                    <div style="display: none; color:#d9534f" id="validation_error_0" class="form-control-feedback ">E-mailadres is al in gebruik</div>
                     <div class="row">@b4.text(form("firstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</div>
                     <div class="row">@b4.text(form("lastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</div>
-                    <div class="row">@b4.number(form("phoneNumber"), '_label -> "Telefoon Nummer", 'placeholder -> "06131313")</div>
+                    <div class="row">
+                        <div class="form-group" id="phoneNumber_field">
+                            <label class="form-control-label" for="phoneNumber">Telefoon Nummer</label>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="right" title="Het nummer dient volgens internationaal formaat te worden ingevoerd. Een Nederlands mobiel nummer ziet er als volgt uit: <br/> 0031 6 xxxxxxxx">Help</button>
+                            <input type="number" id="phoneNumber" name="phoneNumber" value="" required="true" class="form-control" placeholder="06131313">
+                        </div>
+                    </div>
+                    <div style="display: none; color:#d9534f" id="validation_error_2" class="form-control-feedback ">Ongeldig telefoonnummer, zie de help voor meer informatie</div>
                     <div class="row">@b4.text(form("company"), '_label -> "Bedrijf", 'placeholder -> "Software BV")</div>
                     <div class="row">@b4.password(form("password"), '_label -> "Wachtwoord", 'required -> "required")</div>
                     <div class="row">@b4.password(form("validation"), '_label -> "Wachtwoord (herhaling)", 'required -> "required")</div>
