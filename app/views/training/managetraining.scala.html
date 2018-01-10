@@ -51,7 +51,7 @@
                     @if(!categories.isEmpty) {
                         @for((key, value) <- categories) {
                             @if(!trainings.isEmpty) {
-                                @if(key.equals(cat.getCategory)) {
+                                @if(key.equals(cat.getName)) {
                                     <li class="active"><a href="@routes.TrainingController.manageCategory(key)">@key
                                         (@value)</a></li>
                                 } else {
