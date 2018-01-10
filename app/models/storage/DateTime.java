@@ -114,7 +114,7 @@ public class DateTime {
     }
 
     public String getDateString() {
-        DateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy");
         return df.format(this.date);
     }
 
@@ -124,7 +124,7 @@ public class DateTime {
     }
 
     public String getDateOnlyString() {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
         return df.format(this.date);
     }
 
