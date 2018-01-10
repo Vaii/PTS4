@@ -5,6 +5,7 @@ $(document).ready(function () {
             //fadeOutTrainingContent();
             toggleTrainingMenu(false);
         }
+        setNoSelectTrainingContent();
         setActiveLink($(this));
         getTrainings($(this).attr('id'));
         toggleTrainingMenu(true);
@@ -179,4 +180,10 @@ function unescapeHTML(string) {
     var elt = document.createElement("span");
     elt.innerHTML = string;
     return elt.innerText;
+}
+
+function setNoSelectTrainingContent() {
+    $("#trainingContentDiv").css('display', 'none');
+    $("#selectHeader").html("Selecteer een training");
+    $("#noTrainingContent").css('display', 'block');
 }
