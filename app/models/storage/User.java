@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -36,6 +37,8 @@ public class User {
     private List<String> skillIds;
     
     public User() {
+        manager = "";
+        skillIds = new ArrayList<>();
     }
 
     @JsonCreator
@@ -66,6 +69,8 @@ public class User {
         this.role = role;
         this.company = company;
         this.phoneNumber = phoneNumber;
+        manager = "";
+        skillIds = new ArrayList<>();
     }
 
     public User(String firstName, String lastName, String email,
@@ -75,6 +80,8 @@ public class User {
         this.email = email;
         this.company = company;
         this.phoneNumber = phoneNumber;
+        manager = "";
+        skillIds = new ArrayList<>();
     }
 
     @JsonProperty(M_PHONENUMBER)
@@ -157,7 +164,6 @@ public class User {
     public void setSkillIds(List<String> skillIds) {
         this.skillIds = skillIds;
     }
-
 
     public void setManager(String manager) {
         this.manager = manager;

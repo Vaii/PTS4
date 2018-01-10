@@ -7,12 +7,50 @@
 
 @import java.util
 @(page: String, isLoggedIn: Boolean, User: User, form: Form[User], manager: Map[String, String], categories: List[Category], user: User)
-
-
 @shared.main(page, isLoggedIn, User) {
+
+    <script>
+            $( document ).ready(function () {
+                $('#email').on('input', function () {
+                    if ($('#email').val() != "") {
+                        $.post('/utility/checkemailexist/'+  $('[name=id]').val() + "/" + $('#email').val(), function (data) {
+                            if (data == "user_exists") {
+                                console.log("User already exists");
+                                disableControls(true);
+                            } else {
+                                console.log("User doesn't exists");
+                                disableControls(false);
+                            }
+                        });
+                    } else {
+                        disableControls(false);
+                    }
+                });
+            });
+
+
+            function disableControls(disable) {
+                $('.btn-default').prop("disabled",disable);
+                if(disable) {
+                    $('#email_field').addClass('has-danger');
+                    $('#validation_error_0').css("display", "block");
+                } else {
+                    $('#email_field').removeClass('has-danger');
+                    $('#validation_error_0').css("display", "none");
+                }
+            }
+    </script>
+
     <div class="container">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/smallPage.css")">
         <h1>Account management</h1>
+        @if(form.hasGlobalErrors) {
+            <p class="error">
+            @for(error <- form.globalErrors) {
+                <p>@error.format(messages())</p>
+            }
+            </p>
+        }
         @b4.form(routes.AdminController.editUser()) {
             @helper.CSRF.formField
 
@@ -21,6 +59,7 @@
             } else {
                 <div class="row">@b4.email(form("email"), '_label -> "Email", 'placeholder -> "example@example.com")</div>
             }
+            <div style="display: none; color:#d9534f" id="validation_error_0" class="form-control-feedback ">E-mailadres is al in gebruik</div>
             <div class="row">@b4.text(form("firstName"), '_label -> "Voornaam", 'placeholder -> "Jan")</div>
             <div class="row">@b4.text(form("lastName"), '_label -> "Achternaam", 'placeholder -> "Janssen")</div>
             @if(User.getManager() != null) {

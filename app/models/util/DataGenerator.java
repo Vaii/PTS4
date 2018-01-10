@@ -3,6 +3,7 @@ package models.util;
 import dal.contexts.CategoryContext;
 import dal.contexts.DateTimeMongoContext;
 import dal.contexts.TrainingMongoContext;
+import dal.contexts.UserMongoContext;
 import dal.repositories.CategoryRepository;
 import dal.repositories.DateTimeRepository;
 import dal.repositories.TrainingRepository;

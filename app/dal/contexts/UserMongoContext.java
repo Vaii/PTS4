@@ -41,7 +41,8 @@ public class UserMongoContext implements UserContext {
                     " salt:#," +
                     " hashedPassword:#," +
                     " phoneNumber:#," +
-                    " manager:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber(), user.getManager());
+                    " manager:#,"+
+                    " skillIds:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber(), user.getManager(), user.getSkillIds());
             return result.wasAcknowledged();
         }
         else{
@@ -54,7 +55,9 @@ public class UserMongoContext implements UserContext {
                     " company:#," +
                     " salt:#," +
                     " hashedPassword:#," +
-                    " phoneNumber:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber());
+                    " phoneNumber:#," +
+                    " manager:#," +
+                    " skillIds:#}",user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole(), user.getCompany(), salt, hashedPassword, user.getPhoneNumber(), user.getManager(), user.getSkillIds());
             return result.wasAcknowledged();
         }
     }
