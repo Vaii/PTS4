@@ -31,8 +31,8 @@ $(document).ready(function () {
             $("#popupbutton").prop('class', 'btn btn-danger')
         }
         else{
-            $("#newcategorybtn").prop('value', 'Categorie Beheer');
-            $("#newcategorybtn").prop('class', 'btn btn-primary')
+            $("#popupbutton").prop('value', 'Categorie Beheer');
+            $("#popupbutton").prop('class', 'btn btn-primary')
         }
     })
 
