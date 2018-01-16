@@ -42,7 +42,7 @@ public class TrainingController extends Controller {
     private static final String TEACHER = "teacherId";
     private static final String TRAININGCODE = "trainingCode";
     private static final String TRAININGEN = "Trainingen";
-    private static final String DATEFORMAT = "yyyy-MM-dd'T'hh:mm";
+    private static final String DATEFORMAT = "yyyy-MM-dd'T'HH:mm";
 
     private Form<TuitionForm> tuitionFormForm;
     private TuitionFormRepository tutRepo = new TuitionFormRepository(new TuitionFormMongoContext("TuitionForm"));
