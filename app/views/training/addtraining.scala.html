@@ -36,7 +36,7 @@
         </div>
         @b4.form(routes.TrainingController.submit()) {
             @helper.CSRF.formField
-            <div class="row"><div class="col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</div></div>
+            <div class="row"><div class="col-lg-12">@b4.number(form("trainingCode"), '_label -> "Trainingcode:", 'class -> "form-control-inline", 'placeholder -> "Voer trainingscode in")</div></div>
             <div style="display: none;
                 color: #d9534f" id="validation_error_0" class="form-control-feedback ">Code is al in gebruik</div>
             <div class="row"><div class="col-lg-12">@b4.text(form("name"), '_label -> "Naam:", 'class -> "form-control-inline", 'placeholder -> "Voer naam in")</div></div>

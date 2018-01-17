@@ -97,7 +97,7 @@
                         @b4.form(routes.TrainingController.edit(training.getCategory().getName(), training.getTraining().getTrainingCode())) {
                             @helper.CSRF.formField
                             <div class="row col-lg-12">
-                                <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Training code:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
+                                <div class="row col-lg-12">@b4.number(form("trainingCode"), '_label -> "Trainingcode:", 'class -> "", 'placeholder -> "Voer trainingscode in")</div>
                                 <div class="row col-lg-12">@b4.text(form("name"), '_label -> "Naam:", 'class -> "", 'placeholder -> "Voer naam in")</div>
                                 <div class="row col-lg-12">@b4.textarea(form("description"), '_label -> "Beschrijving:", 'class -> "", 'placeholder -> "Voer beschrijving in")</div>
                                 <div class="row col-lg-12">@b4.text(form("requiredMaterial"), '_label -> "Benodigde materialen:", 'class -> "", 'placeholder -> "Voer materialen in")</div>
